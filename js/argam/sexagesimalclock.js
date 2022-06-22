@@ -14,6 +14,15 @@ Date.prototype.getDOY = function() {
     return dayOfYear;
 };
 
+function padDigits(argamStr, digits) {
+    let [integral, decimal] = argamStr.split(".");
+
+    // decimal is undefined if there weren't any decimal points
+    decimal = (decimal ?? "").padEnd(digits, "0");
+
+    return `${integral}.${decimal}`;
+}
+
 function update_time() {
     const date = new Date();
     const hours = date.getHours();
@@ -42,7 +51,7 @@ function update_time() {
 
     const unix = +(date.getTime() / 1000).toFixed(2);
 
-    const unixStringDigits = toS(unix);
+    const unixStringDigits = padDigits(toS(unix), 2);
     const unixStringName = toN(Math.floor(unix));
 
     document.getElementById('clock').innerText = timeStringDigits;

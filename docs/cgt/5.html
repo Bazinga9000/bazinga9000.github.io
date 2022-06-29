@@ -114,9 +114,9 @@ Figure 5.3: A stack of stars.
 </summary>
 <hr />
 <p><strong>Proof:</strong> By Induction.</p>
-<p><em>Base Case</em>: <span class="math inline">\(\ast0 + \ast0 = 0 + 0 = 0 = \ast0\)</span></p>
+<p><em>Base Case</em>: <span class="math inline">\(\ast1 + \ast2 = \ast3\)</span></p>
 <p><em>Inductive Case</em>:</p>
-<p>Suppose that, for all <span class="math inline">\(b\)</span> and <span class="math inline">\(a\)</span> where <span class="math inline">\(b &lt; a &lt; k\)</span>, that <span class="math inline">\(\ast(2^b) + \ast(2^a) = \ast(2^b + 2^a)\)</span>.</p>
+<p>Suppose that, for all <span class="math inline">\(b\)</span> and <span class="math inline">\(a\)</span> where <span class="math inline">\(0 \geq b &lt; a &lt; k\)</span>, that <span class="math inline">\(\ast(2^b) + \ast(2^a) = \ast(2^b + 2^a)\)</span>.</p>
 <p>Note that this means the sums of any two nimbers up to <span class="math inline">\(\ast(2^k)\)</span> are other nimbers, as you can split apart any nimber into sums of powers of two, cancel pairs, and add the remaining ones together.</p>
 <p>We now consider the sum</p>
 <p><span class="math display">\[ \ast(2^a) + \ast(2^k) \]</span></p>
@@ -125,7 +125,7 @@ Figure 5.3: A stack of stars.
 <p>or, in terms of the nimbers, <span class="math inline">\(\ast(2^a) + \ast(2^k) + \ast(2^a + 2^k)\)</span>, is zero by presenting a winning strategy for the second player.</p>
 <p>On the first move, the first player has three options:</p>
 <ol type="1">
-<li>If the first player moves <span class="math inline">\(\ast(2^a) \to \ast x\)</span> for some <span class="math inline">\(x\)</span>, the second player can move <span class="math inline">\(\ast(2^a + 2^k) \to \ast x + \ast (2^k)\)</span> (this sum is a nimber <span class="math inline">\(\star y\)</span> where <span class="math inline">\(y &lt; k\)</span> by induction, so this is possible)</li>
+<li>If the first player moves <span class="math inline">\(\ast(2^a) \to \ast x\)</span> for some <span class="math inline">\(x\)</span>, the second player can move <span class="math inline">\(\ast(2^a + 2^k) \to \ast x + \ast (2^k)\)</span> (this sum is a nimber <span class="math inline">\(\ast y\)</span> where <span class="math inline">\(y &lt; k\)</span> by induction, so this is possible)</li>
 <li>If the first player moves <span class="math inline">\(\ast(2^k) \to \ast x\)</span> for some <span class="math inline">\(x\)</span>, the second player again moves <span class="math inline">\(\ast(2^a + 2^k) \to \ast x + \ast (2^a)\)</span> (which is possible by the same reasoning as in Case 1)</li>
 <li>If the first player moves in <span class="math inline">\(\ast(2^a + 2^k) \to \ast x\)</span> for some <span class="math inline">\(x\)</span>, the second player is always able to do one of these two moves (note that these are just the first and second cases with the players reversed):
 <ol type="a">

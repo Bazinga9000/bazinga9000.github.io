@@ -38,31 +38,31 @@ We notate a position using a pair of braces and a vertical bar. We put the posit
 
 But this raises a question: If we wish to define positions in terms of other positions, how do we "break in"? We have to start somewhere. Well, what we really need is *sets* of positions. Before we have access to any positions at all, we do have access to a particular set of positions: the empty set, containing no positions at all! Let's use this to construct our first position, where Lazuli has no options and neither does Ruby. We call this position $0$ and it is notated like this:
 
-$$ 0 = \game{\,}{\,} $$
+$$ 0 = \game{}{} $$
 
 This new $0$ characterizes the empty Hackenbush position we saw at the start of Part 1, as it describes what moves Lazuli and Ruby can take from it (no moves at all). Now we have the power to use this position to define others. There are three new positions we can make now that we have $0$:
 
-$$ \game{0}{\,} $$
-$$ \game{\,}{0} $$
+$$ \game{0}{} $$
+$$ \game{}{0} $$
 $$ \game{0}{0} $$
 
-Let's look at exactly what $\game{0}{\,}$ is telling us. What it says is that Lazuli has one move, which is to go to the position $0$, and Ruby has no moves at all. This, too, directly corresponds to a Hackenbush position, one with a single blue branch. Ruby has no moves (nothing on the right side of the bar), and Lazuli's only move takes the game to the empty position, which we just called $0$. This we shall call $1$, as that was the value we gave it in Part 1. And similarly, $\game{\,}{0}$ describes the position of the red branch, which we will call $-1$.
+Let's look at exactly what $\game{0}{}$ is telling us. What it says is that Lazuli has one move, which is to go to the position $0$, and Ruby has no moves at all. This, too, directly corresponds to a Hackenbush position, one with a single blue branch. Ruby has no moves (nothing on the right side of the bar), and Lazuli's only move takes the game to the empty position, which we just called $0$. This we shall call $1$, as that was the value we gave it in Part 1. And similarly, $\game{}{0}$ describes the position of the red branch, which we will call $-1$.
 
-Now, $\game{0}{0}$ is special. To see why, think of what Hackenbush position is described in this form. A position where both players have the same exact move, to go to the empty zero position... Why, this is the answer to our mystery from the end of Part 2! This is the value of the green branch! This position has a special name, too. It is called $\ast$, pronounced "star". A star is born!
+Now, $\game{0}{0}$ is special. To see why, think of what Hackenbush position is described in this form. A position where both players have the same exact move, to go to the empty zero position... Why, this is the answer to our mystery from the end of Part 2! This is the value of the green branch! This position has a special name, too. It is called $\star$, pronounced "star". A star is born!
 
-$\ast$'s weird properties from Part 2 can now be explored. We said that $\ast$ cannot be a positive number, a negative number, or zero. But this raises a problem. Namely, we need to define the words "positive", "negative", "zero", and "number". We'll handle the first three now:
+$\star$'s weird properties from Part 2 can now be explored. We said that $\star$ cannot be a positive number, a negative number, or zero. But this raises a problem. Namely, we need to define the words "positive", "negative", "zero", and "number". We'll handle the first three now:
 
 ## The "Sign" of a Position
 
 Positions can be split into four of what *Winning Ways* calls **outcome classes** which are analogous to the sign of conventional numbers. In fact, the four games we have yet created give us examples of all of them, and the first three are exactly as written in Part 1:
 
-* $0 = \game{\,}{\,}$ is **zero**, because the **second** player can always win
-* $1 = \game{0}{\,}$ is **positive**, because **<span class="lazuli">Lazuli</span>** can always win.
-* $-1 = \game{\,}{0}$ is **negative**, because **<span class="ruby">Ruby</span>** can always win.
+* $0 = \game{}{}$ is **zero**, because the **second** player can always win
+* $1 = \game{0}{}$ is **positive**, because **<span class="lazuli">Lazuli</span>** can always win.
+* $-1 = \game{}{0}$ is **negative**, because **<span class="ruby">Ruby</span>** can always win.
 
-$\ast$ requires us to add another case, because as we discovered in Part 2 it is not any of these three:
+$\star$ requires us to add another case, because as we discovered in Part 2 it is not any of these three:
 
-* $\ast = \game{0}{0}$ is **fuzzy**, because the **first** player can always win.
+* $\star = \game{0}{0}$ is **fuzzy**, because the **first** player can always win.
 
 We can also use symbols. For any position $G$:
 
@@ -95,7 +95,7 @@ This raises an important question: Can *every* position be classified this way? 
 
 **Proof:** By induction.
 
-Base Case: $\game{\,}{\,}$ is zero.
+Base Case: $\game{}{}$ is zero.
 
 Inductive Case: Suppose for some $G = \game{G^L}{G^R}$, all $G^L$ and all $G^R$ are either positive, negative, zero, or fuzzy (though it is not necessarily the case that they are all of the *same* outcome class).
 
@@ -135,23 +135,23 @@ Let's do an example: what is $1 + 1$?
 
 Expanding out:
 
-$$ 1 + 1 = \game{0}{\,} + \game{0}{\,} $$
+$$ 1 + 1 = \game{0}{} + \game{0}{} $$
 
 So, $G^L$ and $H^L$ are both just $0$, and $G^R$ and $H^R$ are empty. We can now apply the definition:
 
-$$ 1 + 1 = \game{0 + 1, 0 + 1}{\,} $$
+$$ 1 + 1 = \game{0 + 1, 0 + 1}{} $$
 
 Since $G^R$ and $H^R$ are empty, we have no sums to put on the right side of the bar, leaving it empty.
 
 We now need to add $0 + 1$ which is $1$. Zero works as it does usually, and I'll show the proof at the end of this example. So now we have
 
-$$ 1 + 1 = \game{1, 1}{\,} $$
+$$ 1 + 1 = \game{1, 1}{} $$
 
 We can do a small bit of simplification here, which is removing duplicates if the same position occurs multiple times on one side of the bar. You'll learn more about simplifying positions in Part 4.
 
 So, all in all,
 
-$$ 1 + 1 = \game{1}{\,} $$
+$$ 1 + 1 = \game{1}{} $$
 
 This position has a name. It's called $2$. We'll give more positions names in Part 4.
 
@@ -173,7 +173,7 @@ Adding 0 to any game does not change it. Since the zero position has no moves, c
 Base Case:
 $0 + 0 = \game{0^L + 0, 0 + 0^L}{0^R + 0, 0 + 0^R}$
 
-Since $0^L$ and $0^R$ are both empty, there are no additions to be done and the result is $\game{\,}{\,} = 0$
+Since $0^L$ and $0^R$ are both empty, there are no additions to be done and the result is $\game{}{} = 0$
 
 Inductive Case:
 Suppose that for $G = \game{G^L}{G^R}$, $P + 0 = P$ for any $P \in G^L, P \in G^R$
@@ -209,7 +209,7 @@ Now that we have the concept of addition, we can use it to compare arbitrary pos
 
 These are all spoken the way you'd expect, with the exception that when $G \mid\mid H$ we say that $G$ is **confused with** H.
 
-It is important to note now that before this section, when I have been using the $=$ symbol, I have either been using it to define things like $0$ or $1$, or I meant that the two positions in question had the exact same options on the left and right side of the bar. Now, the $=$ symbol will refer to the relationship defined immediately above. For example, $\game{\,}{\,}$ and $\game{-1}{1}$ are not identical positions, but they are equal to eachother, as their difference is a second-player win. (Verify this as an exercise.)
+It is important to note now that before this section, when I have been using the $=$ symbol, I have either been using it to define things like $0$ or $1$, or I meant that the two positions in question had the exact same options on the left and right side of the bar. Now, the $=$ symbol will refer to the relationship defined immediately above. For example, $\game{}{}$ and $\game{-1}{1}$ are not identical positions, but they are equal to eachother, as their difference is a second-player win. (Verify this as an exercise.)
 
 The intuition of the $=$ relation is that two positions are equal if they have the same value as we have been working with in Parts 1 and 2. In order to remove ambiguity, from now on if I wish to state that two positions have identical *form* and not just that their difference is zero, I will use the $\equiv$ operator.
 
@@ -260,17 +260,17 @@ $\blacksquare$
 
 </details>
 
-For those who know what the words "equivalence relation" mean, we have just shown that equality is one. For the rest of this series, we will mostly care about comparing positions using this notion of equality, and not really whether or not they are perfectly identical. To distinguish, I will call the equivalence class that a given position falls into its "value", and if on the off chance we need to distinguish positions based on exactly what their options are (which we will call their *form*), I will use the $\equiv$ operator. The names $0$, $1$, $-1$, $\ast$, and $2$ that I gave to positions in this part are actually names for the equivalence classes.
+For those who know what the words "equivalence relation" mean, we have just shown that equality is one. For the rest of this series, we will mostly care about comparing positions using this notion of equality, and not really whether or not they are perfectly identical. To distinguish, I will call the equivalence class that a given position falls into its "value", and if on the off chance we need to distinguish positions based on exactly what their options are (which we will call their *form*), I will use the $\equiv$ operator. The names $0$, $1$, $-1$, $\star$, and $2$ that I gave to positions in this part are actually names for the equivalence classes.
 
 If you had no idea what that last paragraph was saying, don't worry about it. All you need to know is that I will use the phrase "has the same value" to mean "equal", and that we only really want to call two positions "different" if they have different values. Two positions that do not look exactly the same are allowed to be equal.
 
 ## Summary of Part 3
 
 * A position is defined in terms of the positions that each player can move to, and each one has a value. Two positions with the same value are considered equal.
-* $\game{\,}{\,}$ has value $0$.
-* $\game{0}{\,}$ has value $1$.
-* $\game{\,}{0}$ has value $-1$.
-* $\game{0}{0}$ has value $\ast$.
+* $\game{}{}$ has value $0$.
+* $\game{0}{}$ has value $1$.
+* $\game{}{0}$ has value $-1$.
+* $\game{0}{0}$ has value $\star$.
 * It is possible to add two positions, and what is meant by that is that on your turn you must move in exactly one of the components of your choosing.
 * We can compare positions by checking who wins their difference.
 

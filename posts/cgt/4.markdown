@@ -28,9 +28,9 @@ The simplest Hackenbush position we have not yet treated formally is two blue br
     </figcaption>
 </center></figure>
 
-We showed in Part 3 that $1 + 1 = \game{1}{\,}$, and this position is in fact the sum of two single branch positions with a value of $1$ each, but let's verify this by checking explicitly what options each player has. Ruby has no moves at all, so the position has nothing on the right side of the bar. Lazuli's two options both remove one blue branch, leaving us with a value of $\game{1,1}{\,}$. Duplicate entries on either side of the bar can be combined, since these are sets, so we are left with $\game{1}{\,}$, exactly as predicted by adding $1 + 1$. This value is called $2$, also as you might expect.
+We showed in Part 3 that $1 + 1 = \game{1}{}$, and this position is in fact the sum of two single branch positions with a value of $1$ each, but let's verify this by checking explicitly what options each player has. Ruby has no moves at all, so the position has nothing on the right side of the bar. Lazuli's two options both remove one blue branch, leaving us with a value of $\game{1,1}{}$. Duplicate entries on either side of the bar can be combined, since these are sets, so we are left with $\game{1}{}$, exactly as predicted by adding $1 + 1$. This value is called $2$, also as you might expect.
 
-I leave you as an exercise to show that the negative of this position, $\game{\,}{-1}$, which we naturally call $-2$, has a value of $-1 + -1$.
+I leave you as an exercise to show that the negative of this position, $\game{}{-1}$, which we naturally call $-2$, has a value of $-1 + -1$.
 
 Cool, what about two blue branches on *top* of each other?
 
@@ -41,9 +41,9 @@ Cool, what about two blue branches on *top* of each other?
     </figcaption>
 </center></figure>
 
-Writing down the options for Lazuli and Ruby show us that this position is $\game{0,1}{\,}$. Is this equal to $2$ as well? One can check that yes, this stack is countered by two isolated red branches to result in a zero position, but there is a more general principle at play here. Look at Lazuli's options. They have the choice between moving to $0$ and moving to $1$. Positions that are more positive are better for Lazuli, so assuming they are playing optimally (which we always are assuming), why in the world would Lazuli *ever* move to $0$, when $1$ is there, which is better for them? This allows us to *simplify* our representation. That is, since $0 \leq 1$,
+Writing down the options for Lazuli and Ruby show us that this position is $\game{0,1}{}$. Is this equal to $2$ as well? One can check that yes, this stack is countered by two isolated red branches to result in a zero position, but there is a more general principle at play here. Look at Lazuli's options. They have the choice between moving to $0$ and moving to $1$. Positions that are more positive are better for Lazuli, so assuming they are playing optimally (which we always are assuming), why in the world would Lazuli *ever* move to $0$, when $1$ is there, which is better for them? This allows us to *simplify* our representation. That is, since $0 \leq 1$,
 
-$$ \game{0,1}{\,} = \game{1}{\,} $$
+$$ \game{0,1}{} = \game{1}{} $$
 
 In general, in some game $G = \game{G^L}{G^R}$, if we have two options in $G^L$, call them $A$ and $B$, where $A \leq B$, we will say that $A$ is **dominated** by $B$.
 Likewise, if if we have two options in $G^R$, call them $X$ and $Y$, where $X \geq Y$ (note that the inequality changed directions), we will also say that $X$ is **dominated** by $Y$.
@@ -85,17 +85,17 @@ $\blacksquare$
 
 By the same logic, we can determine the value of any number of blue branches, either in a stack or side-by-side, and they have the names you would expect from Part 1:
 
-$$ 2 = \game{1}{\,} $$
-$$ 3 = \game{2}{\,} $$
-$$ 4 = \game{3}{\,} $$
+$$ 2 = \game{1}{} $$
+$$ 3 = \game{2}{} $$
+$$ 4 = \game{3}{} $$
 
 and, in general, for some natural number $n$,
 
-$$ n = \game{n-1}{\,} $$
+$$ n = \game{n-1}{} $$
 
 One can, of course, negate these positions to produce the rest of the integers:
 
-$$ -n = \game{\,}{-(n-1)} $$
+$$ -n = \game{}{-(n-1)} $$
 
 Now, giving only one player options makes for some pretty boring positions. Now, we'll cover Part 2's fractional values. Recall this position from part 2:
 
@@ -119,7 +119,7 @@ $$ \frac{1}{4} = \game{0}{\frac{1}{2}} $$
 
 We can see a pattern brewing. What about $\game{0}{\frac{1}{4}}$? We can show that this is how one would write the Hackenbush position that has three red branches stacked upon a blue one, which we saw to be $\frac{1}{8}$ in Part 2. Looking at Hackenbush positions with these expressions we can see that this pattern will continue, but we can also show it explicitly. Suppose we defined the sequence of positions $G_n$ with
 
-$$G_0 = 1 = \game{0}{\,}$$
+$$G_0 = 1 = \game{0}{}$$
 $$G_n = \game{0}{G_{n-1}}$$
 
 (Note that $G_0 > G_1 > G_2 \cdots$. This isn't too hard to show, so I leave it as an exercise.)
@@ -212,7 +212,7 @@ For a position $\game{G^L}{G^R}$ to be called a **number**, it must have the fol
 
 Those among you who know what surreal numbers are may find this defintion strangely familiar, and to that I say we will encounter those lovely things a bit later.
 
-For some examples, every position we've talked about in this part is a number. $\ast = \game{0}{0}$, on the other hand, is not, because $0$ is not strictly less than $0$. We will encounter many more positions that are not numbers in Parts 5 and 6.
+For some examples, every position we've talked about in this part is a number. $\star = \game{0}{0}$, on the other hand, is not, because $0$ is not strictly less than $0$. We will encounter many more positions that are not numbers in Parts 5 and 6.
 
 Now that you know what a "number" is, I present
 
@@ -267,9 +267,9 @@ then $G$ is equal to the simplest such $r$.
 
 Before we begin, recall that any dyadic rational $r$ can be written in one of these ways:
 
-* $r = \game{\,}{\,}$
-* $r = \game{s}{\,}$, where $s$ is a number simpler than $r$, and $s < r$
-* $r = \game{\,}{s}$, where $s$ is a number simpler than $r$, and $s > r$
+* $r = \game{}{}$
+* $r = \game{s}{}$, where $s$ is a number simpler than $r$, and $s < r$
+* $r = \game{}{s}$, where $s$ is a number simpler than $r$, and $s > r$
 * $r = \game{s}{t}$, where $s$ and $t$ are numbers simpler than $r$, and $s < r < t$
 
 Now, for the proof. We must show three things:
@@ -299,13 +299,13 @@ And with that, we've done all that we can currently do in the land of numbers. N
 
 ## Summary of Part 4
 
-* For any positive integer $n$, $n = \game{n-1}{\,}$
-* For any negative integer $-n$, $-n = \game{\,}{-(n-1)}$
+* For any positive integer $n$, $n = \game{n-1}{}$
+* For any negative integer $-n$, $-n = \game{}{-(n-1)}$
 * For any positive integer $n$, $\frac{1}{2^n} = \game{0}{\frac{1}{2^{n-1}}}$
 * For any integer $p$ and any natural number $m$, $\game{\frac{p}{2^m}}{\frac{p+1}{2^m}} = \frac{2p+1}{2^{m+1}}$
 * If there is a number between all left options and all right options of $G$, $G$ is equal to the simplest such.
 
 ## In Part 5, we will
 
-* Learn more about $\ast$ and its friends.
+* Learn more about $\star$ and its friends.
 * Discover a powerful theorem.

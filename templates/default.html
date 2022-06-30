@@ -34,13 +34,7 @@
 		</h1>
 		<div id=content>
 			$if(katex)$
-				$$$$\gdef\game#1#2{\left\{#1 \,\middle|\, #2\right\}}$$$$
-				$$$$\gdef\impgame#1{\left\{#1 \,\middle|\, #1\right\}}$$$$
-				$$$$\gdef\star{\mathord{\ast}}$$$$
-				$$$$\gdef\up{\mathord{\uparrow}}$$$$
-				$$$$\gdef\down{\mathord{\downarrow}}$$$$
-				$$$$\gdef\doubleup{\mathord{\Uparrow}}$$$$
-				$$$$\gdef\doubledown{\mathord{\Downarrow}}$$$$
+				$partial("templates/texpreamble.html")$
 			$endif$
             $body$
         </div>

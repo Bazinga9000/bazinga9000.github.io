@@ -3,7 +3,7 @@ title: Test Page
 kochtitle: Test Page
 goto: /index.html
 katex: on
-includes: test, test2, test3/test4
+includes: test
 ---
 
 TeX!!!!!!

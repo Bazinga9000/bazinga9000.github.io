@@ -21,4 +21,8 @@ executable bazsite
                        hakyll,
                        containers,
                        pandoc,
-                       text
+                       text,
+                       directory,
+                       temporary,
+                       process,
+                       bytestring

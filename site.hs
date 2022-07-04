@@ -1,12 +1,16 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Control.Monad
+import qualified Data.ByteString.Char8 as BS
 import           Data.Maybe
 import           Data.Monoid         (mappend)
 import           Data.String         (fromString)
 import qualified Data.Text           as T
 import           Hakyll
 import           Text.Pandoc.Options
+import           System.Directory (getCurrentDirectory)
+import           System.IO.Temp (withTempFile)
+import           System.Process (callCommand)
 
 {-------------------------------------------------------------------------------
 Configuration
@@ -64,6 +68,10 @@ main = hakyllWith config $ do
         match "js/**" $ do
             route idRoute
             compile copyFileCompiler --todo minify or something
+
+        match "purescript/*" $ do
+            route $ gsubRoute "purescript" (const "js") `composeRoutes` gsubRoute ".purs" (const ".js")
+            compile purescriptCompiler
 
         match "templates/*" $ compile templateBodyCompiler
 
@@ -170,3 +178,25 @@ postCompiler :: Compiler (Item String) -> Compiler (Item String)
 postCompiler c = do
     compileWithDefaultOptions $ c
         >>= loadAndApplyTemplate "templates/post.html" fullContext
+
+{-------------------------------------------------------------------------------
+Purescript
+-------------------------------------------------------------------------------}
+purescriptCompiler :: Compiler (Item String)
+purescriptCompiler = do
+    inputFile <- getResourceFilePath
+    compiledJs <- unsafeCompiler $ do
+        -- get purescript module name
+        inputText <- readFile inputFile
+        let moduleName = words inputText !! 1 --quiet, you.
+        --build it
+        dir <- getCurrentDirectory
+        withTempFile dir "index.js" $ \fp h -> do
+            putStrLn $ "Building purescript" ++ inputFile
+            let outputFile = "--to " ++ fp
+                spago = "spago bundle-app --main " ++ moduleName ++ " " ++ outputFile
+            putStrLn $ "Running " ++ spago
+            callCommand spago
+            BS.unpack <$> BS.hGetContents h
+
+    makeItem compiledJs

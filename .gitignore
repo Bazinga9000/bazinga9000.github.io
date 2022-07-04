@@ -20,10 +20,21 @@ cabal.sandbox.config
 _cache/
 _site/
 
+### purescript ###
+/bower_components/
+/node_modules/
+/.pulp-cache/
+/output/
+/generated-docs/
+/.psc-package/
+/.psc*
+/.purs*
+/.psa*
+/.spago
 
-### not haskell ###
+### neither haskell nor purescript ###
 deploy.sh
 .eslintrc.js
 .ghci
 make.sh
-.vscode/*
+.vscode/

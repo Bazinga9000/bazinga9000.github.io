@@ -118,9 +118,7 @@ Figure 5.3: A stack of stars.
 <strong>Proposition:</strong> For <span class="math inline">\(n \neq m\)</span>, <span class="math inline">\(\star(2^n) + \star(2^m) = \star(2^n + 2^m)\)</span>
 </summary>
 <hr />
-<p><strong>Proof:</strong> By Induction.</p>
-<p><em>Base Case</em>: <span class="math inline">\(\star1 + \star2 = \star3\)</span></p>
-<p><em>Inductive Case</em>:</p>
+<p><strong>Proof:</strong> By strong induction.</p>
 <p>Suppose that, for all <span class="math inline">\(b\)</span> and <span class="math inline">\(a\)</span> where <span class="math inline">\(0 \geq b &lt; a &lt; k\)</span>, that <span class="math inline">\(\star(2^b) + \star(2^a) = \star(2^b + 2^a)\)</span>.</p>
 <p>Note that this means the sums of any two nimbers up to <span class="math inline">\(\star(2^k)\)</span> are other nimbers, as you can split apart any nimber into sums of powers of two, cancel pairs, and add the remaining ones together.</p>
 <p>We now consider the sum</p>
@@ -180,27 +178,27 @@ Likewise, we say that Lazuli’s move to <span class="math inline">\(A\)</span> 
 <summary>
 <strong>Theorem:</strong> Consider a position
 <span class="math display">\[G = \game{A, B, C, \cdots}{X, Y, Z, \cdots}\]</span>
-If <span class="math inline">\(A\)</span> is reversible through some <span class="math inline">\(A^R\)</span>, then
-<span class="math display">\[G = \game{A^{RL}, B, C, \cdots}{X, Y, Z}\]</span>
-where <span class="math inline">\(A^{RL}\)</span> ranges over all of Lazuli’s options from <span class="math inline">\(A^R\)</span>. Likewise, if <span class="math inline">\(X\)</span> is reversible through some <span class="math inline">\(X^L\)</span>, then
-<span class="math display">\[G = \game{A, B, C, \cdots}{X^{LR}, Y, Z}\]</span>
+If <span class="math inline">\(A\)</span> is reversible through <span class="math inline">\(H\)</span>, then
+<span class="math display">\[G = \game{H^{L}, B, C, \cdots}{X, Y, Z}\]</span>
+where <span class="math inline">\(H^{L}\)</span> ranges over all of Lazuli’s options from <span class="math inline">\(H\)</span>. Likewise, if <span class="math inline">\(X\)</span> is reversible through <span class="math inline">\(W\)</span>, then
+<span class="math display">\[G = \game{A, B, C, \cdots}{W^{R}, Y, Z}\]</span>
 </summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>We show only the case for Lazuli’s reversible move. The argument for Ruby is similar.</p>
 <p>Let</p>
 <p><span class="math display">\[G = \game{A, B, C, \cdots}{X, Y, Z, \cdots}\]</span>
-<span class="math display">\[G' = \game{A^{RL}, B, C, \cdots}{X, Y, Z}\]</span></p>
-<p>And suppose that <span class="math inline">\(A\)</span> was reversible through <span class="math inline">\(A^R\)</span> (meaning <span class="math inline">\(A^R \leq G\)</span>). We wish to show that <span class="math inline">\(G = G'\)</span>, which we will do by showing that second player wins their difference,</p>
-<p><span class="math display">\[G - G' = \game{A, B, C, \cdots}{X, Y, Z, \cdots} - \game{A^{RL}, B, C, \cdots}{X, Y, Z}\]</span></p>
-<p>Every move that the first player makes on one component can be copied by the second player on the other, leaving the position zero, with two exceptions: if Lazuli moves <span class="math inline">\(G \to A\)</span> or if Ruby moves <span class="math inline">\(G' \to A^{LR}\)</span>. We consider each case seperately.</p>
+<span class="math display">\[G' = \game{H^{L}, B, C, \cdots}{X, Y, Z}\]</span></p>
+<p>And suppose that <span class="math inline">\(A\)</span> was reversible through <span class="math inline">\(H\)</span> (meaning <span class="math inline">\(H \leq G\)</span>). We wish to show that <span class="math inline">\(G = G'\)</span>, which we will do by showing that second player wins their difference,</p>
+<p><span class="math display">\[G - G' = \game{A, B, C, \cdots}{X, Y, Z, \cdots} - \game{H^{L}, B, C, \cdots}{X, Y, Z}\]</span></p>
+<p>Every move that the first player makes on one component can be copied by the second player on the other, leaving the position zero, with two exceptions: if Lazuli moves <span class="math inline">\(G \to A\)</span> or if Ruby moves <span class="math inline">\(G' \to H^{L}\)</span>. We consider each case seperately.</p>
 <ul>
-<li>First, consider if Lazuli moves <span class="math inline">\(G \to A\)</span>. (In this case we need to show that Ruby wins.) Suppose then Ruby moved <span class="math inline">\(A \to A^R\)</span>, leaving the total position <span class="math inline">\(A^R - G'\)</span> with Lazuli to move. There are two possibilities for Lazuli’s moves:
+<li>First, consider if Lazuli moves <span class="math inline">\(G \to A\)</span>. (In this case we need to show that Ruby wins.) Suppose then Ruby moved <span class="math inline">\(A \to H\)</span>, leaving the total position <span class="math inline">\(H - G'\)</span> with Lazuli to move. There are two possibilities for Lazuli’s moves:
 <ul>
-<li>If Lazuli moves <span class="math inline">\(A^R \to A^{RL}\)</span>, Ruby can move <span class="math inline">\(G'\)</span> to that same <span class="math inline">\(A^{RL}\)</span>, leaving the position zero with Lazuli to move, so Ruby wins.</li>
-<li>If Lazuli moves <span class="math inline">\(G' \to X\)</span> (or <span class="math inline">\(Y\)</span>, or <span class="math inline">\(Z\)</span>), the total position is <span class="math inline">\(A^R - X\)</span>. However, since we know that <span class="math inline">\(A^R \leq G\)</span>, Ruby wins <span class="math inline">\(A^R - G\)</span> moving second. This means that Ruby has a winning response to any of Lazuli’s moves in <span class="math inline">\(A^R - G\)</span>. Since <span class="math inline">\(A^R - X\)</span> is one such option, Ruby has a winning response and wins <span class="math inline">\(G - G'\)</span>.</li>
+<li>If Lazuli moves <span class="math inline">\(H \to H^{L}\)</span>, Ruby can move <span class="math inline">\(G'\)</span> to that same <span class="math inline">\(H^{L}\)</span>, leaving the position zero with Lazuli to move, so Ruby wins.</li>
+<li>If Lazuli moves <span class="math inline">\(G' \to X\)</span> (or <span class="math inline">\(Y\)</span>, or <span class="math inline">\(Z\)</span>), the total position is <span class="math inline">\(H - X\)</span>. However, since we know that <span class="math inline">\(H \leq G\)</span>, Ruby wins <span class="math inline">\(H - G\)</span> moving second. This means that Ruby has a winning response to any of Lazuli’s moves in <span class="math inline">\(H - G\)</span>. Since <span class="math inline">\(H - X\)</span> is one such option, Ruby has a winning response and wins <span class="math inline">\(G - G'\)</span>.</li>
 </ul></li>
-<li>Now, suppose Ruby moved <span class="math inline">\(G' \to A^{RL}\)</span>. (In this case we need to show that Lazuli wins.) Since we know that <span class="math inline">\(A^R \leq G\)</span>, <span class="math inline">\(G \geq A^R\)</span>, meaning that Lazuli wins <span class="math inline">\(G - A^R\)</span> playing second. Therefore, any of Ruby’s options in <span class="math inline">\(G - A^R\)</span> have a winning response by Lazuli. Since <span class="math inline">\(G - A^{RL}\)</span> is one such option, Lazuli has a winning response and wins.</li>
+<li>Now, suppose Ruby moved <span class="math inline">\(G' \to H^{L}\)</span>. (In this case we need to show that Lazuli wins.) Since we know that <span class="math inline">\(H \leq G\)</span>, <span class="math inline">\(G \geq H\)</span>, meaning that Lazuli wins <span class="math inline">\(G - H\)</span> playing second. Therefore, any of Ruby’s options in <span class="math inline">\(G - H\)</span> have a winning response by Lazuli. Since <span class="math inline">\(G - H^{L}\)</span> is one such option, Lazuli has a winning response and wins.</li>
 </ul>
 <span class="math inline">\(\blacksquare\)</span>
 </details>

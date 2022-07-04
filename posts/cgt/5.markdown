@@ -136,11 +136,7 @@ And, after enough effort (or by reading the following proof), you can convince y
 
 -----------
 
-**Proof:** By Induction.
-
-*Base Case*: $\star1 + \star2 = \star3$
-
-*Inductive Case*:
+**Proof:** By strong induction.
 
 Suppose that, for all $b$ and $a$ where $0 \geq b < a < k$, that $\star(2^b) + \star(2^a) = \star(2^b + 2^a)$.
 
@@ -240,10 +236,10 @@ Now, how do we use this to simplify positions? Your first thought might be that 
 <details>
 <summary> **Theorem:** Consider a position
 $$G = \game{A, B, C, \cdots}{X, Y, Z, \cdots}$$
-If $A$ is reversible through some $A^R$, then
-$$G = \game{A^{RL}, B, C, \cdots}{X, Y, Z}$$
-where $A^{RL}$ ranges over all of Lazuli's options from $A^R$. Likewise, if $X$ is reversible through some $X^L$, then
-$$G = \game{A, B, C, \cdots}{X^{LR}, Y, Z}$$
+If $A$ is reversible through $H$, then
+$$G = \game{H^{L}, B, C, \cdots}{X, Y, Z}$$
+where $H^{L}$ ranges over all of Lazuli's options from $H$. Likewise, if $X$ is reversible through $W$, then
+$$G = \game{A, B, C, \cdots}{W^{R}, Y, Z}$$
 </summary>
 
 -----------
@@ -255,18 +251,18 @@ We show only the case for Lazuli's reversible move. The argument for Ruby is sim
 Let
 
 $$G = \game{A, B, C, \cdots}{X, Y, Z, \cdots}$$
-$$G' = \game{A^{RL}, B, C, \cdots}{X, Y, Z}$$
+$$G' = \game{H^{L}, B, C, \cdots}{X, Y, Z}$$
 
-And suppose that $A$ was reversible through $A^R$ (meaning $A^R \leq G$). We wish to show that $G = G'$, which we will do by showing that second player wins their difference,
+And suppose that $A$ was reversible through $H$ (meaning $H \leq G$). We wish to show that $G = G'$, which we will do by showing that second player wins their difference,
 
-$$G - G' = \game{A, B, C, \cdots}{X, Y, Z, \cdots} - \game{A^{RL}, B, C, \cdots}{X, Y, Z}$$
+$$G - G' = \game{A, B, C, \cdots}{X, Y, Z, \cdots} - \game{H^{L}, B, C, \cdots}{X, Y, Z}$$
 
-Every move that the first player makes on one component can be copied by the second player on the other, leaving the position zero, with two exceptions: if Lazuli moves $G \to A$ or if Ruby moves $G' \to A^{LR}$. We consider each case seperately.
+Every move that the first player makes on one component can be copied by the second player on the other, leaving the position zero, with two exceptions: if Lazuli moves $G \to A$ or if Ruby moves $G' \to H^{L}$. We consider each case seperately.
 
-* First, consider if Lazuli moves $G \to A$. (In this case we need to show that Ruby wins.) Suppose then Ruby moved $A \to A^R$, leaving the total position $A^R - G'$ with Lazuli to move. There are two possibilities for Lazuli's moves:
-  * If Lazuli moves $A^R \to A^{RL}$, Ruby can move $G'$ to that same $A^{RL}$, leaving the position zero with Lazuli to move, so Ruby wins.
-  * If Lazuli moves $G' \to X$ (or $Y$, or $Z$), the total position is $A^R - X$. However, since we know that $A^R \leq G$, Ruby wins $A^R - G$ moving second. This means that Ruby has a winning response to any of Lazuli's moves in $A^R - G$. Since $A^R - X$ is one such option, Ruby has a winning response and wins $G - G'$.
-* Now, suppose Ruby moved $G' \to A^{RL}$. (In this case we need to show that Lazuli wins.) Since we know that $A^R \leq G$, $G \geq A^R$, meaning that Lazuli wins $G - A^R$ playing second. Therefore, any of Ruby's options in $G - A^R$ have a winning response by Lazuli. Since $G - A^{RL}$ is one such option, Lazuli has a winning response and wins.
+* First, consider if Lazuli moves $G \to A$. (In this case we need to show that Ruby wins.) Suppose then Ruby moved $A \to H$, leaving the total position $H - G'$ with Lazuli to move. There are two possibilities for Lazuli's moves:
+  * If Lazuli moves $H \to H^{L}$, Ruby can move $G'$ to that same $H^{L}$, leaving the position zero with Lazuli to move, so Ruby wins.
+  * If Lazuli moves $G' \to X$ (or $Y$, or $Z$), the total position is $H - X$. However, since we know that $H \leq G$, Ruby wins $H - G$ moving second. This means that Ruby has a winning response to any of Lazuli's moves in $H - G$. Since $H - X$ is one such option, Ruby has a winning response and wins $G - G'$.
+* Now, suppose Ruby moved $G' \to H^{L}$. (In this case we need to show that Lazuli wins.) Since we know that $H \leq G$, $G \geq H$, meaning that Lazuli wins $G - H$ playing second. Therefore, any of Ruby's options in $G - H$ have a winning response by Lazuli. Since $G - H^{L}$ is one such option, Lazuli has a winning response and wins.
 
 $\blacksquare$
 </details>

@@ -1,0 +1,53 @@
+---
+title: CGT Part 6
+kochtitle: Part 6 - The Garden of Zero
+goto: /cgt.html
+katex: on
+extracss: cgt
+prev: /cgt/5.html
+---
+
+-----------
+
+<center>To see a World in a Grain of Sand</center>
+<center>And a Heaven in a Wild Flower,</center>
+<center>Hold Infinity in the palm of your hand</center>
+<center>And Eternity in an hour.</center>
+<center>—William Blake, *Auguries of Innocence*</center>
+
+-----------
+
+Let's look at a pretty little Hackenbush flower:
+
+<figure><center>
+    <img src="/resources/cgt/6/upflower.svg" width="25%" height="auto"/>
+    <figcaption>
+        Figure 6.1: A piece of Hackenflora.
+    </figcaption>
+</center></figure>
+
+What is the value of this flower? Lazuli can win by chopping the blue petal, and either of Ruby's first moves leaves Lazuli with a single green branch, so this position is positive. How positive is it? Well, you may have heard this one before:
+
+It's smaller than $1$. And $\frac{1}{2}$. And $\frac{1}{4}$. And *every* positive fraction. Just like $\star$! However, there is one crucial difference between this position and $\star$: This one is positive! It's positive, but infinitely tiny! We have encountered an infinitesimal! We shall call this new value $\up$, pronounced "up", and its negative shall be $\down$.
+
+"Now hold on!", I hear a subset of the audience cry, "$\up$? $\down$? We already have a term for infinitesimals, the ever-reliable $\varepsilon$! Why aren't you using that?"
+
+Don't worry, subset of the audience, combinatorial game theorists haven't decided to use a new name just because. The reason why we can't use $\varepsilon$ is because that name is already taken! $\varepsilon$ *does* exist, and we will encounter it in a later part. As it turns out, $\varepsilon$ is *quite a bit bigger* than $\up$ (though still infinitesimal). But we're getting ahead of ourselves.
+
+Alright, what's $\up$ in our vertical bar notation? It differs from previous Hackenbush positions in that a simplest representation doesn't just fall out from the position. We'll have to coax it into a nicer form ourselves. First, let's just write the entire game tree out in vertical bar notation:
+
+$$ \up = \game{0, \star, \game{0, \star}{0}}{\star, \game{0, \star}{0}}$$
+
+This is a *bit* uglier than we're used to. In fact, it would be a tremendously useful exercise to simplify this position yourself, by deleting dominated options and bypassing reversible moves, but I will go through it here.
+
+First, we can remove dominated options. Let's compare $\game{0, \star}{0}$ and $\star$ to see if one is strictly greater than the other. $\game{0, \star}{0}$ corresponds to the Hackenbush position consisting of the stem and the petal of Figure 5.1, and $\star$ is that extra green leaf. This means that the position $\game{0, \star}{0} - \star$, which is actually just $\game{0, \star}{0} + \star$ is in fact equal to $\up$! So, we know it's positive, meaning that $\game{0, \star}{0} > \star$. This lets us remove $\star$ from Lazuli's side and $\game{0, \star}{0}$ from Ruby's. We've reduced the position to
+
+$$ \up = \game{0, \game{0, \star}{0}}{\star}
+
+Now, are there any reversible moves? Since we know $\up$ is positive, Lazuli's move to $\game{0, \star}{0}$ is reversible (Ruby can go to $0$, better for them than $\up$), so we can replace it with all Lazuli's options in $0$. Lazuli has no options in $0$, so we can simply delete it. This gives us the simplest form of $\up$, namely:
+
+$$ \up = \game{0}{\star} $$
+
+Much better. This lets us quickly get a simplest form for $\down$ too, which is
+
+$$ \down = \game{\star}{0} $$

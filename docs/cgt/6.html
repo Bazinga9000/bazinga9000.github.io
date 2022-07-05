@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+	<head>
+		<title>CGT Part 6</title>
+		<link rel="stylesheet" type="text/css" href="../css/default.css">
+		<link rel="icon" type="image/x-icon" href="../resources/favicon.ico">
+		
+			<link rel="stylesheet" type="text/css" href="../css/cgt.css">
+		
+		
+		
+		
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css" integrity="sha384-ZPe7yZ91iWxYumsBEOn7ieg8q/o+qh/hQpSaPow8T6BwALcXSCS6C6fSRPIAnTQs" crossorigin="anonymous">
+			<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js" integrity="sha384-ljao5I1l+8KYFXG7LNEA7DyaFvuvSCmedUf6Y6JI7LJqiu8q5dEivP2nDdFH31V4" crossorigin="anonymous"></script>
+			<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+		
+	<body>
+		<h1>
+			<center><a href="../cgt.html"><img src="../resources/koch.png" height="50px" width="auto" style="vertical-align: middle" /></a></center>
+			<center><span>Part 6 - The Garden of Zero</span></center>
+		</h1>
+		<div id="content">
+			
+				$$\gdef\game#1#2{\left\{#1 \,\middle|\, #2\right\}}$$
+$$\gdef\impgame#1{\left\{#1 \,\middle|\, #1\right\}}$$
+$$\gdef\star{\mathord{\ast}}$$
+$$\gdef\up{\mathord{\uparrow}}$$
+$$\gdef\down{\mathord{\downarrow}}$$
+$$\gdef\doubleup{\mathord{\Uparrow}}$$
+$$\gdef\doubledown{\mathord{\Downarrow}}$$
+			
+            <hr />
+<center>
+To see a World in a Grain of Sand
+</center>
+<center>
+And a Heaven in a Wild Flower,
+</center>
+<center>
+Hold Infinity in the palm of your hand
+</center>
+<center>
+And Eternity in an hour.
+</center>
+<center>
+—William Blake, <em>Auguries of Innocence</em>
+</center>
+<hr />
+<p>Let’s look at a pretty little Hackenbush flower:</p>
+<figure>
+<center>
+<img src="../resources/cgt/6/upflower.svg" width="25%" height="auto" />
+<figcaption>
+Figure 6.1: A piece of Hackenflora.
+</figcaption>
+</center>
+</figure>
+<p>What is the value of this flower? Lazuli can win by chopping the blue petal, and either of Ruby’s first moves leaves Lazuli with a single green branch, so this position is positive. How positive is it? Well, you may have heard this one before:</p>
+<p>It’s smaller than <span class="math inline">\(1\)</span>. And <span class="math inline">\(\frac{1}{2}\)</span>. And <span class="math inline">\(\frac{1}{4}\)</span>. And <em>every</em> positive fraction. Just like <span class="math inline">\(\star\)</span>! However, there is one crucial difference between this position and <span class="math inline">\(\star\)</span>: This one is positive! It’s positive, but infinitely tiny! We have encountered an infinitesimal! We shall call this new value <span class="math inline">\(\up\)</span>, pronounced “up”, and its negative shall be <span class="math inline">\(\down\)</span>.</p>
+<p>“Now hold on!”, I hear a subset of the audience cry, “<span class="math inline">\(\up\)</span>? <span class="math inline">\(\down\)</span>? We already have a term for infinitesimals, the ever-reliable <span class="math inline">\(\varepsilon\)</span>! Why aren’t you using that?”</p>
+<p>Don’t worry, subset of the audience, combinatorial game theorists haven’t just decided to use a new name just because, the reason why we can’t use <span class="math inline">\(\varepsilon\)</span> is because that name is already taken! <span class="math inline">\(\varepsilon\)</span> <em>does</em> exist, and we will encounter it in a later part. As it turns out, <span class="math inline">\(\varepsilon\)</span> is <em>quite a bit bigger</em> than <span class="math inline">\(\up\)</span> (though still infinitesimal). But we’re getting ahead of ourselves.</p>
+<p>Alright, what’s <span class="math inline">\(\up\)</span> in our vertical bar notation? It differs from previous Hackenbush positions in that a simplest representation doesn’t just fall out from the position. We’ll have to coax it into a nicer form ourselves. First, let’s just write the entire game tree out in vertical bar notation:</p>
+<p><span class="math display">\[ \up = \game{0, \star, \game{0, \star}{0}}{\star, \game{0, \star}{0}}\]</span></p>
+<p>This is a <em>bit</em> uglier than we’re used to. In fact, it would be a tremendously useful exercise to simplify this position yourself, by deleting dominated options and bypassing reversible moves, but I will go through it here.</p>
+<p>First, we can remove dominated options. Let’s compare <span class="math inline">\(\game{0, \star}{0}\)</span> and <span class="math inline">\(\star\)</span> to see if one is strictly greater than the other. <span class="math inline">\(\game{0, \star}{0}\)</span> corresponds to the Hackenbush position consisting of the stem and the petal of Figure 5.1, and <span class="math inline">\(\star\)</span> is that extra green leaf. This means that the position <span class="math inline">\(\game{0, \star}{0} - \star\)</span>, which is actually just <span class="math inline">\(\game{0, \star}{0} + \star\)</span> is in fact equal to <span class="math inline">\(\up\)</span>! So, we know it’s positive, meaning that <span class="math inline">\(\game{0, \star}{0} &gt; \star\)</span>. This lets us remove <span class="math inline">\(\star\)</span> from Lazuli’s side and <span class="math inline">\(\game{0, \star}{0}\)</span> from Ruby’s. We’ve reduced the position to</p>
+<p>$$ = </p>
+<p>Now, are there any reversible moves? Since we know <span class="math inline">\(\up\)</span> is positive, Lazuli’s move to <span class="math inline">\(\game{0, \star}{0}\)</span> is reversible (Ruby can go to <span class="math inline">\(0\)</span>, better for them than <span class="math inline">\(\up\)</span>), so we can replace it with all Lazuli’s options in <span class="math inline">\(0\)</span>. Lazuli has no options in <span class="math inline">\(0\)</span>, so we can simply delete it. This gives us the simplest form of <span class="math inline">\(\up\)</span>, namely:</p>
+<p><span class="math display">\[ \up = \game{0}{\star} \]</span></p>
+<p>Much better. This lets us quickly get a simplest form for <span class="math inline">\(\down\)</span> too, which is</p>
+<p><span class="math display">\[ \down = \game{\star}{0} \]</span></p>
+
+<center>
+<div class="pagination">
+
+<a href="../cgt/5.html" style="font-size: 30px">←</a>
+
+<a href="../cgt.html" style="font-size: 40px">☉</a>
+
+<span style="font-size: 30px">×</span>
+
+</div>
+</center>
+
+        </div>
+	</body>
+</html>

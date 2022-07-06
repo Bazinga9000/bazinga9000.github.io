@@ -30,6 +30,8 @@ What is the value of this flower? Lazuli can win by chopping the blue petal, and
 
 It's smaller than $1$. And $\frac{1}{2}$. And $\frac{1}{4}$. And *every* positive fraction. Just like $\star$! However, there is one crucial difference between this position and $\star$: This one is positive! It's positive, but infinitely tiny! We have encountered an infinitesimal! We shall call this new value $\up$, pronounced "up", and its negative shall be $\down$.
 
+Formally, we will call a value $x$ **infinitesimal** if, for all positive dyadic fractions $d$, $-d < x < d$.
+
 "Now hold on!", I hear a subset of the audience cry, "$\up$? $\down$? We already have a term for infinitesimals, the ever-reliable $\varepsilon$! Why aren't you using that?"
 
 Don't worry, subset of the audience, combinatorial game theorists haven't decided to use a new name just because. The reason why we can't use $\varepsilon$ is because that name is already taken! $\varepsilon$ *does* exist, and we will encounter it in a later part. As it turns out, $\varepsilon$ is *quite a bit bigger* than $\up$ (though still infinitesimal). But we're getting ahead of ourselves.
@@ -42,7 +44,7 @@ This is a *bit* uglier than we're used to. In fact, it would be a tremendously u
 
 First, we can remove dominated options. Let's compare $\game{0, \star}{0}$ and $\star$ to see if one is strictly greater than the other. $\game{0, \star}{0}$ corresponds to the Hackenbush position consisting of the stem and the petal of Figure 5.1, and $\star$ is that extra green leaf. This means that the position $\game{0, \star}{0} - \star$, which is actually just $\game{0, \star}{0} + \star$ is in fact equal to $\up$! So, we know it's positive, meaning that $\game{0, \star}{0} > \star$. This lets us remove $\star$ from Lazuli's side and $\game{0, \star}{0}$ from Ruby's. We've reduced the position to
 
-$$ \up = \game{0, \game{0, \star}{0}}{\star}
+$$ \up = \game{0, \game{0, \star}{0}}{\star} $$
 
 Now, are there any reversible moves? Since we know $\up$ is positive, Lazuli's move to $\game{0, \star}{0}$ is reversible (Ruby can go to $0$, better for them than $\up$), so we can replace it with all Lazuli's options in $0$. Lazuli has no options in $0$, so we can simply delete it. This gives us the simplest form of $\up$, namely:
 
@@ -51,3 +53,57 @@ $$ \up = \game{0}{\star} $$
 Much better. This lets us quickly get a simplest form for $\down$ too, which is
 
 $$ \down = \game{\star}{0} $$
+
+Note that we notate $\up + \up = \doubleup$ ("double-up"), and $\down + \down = \doubledown$ ("double-down"), and any higher multiples are notated $n.\up$ or $n.\down$. 
+
+Naturally, since $\up$ is positive, we have
+
+$$ \up < \doubleup < 3.\up < 4.\up < \cdots $$
+
+but how do these values compare with other things we've seen, like $\ast$ or for that matter $1$?
+
+Though comparing multiples of $\up$ with $1$ is easy, we'll do $\ast$ first. Let's first consider $\up - \star$, which is the same as $\up + \star$, which is *also* the same as the following Hackenbush position:
+
+<figure><center>
+    <img src="/resources/cgt/6/upstar.svg" width="25%" height="auto"/>
+    <figcaption>
+        Figure 6.2: A position with value $\up + \star$.
+    </figcaption>
+</center></figure>
+
+Whoever moves first here wins, since they can cut the stem of the flower, leaving their opponent with a zero position. This means that $\up$ is confused with $\star$. Does this hold for every multiple of up? No!
+
+Consider $\up + \up + \star$. Ruby only has two distinct moves here: One to $\up + \up + 0$ and another to $\up + \star + \star = \up$. Both of these moves are positive, so Lazuli will always win here, no matter who goes first (Lazuli going first can simply move to $\up + \up$ and win).
+
+What about comparison to $1$? To compare multiples of $\up$ with $1$, we will perform massive overkill and show a theorem that tells us about a lot more than $\up$ and a lot more than $1$. 
+
+Recall from Part 5 when we learned of *impartial* positions, those where each player has the same set of moves at every point. $\up$ is not impartial, but it *does* satisfy a slightly weaker property. At every subsequent position (other than zeroes), both players have *some* move, though not necessarily the *same* move. Positions with this property are called **dicotic**. Note that adding two dicotic positions together makes another one. 
+
+I now present the equivalent for the Sprague-Grundy Theorem for dicotic games. It doesn't tell us about the exact possible values of dicotic positions, but it is still very powerful:
+
+<details>
+<summary>
+
+**The Lawnmower Theorem:** Every dicotic position is infinitesimal.
+</summary>
+
+-----------
+
+**Proof:**
+
+By Induction.
+
+*Base Case*: $0$ is infinitesimal.
+
+*Inductive Case*: Suppose $G = \game{G^L}{G^R}$ is dicotic. This means that all $G^L$ and all $G^R$ are dicotic, so assume them to be infintesimal.
+
+Consider the position $x - G$, where $x > 0$ is some positive number in canonical form (that is, there are no dominated or reversible options). We wish to show that Lazuli wins no matter who goes first.
+
+Let us first consider if Ruby goes first. Ruby's moves in this position are to either $x^R - G$ or to $x - G^L$. If Ruby moves to $x^R - G$, $x^R$ is a positive number and so by the other branch of this inductive step (when Lazuli is to move), Lazuli wins. If Ruby moves $x - G^L$, Lazuli wins by induction.
+
+Now consider the case when Lazuli goes first. Since $G$ is dicotic, it must have an option $G^R$. Lazuli can therefore move to $x - G^R$ which by induction is a win for Lazuli.
+
+$\blacksquare$
+</details>
+
+A brief aside to explain the whimsical name "Lawnmower Theorem": If you consider a Hackenbush position $G$ where the only branches that connect directly to the ground are green, then that $G$ must necessarily be dicotic (since either player will always have at least one of those green branches to chop). Lazuli's winning strategy in $x - G$, where $x$ is some positive dyadic fraction, is to employ a "lawnmower" to cut all the aforementioned green branches in $G$. After this is complete, $G$ is gone and Lazuli will always have a move in the positive $x$, so they can win.

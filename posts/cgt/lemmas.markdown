@@ -21,7 +21,7 @@ Definitions will lay out in the open. Proofs will be in their usual boxes.
 
 **Definition:** $\widetilde{\mathbb{G}}_n$, the set of **positions born by day** $n$, is defined inductively as follows:
 $$ \widetilde{\mathbb{G}}_0 = {0} $$
-$$ \widetilde{\mathbb{G}}_{n+1} = \{\game{L}{R} \mid L, R \subseteq \widetilde{\mathbb{G}}_n\} $$
+$$ \widetilde{\mathbb{G}}_{n+1} = \{\game{L}{R} : L, R \subseteq \widetilde{\mathbb{G}}_n\} $$
 
 **Definition:** $\mathbb{G}_n$, the set of **values born by day** $n$ is the set of all values of positions in $\widetilde{\mathbb{G}}_n$.
 

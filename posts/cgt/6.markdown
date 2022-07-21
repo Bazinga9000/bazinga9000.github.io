@@ -92,7 +92,7 @@ Consider the position $G = \up - \star n = \up + \star n$. Since Lazuli has a mo
 
 If Ruby goes first, they have two types of move, either moving from $\up \to \star$ or by moving $\star n \to \star a$ for some $a < n$.
 
-If Ruby takes $\star n \to \star a$, Lazuli can move $\star \to \up$ as above. However, if Ruby takes $\up \to \star$, the total position is $\star + \star n$. Since $n > 1$, this position is equal to some nimber other than $0$, which is a fuzzy position, and since Lazuli is to move, they win.
+If Ruby takes $\star n \to \star a$, Lazuli can move $\star a \to 0$ as above. However, if Ruby takes $\up \to \star$, the total position is $\star + \star n$. Since $n > 1$, this position is equal to some nimber other than $0$, which is a fuzzy position, and since Lazuli is to move, they win.
 
 This means that Lazuli wins going second as well, so $G > 0$ and $\up > \star n$.
 

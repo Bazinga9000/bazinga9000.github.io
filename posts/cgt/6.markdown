@@ -448,6 +448,9 @@ This concludes our survey of the infinitesimals (for now), and it might help to 
 
 ## Summary of Part 6
 
+* A position is *infinitesimal* if it is smaller than every positive dyadic fraction and larger than every negative dyadic fraction.
+* Positions where, at every point, both players have a move (or both players have *no move*), are called *dicotic*.
+* Every dicotic position is infinitesimal, by the Lawnmower Theorem.
 * The position $\up = \game{0}{\star}$ is a large infinitesimal.
 * The Hackenbush position that characterizes $\up$ can be generalized into flowers, which are green Hackenbush stalks with red or blue optionally on top.
 * These flowers are generated using the Ordinal Sum operator, $:$, where in $G : H$ any move on $G$ makes $H$ dissapear, but in other ways functions as the normal sum $+$

@@ -172,7 +172,13 @@ Consider the sum
 
 $$ n . G + \down $$
 
-For any $n > 1$. Whenever it is Ruby's turn, they can move from some $G \to \game{0}{-1}$. Lazuli cannot allow this position to persist and must move it to $0$, because if Ruby were allowed to move in it, they could take it to $-1$, leaving the total position's sum as $-1 - x$ where $x$ is some infinitesimal. So, Lazuli must move $\game{0}{-1} \to 0$, leaving the position at $(n-1) . G + \down$. Ruby can then repeat this process with every copy of $G$, until the position is only $\down$, at which point Ruby wins.
+We wish to show that this is negative, for any $n \geq 0$. We will proceed by induction on $n$.
+
+*Base Case*: $0.G + \down$ is negative, so Ruby wins it.
+
+*Inductive Case*: Whenever it is Ruby's turn, they can move from some $G \to \game{0}{-1}$. Lazuli cannot allow this position to persist and must move $\game{0}{-1} \to 0$, because if Lazuli instead moved $\down \to \star$, Ruby could then move $\game{0}{-1} \to -1$, leaving the total position's sum as $-1 + \star + (n-1).G$. $\star$ is infinitesimal by the Lawnmower Theorem and $(n-1).G$ is infinitesimal by induction, so the sum is negative and Ruby wins.
+
+So, Lazuli must move $\game{0}{-1} \to 0$, leaving the position at $(n-1) . G + \down$, which by induction is negative and therefore won by Ruby.
 
 Since Ruby wins this position no matter who goes first, $n . G < \up$, so $G \ll \up$.
 
@@ -442,7 +448,9 @@ $\blacksquare$
 
 So, now we have a pretty good eye on the landscape of infinitesimals. $\up$ and its multiples are at the top (until Part 8, at least). $\up^2$ is infinitely smaller than $\up$, and $\up^3$ is infinitely smaller than $\up^2$. After going through all the uptimals, we eventually reach the realm of the tinies, where we get to $\tiny{1}$, $\tiny{2}$, and so on, all the way down (with every positive position having its own tiny version). $\star$ is confused with $\up$ and everything smaller, but higher nimbers don't get confusing until $\up^2$ and its multiples.
 
-Now, this Part was a lot heavier on definition then previous parts, so you might be asking where these strange infinitesimals serve any use. Well, uptimals come up a lot in Hackenbush when you allow all three colors. There is more that can be done with combinations of nimbers and uptimals and tinies, in fact there is an entire "atomic weight calculus" which helpfully allows you to reason about positions like those, but it is beyond our grasp, for now. Another most startling application is that positions derived from tinies have been used to construct a theory for the game of Go. If you wish to learn more about that, consult Berlekamp and Wolfe's *Mathematical Go: Chilling Gets the Last Point*.
+Now, this Part was a lot heavier on definition then previous parts, so you might be asking where these strange infinitesimals serve any use. Well, uptimals come up a lot in Hackenbush when you allow all three colors. There is more that can be done with combinations of nimbers and uptimals and tinies, in fact there is an entire "atomic weight calculus" which helpfully allows you to reason about positions like those, but it is beyond our grasp, for now.
+
+Another most startling application is that positions derived from tinies have been used to construct a theory for the game of Go, along with some truly devilish Go endgame positions that 9-dan ranked (read: *quite* good) Go players were baffled by, but a combinatorial game theorist could discern the winner of fairly straightforwardly. If you wish to learn more about that, consult Berlekamp and Wolfe's *Mathematical Go: Chilling Gets the Last Point*.
 
 This concludes our survey of the infinitesimals (for now), and it might help to cool down for a moment, because in the next Part our positions will get quite heated indeed.
 

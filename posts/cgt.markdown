@@ -38,7 +38,7 @@ An extremely large thank you goes out to the writers of a handful of very very c
 
 * **Albert, Nowakowski, and Wolfe**, the authors of *Lessons in Play: An Introduction to Combinatorial Game Theory*, which had many examples not seen in other texts and helped me reinforce my knowledge.
 
-* **Siegel**, the author of the AMS' *Graduate Studies in Mathematics Volume 146: Combinatorial Game Theory*, a modern overview of the entire field (it even has a list of open problems!)
+* **Siegel**, the author of the AMS' *Graduate Studies in Mathematics Volume 146: Combinatorial Game Theory*, a modern overview of the entire field (it even has a list of open problems!). A *lot* of the proofs are adapted from here.
 
 * **Siegel** (again), the creator of [CGSuite](http://www.cgsuite.org), a most helpful Computer Algebra System that let me discover so many new things about games.
 
@@ -46,7 +46,7 @@ An extremely large thank you goes out to the writers of a handful of very very c
 
 I also have some other thanks to give to people who have not written any texts or made any videos on CGT, but have been influential nonetheless:
 
-* **The Invisible Rabbit Hole**, for looking over my proofs with a fine-toothed comb and being extremely enthusiastic about this project.
+* **The Invisible Rabbit Hole**, for looking over the proofs with a fine-toothed comb and being extremely enthusiastic about this project.
 
 * **The UMD Math Lounge**, for convincing me to give a talk on this which led to me creating this as one method of preparation. And also for putting up with my constant jokes about the Sprague-Grundy Theorem.
 

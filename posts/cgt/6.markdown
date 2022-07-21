@@ -5,6 +5,7 @@ goto: /cgt.html
 katex: on
 extracss: cgt
 prev: /cgt/5.html
+index: 6
 ---
 
 -----------
@@ -34,7 +35,7 @@ Formally, we will call a value $x$ **infinitesimal** if, for all positive dyadic
 
 "Now hold on!", I hear a subset of the audience cry, "$\up$? $\down$? We already have a term for infinitesimals, the ever-reliable $\varepsilon$! Why aren't you using that?"
 
-Don't worry, subset of the audience, combinatorial game theorists haven't decided to use a new name just because. The reason why we can't use $\varepsilon$ is because that name is already taken! $\varepsilon$ *does* exist, and we will encounter it in a later part. As it turns out, $\varepsilon$ is *quite a bit bigger* than $\up$ (though still infinitesimal). But we're getting ahead of ourselves.
+Don't worry, subset of the audience, combinatorial game theorists haven't decided to use a new name just because. The reason why we can't use $\varepsilon$ is because that name is already taken! $\varepsilon$ *does* exist, and we will encounter it in Part 8. As it turns out, $\varepsilon$ is *quite a bit bigger* than $\up$ (though still infinitesimal). But we're getting ahead of ourselves.
 
 Alright, what's $\up$ in our vertical bar notation? It differs from previous Hackenbush positions in that a simplest representation doesn't just fall out from the position. We'll have to coax it into a nicer form ourselves. First, let's just write the entire game tree out in vertical bar notation:
 
@@ -54,7 +55,7 @@ Much better. This lets us quickly get a simplest form for $\down$ too, which is
 
 $$ \down = \game{\star}{0} $$
 
-Note that we notate $\up + \up = \doubleup$ ("double-up"), and $\down + \down = \doubledown$ ("double-down"), and any higher multiples are notated $n.\up$ or $n.\down$. 
+Note that we notate $\up + \up = \doubleup$ ("double-up"), and $\down + \down = \doubledown$ ("double-down"), and any higher multiples are notated $n.\up$ or $n.\down$.
 
 Naturally, since $\up$ is positive, we have
 
@@ -75,11 +76,34 @@ Whoever moves first here wins, since they can cut the stem of the flower, leavin
 
 Consider $\up + \up + \star$. Ruby only has two distinct moves here: One to $\up + \up + 0$ and another to $\up + \star + \star = \up$. Both of these moves are positive, so Lazuli will always win here, no matter who goes first (Lazuli going first can simply move to $\up + \up$ and win).
 
-What about comparison to $1$? To compare multiples of $\up$ with $1$, we will perform massive overkill and show a theorem that tells us about a lot more than $\up$ and a lot more than $1$. 
+What about other nimbers, then? Surely, if $\up$ is confused with $\star$, it should be confused with other nimbers too. right? As it turns out, that is not true!
 
-Recall from Part 5 when we learned of *impartial* positions, those where each player has the same set of moves at every point. $\up$ is not impartial, but it *does* satisfy a slightly weaker property. At every subsequent position (other than zeroes), both players have *some* move, though not necessarily the *same* move. Positions with this property are called **dicotic**. Note that adding two dicotic positions together makes another one. 
+<details>
+<summary>
 
-I now present the equivalent for the Sprague-Grundy Theorem for dicotic games. It doesn't tell us about the exact possible values of dicotic positions, but it is still very powerful:
+**Proposition:** For any $n \geq 2$, $\up > \star n$
+</summary>
+
+-----------
+
+**Proof:**
+
+Consider the position $G = \up - \star n = \up + \star n$. Since Lazuli has a move to the positive position $\up$ (taking $\star n \to 0$), Lazuli wins going first, so $G \mid\mid> 0$. 
+
+If Ruby goes first, they have two types of move, either moving from $\up \to \star$ or by moving $\star n \to \star a$ for some $a < n$. 
+
+If Ruby takes $\star n \to \star a$, Lazuli can move $\star \to \up$ as above. However, if Ruby takes $\up \to \star$, the total position is $\star + \star n$. Since $n > 1$, this position is equal to some nimber other than $0$, which is a fuzzy position, and since Lazuli is to move, they win. 
+
+This means that Lazuli wins going second as well, so $G > 0$ and $\up > \star n$.
+
+$\blacksquare$
+</details>
+
+What about comparison to $1$? To compare multiples of $\up$ with $1$, we will perform massive overkill and show a theorem that tells us about a lot more than $\up$ and a lot more than $1$.
+
+Recall from Part 5 when we learned of *impartial* positions, those where each player has the same set of moves at every point. $\up$ is not impartial, but it *does* satisfy a slightly weaker property. At every subsequent position (other than zeroes), both players have *some* move, though not necessarily the *same* move. Positions with this property are called **dicotic**. Note that adding two dicotic positions together makes another one.
+
+I now present the equivalent for the Sprague-Grundy Theorem for dicotic positions. It doesn't tell us about the exact possible values of dicotic positions, but it is still very powerful:
 
 <details>
 <summary>
@@ -107,3 +131,337 @@ $\blacksquare$
 </details>
 
 A brief aside to explain the whimsical name "Lawnmower Theorem": If you consider a Hackenbush position $G$ where the only branches that connect directly to the ground are green, then that $G$ must necessarily be dicotic (since either player will always have at least one of those green branches to chop). Lazuli's winning strategy in $x - G$, where $x$ is some positive dyadic fraction, is to employ a "lawnmower" to cut all the aforementioned green branches in $G$. After this is complete, $G$ is gone and Lazuli will always have a move in the positive $x$, so they can win.
+
+This theorem means that every multiple of $\up$ is infinitesimal, so no finite multiple of $\up$ will ever reach $1$. We have a notation for this which will come in handy later. If every finite multiple of $A$ is less than $B$, we write $A \ll B$. So, we have that $\up \ll 1$.
+
+We'll use this property to generate a whole *smattering* of infinitesimals later, but before we do that, let's look at some infinitesimals that are *not* dicotic:
+
+## The Tinys and Minys
+
+Here are the canonical forms for $\up$ and its multiples:
+
+$$ 0 = \impgame{} $$
+$$ \up = \game{0}{\star} $$
+$$ \doubleup = \game{0}{\up + \star} $$
+$$ 3.\up = \game{0}{\doubleup + \star} $$
+$$ n.\up = \game{0}{(n-1).\up + \star} $$
+
+Now, let's take that $\up$ and expand the inner $\star$, giving us
+
+$$ \game{0}{\impgame{0}} $$
+
+Tinkering with this form will give us an entirely new set of infinitesimals. Suppose we took that rightmost zero and decremented it, giving us
+
+$$ \game{0}{\game{0}{-1}} $$
+
+This position is still positive, as no matter who moves first Lazuli can go to zero, but this position is *much* smaller than $\up$. In fact,
+
+<details>
+<summary>
+
+**Proposition:** $\game{0}{\game{0}{-1}} \ll \up$
+</summary>
+
+-----------
+
+**Proof:**
+
+Let $G = \game{0}{\game{0}{-1}}$.
+
+Consider the sum
+
+$$ n . G + \down $$
+
+For any $n > 1$. Whenever it is Ruby's turn, they can move from some $G \to \game{0}{-1}$. Lazuli cannot allow this position to persist and must move it to $0$, because if Ruby were allowed to move in it, they could take it to $-1$, leaving the total position's sum as $-1 - x$ where $x$ is some infinitesimal. So, Lazuli must move $\game{0}{-1} \to 0$, leaving the position at $(n-1) . G + \down$. Ruby can then repeat this process with every copy of $G$, until the position is only $\down$, at which point Ruby wins.
+
+Since Ruby wins this position no matter who goes first, $n . G < \up$, so $G \ll \up$.
+
+$\blacksquare$
+</details>
+
+We have discovered an infinitesimal so small, that it is even infinitesimal *compared to other infinitesimals*! This position is called "tiny-1", and is notated $\tiny{1}$. Its opposite, $\game{\game{1}{0}}{0}$, is called "miny-1", notated $\miny{1}$. In general, we have for any value $x \geq 0$:
+
+$$ \tiny{x} = \game{0}{\game{0}{-x}} $$
+$$ \miny{x} = -\tiny{x} = \game{\game{x}{0}}{0} $$
+
+How do these tiny positions compare to eachother? As it turns out, they have truly earned the "tiny" moniker, because they form an infinite chain of $\ll$ with eachother:
+
+<details>
+<summary>
+
+**Theorem:** Let $x > y \geq 0$. $\tiny{x} \ll \tiny{y}$
+</summary>
+
+-----------
+
+**Proof:**
+
+Consider the sum
+
+$$ n . \tiny{x} + \miny{y} $$
+
+For any $n > 1$. Whenever it is Ruby's turn, they can move from some $\tiny{x} \to \game{0}{-x}$. Lazuli cannot allow this position to persist and must move it to $0$, because if Ruby were allowed to move in it, they could take it to $-x$. Even if Lazuli were then successfully able to convert $\miny{y}$ to $y$, the total position would have a value of $-x + y + z$ for some infinitesimal $z$, which is still negative since $x > y$. Thus, Lazuli must move $\game{0}{-x} \to 0$. Ruby can then repeat this process with every copy of $\tiny{x}$, until the position is only $\miny{y}$, at which point Ruby wins.
+
+Since Ruby wins this position no matter who goes first, $n . \tiny{x} < \tiny{y}$, so $\tiny{x} \ll \tiny{y}$.
+
+$\blacksquare$
+</details>
+
+For an intuition on the tinies, think of them as bombs. Consider, for example, $\tiny{5} = \game{0}{\game{0}{-5}}$. If this position appears as a component, it grants Ruby the ability to arm a bomb. Lazuli can, either before or after the bomb is armed, spend one turn in order to defuse it. However, if Lazuli does not do this, then Ruby can detonate the bomb, which will penalize Lazuli by $5$. The position is still positive, since Lazuli has the freedom to defuse the bomb at any time, but as the magnitude of the threat increases, Lazuli's advantage drops off quickly (infinitely quickly, actually), as Lazuli is increasingly obligated to respond, which may allow Ruby valuable moves elsewhere.
+
+Tinies are *small*. To further drive this point home, we have another result, which shows that in a sense, the tinies are the *smallest* positions of all:
+
+<details>
+<summary>
+
+**Theorem:** For *any* positive $G$, there exists some $x$ such that $\tiny{x} \leq G$.
+</summary>
+
+-----------
+
+**Note:** This proof requires the following Lemmas from Appendix $\star$:
+
+* The Archimedian Principle for Integers
+
+**Proof:**
+
+Choose $n$ such that for all $G^{RR}$, $n > G^{RR}$. Such an $n$ must exist by the Archimedian Principle for Integers. Consider the position
+
+$$ H = G + \miny{n} $$
+
+We will show that Lazuli wins when Ruby starts.
+
+If Ruby is to move, they must move in $G$, since their move in $\miny{n}$ loses since $G$ is positive. So, Ruby must move to
+
+$$ G^R + \miny{n} $$
+
+Lazuli here can move $\miny{n} \to \game{n}{0}$. Ruby cannot avoid negating this threat, as $n > G^{RR}$, so doing so would leave the game as a win for Lazuli.  Thus, they must move $\game{n}{0} \to 0$, leaving the final position as $G^R \mid\mid> 0$.  
+$\blacksquare$
+</details>
+
+We have two extremes of the infinitesimals. $\up$ and its multiples are among the largest infinitesimals we currently have access to, and the $\tiny{n}$'s are the among the smallest. We now introduce a new operator which will let us look between.
+
+## The Ordinal Sum
+
+There are *many* ways to combine two positions into another. Our previous notion of *addition* (that is, giving the players the choice to play on any single component, and whoever runs out of moves in *any* component loses), was only one of them.
+
+Now we will define a new type of "addition" of positions, that is very similar to what we have. We can take two positions $G$ and $H$ and produce $G : H$. The rules of $G : H$ are similar to $G + H$. Each player has the option to move in $G$ or in $H$. If they move in $H$, nothing special happens. However, if they opt instead to move in $G$, $H$ dissapears entirely! In formal terms, we have
+
+$$ G : H = \game{G^L, G : H^L}{G^R, G : H^R} $$
+
+This is hard to visualize in general, but in one specific case, there is a helpful way to think about it. If your $G$ and $H$ are a single stack of Hackenbush branches, $G : H$ is what you get when you put $H$ on top of $G$, like so:
+
+<figure><center>
+    <img src="/resources/cgt/6/ordsum.svg" width="12.5%" height="auto"/>
+    <figcaption>
+        Figure 6.3: $G$, $H$, and $G : H$.
+    </figcaption>
+</center></figure>
+
+Thinking about the branches like this, one can see that this lets you get some semblance of normalcy back with nimbers, because
+
+$$ \star a : \star b = \star (a + b) $$
+
+But that's about as far as the normalcy goes, since this operation doesn't follow some rules we expect. If $H = H'$, then $G + H = G + H'$, and this holds for the ordinal sum too. However, the other way doesn't. If $G = G'$ then $G + H = G' + H$, but not so for ordinal sums. For example, $0 : 1 = 1$, and $\impgame{\star} = 0$, but $\impgame{\star} : 1 = \up$. I leave verifying this as an exercise.
+
+With our new tool ready-made, we are now ready to enter the garden!
+
+## Flowers and the Gardens in Which They Reside
+
+We will term any position of the form $\star m : n$, for any integer $n$ and any positive integer $m$ a **flower**. Why do we call them this? Because the $\star m$ is a green Hackenbush stack (the "stem"), and the $n$ is another red or blue Hackenbush stack on top of it. We call a flower **green** if $n = 0$ (the flower is only the stem), **red** if $n < 0$ (the "petal" is red), and **blue** if $n > 0$ (the "petal" is blue). Naturally, any position which is a sum of flowers is called a **flower garden**. Here is an example:
+
+<figure><center>
+    <img src="/resources/cgt/6/flowergarden.svg" width="12.5%" height="auto"/>
+    <figcaption>
+        Figure 6.3: A flower garden consisting of two blue flowers, two red flowers, and a green flower (equal to $\star 3$)
+    </figcaption>
+</center></figure>
+
+In general, figuring out who wins in a flower garden is *hard*. So hard, in fact, that it is currently an *open problem*. However, we do have some methods for figuring this out for *some* flower gardens. As it turns out, it is often the case that only the *number* of red and blue flowers matters.
+
+We will define the **weight** of a flower garden, denoted $w(G)$, to be the difference between the count of blue flowers and the count of red flowers. For example, Figure 6.3 has a weight of zero, since the number of red and blue flowers are equal (green flowers do not affect the weight). From this weight we have a useful rule:
+
+<details>
+<summary>
+
+**The Two-Ahead Rule:** Let $G$ be a flower garden. <br>
+$(a)$ If $w(G) \geq 1$, $G \mid\mid> 0$ (that is, Lazuli wins going first) <br>
+$(b)$ If $w(G) \geq 2$, $G > 0$ (that is, Lazuli wins always)
+</summary>
+
+-----------
+
+**Proof:**
+
+First we will show (a).
+
+If there is at least one red flower in $G$, Lazuli can remove it by making some arbitrary move on the stem of that flower. This new position would thus have a weight of at least 2 (since one red flower was removed), so by induction it is positive and Lazuli wins going second. This means that $G \mid\mid> 0$.
+
+Now suppose there is no red flower in $G$. We can write:
+
+$$ G = (\star m_1 : n_1) + (\star m_2 : n_2) + \cdots + (\star m_k : n_k) $$
+
+Since we know there are no red flowers, every $n_i \geq 0$ and since $w(G) \geq 1$ we know that at least one $n_i > 0$. Consider the position
+
+$$ H = \star m_1 + \star m_2 + \cdots + \star m_k $$
+
+We know that $G \geq H$, since $G$ is simply $H$ with additional options for Lazuli. In addition, there is some $G^L \geq H$ since Lazuli can simply move on any of the blue petals. There are two possibilities:
+
+* If $H \mid\mid> 0$, we have $G \geq H \mid\mid> 0$ which implies that $G \mid\mid> 0$. (In this case, Lazuli's winning strategy would involve ignoring the petals and treating the game as if it were Nim on the stems.)
+* If $H = 0$, we have $G^L \geq H \geq 0$, so Lazuli can win playing first and so $G \mid\mid> 0$. (In this case, Lazuli's winning strategy would involve making the blossom-move mentioned above, and then proceeding as in the other case)
+
+Now, for (b). Any move by Ruby must reduce the weight by at most $1$. Thus, every $w(G^R) \geq 1$ for every $G^R$. So, by induction, Lazuli wins them all playing first, so Lazuli wins $G$ playing second. Thus, $G \geq 0$. However, since $w(G) \geq 2$, $w(G) \geq 1$ as well, so we know that $G \mid\mid> 0$. Since $G \geq 0$ and $G \mid\mid> 0$, we have $G > 0$.
+
+$\blacksquare$
+</details>
+
+## The Uptimals
+
+Certain flowers are particularly interesting, those of the form $\star : n$ for some integer n. For small values of $n$, we get some familiar faces:
+
+$$ \star : 0 = \impgame{0} = \star $$
+$$ \star : 1 = \game{0, \star}{0} = \up + \star $$
+
+Since incrementing $n$ only adds another blue stack, and Lazuli will never want to leave themselves with fewer free moves, we can write each new position in terms of the previous, like so:
+
+$$ \star : n = \game{0, (\star : (n - 1))}{0} $$
+
+Interesting things occur when considering the differences between these positions.
+
+Observe that $(\star : 1) - (\star : 0) = \up + \star - \star = \up$. This the motivation for the names of these positions. We will say
+
+$$ \up^n = (\star : n) - (\star : (n-1)) $$
+
+Pronounced "up-$n$th". It is important to note that these positions are *not* "powers of $\up$" in any meaningful sense, as there is no general multiplication operator that works on any two positions (though there *is* one for numbers, which we will see in Part 8). We also have another occasionally useful position,
+
+$$ \up^{[n]} = (\star : n) - \star = \up + \up^2 + \cdots + \up^n $$
+
+Which... doesn't have a pronunciation in Siegel's textbook. Naturally, the negatives of these positions are $\down^n$ and $\down^{[n]}$. Though, there is a name for all of these positions. Any position of the form
+
+$$ k_1.\up + k_2.\up^2 + \cdots + k_n.\up^n $$
+
+Where $k_i$ can be any integer, is called an **uptimal**.
+
+What are the simplest forms of these uptimals? I leave the verification as an exercise, but
+
+$$ \up^{n+1} = \game{0}{\star : -n} $$
+$$ \up^{[n+1]} = \game{\up^{[n]}}{\star} $$
+
+Right, now that the definition is out of the way, what are some properties of these funny little guys? Well, you're probably expecting this, but they are indeed tiny *little* guys. Much like the tinies before, we have another chain of $\ll$:
+
+<details>
+<summary>
+
+**Theorem:** For all $n \geq 1$, $\up^{n+1} \ll \up^n$
+</summary>
+
+-----------
+
+**Proof:**
+
+Consider the difference:
+
+$$ G_k = \up^n + k.\down^{n+1} $$
+
+Recalling that the various ups are differences of two flowers, we can rewrite $G_k$ as
+
+$$ G_k = (\star : n) + (\star : (-n + 1)) + k.(\star : (n+1)) + k.(\star : -n) $$
+
+We wish to show that this difference is positive.
+
+First, suppose Lazuli moves first. Note that this is a flower garden with a weight of zero, so if Lazuli removes a red flower, Ruby is compelled to remove a blue one to avoid the weight reaching $2$. So, this means that the position eventually reaches $(\star : n) + (\star : (-n + 1))$, which is positive. So, Lazuli wins going first.
+
+Now suppose instead Lazuli goes second. In this case, we will write the various $\down^{n+1}$s in simplest form, namely:
+
+$$ G_k = \up^n + k.\game{\star : n}{0} $$
+
+Since we know, by the previous case, that $G_{k-1}$ is a win for Lazuliwwhen they go first, Ruby cannot move any $\game{\star : n}{0} \to 0$, or they will lose. So, Ruby's only move is $\up^n \to (\star : (-n + 1))$, leaving the total position as
+
+$$ (\star : (-n + 1)) + k.\down^{n+1} $$
+
+However, from this position, Lazuli can move one of the $\down^{n+1} \to (\star : n)$, putting the position at
+
+$$ (\star : (-n + 1)) + (\star : n) + (k-1).\down^{n+1} = \up^n + (k-1).\down^{n+1} $$
+
+Which is exactly where it was before, with one fewer $\down^{n+1}$. This means that Lazuli can just repeat this process, eventually winning when the $\down^{n+1}$s are exhausted.
+
+$\blacksquare$
+</details>
+
+Now, remember earlier when we mentioned that $\up \mid\mid \star$, but $\up > \star 2$? You might think that a pattern is emerging, that perhaps $\up^n || \star m$ when $m \leq n$, and is bigger than the rest. Unfortunately, that pattern fails to exist. Thankfully, the real rule is a lot simpler:
+
+<details>
+<summary>
+
+**Theorem:** For all $n \geq 1$ and for all $k$, $k.\up^{2} \mid \ast n$
+</summary>
+
+-----------
+
+**Proof:**
+
+WLOG suppose $k > 0$. Let
+
+$$ G = k.\up^{2} + \ast n = k.(\ast : 2) + k.(\ast : -1) + \star n $$
+
+This is a flower garden with weight $0$. So, by the Two Ahead Rule, whoever goes first can remove flowers of the opposite color, forcing their opponent to reply in kind until the position is only $\star n$ with the first player to move again.
+
+$\blacksquare$
+</details>
+
+Since $\up^2$ is confused with every nonzero nimber, any uptimal that doesn't include $\up$ or $\down$ is too. Now, we have discovered two infinite chains of $\ll$ throughout this part. How do they compare? Well,
+
+<details>
+<summary>
+
+**Theorem:** For all $n \geq 1$, $\tiny{1} \ll \up^n$
+</summary>
+
+-----------
+
+**Proof:**
+
+Let $G = k.\up^n + \miny{1}$. We wish to show $G$ is a win for Lazuli.
+
+If Lazuli goes first, they can move $\miny{1} \to \game{1}{0}$. If Ruby then moves $\game{1}{0} \to 0$, the entire position is $k.\up^n$, which is positive. If Ruby does not, Lazuli can move $\game{1}{0} \to 1$ and win.
+
+If Lazuli goes second, Ruby has two options. If Ruby moves $\miny{1} \to 0$, the entire position becomes $k.\up^n$, which is positive. If Ruby moves in one of the $\up^n \to \star : -n + 1$, the entire position is left at
+
+$$ (\star : -n + 1) + (k-1).\up^{n} + \miny{1} $$
+
+Lazuli can then activate the threat by moving $\miny{1} \to \game{1}{0}$, which Ruby must respond to by moving $\game{1}{0} \to 0$. So, now we have
+
+$$ (\star : -n + 1) + (k-1).\up^{n} $$
+
+Lazuli can now move $(\star : -n + 1) \to 0$, leaving the entire position at $(k - 1).\up^{n}$, which is positive and hence won for Lazuli.
+
+Since Lazuli wins both going first and second, $G > 0$ and so $k.\up^n > \tiny{1}$.
+
+$\blacksquare$
+</details>
+
+So, now we have a pretty good eye on the landscape of infinitesimals. $\up$ and its multiples are at the top (until Part 8, at least). $\up^2$ is infinitely smaller than $\up$, and $\up^3$ is infinitely smaller than $\up^2$. After going through all the uptimals, we eventually reach the realm of the tinies, where we get to $\tiny{1}$, $\tiny{2}$, and so on, all the way down (with every positive position having its own tiny version). $\star$ is confused with $\up$ and everything smaller, but higher nimbers don't get confusing until $\up^2$ and its multiples.
+
+Now, this Part was a lot heavier on definition then previous parts, so you might be asking where these strange infinitesimals serve any use. Well, uptimals come up a lot in Hackenbush when you allow all three colors. There is more that can be done with combinations of nimbers and uptimals and tinies, in fact there is an entire "atomic weight calculus" which helpfully allows you to reason about positions like those, but it is beyond our grasp, for now. Another most startling application is that positions derived from tinies have been used to construct a theory for the game of Go. If you wish to learn more about that, consult Berlekamp and Wolfe's *Mathematical Go: Chilling Gets the Last Point*.
+
+This concludes our survey of the infinitesimals (for now), and it might help to cool down for a moment, because in the next Part our positions will get quite heated indeed.
+
+## Summary of Part 6
+
+* The position $\up = \game{0}{\star}$ is a large infinitesimal.
+* The Hackenbush position that characterizes $\up$ can be generalized into flowers, which are green Hackenbush stalks with red or blue optionally on top.
+* These flowers are generated using the Ordinal Sum operator, $:$, where in $G : H$ any move on $G$ makes $H$ dissapear, but in other ways functions as the normal sum $+$
+* The difference $(\star : n) - (\star : (n-1))$ is equal to $\up^n$, and sums of $\up^n$s are called "uptimals"
+* $\up^{n+1} \ll \up^n$
+* We can define the "tinies", $\tiny{x}$, which correspond to "bombs" of magnitude $x$. When $y > x$, $\tiny{y} \ll \tiny{x}$.
+* The tinies are all infinitely smaller than the uptimals.
+* $\up \mid\mid \star$, but $\up > \star2$ and $\doubleup > \star$
+* Any amount of $\up^2$ copies is confused with any nonzero nimber.
+
+## In Part 7, we will
+
+* Learn a game other than Hackenbush and Nim.
+* Examine positions where the players really, *really* want to have the right to move.
+* Measure the temperature of these positions.
+* Draw diagrams which describe how these temperatures change over time.
+* Heat, cool, and overheat positions.

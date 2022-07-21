@@ -6,6 +6,7 @@ katex: on
 extracss: cgt
 prev: /cgt/3.html
 next: /cgt/5.html
+index: 4
 ---
 
 -----------

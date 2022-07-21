@@ -2,6 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Control.Monad
 import qualified Data.ByteString.Char8 as BS
+import           Data.List
 import           Data.Maybe
 import           Data.Monoid         (mappend)
 import           Data.String         (fromString)
@@ -172,7 +173,22 @@ postFolder :: String -> String -> Pattern
 postFolder f ext = fromGlob $ "posts/" ++ f ++ "/**" ++ ext
 
 getIndexContext :: [Item String] -> Context String
-getIndexContext posts = listField "posts" fullContext (return posts) <> fullContext
+getIndexContext posts = listField "posts" fullContext (filterAndSortPosts posts) <> fullContext
+
+getPostIndex :: Item String -> Compiler (Maybe Int)
+getPostIndex post = do
+    s <- getMetadataField (itemIdentifier post) "index"
+    return $ read <$> s
+
+isPostVisible :: Item String -> Compiler Bool
+isPostVisible post = isJust <$> getMetadataField (itemIdentifier post) "index" 
+
+filterAndSortPosts :: [Item String] -> Compiler [Item String] 
+filterAndSortPosts posts = do
+    filteredPosts <- filterM isPostVisible posts
+    let makePair p = getPostIndex p >>= (\i -> return (p, i))
+    postsWithIndices <- mapM makePair filteredPosts
+    return $ map fst $ sortOn snd postsWithIndices 
 
 postCompiler :: Compiler (Item String) -> Compiler (Item String)
 postCompiler c = do

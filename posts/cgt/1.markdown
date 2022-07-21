@@ -5,6 +5,7 @@ goto: /cgt.html
 katex: on
 extracss: cgt
 next: /cgt/2.html
+index: 1
 ---
 
 -----------

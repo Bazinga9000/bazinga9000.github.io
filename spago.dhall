@@ -16,6 +16,7 @@ to generate this file without the comments in this block.
   , "console"
   , "decimals"
   , "effect"
+  , "foldable-traversable"
   , "integers"
   , "maybe"
   , "ordered-collections"
@@ -23,6 +24,7 @@ to generate this file without the comments in this block.
   , "prelude"
   , "strings"
   , "stringutils"
+  , "transformers"
   , "tuples"
   ]
 , packages = ./packages.dhall

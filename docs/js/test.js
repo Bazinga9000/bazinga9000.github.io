@@ -8,11 +8,11 @@
   var __commonJS = (cb, mod2) => function __require() {
     return mod2 || (0, cb[__getOwnPropNames(cb)[0]])((mod2 = { exports: {} }).exports, mod2), mod2.exports;
   };
-  var __copyProps = (to, from, except, desc) => {
-    if (from && typeof from === "object" || typeof from === "function") {
-      for (let key of __getOwnPropNames(from))
+  var __copyProps = (to, from2, except, desc) => {
+    if (from2 && typeof from2 === "object" || typeof from2 === "function") {
+      for (let key of __getOwnPropNames(from2))
         if (!__hasOwnProp.call(to, key) && key !== except)
-          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+          __defProp(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc(from2, key)) || desc.enumerable });
     }
     return to;
   };
@@ -2314,326 +2314,99 @@
     }
   });
 
-  // output/Argam/foreign.js
+  // output/Data.Decimal/foreign.js
   var import_decimal = __toESM(require_decimal(), 1);
-  function initArgam() {
-    import_decimal.default.set({ precision: 1e3 });
+  import_decimal.default.set({ precision: 30 });
+  import_decimal.default.set({ modulo: import_decimal.default.EUCLID });
+  function fromInt(x) {
+    return new import_decimal.default(x);
   }
-
-  // output/Data.Array/foreign.js
-  var range = function(start) {
-    return function(end) {
-      var step2 = start > end ? -1 : 1;
-      var result = new Array(step2 * (end - start) + 1);
-      var i = start, n = 0;
-      while (i !== end) {
-        result[n++] = i;
-        i += step2;
-      }
-      result[n] = i;
-      return result;
-    };
-  };
-  var replicateFill = function(count) {
-    return function(value) {
-      if (count < 1) {
-        return [];
-      }
-      var result = new Array(count);
-      return result.fill(value);
-    };
-  };
-  var replicatePolyfill = function(count) {
-    return function(value) {
-      var result = [];
-      var n = 0;
-      for (var i = 0; i < count; i++) {
-        result[n++] = value;
-      }
-      return result;
-    };
-  };
-  var replicate = typeof Array.prototype.fill === "function" ? replicateFill : replicatePolyfill;
-  var fromFoldableImpl = function() {
-    function Cons3(head3, tail2) {
-      this.head = head3;
-      this.tail = tail2;
-    }
-    var emptyList = {};
-    function curryCons(head3) {
-      return function(tail2) {
-        return new Cons3(head3, tail2);
-      };
-    }
-    function listToArray(list) {
-      var result = [];
-      var count = 0;
-      var xs = list;
-      while (xs !== emptyList) {
-        result[count++] = xs.head;
-        xs = xs.tail;
-      }
-      return result;
-    }
-    return function(foldr3) {
-      return function(xs) {
-        return listToArray(foldr3(curryCons)(emptyList)(xs));
-      };
-    };
-  }();
-  var length = function(xs) {
-    return xs.length;
-  };
-  var unconsImpl = function(empty3) {
-    return function(next) {
-      return function(xs) {
-        return xs.length === 0 ? empty3({}) : next(xs[0])(xs.slice(1));
-      };
-    };
-  };
-  var indexImpl = function(just) {
-    return function(nothing) {
-      return function(xs) {
-        return function(i) {
-          return i < 0 || i >= xs.length ? nothing : just(xs[i]);
-        };
-      };
-    };
-  };
-  var reverse = function(l) {
-    return l.slice().reverse();
-  };
-  var concat = function(xss) {
-    if (xss.length <= 1e4) {
-      return Array.prototype.concat.apply([], xss);
-    }
-    var result = [];
-    for (var i = 0, l = xss.length; i < l; i++) {
-      var xs = xss[i];
-      for (var j = 0, m = xs.length; j < m; j++) {
-        result.push(xs[j]);
-      }
-    }
-    return result;
-  };
-  var sortByImpl = function() {
-    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from, to) {
-      var mid;
-      var i;
-      var j;
-      var k;
-      var x;
-      var y;
-      var c;
-      mid = from + (to - from >> 1);
-      if (mid - from > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, from, mid);
-      if (to - mid > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
-      i = from;
-      j = mid;
-      k = from;
-      while (i < mid && j < to) {
-        x = xs2[i];
-        y = xs2[j];
-        c = fromOrdering(compare2(x)(y));
-        if (c > 0) {
-          xs1[k++] = y;
-          ++j;
-        } else {
-          xs1[k++] = x;
-          ++i;
+  function fromStringImpl(nothing) {
+    return function(just) {
+      return function(str) {
+        try {
+          return just(new import_decimal.default(str));
+        } catch (e2) {
+          return nothing;
         }
-      }
-      while (i < mid) {
-        xs1[k++] = xs2[i++];
-      }
-      while (j < to) {
-        xs1[k++] = xs2[j++];
-      }
-    }
-    return function(compare2) {
-      return function(fromOrdering) {
-        return function(xs) {
-          var out;
-          if (xs.length < 2)
-            return xs;
-          out = xs.slice(0);
-          mergeFromTo(compare2, fromOrdering, out, xs.slice(0), 0, xs.length);
-          return out;
-        };
       };
     };
-  }();
-  var slice = function(s) {
-    return function(e2) {
-      return function(l) {
-        return l.slice(s, e2);
-      };
+  }
+  function toNumber(x) {
+    return x.toNumber();
+  }
+  function toString(x) {
+    return x.toString();
+  }
+  function isFinite2(x) {
+    return x.isFinite();
+  }
+  function dAdd(x) {
+    return function(y) {
+      return x.add(y);
     };
-  };
-  var zipWith = function(f) {
-    return function(xs) {
-      return function(ys) {
-        var l = xs.length < ys.length ? xs.length : ys.length;
-        var result = new Array(l);
-        for (var i = 0; i < l; i++) {
-          result[i] = f(xs[i])(ys[i]);
-        }
-        return result;
-      };
+  }
+  function modulo(x) {
+    return function(y) {
+      return x.mod(y);
     };
-  };
-
-  // output/Data.Functor/foreign.js
-  var arrayMap = function(f) {
-    return function(arr) {
-      var l = arr.length;
-      var result = new Array(l);
-      for (var i = 0; i < l; i++) {
-        result[i] = f(arr[i]);
-      }
-      return result;
+  }
+  function dMul(x) {
+    return function(y) {
+      return x.mul(y);
     };
-  };
-
-  // output/Control.Semigroupoid/index.js
-  var semigroupoidFn = {
-    compose: function(f) {
-      return function(g) {
-        return function(x) {
-          return f(g(x));
-        };
-      };
-    }
-  };
-
-  // output/Control.Category/index.js
-  var identity = function(dict) {
-    return dict.identity;
-  };
-  var categoryFn = {
-    identity: function(x) {
-      return x;
-    },
-    Semigroupoid0: function() {
-      return semigroupoidFn;
-    }
-  };
+  }
+  function dSub(x) {
+    return function(y) {
+      return x.minus(y);
+    };
+  }
+  function dDiv(x) {
+    return function(y) {
+      return x.div(y);
+    };
+  }
+  function dEquals(x) {
+    return function(y) {
+      return x.equals(y);
+    };
+  }
+  function dCompare(x) {
+    return function(y) {
+      return x.cmp(y);
+    };
+  }
+  function abs(x) {
+    return x.abs();
+  }
+  function floor(x) {
+    return x.floor();
+  }
+  var e = import_decimal.default.exp(1);
+  var pi = new import_decimal.default("3.14159265358979323846264338327950288419716939937510582097494459230781640628620899");
 
   // output/Data.Boolean/index.js
   var otherwise = true;
 
-  // output/Data.Function/index.js
-  var $$const = function(a) {
-    return function(v) {
-      return a;
+  // output/Data.EuclideanRing/foreign.js
+  var intDegree = function(x) {
+    return Math.min(Math.abs(x), 2147483647);
+  };
+  var intDiv = function(x) {
+    return function(y) {
+      if (y === 0)
+        return 0;
+      return y > 0 ? Math.floor(x / y) : -Math.floor(x / -y);
     };
   };
-
-  // output/Data.Functor/index.js
-  var map = function(dict) {
-    return dict.map;
-  };
-  var functorArray = {
-    map: arrayMap
-  };
-
-  // output/Data.Semigroup/foreign.js
-  var concatArray = function(xs) {
-    return function(ys) {
-      if (xs.length === 0)
-        return ys;
-      if (ys.length === 0)
-        return xs;
-      return xs.concat(ys);
+  var intMod = function(x) {
+    return function(y) {
+      if (y === 0)
+        return 0;
+      var yy = Math.abs(y);
+      return (x % yy + yy) % yy;
     };
   };
-
-  // output/Data.Semigroup/index.js
-  var semigroupArray = {
-    append: concatArray
-  };
-  var append = function(dict) {
-    return dict.append;
-  };
-
-  // output/Data.Bounded/foreign.js
-  var topInt = 2147483647;
-  var bottomInt = -2147483648;
-  var topChar = String.fromCharCode(65535);
-  var bottomChar = String.fromCharCode(0);
-  var topNumber = Number.POSITIVE_INFINITY;
-  var bottomNumber = Number.NEGATIVE_INFINITY;
-
-  // output/Data.Ord/foreign.js
-  var unsafeCompareImpl = function(lt) {
-    return function(eq2) {
-      return function(gt) {
-        return function(x) {
-          return function(y) {
-            return x < y ? lt : x === y ? eq2 : gt;
-          };
-        };
-      };
-    };
-  };
-  var ordIntImpl = unsafeCompareImpl;
-  var ordCharImpl = unsafeCompareImpl;
-
-  // output/Data.Eq/foreign.js
-  var refEq = function(r1) {
-    return function(r2) {
-      return r1 === r2;
-    };
-  };
-  var eqBooleanImpl = refEq;
-  var eqIntImpl = refEq;
-  var eqCharImpl = refEq;
-
-  // output/Data.Eq/index.js
-  var eqInt = {
-    eq: eqIntImpl
-  };
-  var eqChar = {
-    eq: eqCharImpl
-  };
-  var eqBoolean = {
-    eq: eqBooleanImpl
-  };
-  var eq = function(dict) {
-    return dict.eq;
-  };
-  var notEq = function(dictEq) {
-    return function(x) {
-      return function(y) {
-        return eq(eqBoolean)(eq(dictEq)(x)(y))(false);
-      };
-    };
-  };
-
-  // output/Data.Ordering/index.js
-  var LT = /* @__PURE__ */ function() {
-    function LT2() {
-    }
-    ;
-    LT2.value = new LT2();
-    return LT2;
-  }();
-  var GT = /* @__PURE__ */ function() {
-    function GT2() {
-    }
-    ;
-    GT2.value = new GT2();
-    return GT2;
-  }();
-  var EQ = /* @__PURE__ */ function() {
-    function EQ2() {
-    }
-    ;
-    EQ2.value = new EQ2();
-    return EQ2;
-  }();
 
   // output/Data.Ring/foreign.js
   var intSub = function(x) {
@@ -2678,6 +2451,216 @@
       return semiringInt;
     }
   };
+
+  // output/Data.CommutativeRing/index.js
+  var commutativeRingInt = {
+    Ring0: function() {
+      return ringInt;
+    }
+  };
+
+  // output/Data.Eq/foreign.js
+  var refEq = function(r1) {
+    return function(r2) {
+      return r1 === r2;
+    };
+  };
+  var eqBooleanImpl = refEq;
+  var eqIntImpl = refEq;
+  var eqCharImpl = refEq;
+
+  // output/Data.Eq/index.js
+  var eqInt = {
+    eq: eqIntImpl
+  };
+  var eqChar = {
+    eq: eqCharImpl
+  };
+  var eqBoolean = {
+    eq: eqBooleanImpl
+  };
+  var eq = function(dict) {
+    return dict.eq;
+  };
+  var notEq = function(dictEq) {
+    return function(x) {
+      return function(y) {
+        return eq(eqBoolean)(eq(dictEq)(x)(y))(false);
+      };
+    };
+  };
+
+  // output/Data.EuclideanRing/index.js
+  var mod = function(dict) {
+    return dict.mod;
+  };
+  var euclideanRingInt = {
+    degree: intDegree,
+    div: intDiv,
+    mod: intMod,
+    CommutativeRing0: function() {
+      return commutativeRingInt;
+    }
+  };
+  var div = function(dict) {
+    return dict.div;
+  };
+
+  // output/Data.Functor/foreign.js
+  var arrayMap = function(f) {
+    return function(arr) {
+      var l = arr.length;
+      var result = new Array(l);
+      for (var i = 0; i < l; i++) {
+        result[i] = f(arr[i]);
+      }
+      return result;
+    };
+  };
+
+  // output/Control.Semigroupoid/index.js
+  var semigroupoidFn = {
+    compose: function(f) {
+      return function(g) {
+        return function(x) {
+          return f(g(x));
+        };
+      };
+    }
+  };
+
+  // output/Control.Category/index.js
+  var identity = function(dict) {
+    return dict.identity;
+  };
+  var categoryFn = {
+    identity: function(x) {
+      return x;
+    },
+    Semigroupoid0: function() {
+      return semigroupoidFn;
+    }
+  };
+
+  // output/Data.Function/index.js
+  var flip = function(f) {
+    return function(b) {
+      return function(a) {
+        return f(a)(b);
+      };
+    };
+  };
+  var $$const = function(a) {
+    return function(v) {
+      return a;
+    };
+  };
+
+  // output/Data.Functor/index.js
+  var map = function(dict) {
+    return dict.map;
+  };
+  var functorArray = {
+    map: arrayMap
+  };
+
+  // output/Data.Semigroup/foreign.js
+  var concatArray = function(xs) {
+    return function(ys) {
+      if (xs.length === 0)
+        return ys;
+      if (ys.length === 0)
+        return xs;
+      return xs.concat(ys);
+    };
+  };
+
+  // output/Data.Semigroup/index.js
+  var semigroupArray = {
+    append: concatArray
+  };
+  var append = function(dict) {
+    return dict.append;
+  };
+
+  // output/Control.Apply/foreign.js
+  var arrayApply = function(fs) {
+    return function(xs) {
+      var l = fs.length;
+      var k = xs.length;
+      var result = new Array(l * k);
+      var n = 0;
+      for (var i = 0; i < l; i++) {
+        var f = fs[i];
+        for (var j = 0; j < k; j++) {
+          result[n++] = f(xs[j]);
+        }
+      }
+      return result;
+    };
+  };
+
+  // output/Control.Apply/index.js
+  var applyArray = {
+    apply: arrayApply,
+    Functor0: function() {
+      return functorArray;
+    }
+  };
+  var apply = function(dict) {
+    return dict.apply;
+  };
+
+  // output/Control.Applicative/index.js
+  var pure = function(dict) {
+    return dict.pure;
+  };
+
+  // output/Data.Bounded/foreign.js
+  var topInt = 2147483647;
+  var bottomInt = -2147483648;
+  var topChar = String.fromCharCode(65535);
+  var bottomChar = String.fromCharCode(0);
+  var topNumber = Number.POSITIVE_INFINITY;
+  var bottomNumber = Number.NEGATIVE_INFINITY;
+
+  // output/Data.Ord/foreign.js
+  var unsafeCompareImpl = function(lt) {
+    return function(eq2) {
+      return function(gt) {
+        return function(x) {
+          return function(y) {
+            return x < y ? lt : x === y ? eq2 : gt;
+          };
+        };
+      };
+    };
+  };
+  var ordIntImpl = unsafeCompareImpl;
+  var ordCharImpl = unsafeCompareImpl;
+
+  // output/Data.Ordering/index.js
+  var LT = /* @__PURE__ */ function() {
+    function LT2() {
+    }
+    ;
+    LT2.value = new LT2();
+    return LT2;
+  }();
+  var GT = /* @__PURE__ */ function() {
+    function GT2() {
+    }
+    ;
+    GT2.value = new GT2();
+    return GT2;
+  }();
+  var EQ = /* @__PURE__ */ function() {
+    function EQ2() {
+    }
+    ;
+    EQ2.value = new EQ2();
+    return EQ2;
+  }();
 
   // output/Data.Ord/index.js
   var ordInt = /* @__PURE__ */ function() {
@@ -2785,8 +2768,8 @@
           return "\\v";
       }
       var k = i + 1;
-      var empty3 = k < l && s[k] >= "0" && s[k] <= "9" ? "\\&" : "";
-      return "\\" + c.charCodeAt(0).toString(10) + empty3;
+      var empty2 = k < l && s[k] >= "0" && s[k] <= "9" ? "\\&" : "";
+      return "\\" + c.charCodeAt(0).toString(10) + empty2;
     }) + '"';
   };
   var showArrayImpl = function(f) {
@@ -2886,52 +2869,384 @@
     };
   };
 
-  // output/Data.EuclideanRing/foreign.js
-  var intDegree = function(x) {
-    return Math.min(Math.abs(x), 2147483647);
+  // output/Data.Decimal/index.js
+  var showDecimal = {
+    show: function(x) {
+      return '(fromString "' + (toString(x) + '")');
+    }
   };
-  var intDiv = function(x) {
-    return function(y) {
-      if (y === 0)
-        return 0;
-      return y > 0 ? Math.floor(x / y) : -Math.floor(x / -y);
-    };
+  var semiringDecimal = {
+    add: dAdd,
+    zero: /* @__PURE__ */ fromInt(0),
+    mul: dMul,
+    one: /* @__PURE__ */ fromInt(1)
   };
-  var intMod = function(x) {
-    return function(y) {
-      if (y === 0)
-        return 0;
-      var yy = Math.abs(y);
-      return (x % yy + yy) % yy;
-    };
+  var ringDecimal = {
+    sub: dSub,
+    Semiring0: function() {
+      return semiringDecimal;
+    }
   };
-
-  // output/Data.CommutativeRing/index.js
-  var commutativeRingInt = {
+  var eqDecimal = {
+    eq: dEquals
+  };
+  var ordDecimal = {
+    compare: function(x) {
+      return function(y) {
+        var v = dCompare(x)(y);
+        if (v === 1) {
+          return GT.value;
+        }
+        ;
+        if (v === 0) {
+          return EQ.value;
+        }
+        ;
+        return LT.value;
+      };
+    },
+    Eq0: function() {
+      return eqDecimal;
+    }
+  };
+  var commutativeRingDecimal = {
     Ring0: function() {
-      return ringInt;
+      return ringDecimal;
     }
   };
-
-  // output/Data.EuclideanRing/index.js
-  var mod = function(dict) {
-    return dict.mod;
-  };
-  var euclideanRingInt = {
-    degree: intDegree,
-    div: intDiv,
-    mod: intMod,
+  var euclideanRingDecimal = {
+    div: dDiv,
+    mod: function(v) {
+      return function(v1) {
+        return zero(semiringDecimal);
+      };
+    },
+    degree: function(v) {
+      return 1;
+    },
     CommutativeRing0: function() {
-      return commutativeRingInt;
+      return commutativeRingDecimal;
     }
   };
-  var div = function(dict) {
-    return dict.div;
+  var fromString = /* @__PURE__ */ function() {
+    return fromStringImpl(Nothing.value)(Just.create);
+  }();
+
+  // output/Effect.Console/foreign.js
+  var log = function(s) {
+    return function() {
+      console.log(s);
+    };
   };
 
-  // output/Data.Array.ST/foreign.js
-  var sortByImpl2 = function() {
-    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from, to) {
+  // output/NumberSystems/foreign.js
+  var import_decimal2 = __toESM(require_decimal(), 1);
+  function initArgam() {
+    import_decimal2.default.set({ precision: 1e3 });
+  }
+
+  // output/Control.Bind/foreign.js
+  var arrayBind = function(arr) {
+    return function(f) {
+      var result = [];
+      for (var i = 0, l = arr.length; i < l; i++) {
+        Array.prototype.push.apply(result, f(arr[i]));
+      }
+      return result;
+    };
+  };
+
+  // output/Control.Bind/index.js
+  var bindArray = {
+    bind: arrayBind,
+    Apply0: function() {
+      return applyArray;
+    }
+  };
+  var bind = function(dict) {
+    return dict.bind;
+  };
+
+  // output/Control.Monad.Reader.Class/index.js
+  var ask = function(dict) {
+    return dict.ask;
+  };
+
+  // output/Data.Monoid/index.js
+  var mempty = function(dict) {
+    return dict.mempty;
+  };
+
+  // output/Data.Identity/index.js
+  var Identity = function(x) {
+    return x;
+  };
+  var functorIdentity = {
+    map: function(f) {
+      return function(m) {
+        return f(m);
+      };
+    }
+  };
+  var applyIdentity = {
+    apply: function(v) {
+      return function(v1) {
+        return v(v1);
+      };
+    },
+    Functor0: function() {
+      return functorIdentity;
+    }
+  };
+  var bindIdentity = {
+    bind: function(v) {
+      return function(f) {
+        return f(v);
+      };
+    },
+    Apply0: function() {
+      return applyIdentity;
+    }
+  };
+  var applicativeIdentity = {
+    pure: Identity,
+    Apply0: function() {
+      return applyIdentity;
+    }
+  };
+  var monadIdentity = {
+    Applicative0: function() {
+      return applicativeIdentity;
+    },
+    Bind1: function() {
+      return bindIdentity;
+    }
+  };
+
+  // output/Data.Tuple/index.js
+  var Tuple = /* @__PURE__ */ function() {
+    function Tuple2(value0, value1) {
+      this.value0 = value0;
+      this.value1 = value1;
+    }
+    ;
+    Tuple2.create = function(value0) {
+      return function(value1) {
+        return new Tuple2(value0, value1);
+      };
+    };
+    return Tuple2;
+  }();
+  var snd = function(v) {
+    return v.value1;
+  };
+  var fst = function(v) {
+    return v.value0;
+  };
+
+  // output/Unsafe.Coerce/foreign.js
+  var unsafeCoerce2 = function(x) {
+    return x;
+  };
+
+  // output/Safe.Coerce/index.js
+  var coerce = function() {
+    return unsafeCoerce2;
+  };
+
+  // output/Data.Newtype/index.js
+  var unwrap = coerce;
+
+  // output/Control.Monad.Reader.Trans/index.js
+  var ReaderT = function(x) {
+    return x;
+  };
+  var mapReaderT = function(f) {
+    return function(v) {
+      return function($64) {
+        return f(v($64));
+      };
+    };
+  };
+  var functorReaderT = function(dictFunctor) {
+    return {
+      map: function() {
+        var $65 = map(dictFunctor);
+        return function($66) {
+          return mapReaderT($65($66));
+        };
+      }()
+    };
+  };
+  var applyReaderT = function(dictApply) {
+    return {
+      apply: function(v) {
+        return function(v1) {
+          return function(r) {
+            return apply(dictApply)(v(r))(v1(r));
+          };
+        };
+      },
+      Functor0: function() {
+        return functorReaderT(dictApply.Functor0());
+      }
+    };
+  };
+  var bindReaderT = function(dictBind) {
+    return {
+      bind: function(v) {
+        return function(k) {
+          return function(r) {
+            return bind(dictBind)(v(r))(function(a) {
+              var v1 = k(a);
+              return v1(r);
+            });
+          };
+        };
+      },
+      Apply0: function() {
+        return applyReaderT(dictBind.Apply0());
+      }
+    };
+  };
+  var applicativeReaderT = function(dictApplicative) {
+    return {
+      pure: function() {
+        var $70 = pure(dictApplicative);
+        return function($71) {
+          return ReaderT($$const($70($71)));
+        };
+      }(),
+      Apply0: function() {
+        return applyReaderT(dictApplicative.Apply0());
+      }
+    };
+  };
+  var monadReaderT = function(dictMonad) {
+    return {
+      Applicative0: function() {
+        return applicativeReaderT(dictMonad.Applicative0());
+      },
+      Bind1: function() {
+        return bindReaderT(dictMonad.Bind1());
+      }
+    };
+  };
+  var monadAskReaderT = function(dictMonad) {
+    return {
+      ask: pure(dictMonad.Applicative0()),
+      Monad0: function() {
+        return monadReaderT(dictMonad);
+      }
+    };
+  };
+
+  // output/Control.Monad.Reader/index.js
+  var runReader = function(v) {
+    var $2 = unwrap();
+    return function($3) {
+      return $2(v($3));
+    };
+  };
+
+  // output/Data.Array/foreign.js
+  var range = function(start) {
+    return function(end) {
+      var step = start > end ? -1 : 1;
+      var result = new Array(step * (end - start) + 1);
+      var i = start, n = 0;
+      while (i !== end) {
+        result[n++] = i;
+        i += step;
+      }
+      result[n] = i;
+      return result;
+    };
+  };
+  var replicateFill = function(count) {
+    return function(value) {
+      if (count < 1) {
+        return [];
+      }
+      var result = new Array(count);
+      return result.fill(value);
+    };
+  };
+  var replicatePolyfill = function(count) {
+    return function(value) {
+      var result = [];
+      var n = 0;
+      for (var i = 0; i < count; i++) {
+        result[n++] = value;
+      }
+      return result;
+    };
+  };
+  var replicate = typeof Array.prototype.fill === "function" ? replicateFill : replicatePolyfill;
+  var fromFoldableImpl = function() {
+    function Cons(head2, tail2) {
+      this.head = head2;
+      this.tail = tail2;
+    }
+    var emptyList = {};
+    function curryCons(head2) {
+      return function(tail2) {
+        return new Cons(head2, tail2);
+      };
+    }
+    function listToArray(list) {
+      var result = [];
+      var count = 0;
+      var xs = list;
+      while (xs !== emptyList) {
+        result[count++] = xs.head;
+        xs = xs.tail;
+      }
+      return result;
+    }
+    return function(foldr2) {
+      return function(xs) {
+        return listToArray(foldr2(curryCons)(emptyList)(xs));
+      };
+    };
+  }();
+  var length = function(xs) {
+    return xs.length;
+  };
+  var unconsImpl = function(empty2) {
+    return function(next) {
+      return function(xs) {
+        return xs.length === 0 ? empty2({}) : next(xs[0])(xs.slice(1));
+      };
+    };
+  };
+  var indexImpl = function(just) {
+    return function(nothing) {
+      return function(xs) {
+        return function(i) {
+          return i < 0 || i >= xs.length ? nothing : just(xs[i]);
+        };
+      };
+    };
+  };
+  var reverse = function(l) {
+    return l.slice().reverse();
+  };
+  var concat = function(xss) {
+    if (xss.length <= 1e4) {
+      return Array.prototype.concat.apply([], xss);
+    }
+    var result = [];
+    for (var i = 0, l = xss.length; i < l; i++) {
+      var xs = xss[i];
+      for (var j = 0, m = xs.length; j < m; j++) {
+        result.push(xs[j]);
+      }
+    }
+    return result;
+  };
+  var sortByImpl = function() {
+    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from2, to) {
       var mid;
       var i;
       var j;
@@ -2939,14 +3254,84 @@
       var x;
       var y;
       var c;
-      mid = from + (to - from >> 1);
-      if (mid - from > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, from, mid);
+      mid = from2 + (to - from2 >> 1);
+      if (mid - from2 > 1)
+        mergeFromTo(compare2, fromOrdering, xs2, xs1, from2, mid);
       if (to - mid > 1)
         mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
-      i = from;
+      i = from2;
       j = mid;
-      k = from;
+      k = from2;
+      while (i < mid && j < to) {
+        x = xs2[i];
+        y = xs2[j];
+        c = fromOrdering(compare2(x)(y));
+        if (c > 0) {
+          xs1[k++] = y;
+          ++j;
+        } else {
+          xs1[k++] = x;
+          ++i;
+        }
+      }
+      while (i < mid) {
+        xs1[k++] = xs2[i++];
+      }
+      while (j < to) {
+        xs1[k++] = xs2[j++];
+      }
+    }
+    return function(compare2) {
+      return function(fromOrdering) {
+        return function(xs) {
+          var out;
+          if (xs.length < 2)
+            return xs;
+          out = xs.slice(0);
+          mergeFromTo(compare2, fromOrdering, out, xs.slice(0), 0, xs.length);
+          return out;
+        };
+      };
+    };
+  }();
+  var slice = function(s) {
+    return function(e2) {
+      return function(l) {
+        return l.slice(s, e2);
+      };
+    };
+  };
+  var zipWith = function(f) {
+    return function(xs) {
+      return function(ys) {
+        var l = xs.length < ys.length ? xs.length : ys.length;
+        var result = new Array(l);
+        for (var i = 0; i < l; i++) {
+          result[i] = f(xs[i])(ys[i]);
+        }
+        return result;
+      };
+    };
+  };
+
+  // output/Data.Array.ST/foreign.js
+  var sortByImpl2 = function() {
+    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from2, to) {
+      var mid;
+      var i;
+      var j;
+      var k;
+      var x;
+      var y;
+      var c;
+      mid = from2 + (to - from2 >> 1);
+      if (mid - from2 > 1)
+        mergeFromTo(compare2, fromOrdering, xs2, xs1, from2, mid);
+      if (to - mid > 1)
+        mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
+      i = from2;
+      j = mid;
+      k = from2;
       while (i < mid && j < to) {
         x = xs2[i];
         y = xs2[j];
@@ -2980,25 +3365,53 @@
     };
   }();
 
-  // output/Data.Tuple/index.js
-  var Tuple = /* @__PURE__ */ function() {
-    function Tuple2(value0, value1) {
-      this.value0 = value0;
-      this.value1 = value1;
-    }
-    ;
-    Tuple2.create = function(value0) {
-      return function(value1) {
-        return new Tuple2(value0, value1);
+  // output/Data.Foldable/foreign.js
+  var foldrArray = function(f) {
+    return function(init) {
+      return function(xs) {
+        var acc = init;
+        var len = xs.length;
+        for (var i = len - 1; i >= 0; i--) {
+          acc = f(xs[i])(acc);
+        }
+        return acc;
       };
     };
-    return Tuple2;
-  }();
-  var snd = function(v) {
-    return v.value1;
   };
-  var fst = function(v) {
-    return v.value0;
+  var foldlArray = function(f) {
+    return function(init) {
+      return function(xs) {
+        var acc = init;
+        var len = xs.length;
+        for (var i = 0; i < len; i++) {
+          acc = f(acc)(xs[i]);
+        }
+        return acc;
+      };
+    };
+  };
+
+  // output/Data.Foldable/index.js
+  var foldr = function(dict) {
+    return dict.foldr;
+  };
+  var foldMapDefaultR = function(dictFoldable) {
+    return function(dictMonoid) {
+      return function(f) {
+        return foldr(dictFoldable)(function(x) {
+          return function(acc) {
+            return append(dictMonoid.Semigroup0())(f(x))(acc);
+          };
+        })(mempty(dictMonoid));
+      };
+    };
+  };
+  var foldableArray = {
+    foldr: foldrArray,
+    foldl: foldlArray,
+    foldMap: function(dictMonoid) {
+      return foldMapDefaultR(foldableArray)(dictMonoid);
+    }
   };
 
   // output/Data.Traversable/foreign.js
@@ -3050,6 +3463,33 @@
       };
     };
   }();
+
+  // output/Data.Traversable/index.js
+  var traverse = function(dict) {
+    return dict.traverse;
+  };
+  var sequenceDefault = function(dictTraversable) {
+    return function(dictApplicative) {
+      return traverse(dictTraversable)(dictApplicative)(identity(categoryFn));
+    };
+  };
+  var traversableArray = {
+    traverse: function(dictApplicative) {
+      return traverseArrayImpl(apply(dictApplicative.Apply0()))(map(dictApplicative.Apply0().Functor0()))(pure(dictApplicative));
+    },
+    sequence: function(dictApplicative) {
+      return sequenceDefault(traversableArray)(dictApplicative);
+    },
+    Functor0: function() {
+      return functorArray;
+    },
+    Foldable1: function() {
+      return foldableArray;
+    }
+  };
+  var sequence = function(dict) {
+    return dict.sequence;
+  };
 
   // output/Data.Unfoldable/foreign.js
   var unfoldrArrayImpl = function(isNothing2) {
@@ -3123,6 +3563,9 @@
       };
     });
   }();
+  var singleton2 = function(a) {
+    return [a];
+  };
   var $$null = function(xs) {
     return length(xs) === 0;
   };
@@ -3199,6 +3642,67 @@
       return append(semigroupArray)([x])(xs);
     };
   };
+  var concatMap = /* @__PURE__ */ flip(/* @__PURE__ */ bind(bindArray));
+  var mapMaybe = function(f) {
+    return concatMap(function() {
+      var $99 = maybe([])(singleton2);
+      return function($100) {
+        return $99(f($100));
+      };
+    }());
+  };
+  var catMaybes = /* @__PURE__ */ mapMaybe(/* @__PURE__ */ identity(categoryFn));
+
+  // output/Data.Int/foreign.js
+  var fromNumberImpl = function(just) {
+    return function(nothing) {
+      return function(n) {
+        return (n | 0) === n ? just(n) : nothing;
+      };
+    };
+  };
+  var toNumber2 = function(n) {
+    return n;
+  };
+
+  // output/Data.Number/foreign.js
+  var isFiniteImpl = isFinite;
+  var floor2 = Math.floor;
+
+  // output/Data.Int/index.js
+  var fromNumber2 = /* @__PURE__ */ function() {
+    return fromNumberImpl(Just.create)(Nothing.value);
+  }();
+  var unsafeClamp = function(x) {
+    if (!isFiniteImpl(x)) {
+      return 0;
+    }
+    ;
+    if (x >= toNumber2(top(boundedInt))) {
+      return top(boundedInt);
+    }
+    ;
+    if (x <= toNumber2(bottom(boundedInt))) {
+      return bottom(boundedInt);
+    }
+    ;
+    if (otherwise) {
+      return fromMaybe(0)(fromNumber2(x));
+    }
+    ;
+    throw new Error("Failed pattern match at Data.Int (line 72, column 1 - line 72, column 29): " + [x.constructor.name]);
+  };
+  var floor3 = function($25) {
+    return unsafeClamp(floor2($25));
+  };
+
+  // output/Data.String.Utils/foreign.js
+  function fromCharArrayImpl(array) {
+    return array.join("");
+  }
+  function wordsImpl(s) {
+    return s.split(/[\u000a-\u000d\u0085\u2028\u2029\u0009\u0020\u00a0\u1680\u2000-\u200a\u202f\u205f\u3000]+/);
+  }
 
   // output/Data.String.CodePoints/foreign.js
   var hasArrayFrom = typeof Array.from === "function";
@@ -3311,51 +3815,8 @@
     };
   }();
 
-  // output/Data.Int/foreign.js
-  var fromNumberImpl = function(just) {
-    return function(nothing) {
-      return function(n) {
-        return (n | 0) === n ? just(n) : nothing;
-      };
-    };
-  };
-  var toNumber = function(n) {
-    return n;
-  };
-
-  // output/Data.Number/foreign.js
-  var isFiniteImpl = isFinite;
-  var floor = Math.floor;
-
-  // output/Data.Int/index.js
-  var fromNumber = /* @__PURE__ */ function() {
-    return fromNumberImpl(Just.create)(Nothing.value);
-  }();
-  var unsafeClamp = function(x) {
-    if (!isFiniteImpl(x)) {
-      return 0;
-    }
-    ;
-    if (x >= toNumber(top(boundedInt))) {
-      return top(boundedInt);
-    }
-    ;
-    if (x <= toNumber(bottom(boundedInt))) {
-      return bottom(boundedInt);
-    }
-    ;
-    if (otherwise) {
-      return fromMaybe(0)(fromNumber(x));
-    }
-    ;
-    throw new Error("Failed pattern match at Data.Int (line 72, column 1 - line 72, column 29): " + [x.constructor.name]);
-  };
-  var floor2 = function($25) {
-    return unsafeClamp(floor($25));
-  };
-
   // output/Data.String.CodeUnits/foreign.js
-  var singleton2 = function(c) {
+  var singleton3 = function(c) {
     return c;
   };
   var length2 = function(s) {
@@ -3457,7 +3918,7 @@
   var fromCharCode2 = /* @__PURE__ */ function() {
     var $53 = toEnumWithDefaults(boundedEnumChar)(bottom(boundedChar))(top(boundedChar));
     return function($54) {
-      return singleton2($53($54));
+      return singleton3($53($54));
     };
   }();
   var singletonFallback = function(v) {
@@ -3484,20 +3945,60 @@
     };
   }();
 
-  // output/Data.String.Utils/foreign.js
-  function wordsImpl(s) {
-    return s.split(/[\u000a-\u000d\u0085\u2028\u2029\u0009\u0020\u00a0\u1680\u2000-\u200a\u202f\u205f\u3000]+/);
-  }
-
   // output/Data.String.Utils/index.js
   var words = function(s) {
     return wordsImpl(s);
   };
+  var fromCharArray2 = function(arr) {
+    return fromCharArrayImpl(arr);
+  };
 
-  // output/ArgamNames/index.js
-  var digitNames = /* @__PURE__ */ words("zero one two three four five six seven eight nine dess ell zen thise zeff trick tess zote dine ax score tress dell flore cadex quint dithe trine caven neve kinex sode twive trell dote kineff exent mack dax trithe kinoct lume exeff sill cadell kinove diore foss exoct effent kiness trote cadithe sull exove kinell sevoct trax deve clore shock ark disode senove twex kinithe exell kale cazote triore sevess calse octove scand dimack kinchick catax sevell exithe tite kintess novent dilume van sezzen kinote dill treve octell crome novess sevithe cadore trisode doss kinax ozzen mang seneff novell kent ferr exote cobe octithe setrick disull nick catrine cupe desell trimack setess zinn exax kinore caneve novithe diclore sevote hund ellent diark trilume casode kincue disenove gall tweven trisill desithe gerr ellzen sevax dikale kintrine octote arsen exore selene dezeff tross dalse ellithe zenent kineve discand sentress camack brome exquint krypt octax novote ellzeff kinsode zenithe rube dite trisull kintwive seflore extrine stron calume trikinell divan yttr zenzeff thisent dessote novax casill zirc exeve sequint elltess triclore dicrome niobe zenchick molyb thizeff triark offlore kinmack exsode ellote cafoss setrine dessax technes zentess ruthe dimang trickithe zeffent rhode elldine pallade descore trikale diferr seneve zenote kinlume dicobe noveflore thitess ellax kinexeff argene cadsull trialse dinick kinsill excue sesode dicupe triscand cadkinell thiote exmack cadme setwive trickent dinn inde zenax stann desore trisevell octeve stibbe thidine kinoss caclore trite zeffote tellure trikintess iode elldell novetrine cadark effinkin exume thiax octsode trivan desquint xeen exineff ellore digall trickote tweight caese exill semack cadkinithe noneve digerr bare cadexell kinsull zeffax tricrome cakale lanthe destrine cere tessote trisevithe diarsen ellquint zenore prase diselene novesode kinsevoct neo exfoss prome cacalse trikinax thidell selume novetwive zotent desneve trimang cascand samare effinex kinclore octmack elltrine dibrome thiore zenquint sesill dikrypt triferr tessax kinark dinovote europ cadsevell tricobe desode gadole cadexithe terbe dirube kinsenove catite dyss exsull ellneve kintwex trinick zefflore zotax dinent thiquint distron tricupe octlume sefoss kinexell holme cadvan novemack ditt kinkale testress erbe thidithe trinn cadkinote ellsode dinovax effcue octsill trikinore dirc thume zeneve ytterb kinsevess thitrine elltwive lute exclore kincalse cacrome trisevote diobe hafne kinoctove axent dimolyb elltrell cadsevithe kinscand exark tante tessore novelume desmack sesull zensode wolfre dellote chickquint octfoss thineve zeftrine rhene cadkinax trigall ditechnes osme tritweven kinsevell diruthe novesill camang iride kinexithe zotore effinoct trigerr dirhode kintite exinell platt dipallade trisevax scorent aure exkale thisode caferr novinkin zeffneve ellmack cadexote hyde deslume triarsen cacobe seclore dinoveflore kinvan thitwive triselene axdell thule kinsezzen plumb diargene novefoss octsull zotquint exalse sevark canick thitrell dessill biss testrine polone zeffsode trikineve cacupe axore exscand aste kinoctell tressent thidote nite zenmack kincrome dicadme tribrome setwex fran kinovess ellume cazinn trikrypt dyinde kinsevithe cadexax rade distann zotrine cadkinore acte exsevell thor tesseve trikinsode distibbe prote exinithe sekale desfoss trirube octclore ellsill extite axquint cadsevote novesull ditellure urane kinozzen thimack dyiode triseflore dellent kinmang dinovetrine nept octark tristron");
-  var getDigitName = function(x) {
-    return fromMaybe("unnamed")(index(digitNames)(x));
+  // output/Data.Char/index.js
+  var fromCharCode3 = /* @__PURE__ */ toEnum(boundedEnumChar);
+
+  // output/NumberSystems.NumberSystem/index.js
+  var MkNumberSystem = /* @__PURE__ */ function() {
+    function MkNumberSystem2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    MkNumberSystem2.create = function(value0) {
+      return new MkNumberSystem2(value0);
+    };
+    return MkNumberSystem2;
+  }();
+  var digitSuffixes = function(v) {
+    return v.value0.digitSuffixes;
+  };
+  var digitNames = function(v) {
+    return v.value0.digitNames;
+  };
+  var alphabet = function(v) {
+    return v.value0.alphabet;
+  };
+
+  // output/NumberSystems.Names/index.js
+  var toArgamCharacter = function(alphabet2) {
+    return function(n) {
+      var v = index(alphabet2)(n);
+      if (v instanceof Nothing) {
+        return "?";
+      }
+      ;
+      if (v instanceof Just) {
+        return v.value0;
+      }
+      ;
+      throw new Error("Failed pattern match at NumberSystems.Names (line 42, column 31 - line 44, column 14): " + [v.constructor.name]);
+    };
+  };
+  var makePUAAlphabet = function(b) {
+    var f = function($6) {
+      return fromCharCode3(function(x) {
+        return x + 57344 | 0;
+      }($6));
+    };
+    return map(functorArray)(singleton3)(catMaybes(map(functorArray)(f)(range(0)(b))));
   };
   var combineSuffix = function(prefix) {
     return function(v) {
@@ -3517,159 +4018,22 @@
       return trimmedPrefix + trimmedSuffix;
     };
   };
-  var digitSuffixes = /* @__PURE__ */ append(semigroupArray)(["", "ta", "un", "zand", ""])(/* @__PURE__ */ map(functorArray)(function(x) {
-    return "-" + combineSuffix(x)("lion");
-  })(/* @__PURE__ */ fromMaybe([])(/* @__PURE__ */ tail(digitNames))));
-  var getSuffix = function(v) {
-    return function(index2) {
-      return fromMaybe("unnamed")(index(digitSuffixes)(index2));
+  var makeSuffixesFromDigits = function(digits) {
+    return function(suffix) {
+      return map(functorArray)(flip(combineSuffix)(suffix))(fromMaybe([])(tail(digits)));
     };
-  };
-  var applySuffix = function(n) {
-    return combineSuffix(getDigitName(n));
   };
   var nameSingleDigit = function(base) {
     return function(value) {
       return function(suffixIndex) {
-        var suffix = getSuffix(base)(suffixIndex);
-        return applySuffix(value)(suffix);
+        return bind(bindReaderT(bindIdentity))(ask(monadAskReaderT(monadIdentity)))(function(ns) {
+          var suffix = fromMaybe("unnamed")(index(digitSuffixes(ns))(suffixIndex));
+          var digitName = fromMaybe("unnamed")(index(digitNames(ns))(value));
+          return pure(applicativeReaderT(applicativeIdentity))(combineSuffix(digitName)(suffix));
+        });
       };
     };
   };
-
-  // output/Data.Decimal/foreign.js
-  var import_decimal2 = __toESM(require_decimal(), 1);
-  import_decimal2.default.set({ precision: 30 });
-  import_decimal2.default.set({ modulo: import_decimal2.default.EUCLID });
-  function fromInt(x) {
-    return new import_decimal2.default(x);
-  }
-  function fromStringImpl2(nothing) {
-    return function(just) {
-      return function(str) {
-        try {
-          return just(new import_decimal2.default(str));
-        } catch (e2) {
-          return nothing;
-        }
-      };
-    };
-  }
-  function toNumber2(x) {
-    return x.toNumber();
-  }
-  function toString(x) {
-    return x.toString();
-  }
-  function isFinite2(x) {
-    return x.isFinite();
-  }
-  function dAdd(x) {
-    return function(y) {
-      return x.add(y);
-    };
-  }
-  function modulo(x) {
-    return function(y) {
-      return x.mod(y);
-    };
-  }
-  function dMul(x) {
-    return function(y) {
-      return x.mul(y);
-    };
-  }
-  function dSub(x) {
-    return function(y) {
-      return x.minus(y);
-    };
-  }
-  function dDiv(x) {
-    return function(y) {
-      return x.div(y);
-    };
-  }
-  function dEquals(x) {
-    return function(y) {
-      return x.equals(y);
-    };
-  }
-  function dCompare(x) {
-    return function(y) {
-      return x.cmp(y);
-    };
-  }
-  function abs2(x) {
-    return x.abs();
-  }
-  function floor3(x) {
-    return x.floor();
-  }
-  var e = import_decimal2.default.exp(1);
-  var pi = new import_decimal2.default("3.14159265358979323846264338327950288419716939937510582097494459230781640628620899");
-
-  // output/Data.Decimal/index.js
-  var showDecimal = {
-    show: function(x) {
-      return '(fromString "' + (toString(x) + '")');
-    }
-  };
-  var semiringDecimal = {
-    add: dAdd,
-    zero: /* @__PURE__ */ fromInt(0),
-    mul: dMul,
-    one: /* @__PURE__ */ fromInt(1)
-  };
-  var ringDecimal = {
-    sub: dSub,
-    Semiring0: function() {
-      return semiringDecimal;
-    }
-  };
-  var eqDecimal = {
-    eq: dEquals
-  };
-  var ordDecimal = {
-    compare: function(x) {
-      return function(y) {
-        var v = dCompare(x)(y);
-        if (v === 1) {
-          return GT.value;
-        }
-        ;
-        if (v === 0) {
-          return EQ.value;
-        }
-        ;
-        return LT.value;
-      };
-    },
-    Eq0: function() {
-      return eqDecimal;
-    }
-  };
-  var commutativeRingDecimal = {
-    Ring0: function() {
-      return ringDecimal;
-    }
-  };
-  var euclideanRingDecimal = {
-    div: dDiv,
-    mod: function(v) {
-      return function(v1) {
-        return zero(semiringDecimal);
-      };
-    },
-    degree: function(v) {
-      return 1;
-    },
-    CommutativeRing0: function() {
-      return commutativeRingDecimal;
-    }
-  };
-  var fromString = /* @__PURE__ */ function() {
-    return fromStringImpl2(Nothing.value)(Just.create);
-  }();
 
   // output/Utils.String/index.js
   var unwords = /* @__PURE__ */ joinWith(" ");
@@ -3688,7 +4052,7 @@
     };
   }();
 
-  // output/Argam/index.js
+  // output/NumberSystems/index.js
   var BaseRepresentation = /* @__PURE__ */ function() {
     function BaseRepresentation2(value0, value1, value2, value3) {
       this.value0 = value0;
@@ -3708,8 +4072,8 @@
     };
     return BaseRepresentation2;
   }();
-  var toInteger = function($39) {
-    return floor2(toNumber2($39));
+  var toInteger = function($38) {
+    return floor3(toNumber($38));
   };
   var showBaseRepresentation = {
     show: function(v) {
@@ -3719,8 +4083,8 @@
   var maxDecimalPlaces = 20;
   var toBase = function(base) {
     return function(n) {
-      var n$prime = abs2(n);
-      var i = floor3(n$prime);
+      var n$prime = abs(n);
+      var i = floor(n$prime);
       var f = sub(ringDecimal)(n$prime)(i);
       var base$prime = fromInt(base);
       var handleFractionalPart$prime = function(v) {
@@ -3730,7 +4094,7 @@
           }
           ;
           var x$prime = mul(semiringDecimal)(v)(base$prime);
-          var d = floor3(x$prime);
+          var d = floor(x$prime);
           var m = sub(ringDecimal)(x$prime)(d);
           return cons2(toInteger(d))(handleFractionalPart$prime(m)(v1 - 1 | 0));
         };
@@ -3748,16 +4112,16 @@
         }
         ;
         if (otherwise) {
-          var m = floor3(div(euclideanRingDecimal)(x)(base$prime));
+          var m = floor(div(euclideanRingDecimal)(x)(base$prime));
           var d = modulo(x)(base$prime);
           return cons2(toInteger(d))(handleIntegerPart$prime(m));
         }
         ;
-        throw new Error("Failed pattern match at Argam (line 55, column 5 - line 59, column 38): " + [x.constructor.name]);
+        throw new Error("Failed pattern match at NumberSystems (line 53, column 3 - line 59, column 32): " + [x.constructor.name]);
       };
       var handleIntegerPart = function(x) {
-        var $14 = eq(eqDecimal)(x)(fromInt(0));
-        if ($14) {
+        var $13 = eq(eqDecimal)(x)(fromInt(0));
+        if ($13) {
           return [0];
         }
         ;
@@ -3766,69 +4130,139 @@
       return new BaseRepresentation(base, greaterThanOrEq(ordDecimal)(n)(fromInt(0)), handleIntegerPart(i), handleFractionalPart(f)(maxDecimalPlaces));
     };
   };
-  var baseRepToName = function(v) {
-    var minus = function() {
-      if (v.value1) {
-        return [];
-      }
-      ;
-      return ["negative"];
-    }();
-    var inames = reverse(zipWith(nameSingleDigit(v.value0))(reverse(v.value2))(range(0)(length(v.value2))));
-    var fnames = map(functorArray)(function(x) {
-      return nameSingleDigit(v.value0)(x)(0);
-    })(v.value3);
-    var dp = function() {
-      var $19 = $$null(v.value3);
-      if ($19) {
-        return [];
-      }
-      ;
-      return ["point"];
-    }();
-    var biglist = concat([minus, inames, dp, fnames]);
-    return titleJoin(biglist);
-  };
-  var toArgamName = function(x) {
-    return function(base) {
-      if (notEq(eqDecimal)(x)(x)) {
-        return "Not a Number";
-      }
-      ;
-      if (!isFinite2(x)) {
-        var $26 = greaterThan(ordDecimal)(x)(fromInt(0));
-        if ($26) {
-          return "Infinity";
+  var baseRepToString = function(v) {
+    return bind(bindReaderT(bindIdentity))(map(functorReaderT(functorIdentity))(alphabet)(ask(monadAskReaderT(monadIdentity))))(function(digits) {
+      var sign2 = function() {
+        if (v.value1) {
+          return [];
         }
         ;
-        return "Negative Infinity";
-      }
-      ;
-      if (otherwise) {
-        return baseRepToName(toBase(base)(x));
-      }
-      ;
-      throw new Error("Failed pattern match at Argam (line 98, column 1 - line 98, column 40): " + [x.constructor.name, base.constructor.name]);
+        return ["-"];
+      }();
+      var idigits = map(functorArray)(toArgamCharacter(digits))(v.value2);
+      var fdigits = map(functorArray)(toArgamCharacter(digits))(v.value3);
+      var dp = function() {
+        var $18 = $$null(fdigits);
+        if ($18) {
+          return [];
+        }
+        ;
+        return ["."];
+      }();
+      var biglist = concat([sign2, idigits, dp, fdigits]);
+      return pure(applicativeReaderT(applicativeIdentity))(fromCharArray2(biglist));
+    });
+  };
+  var convertToNumberSystem = function(ns) {
+    return function(base) {
+      return function(x) {
+        if (notEq(eqDecimal)(x)(x)) {
+          return "NaN";
+        }
+        ;
+        if (!isFinite2(x)) {
+          var $26 = greaterThan(ordDecimal)(x)(fromInt(0));
+          if ($26) {
+            return "\u221E";
+          }
+          ;
+          return "-\u221E";
+        }
+        ;
+        if (otherwise) {
+          return runReader(baseRepToString(toBase(base)(x)))(ns);
+        }
+        ;
+        throw new Error("Failed pattern match at NumberSystems (line 88, column 1 - line 88, column 66): " + [ns.constructor.name, base.constructor.name, x.constructor.name]);
+      };
+    };
+  };
+  var baseRepToName = function(v) {
+    return bind(bindReaderT(bindIdentity))(sequence(traversableArray)(applicativeReaderT(applicativeIdentity))(reverse(zipWith(nameSingleDigit(v.value0))(reverse(v.value2))(range(0)(length(v.value2))))))(function(inames) {
+      return bind(bindReaderT(bindIdentity))(sequence(traversableArray)(applicativeReaderT(applicativeIdentity))(map(functorArray)(function(x) {
+        return nameSingleDigit(v.value0)(x)(0);
+      })(v.value3)))(function(fnames) {
+        var minus = function() {
+          if (v.value1) {
+            return [];
+          }
+          ;
+          return ["negative"];
+        }();
+        var dp = function() {
+          var $29 = $$null(v.value3);
+          if ($29) {
+            return [];
+          }
+          ;
+          return ["point"];
+        }();
+        var biglist = concat([minus, inames, dp, fnames]);
+        return pure(applicativeReaderT(applicativeIdentity))(titleJoin(biglist));
+      });
+    });
+  };
+  var nameInNumberSystem = function(ns) {
+    return function(base) {
+      return function(x) {
+        if (notEq(eqDecimal)(x)(x)) {
+          return "Not a Number";
+        }
+        ;
+        if (!isFinite2(x)) {
+          var $37 = greaterThan(ordDecimal)(x)(fromInt(0));
+          if ($37) {
+            return "Infinity";
+          }
+          ;
+          return "Negative Infinity";
+        }
+        ;
+        if (otherwise) {
+          return runReader(baseRepToName(toBase(base)(x)))(ns);
+        }
+        ;
+        throw new Error("Failed pattern match at NumberSystems (line 106, column 1 - line 106, column 63): " + [ns.constructor.name, base.constructor.name, x.constructor.name]);
+      };
     };
   };
 
-  // output/Effect.Console/foreign.js
-  var log3 = function(s) {
-    return function() {
-      console.log(s);
-    };
-  };
+  // output/NumberSystems.Systems/index.js
+  var computerese = /* @__PURE__ */ function() {
+    var n = words("0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
+    return new MkNumberSystem({
+      name: "Computerese",
+      digitNames: n,
+      digitSuffixes: [""],
+      maxBase: 36,
+      alphabet: n
+    });
+  }();
+  var argam = /* @__PURE__ */ function() {
+    var n = words("zero one two three four five six seven eight nine dess ell zen thise zeff trick tess zote dine ax score tress dell flore cadex quint dithe trine caven neve kinex sode twive trell dote kineff exent mack dax trithe kinoct lume exeff sill cadell kinove diore foss exoct effent kiness trote cadithe sull exove kinell sevoct trax deve clore shock ark disode senove twex kinithe exell kale cazote triore sevess calse octove scand dimack kinchick catax sevell exithe tite kintess novent dilume van sezzen kinote dill treve octell crome novess sevithe cadore trisode doss kinax ozzen mang seneff novell kent ferr exote cobe octithe setrick disull nick catrine cupe desell trimack setess zinn exax kinore caneve novithe diclore sevote hund ellent diark trilume casode kincue disenove gall tweven trisill desithe gerr ellzen sevax dikale kintrine octote arsen exore selene dezeff tross dalse ellithe zenent kineve discand sentress camack brome exquint krypt octax novote ellzeff kinsode zenithe rube dite trisull kintwive seflore extrine stron calume trikinell divan yttr zenzeff thisent dessote novax casill zirc exeve sequint elltess triclore dicrome niobe zenchick molyb thizeff triark offlore kinmack exsode ellote cafoss setrine dessax technes zentess ruthe dimang trickithe zeffent rhode elldine pallade descore trikale diferr seneve zenote kinlume dicobe noveflore thitess ellax kinexeff argene cadsull trialse dinick kinsill excue sesode dicupe triscand cadkinell thiote exmack cadme setwive trickent dinn inde zenax stann desore trisevell octeve stibbe thidine kinoss caclore trite zeffote tellure trikintess iode elldell novetrine cadark effinkin exume thiax octsode trivan desquint xeen exineff ellore digall trickote tweight caese exill semack cadkinithe noneve digerr bare cadexell kinsull zeffax tricrome cakale lanthe destrine cere tessote trisevithe diarsen ellquint zenore prase diselene novesode kinsevoct neo exfoss prome cacalse trikinax thidell selume novetwive zotent desneve trimang cascand samare effinex kinclore octmack elltrine dibrome thiore zenquint sesill dikrypt triferr tessax kinark dinovote europ cadsevell tricobe desode gadole cadexithe terbe dirube kinsenove catite dyss exsull ellneve kintwex trinick zefflore zotax dinent thiquint distron tricupe octlume sefoss kinexell holme cadvan novemack ditt kinkale testress erbe thidithe trinn cadkinote ellsode dinovax effcue octsill trikinore dirc thume zeneve ytterb kinsevess thitrine elltwive lute exclore kincalse cacrome trisevote diobe hafne kinoctove axent dimolyb elltrell cadsevithe kinscand exark tante tessore novelume desmack sesull zensode wolfre dellote chickquint octfoss thineve zeftrine rhene cadkinax trigall ditechnes osme tritweven kinsevell diruthe novesill camang iride kinexithe zotore effinoct trigerr dirhode kintite exinell platt dipallade trisevax scorent aure exkale thisode caferr novinkin zeffneve ellmack cadexote hyde deslume triarsen cacobe seclore dinoveflore kinvan thitwive triselene axdell thule kinsezzen plumb diargene novefoss octsull zotquint exalse sevark canick thitrell dessill biss testrine polone zeffsode trikineve cacupe axore exscand aste kinoctell tressent thidote nite zenmack kincrome dicadme tribrome setwex fran kinovess ellume cazinn trikrypt dyinde kinsevithe cadexax rade distann zotrine cadkinore acte exsevell thor tesseve trikinsode distibbe prote exinithe sekale desfoss trirube octclore ellsill extite axquint cadsevote novesull ditellure urane kinozzen thimack dyiode triseflore dellent kinmang dinovetrine nept octark tristron");
+    return new MkNumberSystem({
+      name: "Argam",
+      digitNames: n,
+      digitSuffixes: append(semigroupArray)(["", "ta", "un", "zand", ""])(map(functorArray)(function(x) {
+        return "-" + x;
+      })(makeSuffixesFromDigits(n)("lion"))),
+      maxBase: 480,
+      alphabet: makePUAAlphabet(480)
+    });
+  }();
 
   // output/TestPurescript/index.js
   var main = function __do() {
     initArgam();
     var d = fromJust()(fromString("-123456789.2347823470000000000000001"));
-    log3(show(showDecimal)(d))();
-    log3(show(showBaseRepresentation)(toBase(10)(d)))();
-    log3(show(showBaseRepresentation)(toBase(60)(d)))();
-    log3(show(showString)(toArgamName(d)(10)))();
-    log3(show(showString)(toArgamName(d)(60)))();
-    return log3(show(showString)(toArgamName(d)(120)))();
+    log(show(showDecimal)(d))();
+    log(show(showBaseRepresentation)(toBase(10)(d)))();
+    log(show(showBaseRepresentation)(toBase(60)(d)))();
+    log(show(showString)(convertToNumberSystem(argam)(10)(d)))();
+    log(show(showString)(convertToNumberSystem(argam)(60)(d)))();
+    log(show(showString)(convertToNumberSystem(argam)(120)(d)))();
+    log(show(showString)(convertToNumberSystem(computerese)(10)(d)))();
+    return log(show(showString)(nameInNumberSystem(argam)(10)(d)))();
   };
 
   // <stdin>

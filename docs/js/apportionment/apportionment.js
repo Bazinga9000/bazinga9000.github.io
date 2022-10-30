@@ -126,7 +126,12 @@ function createTable(sortmode) {
     console.log(sortmode);
 
     if (oldsortmode != sortmode) {
-        darray.sort(function(a, b) { return a[sortmode] > b[sortmode]; });
+        darray.sort(function(a, b) {
+            if (a[sortmode] === b[sortmode]) {
+                return 0;
+            } 
+            return a[sortmode] < b[sortmode] ? -1 : 1; 
+        });
         descending = false;
     } else {
         darray.reverse();

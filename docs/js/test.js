@@ -5,8 +5,8 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __commonJS = (cb, mod2) => function __require() {
-    return mod2 || (0, cb[__getOwnPropNames(cb)[0]])((mod2 = { exports: {} }).exports, mod2), mod2.exports;
+  var __commonJS = (cb, mod3) => function __require() {
+    return mod3 || (0, cb[__getOwnPropNames(cb)[0]])((mod3 = { exports: {} }).exports, mod3), mod3.exports;
   };
   var __copyProps = (to, from2, except, desc) => {
     if (from2 && typeof from2 === "object" || typeof from2 === "function") {
@@ -16,7 +16,10 @@
     }
     return to;
   };
-  var __toESM = (mod2, isNodeMode, target) => (target = mod2 != null ? __create(__getProtoOf(mod2)) : {}, __copyProps(isNodeMode || !mod2 || !mod2.__esModule ? __defProp(target, "default", { value: mod2, enumerable: true }) : target, mod2));
+  var __toESM = (mod3, isNodeMode, target) => (target = mod3 != null ? __create(__getProtoOf(mod3)) : {}, __copyProps(
+    isNodeMode || !mod3 || !mod3.__esModule ? __defProp(target, "default", { value: mod3, enumerable: true }) : target,
+    mod3
+  ));
 
   // ../node_modules/decimal.js/decimal.js
   var require_decimal = __commonJS({
@@ -1142,7 +1145,9 @@
           return function(x, y, pr, rm, dp, base) {
             var cmp, e2, i, k, logBase, more, prod, prodL, q, qd, rem2, remL, rem0, sd, t, xi, xL, yd0, yL, yz, Ctor = x.constructor, sign3 = x.s == y.s ? 1 : -1, xd = x.d, yd = y.d;
             if (!xd || !xd[0] || !yd || !yd[0]) {
-              return new Ctor(!x.s || !y.s || (xd ? yd && xd[0] == yd[0] : !yd) ? NaN : xd && xd[0] == 0 || !yd ? sign3 * 0 : sign3 / 0);
+              return new Ctor(
+                !x.s || !y.s || (xd ? yd && xd[0] == yd[0] : !yd) ? NaN : xd && xd[0] == 0 || !yd ? sign3 * 0 : sign3 / 0
+              );
             }
             if (base) {
               logBase = 1;
@@ -2095,7 +2100,7 @@
           Decimal4.clamp = clamp2;
           Decimal4.cos = cos3;
           Decimal4.cosh = cosh2;
-          Decimal4.div = div2;
+          Decimal4.div = div4;
           Decimal4.exp = exp3;
           Decimal4.floor = floor4;
           Decimal4.hypot = hypot;
@@ -2105,8 +2110,8 @@
           Decimal4.log2 = log22;
           Decimal4.max = max4;
           Decimal4.min = min4;
-          Decimal4.mod = mod2;
-          Decimal4.mul = mul2;
+          Decimal4.mod = mod3;
+          Decimal4.mul = mul3;
           Decimal4.pow = pow4;
           Decimal4.random = random;
           Decimal4.round = round3;
@@ -2114,7 +2119,7 @@
           Decimal4.sin = sin3;
           Decimal4.sinh = sinh2;
           Decimal4.sqrt = sqrt3;
-          Decimal4.sub = sub2;
+          Decimal4.sub = sub3;
           Decimal4.sum = sum2;
           Decimal4.tan = tan3;
           Decimal4.tanh = tanh2;
@@ -2132,7 +2137,7 @@
           Decimal4.config(obj);
           return Decimal4;
         }
-        function div2(x, y) {
+        function div4(x, y) {
           return new this(x).div(y);
         }
         function exp3(x) {
@@ -2180,10 +2185,10 @@
         function min4() {
           return maxOrMin(this, arguments, "gt");
         }
-        function mod2(x, y) {
+        function mod3(x, y) {
           return new this(x).mod(y);
         }
-        function mul2(x, y) {
+        function mul3(x, y) {
           return new this(x).mul(y);
         }
         function pow4(x, y) {
@@ -2264,7 +2269,7 @@
         function sqrt3(x) {
           return new this(x).sqrt();
         }
-        function sub2(x, y) {
+        function sub3(x, y) {
           return new this(x).sub(y);
         }
         function sum2() {
@@ -2482,10 +2487,12 @@
   var eq = function(dict) {
     return dict.eq;
   };
+  var eq2 = /* @__PURE__ */ eq(eqBoolean);
   var notEq = function(dictEq) {
+    var eq32 = eq(dictEq);
     return function(x) {
       return function(y) {
-        return eq(eqBoolean)(eq(dictEq)(x)(y))(false);
+        return eq2(eq32(x)(y))(false);
       };
     };
   };
@@ -2626,11 +2633,11 @@
 
   // output/Data.Ord/foreign.js
   var unsafeCompareImpl = function(lt) {
-    return function(eq2) {
+    return function(eq4) {
       return function(gt) {
         return function(x) {
           return function(y) {
-            return x < y ? lt : x === y ? eq2 : gt;
+            return x < y ? lt : x === y ? eq4 : gt;
           };
         };
       };
@@ -2683,9 +2690,10 @@
     return dict.compare;
   };
   var greaterThan = function(dictOrd) {
+    var compare3 = compare(dictOrd);
     return function(a1) {
       return function(a2) {
-        var v = compare(dictOrd)(a1)(a2);
+        var v = compare3(a1)(a2);
         if (v instanceof GT) {
           return true;
         }
@@ -2695,9 +2703,10 @@
     };
   };
   var greaterThanOrEq = function(dictOrd) {
+    var compare3 = compare(dictOrd);
     return function(a1) {
       return function(a2) {
-        var v = compare(dictOrd)(a1)(a2);
+        var v = compare3(a1)(a2);
         if (v instanceof LT) {
           return false;
         }
@@ -2707,9 +2716,10 @@
     };
   };
   var lessThan = function(dictOrd) {
+    var compare3 = compare(dictOrd);
     return function(a1) {
       return function(a2) {
-        var v = compare(dictOrd)(a1)(a2);
+        var v = compare3(a1)(a2);
         if (v instanceof LT) {
           return true;
         }
@@ -2747,30 +2757,33 @@
   };
   var showStringImpl = function(s) {
     var l = s.length;
-    return '"' + s.replace(/[\0-\x1F\x7F"\\]/g, function(c, i) {
-      switch (c) {
-        case '"':
-        case "\\":
-          return "\\" + c;
-        case "\x07":
-          return "\\a";
-        case "\b":
-          return "\\b";
-        case "\f":
-          return "\\f";
-        case "\n":
-          return "\\n";
-        case "\r":
-          return "\\r";
-        case "	":
-          return "\\t";
-        case "\v":
-          return "\\v";
+    return '"' + s.replace(
+      /[\0-\x1F\x7F"\\]/g,
+      function(c, i) {
+        switch (c) {
+          case '"':
+          case "\\":
+            return "\\" + c;
+          case "\x07":
+            return "\\a";
+          case "\b":
+            return "\\b";
+          case "\f":
+            return "\\f";
+          case "\n":
+            return "\\n";
+          case "\r":
+            return "\\r";
+          case "	":
+            return "\\t";
+          case "\v":
+            return "\\v";
+        }
+        var k = i + 1;
+        var empty2 = k < l && s[k] >= "0" && s[k] <= "9" ? "\\&" : "";
+        return "\\" + c.charCodeAt(0).toString(10) + empty2;
       }
-      var k = i + 1;
-      var empty2 = k < l && s[k] >= "0" && s[k] <= "9" ? "\\&" : "";
-      return "\\" + c.charCodeAt(0).toString(10) + empty2;
-    }) + '"';
+    ) + '"';
   };
   var showArrayImpl = function(f) {
     return function(xs) {
@@ -2812,6 +2825,7 @@
   };
 
   // output/Data.Maybe/index.js
+  var identity2 = /* @__PURE__ */ identity(categoryFn);
   var Nothing = /* @__PURE__ */ function() {
     function Nothing2() {
     }
@@ -2857,7 +2871,7 @@
     }
   };
   var fromMaybe = function(a) {
-    return maybe(a)(identity(categoryFn));
+    return maybe(a)(identity2);
   };
   var fromJust = function() {
     return function(v) {
@@ -2881,6 +2895,7 @@
     mul: dMul,
     one: /* @__PURE__ */ fromInt(1)
   };
+  var zero2 = /* @__PURE__ */ zero(semiringDecimal);
   var ringDecimal = {
     sub: dSub,
     Semiring0: function() {
@@ -2918,7 +2933,7 @@
     div: dDiv,
     mod: function(v) {
       return function(v1) {
-        return zero(semiringDecimal);
+        return zero2;
       };
     },
     degree: function(v) {
@@ -3055,7 +3070,10 @@
   };
 
   // output/Data.Newtype/index.js
-  var unwrap = coerce;
+  var coerce2 = /* @__PURE__ */ coerce();
+  var unwrap = function() {
+    return coerce2;
+  };
 
   // output/Control.Monad.Reader.Trans/index.js
   var ReaderT = function(x) {
@@ -3063,41 +3081,45 @@
   };
   var mapReaderT = function(f) {
     return function(v) {
-      return function($64) {
-        return f(v($64));
+      return function($148) {
+        return f(v($148));
       };
     };
   };
   var functorReaderT = function(dictFunctor) {
     return {
       map: function() {
-        var $65 = map(dictFunctor);
-        return function($66) {
-          return mapReaderT($65($66));
+        var $149 = map(dictFunctor);
+        return function($150) {
+          return mapReaderT($149($150));
         };
       }()
     };
   };
   var applyReaderT = function(dictApply) {
+    var apply2 = apply(dictApply);
+    var functorReaderT1 = functorReaderT(dictApply.Functor0());
     return {
       apply: function(v) {
         return function(v1) {
           return function(r) {
-            return apply(dictApply)(v(r))(v1(r));
+            return apply2(v(r))(v1(r));
           };
         };
       },
       Functor0: function() {
-        return functorReaderT(dictApply.Functor0());
+        return functorReaderT1;
       }
     };
   };
   var bindReaderT = function(dictBind) {
+    var bind4 = bind(dictBind);
+    var applyReaderT1 = applyReaderT(dictBind.Apply0());
     return {
       bind: function(v) {
         return function(k) {
           return function(r) {
-            return bind(dictBind)(v(r))(function(a) {
+            return bind4(v(r))(function(a) {
               var v1 = k(a);
               return v1(r);
             });
@@ -3105,47 +3127,51 @@
         };
       },
       Apply0: function() {
-        return applyReaderT(dictBind.Apply0());
+        return applyReaderT1;
       }
     };
   };
   var applicativeReaderT = function(dictApplicative) {
+    var applyReaderT1 = applyReaderT(dictApplicative.Apply0());
     return {
       pure: function() {
-        var $70 = pure(dictApplicative);
-        return function($71) {
-          return ReaderT($$const($70($71)));
+        var $154 = pure(dictApplicative);
+        return function($155) {
+          return ReaderT($$const($154($155)));
         };
       }(),
       Apply0: function() {
-        return applyReaderT(dictApplicative.Apply0());
+        return applyReaderT1;
       }
     };
   };
   var monadReaderT = function(dictMonad) {
+    var applicativeReaderT1 = applicativeReaderT(dictMonad.Applicative0());
+    var bindReaderT1 = bindReaderT(dictMonad.Bind1());
     return {
       Applicative0: function() {
-        return applicativeReaderT(dictMonad.Applicative0());
+        return applicativeReaderT1;
       },
       Bind1: function() {
-        return bindReaderT(dictMonad.Bind1());
+        return bindReaderT1;
       }
     };
   };
   var monadAskReaderT = function(dictMonad) {
+    var monadReaderT1 = monadReaderT(dictMonad);
     return {
       ask: pure(dictMonad.Applicative0()),
       Monad0: function() {
-        return monadReaderT(dictMonad);
+        return monadReaderT1;
       }
     };
   };
 
   // output/Control.Monad.Reader/index.js
+  var unwrap2 = /* @__PURE__ */ unwrap();
   var runReader = function(v) {
-    var $2 = unwrap();
-    return function($3) {
-      return $2(v($3));
+    return function($4) {
+      return unwrap2(v($4));
     };
   };
 
@@ -3396,13 +3422,16 @@
     return dict.foldr;
   };
   var foldMapDefaultR = function(dictFoldable) {
+    var foldr2 = foldr(dictFoldable);
     return function(dictMonoid) {
+      var append3 = append(dictMonoid.Semigroup0());
+      var mempty2 = mempty(dictMonoid);
       return function(f) {
-        return foldr(dictFoldable)(function(x) {
+        return foldr2(function(x) {
           return function(acc) {
-            return append(dictMonoid.Semigroup0())(f(x))(acc);
+            return append3(f(x))(acc);
           };
-        })(mempty(dictMonoid));
+        })(mempty2);
       };
     };
   };
@@ -3437,23 +3466,23 @@
       };
     }
     return function(apply2) {
-      return function(map2) {
-        return function(pure2) {
+      return function(map5) {
+        return function(pure4) {
           return function(f) {
             return function(array) {
-              function go(bot, top2) {
-                switch (top2 - bot) {
+              function go(bot, top4) {
+                switch (top4 - bot) {
                   case 0:
-                    return pure2([]);
+                    return pure4([]);
                   case 1:
-                    return map2(array1)(f(array[bot]));
+                    return map5(array1)(f(array[bot]));
                   case 2:
-                    return apply2(map2(array2)(f(array[bot])))(f(array[bot + 1]));
+                    return apply2(map5(array2)(f(array[bot])))(f(array[bot + 1]));
                   case 3:
-                    return apply2(apply2(map2(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
+                    return apply2(apply2(map5(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
                   default:
-                    var pivot = bot + Math.floor((top2 - bot) / 4) * 2;
-                    return apply2(map2(concat2)(go(bot, pivot)))(go(pivot, top2));
+                    var pivot = bot + Math.floor((top4 - bot) / 4) * 2;
+                    return apply2(map5(concat2)(go(bot, pivot)))(go(pivot, top4));
                 }
               }
               return go(0, array.length);
@@ -3465,17 +3494,20 @@
   }();
 
   // output/Data.Traversable/index.js
+  var identity3 = /* @__PURE__ */ identity(categoryFn);
   var traverse = function(dict) {
     return dict.traverse;
   };
   var sequenceDefault = function(dictTraversable) {
+    var traverse2 = traverse(dictTraversable);
     return function(dictApplicative) {
-      return traverse(dictTraversable)(dictApplicative)(identity(categoryFn));
+      return traverse2(dictApplicative)(identity3);
     };
   };
   var traversableArray = {
     traverse: function(dictApplicative) {
-      return traverseArrayImpl(apply(dictApplicative.Apply0()))(map(dictApplicative.Apply0().Functor0()))(pure(dictApplicative));
+      var Apply0 = dictApplicative.Apply0();
+      return traverseArrayImpl(apply(Apply0))(map(Apply0.Functor0()))(pure(dictApplicative));
     },
     sequence: function(dictApplicative) {
       return sequenceDefault(traversableArray)(dictApplicative);
@@ -3493,7 +3525,7 @@
 
   // output/Data.Unfoldable/foreign.js
   var unfoldrArrayImpl = function(isNothing2) {
-    return function(fromJust2) {
+    return function(fromJust5) {
       return function(fst2) {
         return function(snd2) {
           return function(f) {
@@ -3504,7 +3536,7 @@
                 var maybe2 = f(value);
                 if (isNothing2(maybe2))
                   return result;
-                var tuple = fromJust2(maybe2);
+                var tuple = fromJust5(maybe2);
                 result.push(fst2(tuple));
                 value = snd2(tuple);
               }
@@ -3517,7 +3549,7 @@
 
   // output/Data.Unfoldable1/foreign.js
   var unfoldr1ArrayImpl = function(isNothing2) {
-    return function(fromJust2) {
+    return function(fromJust5) {
       return function(fst2) {
         return function(snd2) {
           return function(f) {
@@ -3530,7 +3562,7 @@
                 var maybe2 = snd2(tuple);
                 if (isNothing2(maybe2))
                   return result;
-                value = fromJust2(maybe2);
+                value = fromJust5(maybe2);
               }
             };
           };
@@ -3540,22 +3572,25 @@
   };
 
   // output/Data.Unfoldable1/index.js
+  var fromJust2 = /* @__PURE__ */ fromJust();
   var unfoldable1Array = {
-    unfoldr1: /* @__PURE__ */ unfoldr1ArrayImpl(isNothing)(/* @__PURE__ */ fromJust())(fst)(snd)
+    unfoldr1: /* @__PURE__ */ unfoldr1ArrayImpl(isNothing)(fromJust2)(fst)(snd)
   };
 
   // output/Data.Unfoldable/index.js
+  var fromJust3 = /* @__PURE__ */ fromJust();
   var unfoldr = function(dict) {
     return dict.unfoldr;
   };
   var unfoldableArray = {
-    unfoldr: /* @__PURE__ */ unfoldrArrayImpl(isNothing)(/* @__PURE__ */ fromJust())(fst)(snd),
+    unfoldr: /* @__PURE__ */ unfoldrArrayImpl(isNothing)(fromJust3)(fst)(snd),
     Unfoldable10: function() {
       return unfoldable1Array;
     }
   };
 
   // output/Data.Array/index.js
+  var append2 = /* @__PURE__ */ append(semigroupArray);
   var tail = /* @__PURE__ */ function() {
     return unconsImpl($$const(Nothing.value))(function(v) {
       return function(xs) {
@@ -3580,8 +3615,8 @@
         function $tco_loop(i) {
           var v = index(arr)(i);
           if (v instanceof Just) {
-            var $64 = p(v.value0);
-            if ($64) {
+            var $154 = p(v.value0);
+            if ($154) {
               $copy_i = i + 1 | 0;
               return;
             }
@@ -3639,15 +3674,15 @@
   };
   var cons2 = function(x) {
     return function(xs) {
-      return append(semigroupArray)([x])(xs);
+      return append2([x])(xs);
     };
   };
   var concatMap = /* @__PURE__ */ flip(/* @__PURE__ */ bind(bindArray));
   var mapMaybe = function(f) {
     return concatMap(function() {
-      var $99 = maybe([])(singleton2);
-      return function($100) {
-        return $99(f($100));
+      var $187 = maybe([])(singleton2);
+      return function($188) {
+        return $187(f($188));
       };
     }());
   };
@@ -3670,6 +3705,8 @@
   var floor2 = Math.floor;
 
   // output/Data.Int/index.js
+  var top2 = /* @__PURE__ */ top(boundedInt);
+  var bottom2 = /* @__PURE__ */ bottom(boundedInt);
   var fromNumber2 = /* @__PURE__ */ function() {
     return fromNumberImpl(Just.create)(Nothing.value);
   }();
@@ -3678,12 +3715,12 @@
       return 0;
     }
     ;
-    if (x >= toNumber2(top(boundedInt))) {
-      return top(boundedInt);
+    if (x >= toNumber2(top2)) {
+      return top2;
     }
     ;
-    if (x <= toNumber2(bottom(boundedInt))) {
-      return bottom(boundedInt);
+    if (x <= toNumber2(bottom2)) {
+      return bottom2;
     }
     ;
     if (otherwise) {
@@ -3692,8 +3729,8 @@
     ;
     throw new Error("Failed pattern match at Data.Int (line 72, column 1 - line 72, column 29): " + [x.constructor.name]);
   };
-  var floor3 = function($25) {
-    return unsafeClamp(floor2($25));
+  var floor3 = function($39) {
+    return unsafeClamp(floor2($39));
   };
 
   // output/Data.String.Utils/foreign.js
@@ -3744,6 +3781,8 @@
   }
 
   // output/Data.Enum/index.js
+  var top3 = /* @__PURE__ */ top(boundedInt);
+  var bottom3 = /* @__PURE__ */ bottom(boundedInt);
   var toEnum = function(dict) {
     return dict.toEnum;
   };
@@ -3751,17 +3790,20 @@
     return dict.fromEnum;
   };
   var toEnumWithDefaults = function(dictBoundedEnum) {
+    var toEnum1 = toEnum(dictBoundedEnum);
+    var fromEnum1 = fromEnum(dictBoundedEnum);
+    var bottom1 = bottom(dictBoundedEnum.Bounded0());
     return function(low) {
       return function(high) {
         return function(x) {
-          var v = toEnum(dictBoundedEnum)(x);
+          var v = toEnum1(x);
           if (v instanceof Just) {
             return v.value0;
           }
           ;
           if (v instanceof Nothing) {
-            var $54 = x < fromEnum(dictBoundedEnum)(bottom(dictBoundedEnum.Bounded0()));
-            if ($54) {
+            var $140 = x < fromEnum1(bottom1);
+            if ($140) {
               return low;
             }
             ;
@@ -3788,7 +3830,7 @@
     };
   };
   var charToEnum = function(v) {
-    if (v >= bottom(boundedInt) && v <= top(boundedInt)) {
+    if (v >= bottom3 && v <= top3) {
       return new Just(fromCharCode(v));
     }
     ;
@@ -3848,6 +3890,11 @@
   };
 
   // output/Data.String.CodePoints/index.js
+  var fromEnum2 = /* @__PURE__ */ fromEnum(boundedEnumChar);
+  var map2 = /* @__PURE__ */ map(functorMaybe);
+  var unfoldr2 = /* @__PURE__ */ unfoldr(unfoldableArray);
+  var div2 = /* @__PURE__ */ div(euclideanRingInt);
+  var mod2 = /* @__PURE__ */ mod(euclideanRingInt);
   var CodePoint = function(x) {
     return x;
   };
@@ -3870,15 +3917,15 @@
     ;
     if (v === 1) {
       return new Just({
-        head: fromEnum(boundedEnumChar)(charAt(0)(s)),
+        head: fromEnum2(charAt(0)(s)),
         tail: ""
       });
     }
     ;
-    var cu1 = fromEnum(boundedEnumChar)(charAt(1)(s));
-    var cu0 = fromEnum(boundedEnumChar)(charAt(0)(s));
-    var $21 = isLead(cu0) && isTrail(cu1);
-    if ($21) {
+    var cu1 = fromEnum2(charAt(1)(s));
+    var cu0 = fromEnum2(charAt(0)(s));
+    var $43 = isLead(cu0) && isTrail(cu1);
+    if ($43) {
       return new Just({
         head: unsurrogate(cu0)(cu1),
         tail: drop(2)(s)
@@ -3891,20 +3938,20 @@
     });
   };
   var unconsButWithTuple = function(s) {
-    return map(functorMaybe)(function(v) {
+    return map2(function(v) {
       return new Tuple(v.head, v.tail);
     })(uncons(s));
   };
   var toCodePointArrayFallback = function(s) {
-    return unfoldr(unfoldableArray)(unconsButWithTuple)(s);
+    return unfoldr2(unconsButWithTuple)(s);
   };
   var unsafeCodePointAt0Fallback = function(s) {
-    var cu0 = fromEnum(boundedEnumChar)(charAt(0)(s));
-    var $25 = isLead(cu0) && length2(s) > 1;
-    if ($25) {
-      var cu1 = fromEnum(boundedEnumChar)(charAt(1)(s));
-      var $26 = isTrail(cu1);
-      if ($26) {
+    var cu0 = fromEnum2(charAt(0)(s));
+    var $47 = isLead(cu0) && length2(s) > 1;
+    if ($47) {
+      var cu1 = fromEnum2(charAt(1)(s));
+      var $48 = isTrail(cu1);
+      if ($48) {
         return unsurrogate(cu0)(cu1);
       }
       ;
@@ -3916,9 +3963,9 @@
   var unsafeCodePointAt0 = /* @__PURE__ */ _unsafeCodePointAt0(unsafeCodePointAt0Fallback);
   var toCodePointArray = /* @__PURE__ */ _toCodePointArray(toCodePointArrayFallback)(unsafeCodePointAt0);
   var fromCharCode2 = /* @__PURE__ */ function() {
-    var $53 = toEnumWithDefaults(boundedEnumChar)(bottom(boundedChar))(top(boundedChar));
-    return function($54) {
-      return singleton3($53($54));
+    var $75 = toEnumWithDefaults(boundedEnumChar)(bottom(boundedChar))(top(boundedChar));
+    return function($76) {
+      return singleton3($75($76));
     };
   }();
   var singletonFallback = function(v) {
@@ -3926,8 +3973,8 @@
       return fromCharCode2(v);
     }
     ;
-    var lead = div(euclideanRingInt)(v - 65536 | 0)(1024) + 55296 | 0;
-    var trail = mod(euclideanRingInt)(v - 65536 | 0)(1024) + 56320 | 0;
+    var lead = div2(v - 65536 | 0)(1024) + 55296 | 0;
+    var trail = mod2(v - 65536 | 0)(1024) + 56320 | 0;
     return fromCharCode2(lead) + fromCharCode2(trail);
   };
   var fromCodePointArray = /* @__PURE__ */ _fromCodePointArray(singletonFallback);
@@ -3938,12 +3985,9 @@
       };
     }
   };
-  var codePointFromChar = /* @__PURE__ */ function() {
-    var $55 = fromEnum(boundedEnumChar);
-    return function($56) {
-      return CodePoint($55($56));
-    };
-  }();
+  var codePointFromChar = function($77) {
+    return CodePoint(fromEnum2($77));
+  };
 
   // output/Data.String.Utils/index.js
   var words = function(s) {
@@ -3978,6 +4022,11 @@
   };
 
   // output/NumberSystems.Names/index.js
+  var map3 = /* @__PURE__ */ map(functorArray);
+  var eq3 = /* @__PURE__ */ eq(eqCodePoint);
+  var bind2 = /* @__PURE__ */ bind(/* @__PURE__ */ bindReaderT(bindIdentity));
+  var ask2 = /* @__PURE__ */ ask(/* @__PURE__ */ monadAskReaderT(monadIdentity));
+  var pure2 = /* @__PURE__ */ pure(/* @__PURE__ */ applicativeReaderT(applicativeIdentity));
   var toArgamCharacter = function(alphabet2) {
     return function(n) {
       var v = index(alphabet2)(n);
@@ -3992,44 +4041,46 @@
       throw new Error("Failed pattern match at NumberSystems.Names (line 42, column 31 - line 44, column 14): " + [v.constructor.name]);
     };
   };
-  var makePUAAlphabet = function(b) {
-    var f = function($6) {
-      return fromCharCode3(function(x) {
-        return x + 57344 | 0;
-      }($6));
+  var makePUAAlphabet = function(start) {
+    return function(b) {
+      var f = function($18) {
+        return fromCharCode3(function(x) {
+          return x + start | 0;
+        }($18));
+      };
+      return map3(singleton3)(catMaybes(map3(f)(range(0)(b))));
     };
-    return map(functorArray)(singleton3)(catMaybes(map(functorArray)(f)(range(0)(b))));
   };
-  var combineSuffix = function(prefix) {
-    return function(v) {
-      if (v === "") {
-        return prefix;
+  var combineSuffix = function(v) {
+    return function(v1) {
+      if (v1 === "") {
+        return v;
       }
       ;
-      var suffix$prime = toCodePointArray(v);
-      var rprefix = reverse(toCodePointArray(prefix));
+      var suffix$prime = toCodePointArray(v1);
+      var rprefix = reverse(toCodePointArray(v));
       var trimletter = fromMaybe(codePointFromChar("?"))(head(rprefix));
       var trimmedSuffix = fromCodePointArray(cons2(trimletter)(dropWhile(function(x) {
-        return eq(eqCodePoint)(x)(trimletter);
+        return eq3(x)(trimletter);
       })(suffix$prime)));
       var trimmedPrefix = fromCodePointArray(reverse(dropWhile(function(x) {
-        return eq(eqCodePoint)(x)(trimletter);
+        return eq3(x)(trimletter);
       })(rprefix)));
       return trimmedPrefix + trimmedSuffix;
     };
   };
   var makeSuffixesFromDigits = function(digits) {
     return function(suffix) {
-      return map(functorArray)(flip(combineSuffix)(suffix))(fromMaybe([])(tail(digits)));
+      return map3(flip(combineSuffix)(suffix))(fromMaybe([])(tail(digits)));
     };
   };
   var nameSingleDigit = function(base) {
     return function(value) {
       return function(suffixIndex) {
-        return bind(bindReaderT(bindIdentity))(ask(monadAskReaderT(monadIdentity)))(function(ns) {
+        return bind2(ask2)(function(ns) {
           var suffix = fromMaybe("unnamed")(index(digitSuffixes(ns))(suffixIndex));
           var digitName = fromMaybe("unnamed")(index(digitNames(ns))(value));
-          return pure(applicativeReaderT(applicativeIdentity))(combineSuffix(digitName)(suffix));
+          return pure2(combineSuffix(digitName)(suffix));
         });
       };
     };
@@ -4046,13 +4097,31 @@
     return str;
   };
   var titleJoin = /* @__PURE__ */ function() {
-    var $3 = map(functorArray)(capitalize);
-    return function($4) {
-      return unwords($3($4));
+    var $6 = map(functorArray)(capitalize);
+    return function($7) {
+      return unwords($6($7));
     };
   }();
 
   // output/NumberSystems/index.js
+  var show2 = /* @__PURE__ */ show(showInt);
+  var show1 = /* @__PURE__ */ show(showBoolean);
+  var show22 = /* @__PURE__ */ show(/* @__PURE__ */ showArray(showInt));
+  var sub2 = /* @__PURE__ */ sub(ringDecimal);
+  var mul2 = /* @__PURE__ */ mul(semiringDecimal);
+  var lessThan2 = /* @__PURE__ */ lessThan(ordDecimal);
+  var div3 = /* @__PURE__ */ div(euclideanRingDecimal);
+  var eq12 = /* @__PURE__ */ eq(eqDecimal);
+  var greaterThanOrEq2 = /* @__PURE__ */ greaterThanOrEq(ordDecimal);
+  var notEq2 = /* @__PURE__ */ notEq(eqDecimal);
+  var bind3 = /* @__PURE__ */ bind(/* @__PURE__ */ bindReaderT(bindIdentity));
+  var map4 = /* @__PURE__ */ map(/* @__PURE__ */ functorReaderT(functorIdentity));
+  var ask3 = /* @__PURE__ */ ask(/* @__PURE__ */ monadAskReaderT(monadIdentity));
+  var map1 = /* @__PURE__ */ map(functorArray);
+  var applicativeReaderT2 = /* @__PURE__ */ applicativeReaderT(applicativeIdentity);
+  var pure3 = /* @__PURE__ */ pure(applicativeReaderT2);
+  var greaterThan2 = /* @__PURE__ */ greaterThan(ordDecimal);
+  var sequence2 = /* @__PURE__ */ sequence(traversableArray)(applicativeReaderT2);
   var BaseRepresentation = /* @__PURE__ */ function() {
     function BaseRepresentation2(value0, value1, value2, value3) {
       this.value0 = value0;
@@ -4072,12 +4141,12 @@
     };
     return BaseRepresentation2;
   }();
-  var toInteger = function($38) {
-    return floor3(toNumber($38));
+  var toInteger = function($68) {
+    return floor3(toNumber($68));
   };
   var showBaseRepresentation = {
     show: function(v) {
-      return show(showInt)(v.value0) + (" " + (show(showBoolean)(v.value1) + (" " + (show(showArray(showInt))(v.value2) + (" " + show(showArray(showInt))(v.value3))))));
+      return show2(v.value0) + (" " + (show1(v.value1) + (" " + (show22(v.value2) + (" " + show22(v.value3))))));
     }
   };
   var maxDecimalPlaces = 20;
@@ -4085,7 +4154,7 @@
     return function(n) {
       var n$prime = abs(n);
       var i = floor(n$prime);
-      var f = sub(ringDecimal)(n$prime)(i);
+      var f = sub2(n$prime)(i);
       var base$prime = fromInt(base);
       var handleFractionalPart$prime = function(v) {
         return function(v1) {
@@ -4093,9 +4162,9 @@
             return [];
           }
           ;
-          var x$prime = mul(semiringDecimal)(v)(base$prime);
+          var x$prime = mul2(v)(base$prime);
           var d = floor(x$prime);
-          var m = sub(ringDecimal)(x$prime)(d);
+          var m = sub2(x$prime)(d);
           return cons2(toInteger(d))(handleFractionalPart$prime(m)(v1 - 1 | 0));
         };
       };
@@ -4107,12 +4176,12 @@
         };
       };
       var handleIntegerPart$prime = function(x) {
-        if (lessThan(ordDecimal)(x)(fromInt(1))) {
+        if (lessThan2(x)(fromInt(1))) {
           return [];
         }
         ;
         if (otherwise) {
-          var m = floor(div(euclideanRingDecimal)(x)(base$prime));
+          var m = floor(div3(x)(base$prime));
           var d = modulo(x)(base$prime);
           return cons2(toInteger(d))(handleIntegerPart$prime(m));
         }
@@ -4120,18 +4189,18 @@
         throw new Error("Failed pattern match at NumberSystems (line 53, column 3 - line 59, column 32): " + [x.constructor.name]);
       };
       var handleIntegerPart = function(x) {
-        var $13 = eq(eqDecimal)(x)(fromInt(0));
-        if ($13) {
+        var $43 = eq12(x)(fromInt(0));
+        if ($43) {
           return [0];
         }
         ;
         return reverse(handleIntegerPart$prime(x));
       };
-      return new BaseRepresentation(base, greaterThanOrEq(ordDecimal)(n)(fromInt(0)), handleIntegerPart(i), handleFractionalPart(f)(maxDecimalPlaces));
+      return new BaseRepresentation(base, greaterThanOrEq2(n)(fromInt(0)), handleIntegerPart(i), handleFractionalPart(f)(maxDecimalPlaces));
     };
   };
   var baseRepToString = function(v) {
-    return bind(bindReaderT(bindIdentity))(map(functorReaderT(functorIdentity))(alphabet)(ask(monadAskReaderT(monadIdentity))))(function(digits) {
+    return bind3(map4(alphabet)(ask3))(function(digits) {
       var sign2 = function() {
         if (v.value1) {
           return [];
@@ -4139,30 +4208,30 @@
         ;
         return ["-"];
       }();
-      var idigits = map(functorArray)(toArgamCharacter(digits))(v.value2);
-      var fdigits = map(functorArray)(toArgamCharacter(digits))(v.value3);
+      var idigits = map1(toArgamCharacter(digits))(v.value2);
+      var fdigits = map1(toArgamCharacter(digits))(v.value3);
       var dp = function() {
-        var $18 = $$null(fdigits);
-        if ($18) {
+        var $48 = $$null(fdigits);
+        if ($48) {
           return [];
         }
         ;
         return ["."];
       }();
       var biglist = concat([sign2, idigits, dp, fdigits]);
-      return pure(applicativeReaderT(applicativeIdentity))(fromCharArray2(biglist));
+      return pure3(fromCharArray2(biglist));
     });
   };
   var convertToNumberSystem = function(ns) {
     return function(base) {
       return function(x) {
-        if (notEq(eqDecimal)(x)(x)) {
+        if (notEq2(x)(x)) {
           return "NaN";
         }
         ;
         if (!isFinite2(x)) {
-          var $26 = greaterThan(ordDecimal)(x)(fromInt(0));
-          if ($26) {
+          var $56 = greaterThan2(x)(fromInt(0));
+          if ($56) {
             return "\u221E";
           }
           ;
@@ -4178,8 +4247,8 @@
     };
   };
   var baseRepToName = function(v) {
-    return bind(bindReaderT(bindIdentity))(sequence(traversableArray)(applicativeReaderT(applicativeIdentity))(reverse(zipWith(nameSingleDigit(v.value0))(reverse(v.value2))(range(0)(length(v.value2))))))(function(inames) {
-      return bind(bindReaderT(bindIdentity))(sequence(traversableArray)(applicativeReaderT(applicativeIdentity))(map(functorArray)(function(x) {
+    return bind3(sequence2(reverse(zipWith(nameSingleDigit(v.value0))(reverse(v.value2))(range(0)(length(v.value2))))))(function(inames) {
+      return bind3(sequence2(map1(function(x) {
         return nameSingleDigit(v.value0)(x)(0);
       })(v.value3)))(function(fnames) {
         var minus = function() {
@@ -4190,28 +4259,28 @@
           return ["negative"];
         }();
         var dp = function() {
-          var $29 = $$null(v.value3);
-          if ($29) {
+          var $59 = $$null(v.value3);
+          if ($59) {
             return [];
           }
           ;
           return ["point"];
         }();
         var biglist = concat([minus, inames, dp, fnames]);
-        return pure(applicativeReaderT(applicativeIdentity))(titleJoin(biglist));
+        return pure3(titleJoin(biglist));
       });
     });
   };
   var nameInNumberSystem = function(ns) {
     return function(base) {
       return function(x) {
-        if (notEq(eqDecimal)(x)(x)) {
+        if (notEq2(x)(x)) {
           return "Not a Number";
         }
         ;
         if (!isFinite2(x)) {
-          var $37 = greaterThan(ordDecimal)(x)(fromInt(0));
-          if ($37) {
+          var $67 = greaterThan2(x)(fromInt(0));
+          if ($67) {
             return "Infinity";
           }
           ;
@@ -4247,22 +4316,26 @@
         return "-" + x;
       })(makeSuffixesFromDigits(n)("lion"))),
       maxBase: 480,
-      alphabet: makePUAAlphabet(480)
+      alphabet: makePUAAlphabet(57344)(480)
     });
   }();
 
   // output/TestPurescript/index.js
+  var fromJust4 = /* @__PURE__ */ fromJust();
+  var show3 = /* @__PURE__ */ show(showDecimal);
+  var show12 = /* @__PURE__ */ show(showBaseRepresentation);
+  var show23 = /* @__PURE__ */ show(showString);
   var main = function __do() {
     initArgam();
-    var d = fromJust()(fromString("-123456789.2347823470000000000000001"));
-    log(show(showDecimal)(d))();
-    log(show(showBaseRepresentation)(toBase(10)(d)))();
-    log(show(showBaseRepresentation)(toBase(60)(d)))();
-    log(show(showString)(convertToNumberSystem(argam)(10)(d)))();
-    log(show(showString)(convertToNumberSystem(argam)(60)(d)))();
-    log(show(showString)(convertToNumberSystem(argam)(120)(d)))();
-    log(show(showString)(convertToNumberSystem(computerese)(10)(d)))();
-    return log(show(showString)(nameInNumberSystem(argam)(10)(d)))();
+    var d = fromJust4(fromString("-123456789.2347823470000000000000001"));
+    log(show3(d))();
+    log(show12(toBase(10)(d)))();
+    log(show12(toBase(60)(d)))();
+    log(show23(convertToNumberSystem(argam)(10)(d)))();
+    log(show23(convertToNumberSystem(argam)(60)(d)))();
+    log(show23(convertToNumberSystem(argam)(120)(d)))();
+    log(show23(convertToNumberSystem(computerese)(10)(d)))();
+    return log(show23(nameInNumberSystem(argam)(10)(d)))();
   };
 
   // <stdin>

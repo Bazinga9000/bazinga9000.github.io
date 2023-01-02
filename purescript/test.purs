@@ -1,13 +1,14 @@
 module TestPurescript where
 
+import Data.Decimal
+import Data.Maybe
+import NumberSystems
+import NumberSystems.Systems
 import Prelude
+
 import Effect (Effect)
 import Effect.Console (log)
-import NumberSystems
-import Data.Maybe
 import Partial.Unsafe (unsafePartial)
-import Data.Decimal
-import NumberSystems.Systems
 
 main :: Effect Unit
 main = do

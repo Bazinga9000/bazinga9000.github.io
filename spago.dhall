@@ -12,11 +12,15 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "arrays"
+  [ "aff"
+  , "arrays"
   , "console"
   , "decimals"
   , "effect"
   , "foldable-traversable"
+  , "functions"
+  , "halogen"
+  , "halogen-subscriptions"
   , "integers"
   , "maybe"
   , "ordered-collections"
@@ -24,6 +28,7 @@ to generate this file without the comments in this block.
   , "prelude"
   , "strings"
   , "stringutils"
+  , "tailrec"
   , "transformers"
   , "tuples"
   ]

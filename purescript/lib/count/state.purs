@@ -106,7 +106,7 @@ newIncreasers = M.fromFoldable [
 handleTarget :: GlobalState -> Target -> EN -> GlobalState
 handleTarget state target delta = case target of 
     TCount -> state { count = state.count + delta }
-    TIncreaser id -> state { increasers = M.update (\inc -> Just $ inc {owned = ceil $ inc.owned + delta}) id state.increasers}
+    TIncreaser id -> state { increasers = M.update (\inc -> Just $ inc {owned = inc.owned + delta}) id state.increasers}
 
 handleIncreaser :: EN ->  Increaser -> GlobalState -> GlobalState
 handleIncreaser speed inc state = 

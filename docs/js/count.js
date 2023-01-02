@@ -4647,6 +4647,7 @@
   var fromString = _fromString;
   var mkEN = fromString;
   var fromNumber = _fromNumber;
+  var floor = _floor;
   var equalTo = function(a2) {
     return function(b2) {
       return _equalsTo(a2, b2);
@@ -4681,7 +4682,6 @@
       return eqEN;
     }
   };
-  var ceil = _ceiling;
   var affordGeometricSeries = function(a2) {
     return function(b2) {
       return function(c) {
@@ -4878,7 +4878,7 @@
             tickSpeed: state3.tickSpeed,
             increasers: update2(function(inc) {
               return new Just({
-                owned: ceil(add2(inc.owned)(delta)),
+                owned: add2(inc.owned)(delta),
                 baseCost: inc.baseCost,
                 bought: inc.bought,
                 cost: inc.cost,
@@ -4895,7 +4895,7 @@
           };
         }
         ;
-        throw new Error("Failed pattern match at Count.State (line 107, column 35 - line 109, column 128): " + [target6.constructor.name]);
+        throw new Error("Failed pattern match at Count.State (line 107, column 35 - line 109, column 121): " + [target6.constructor.name]);
       };
     };
   };
@@ -8546,7 +8546,7 @@
   var makeIncreaserRow = function(state3) {
     return function(v) {
       var bm = [style("display: inline-block; width: 15%; align: center")];
-      return tr_([td(bm)([h3_([text(v.value1.name)])]), td(bm)([h4_([text("\xD7" + displayEN(v.value1.multiplier))])]), td(bm)([h3_([text(displayEN(v.value1.owned))])]), function() {
+      return tr_([td(bm)([h3_([text(v.value1.name)])]), td(bm)([h4_([text("\xD7" + displayEN(v.value1.multiplier))])]), td(bm)([h3_([text(displayEN(floor(v.value1.owned)))])]), function() {
         var $45 = greaterThanOrEq2(state3.count)(v.value1.cost);
         if ($45) {
           return td(bm)([button([onClick(function(v1) {

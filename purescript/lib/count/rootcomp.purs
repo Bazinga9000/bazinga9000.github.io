@@ -75,7 +75,7 @@ makeIncreaserRow ∷ forall a. GlobalState -> Tuple String Increaser → HH.HTML
 makeIncreaserRow state (Tuple id inc) = HH.tr_ [ 
           HH.td bm [HH.h3_ [HH.text $ inc.name]]
         , HH.td bm [HH.h4_ [HH.text $ "×" <> displayEN inc.multiplier]]
-        , HH.td bm [HH.h3_ [HH.text $ displayEN inc.owned]]
+        , HH.td bm [HH.h3_ [HH.text $ displayEN $ floor inc.owned]]
         , if state.count >= inc.cost then
             HH.td bm [HH.button [ HE.onClick \_ -> BuyIncreaser id] [ HH.text $ "Buy for " <> displayEN inc.cost ]]
         else

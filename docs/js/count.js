@@ -220,11 +220,11 @@
 
   // output/Data.Ord/foreign.js
   var unsafeCompareImpl = function(lt) {
-    return function(eq3) {
+    return function(eq4) {
       return function(gt) {
         return function(x) {
           return function(y) {
-            return x < y ? lt : x === y ? eq3 : gt;
+            return x < y ? lt : x === y ? eq4 : gt;
           };
         };
       };
@@ -319,6 +319,19 @@
         }
         ;
         return true;
+      };
+    };
+  };
+  var lessThan = function(dictOrd) {
+    var compare3 = compare(dictOrd);
+    return function(a1) {
+      return function(a2) {
+        var v = compare3(a1)(a2);
+        if (v instanceof LT) {
+          return true;
+        }
+        ;
+        return false;
       };
     };
   };
@@ -817,6 +830,11 @@
       });
     };
   };
+  var get = function(dictMonadState) {
+    return state(dictMonadState)(function(s) {
+      return new Tuple(s, s);
+    });
+  };
 
   // output/Data.Foldable/foreign.js
   var foldrArray = function(f) {
@@ -878,9 +896,9 @@
     var applySecond2 = applySecond(dictApplicative.Apply0());
     var pure10 = pure(dictApplicative);
     return function(dictFoldable) {
-      var foldr22 = foldr(dictFoldable);
+      var foldr23 = foldr(dictFoldable);
       return function(f) {
-        return foldr22(function($454) {
+        return foldr23(function($454) {
           return applySecond2(f($454));
         })(pure10(unit));
       };
@@ -944,14 +962,14 @@
     }
   };
   var foldMapDefaultR = function(dictFoldable) {
-    var foldr22 = foldr(dictFoldable);
+    var foldr23 = foldr(dictFoldable);
     return function(dictMonoid) {
-      var append6 = append(dictMonoid.Semigroup0());
+      var append5 = append(dictMonoid.Semigroup0());
       var mempty2 = mempty(dictMonoid);
       return function(f) {
-        return foldr22(function(x) {
+        return foldr23(function(x) {
           return function(acc) {
-            return append6(f(x))(acc);
+            return append5(f(x))(acc);
           };
         })(mempty2);
       };
@@ -966,6 +984,17 @@
   };
   var foldMap = function(dict) {
     return dict.foldMap;
+  };
+
+  // output/Data.FoldableWithIndex/index.js
+  var foldrWithIndex = function(dict) {
+    return dict.foldrWithIndex;
+  };
+  var foldlWithIndex = function(dict) {
+    return dict.foldlWithIndex;
+  };
+  var foldMapWithIndex = function(dict) {
+    return dict.foldMapWithIndex;
   };
 
   // output/Data.Traversable/foreign.js
@@ -1667,6 +1696,25 @@
       return go2;
     };
   };
+  var functorMap = {
+    map: function(v) {
+      return function(v1) {
+        if (v1 instanceof Leaf) {
+          return Leaf.value;
+        }
+        ;
+        if (v1 instanceof Two) {
+          return new Two(map(functorMap)(v)(v1.value0), v1.value1, v(v1.value2), map(functorMap)(v)(v1.value3));
+        }
+        ;
+        if (v1 instanceof Three) {
+          return new Three(map(functorMap)(v)(v1.value0), v1.value1, v(v1.value2), map(functorMap)(v)(v1.value3), v1.value4, v(v1.value5), map(functorMap)(v)(v1.value6));
+        }
+        ;
+        throw new Error("Failed pattern match at Data.Map.Internal (line 116, column 1 - line 119, column 110): " + [v.constructor.name, v1.constructor.name]);
+      };
+    }
+  };
   var fromZipper = function($copy_dictOrd) {
     return function($copy_v) {
       return function($copy_v1) {
@@ -2215,6 +2263,80 @@
       };
     }
   };
+  var foldableWithIndexMap = {
+    foldrWithIndex: function(f) {
+      return function(z) {
+        return function(m) {
+          if (m instanceof Leaf) {
+            return z;
+          }
+          ;
+          if (m instanceof Two) {
+            return foldrWithIndex(foldableWithIndexMap)(f)(f(m.value1)(m.value2)(foldrWithIndex(foldableWithIndexMap)(f)(z)(m.value3)))(m.value0);
+          }
+          ;
+          if (m instanceof Three) {
+            return foldrWithIndex(foldableWithIndexMap)(f)(f(m.value1)(m.value2)(foldrWithIndex(foldableWithIndexMap)(f)(f(m.value4)(m.value5)(foldrWithIndex(foldableWithIndexMap)(f)(z)(m.value6)))(m.value3)))(m.value0);
+          }
+          ;
+          throw new Error("Failed pattern match at Data.Map.Internal (line 147, column 26 - line 150, column 120): " + [m.constructor.name]);
+        };
+      };
+    },
+    foldlWithIndex: function(f) {
+      return function(z) {
+        return function(m) {
+          if (m instanceof Leaf) {
+            return z;
+          }
+          ;
+          if (m instanceof Two) {
+            return foldlWithIndex(foldableWithIndexMap)(f)(f(m.value1)(foldlWithIndex(foldableWithIndexMap)(f)(z)(m.value0))(m.value2))(m.value3);
+          }
+          ;
+          if (m instanceof Three) {
+            return foldlWithIndex(foldableWithIndexMap)(f)(f(m.value4)(foldlWithIndex(foldableWithIndexMap)(f)(f(m.value1)(foldlWithIndex(foldableWithIndexMap)(f)(z)(m.value0))(m.value2))(m.value3))(m.value5))(m.value6);
+          }
+          ;
+          throw new Error("Failed pattern match at Data.Map.Internal (line 151, column 26 - line 154, column 120): " + [m.constructor.name]);
+        };
+      };
+    },
+    foldMapWithIndex: function(dictMonoid) {
+      var mempty2 = mempty(dictMonoid);
+      var append22 = append(dictMonoid.Semigroup0());
+      return function(f) {
+        return function(m) {
+          if (m instanceof Leaf) {
+            return mempty2;
+          }
+          ;
+          if (m instanceof Two) {
+            return append22(foldMapWithIndex(foldableWithIndexMap)(dictMonoid)(f)(m.value0))(append22(f(m.value1)(m.value2))(foldMapWithIndex(foldableWithIndexMap)(dictMonoid)(f)(m.value3)));
+          }
+          ;
+          if (m instanceof Three) {
+            return append22(foldMapWithIndex(foldableWithIndexMap)(dictMonoid)(f)(m.value0))(append22(f(m.value1)(m.value2))(append22(foldMapWithIndex(foldableWithIndexMap)(dictMonoid)(f)(m.value3))(append22(f(m.value4)(m.value5))(foldMapWithIndex(foldableWithIndexMap)(dictMonoid)(f)(m.value6)))));
+          }
+          ;
+          throw new Error("Failed pattern match at Data.Map.Internal (line 155, column 26 - line 158, column 128): " + [m.constructor.name]);
+        };
+      };
+    },
+    Foldable0: function() {
+      return foldableMap;
+    }
+  };
+  var foldrWithIndex2 = /* @__PURE__ */ foldrWithIndex(foldableWithIndexMap);
+  var keys = /* @__PURE__ */ function() {
+    return foldrWithIndex2(function(k) {
+      return function(v) {
+        return function(acc) {
+          return new Cons(k, acc);
+        };
+      };
+    })(Nil.value);
+  }();
   var empty2 = /* @__PURE__ */ function() {
     return Leaf.value;
   }();
@@ -2267,6 +2389,253 @@
       };
     };
   };
+
+  // output/Data.Array/foreign.js
+  var replicateFill = function(count) {
+    return function(value12) {
+      if (count < 1) {
+        return [];
+      }
+      var result = new Array(count);
+      return result.fill(value12);
+    };
+  };
+  var replicatePolyfill = function(count) {
+    return function(value12) {
+      var result = [];
+      var n = 0;
+      for (var i2 = 0; i2 < count; i2++) {
+        result[n++] = value12;
+      }
+      return result;
+    };
+  };
+  var replicate = typeof Array.prototype.fill === "function" ? replicateFill : replicatePolyfill;
+  var fromFoldableImpl = function() {
+    function Cons3(head3, tail) {
+      this.head = head3;
+      this.tail = tail;
+    }
+    var emptyList = {};
+    function curryCons(head3) {
+      return function(tail) {
+        return new Cons3(head3, tail);
+      };
+    }
+    function listToArray(list) {
+      var result = [];
+      var count = 0;
+      var xs = list;
+      while (xs !== emptyList) {
+        result[count++] = xs.head;
+        xs = xs.tail;
+      }
+      return result;
+    }
+    return function(foldr6) {
+      return function(xs) {
+        return listToArray(foldr6(curryCons)(emptyList)(xs));
+      };
+    };
+  }();
+  var length2 = function(xs) {
+    return xs.length;
+  };
+  var findIndexImpl = function(just) {
+    return function(nothing) {
+      return function(f) {
+        return function(xs) {
+          for (var i2 = 0, l = xs.length; i2 < l; i2++) {
+            if (f(xs[i2]))
+              return just(i2);
+          }
+          return nothing;
+        };
+      };
+    };
+  };
+  var _deleteAt = function(just) {
+    return function(nothing) {
+      return function(i2) {
+        return function(l) {
+          if (i2 < 0 || i2 >= l.length)
+            return nothing;
+          var l1 = l.slice();
+          l1.splice(i2, 1);
+          return just(l1);
+        };
+      };
+    };
+  };
+  var sortByImpl = function() {
+    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from2, to) {
+      var mid;
+      var i2;
+      var j;
+      var k;
+      var x;
+      var y;
+      var c;
+      mid = from2 + (to - from2 >> 1);
+      if (mid - from2 > 1)
+        mergeFromTo(compare2, fromOrdering, xs2, xs1, from2, mid);
+      if (to - mid > 1)
+        mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
+      i2 = from2;
+      j = mid;
+      k = from2;
+      while (i2 < mid && j < to) {
+        x = xs2[i2];
+        y = xs2[j];
+        c = fromOrdering(compare2(x)(y));
+        if (c > 0) {
+          xs1[k++] = y;
+          ++j;
+        } else {
+          xs1[k++] = x;
+          ++i2;
+        }
+      }
+      while (i2 < mid) {
+        xs1[k++] = xs2[i2++];
+      }
+      while (j < to) {
+        xs1[k++] = xs2[j++];
+      }
+    }
+    return function(compare2) {
+      return function(fromOrdering) {
+        return function(xs) {
+          var out;
+          if (xs.length < 2)
+            return xs;
+          out = xs.slice(0);
+          mergeFromTo(compare2, fromOrdering, out, xs.slice(0), 0, xs.length);
+          return out;
+        };
+      };
+    };
+  }();
+
+  // output/Data.Array.ST/foreign.js
+  var sortByImpl2 = function() {
+    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from2, to) {
+      var mid;
+      var i2;
+      var j;
+      var k;
+      var x;
+      var y;
+      var c;
+      mid = from2 + (to - from2 >> 1);
+      if (mid - from2 > 1)
+        mergeFromTo(compare2, fromOrdering, xs2, xs1, from2, mid);
+      if (to - mid > 1)
+        mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
+      i2 = from2;
+      j = mid;
+      k = from2;
+      while (i2 < mid && j < to) {
+        x = xs2[i2];
+        y = xs2[j];
+        c = fromOrdering(compare2(x)(y));
+        if (c > 0) {
+          xs1[k++] = y;
+          ++j;
+        } else {
+          xs1[k++] = x;
+          ++i2;
+        }
+      }
+      while (i2 < mid) {
+        xs1[k++] = xs2[i2++];
+      }
+      while (j < to) {
+        xs1[k++] = xs2[j++];
+      }
+    }
+    return function(compare2) {
+      return function(fromOrdering) {
+        return function(xs) {
+          return function() {
+            if (xs.length < 2)
+              return xs;
+            mergeFromTo(compare2, fromOrdering, xs, xs.slice(0), 0, xs.length);
+            return xs;
+          };
+        };
+      };
+    };
+  }();
+
+  // output/Data.Array/index.js
+  var fromJust4 = /* @__PURE__ */ fromJust();
+  var findIndex = /* @__PURE__ */ function() {
+    return findIndexImpl(Just.create)(Nothing.value);
+  }();
+  var deleteAt = /* @__PURE__ */ function() {
+    return _deleteAt(Just.create)(Nothing.value);
+  }();
+  var deleteBy = function(v) {
+    return function(v1) {
+      return function(v2) {
+        if (v2.length === 0) {
+          return [];
+        }
+        ;
+        return maybe(v2)(function(i2) {
+          return fromJust4(deleteAt(i2)(v2));
+        })(findIndex(v(v1))(v2));
+      };
+    };
+  };
+
+  // output/Data.Set/index.js
+  var foldMap2 = /* @__PURE__ */ foldMap(foldableList);
+  var foldl2 = /* @__PURE__ */ foldl(foldableList);
+  var foldr3 = /* @__PURE__ */ foldr(foldableList);
+  var $$Set = function(x) {
+    return x;
+  };
+  var toList = function(v) {
+    return keys(v);
+  };
+  var fromMap = $$Set;
+  var foldableSet = {
+    foldMap: function(dictMonoid) {
+      var foldMap12 = foldMap2(dictMonoid);
+      return function(f) {
+        var $129 = foldMap12(f);
+        return function($130) {
+          return $129(toList($130));
+        };
+      };
+    },
+    foldl: function(f) {
+      return function(x) {
+        var $131 = foldl2(f)(x);
+        return function($132) {
+          return $131(toList($132));
+        };
+      };
+    },
+    foldr: function(f) {
+      return function(x) {
+        var $133 = foldr3(f)(x);
+        return function($134) {
+          return $133(toList($134));
+        };
+      };
+    }
+  };
+
+  // output/Data.Map/index.js
+  var keys2 = /* @__PURE__ */ function() {
+    var $38 = $$void(functorMap);
+    return function($39) {
+      return fromMap($38($39));
+    };
+  }();
 
   // output/ExpantaNum/foreign.js
   (function(globalScope) {
@@ -4200,6 +4569,7 @@
     return x.toStringWithDecimalPlaces(places, applyToOpNums);
   };
   var _fromString = ExpantaNum.fromString;
+  var _fromNumber = ExpantaNum.fromNumber;
 
   // output/ExpantaNum/index.js
   var zero2 = _zero;
@@ -4211,6 +4581,11 @@
     };
   };
   var toString = _toString;
+  var toPower = function(a2) {
+    return function(b2) {
+      return _toPower(a2, b2);
+    };
+  };
   var times = function(a2) {
     return function(b2) {
       return _times(a2, b2);
@@ -4223,9 +4598,20 @@
       };
     };
   };
+  var sumGeometricSeries = function(a2) {
+    return function(b2) {
+      return function(c) {
+        return function(d) {
+          return _sumGeometricSeries(a2, b2, c, d);
+        };
+      };
+    };
+  };
   var showEN = {
     show: toString
   };
+  var reciprocate = _reciprocate;
+  var pow = toPower;
   var plus = function(a2) {
     return function(b2) {
       return _plus(a2, b2);
@@ -4255,9 +4641,12 @@
       return semiringEN;
     }
   };
+  var isPositive = _isPositive;
+  var isPos = isPositive;
   var grahamsNumber = _grahamsNumber;
   var fromString = _fromString;
   var mkEN = fromString;
+  var fromNumber = _fromNumber;
   var equalTo = function(a2) {
     return function(b2) {
       return _equalsTo(a2, b2);
@@ -4293,18 +4682,29 @@
     }
   };
   var ceil = _ceiling;
+  var affordGeometricSeries = function(a2) {
+    return function(b2) {
+      return function(c) {
+        return function(d) {
+          return _affordGeometricSeries(a2, b2, c, d);
+        };
+      };
+    };
+  };
 
   // output/Count.State/index.js
   var add2 = /* @__PURE__ */ add(semiringEN);
-  var update2 = /* @__PURE__ */ update(ordString);
   var mul2 = /* @__PURE__ */ mul(semiringEN);
-  var foldr3 = /* @__PURE__ */ foldr(foldableArray);
-  var foldr1 = /* @__PURE__ */ foldr(foldableMap);
-  var eq2 = /* @__PURE__ */ eq(eqEN);
-  var show2 = /* @__PURE__ */ show(showEN);
   var lookup2 = /* @__PURE__ */ lookup(ordString);
   var sub2 = /* @__PURE__ */ sub(ringEN);
   var insert2 = /* @__PURE__ */ insert(ordString);
+  var foldr4 = /* @__PURE__ */ foldr(foldableSet);
+  var update2 = /* @__PURE__ */ update(ordString);
+  var foldr1 = /* @__PURE__ */ foldr(foldableArray);
+  var foldr22 = /* @__PURE__ */ foldr(foldableMap);
+  var eq2 = /* @__PURE__ */ eq(eqEN);
+  var show2 = /* @__PURE__ */ show(showEN);
+  var lessThan2 = /* @__PURE__ */ lessThan(ordEN);
   var TCount = /* @__PURE__ */ function() {
     function TCount2() {
     }
@@ -4322,12 +4722,51 @@
     };
     return TIncreaser2;
   }();
+  var updateIncreaser = function(n) {
+    return function(inc) {
+      return {
+        name: inc.name,
+        isVisible: inc.isVisible,
+        owned: add2(inc.owned)(n),
+        bought: add2(inc.bought)(n),
+        baseCost: inc.baseCost,
+        cost: mul2(inc.cost)(pow(inc.costPerPurch)(n)),
+        costPerPurch: inc.costPerPurch,
+        multiplier: mul2(inc.multiplier)(pow(inc.multPerPurch)(n)),
+        multPerPurch: inc.multPerPurch,
+        targets: inc.targets
+      };
+    };
+  };
+  var tickSpeedIncreaser = {
+    name: "Tickspeed Increaser",
+    isVisible: true,
+    owned: zero2,
+    bought: zero2,
+    baseCost: one2,
+    cost: one2,
+    costPerPurch: /* @__PURE__ */ mkEN("5"),
+    multiplier: one2,
+    multPerPurch: /* @__PURE__ */ mkEN("1.02"),
+    targets: []
+  };
+  var setTickSpeed = function(state3) {
+    return {
+      count: state3.count,
+      manualPower: state3.manualPower,
+      tickSpeed: state3.tickSpeedInc.multiplier,
+      increasers: state3.increasers,
+      settings: state3.settings,
+      tickSpeedInc: state3.tickSpeedInc
+    };
+  };
   var newIncreasers = /* @__PURE__ */ function() {
     return fromFoldable(ordString)(foldableArray)([new Tuple("1", {
       name: "Count Increaser",
-      displayPrio: 1,
+      isVisible: true,
       owned: zero2,
       bought: zero2,
+      baseCost: one2,
       cost: one2,
       costPerPurch: mkEN("1.25"),
       multiplier: one2,
@@ -4335,9 +4774,10 @@
       targets: [TCount.value]
     }), new Tuple("2", {
       name: "Count Increaser Increaser",
-      displayPrio: 2,
+      isVisible: true,
       owned: zero2,
       bought: zero2,
+      baseCost: mkEN("1000"),
       cost: mkEN("1000"),
       costPerPurch: mkEN("1.25"),
       multiplier: one2,
@@ -4345,28 +4785,76 @@
       targets: [new TIncreaser("1")]
     }), new Tuple("3", {
       name: "Count In3ser",
-      displayPrio: 3,
+      isVisible: true,
       owned: zero2,
       bought: zero2,
-      cost: mkEN("1000000"),
+      baseCost: mkEN("1e6"),
+      cost: mkEN("1e6"),
       costPerPurch: mkEN("1.25"),
       multiplier: one2,
       multPerPurch: mkEN("1.08"),
       targets: [new TIncreaser("2")]
     })]);
   }();
-  var newGlobalState = {
-    count: zero2,
-    manualPower: one2,
-    tickSpeed: one2,
-    increasers: newIncreasers
+  var maxTickSpeed = function(state3) {
+    var amountToBuy = affordGeometricSeries(state3.count)(state3.tickSpeedInc.baseCost)(state3.tickSpeedInc.costPerPurch)(state3.tickSpeedInc.bought);
+    var $29 = !isPos(amountToBuy);
+    if ($29) {
+      return state3;
+    }
+    ;
+    var totalCost = sumGeometricSeries(amountToBuy)(state3.tickSpeedInc.baseCost)(state3.tickSpeedInc.costPerPurch)(state3.tickSpeedInc.bought);
+    return {
+      count: state3.count,
+      manualPower: state3.manualPower,
+      tickSpeed: state3.tickSpeed,
+      increasers: state3.increasers,
+      settings: state3.settings,
+      tickSpeedInc: updateIncreaser(amountToBuy)(state3.tickSpeedInc)
+    };
+  };
+  var maxIncreaser = function(id2) {
+    return function(state3) {
+      var v = lookup2(id2)(state3.increasers);
+      if (v instanceof Nothing) {
+        return state3;
+      }
+      ;
+      if (v instanceof Just) {
+        var amountToBuy = affordGeometricSeries(state3.count)(v.value0.baseCost)(v.value0.costPerPurch)(v.value0.bought);
+        var $31 = !isPos(amountToBuy);
+        if ($31) {
+          return state3;
+        }
+        ;
+        var totalCost = sumGeometricSeries(amountToBuy)(v.value0.baseCost)(v.value0.costPerPurch)(v.value0.bought);
+        return {
+          count: sub2(state3.count)(totalCost),
+          manualPower: state3.manualPower,
+          tickSpeed: state3.tickSpeed,
+          increasers: insert2(id2)(updateIncreaser(amountToBuy)(v.value0))(state3.increasers),
+          settings: state3.settings,
+          tickSpeedInc: state3.tickSpeedInc
+        };
+      }
+      ;
+      throw new Error("Failed pattern match at Count.State (line 157, column 25 - line 166, column 4): " + [v.constructor.name]);
+    };
+  };
+  var maxAllIncreasers = function(s) {
+    return foldr4(maxIncreaser)(s)(keys2(s.increasers));
+  };
+  var maxAll = function($42) {
+    return maxAllIncreasers(maxTickSpeed($42));
   };
   var manualCount = function(state3) {
     return {
       count: add2(state3.count)(state3.manualPower),
       manualPower: state3.manualPower,
       tickSpeed: state3.tickSpeed,
-      increasers: state3.increasers
+      increasers: state3.increasers,
+      settings: state3.settings,
+      tickSpeedInc: state3.tickSpeedInc
     };
   };
   var handleTarget = function(state3) {
@@ -4374,10 +4862,12 @@
       return function(delta) {
         if (target6 instanceof TCount) {
           return {
-            count: ceil(add2(state3.count)(delta)),
+            count: add2(state3.count)(delta),
             manualPower: state3.manualPower,
             tickSpeed: state3.tickSpeed,
-            increasers: state3.increasers
+            increasers: state3.increasers,
+            settings: state3.settings,
+            tickSpeedInc: state3.tickSpeedInc
           };
         }
         ;
@@ -4389,20 +4879,23 @@
             increasers: update2(function(inc) {
               return new Just({
                 owned: ceil(add2(inc.owned)(delta)),
+                baseCost: inc.baseCost,
                 bought: inc.bought,
                 cost: inc.cost,
                 costPerPurch: inc.costPerPurch,
-                displayPrio: inc.displayPrio,
+                isVisible: inc.isVisible,
                 multPerPurch: inc.multPerPurch,
                 multiplier: inc.multiplier,
                 name: inc.name,
                 targets: inc.targets
               });
-            })(target6.value0)(state3.increasers)
+            })(target6.value0)(state3.increasers),
+            settings: state3.settings,
+            tickSpeedInc: state3.tickSpeedInc
           };
         }
         ;
-        throw new Error("Failed pattern match at Count.State (line 76, column 35 - line 78, column 128): " + [target6.constructor.name]);
+        throw new Error("Failed pattern match at Count.State (line 107, column 35 - line 109, column 128): " + [target6.constructor.name]);
       };
     };
   };
@@ -4410,7 +4903,7 @@
     return function(inc) {
       return function(state3) {
         var delta = mul2(mul2(inc.owned)(inc.multiplier))(speed);
-        return foldr3(function(t) {
+        return foldr1(function(t) {
           return function(st) {
             return handleTarget(st)(t)(delta);
           };
@@ -4418,18 +4911,61 @@
       };
     };
   };
-  var tick = function(speed) {
-    return function(state3) {
-      return foldr1(handleIncreaser(speed))(state3)(state3.increasers);
-    };
+  var tickIncreasers = function(state3) {
+    var speed = mul2(state3.tickSpeed)(reciprocate(fromNumber(state3.settings.updateRate)));
+    return foldr22(handleIncreaser(speed))(state3)(state3.increasers);
+  };
+  var tick = function($43) {
+    return tickIncreasers(setTickSpeed($43));
+  };
+  var getCountPerSecond = function(state3) {
+    var countIncreaserContrib = function() {
+      var v = lookup2("1")(state3.increasers);
+      if (v instanceof Nothing) {
+        return one2;
+      }
+      ;
+      if (v instanceof Just) {
+        return mul2(v.value0.owned)(v.value0.multiplier);
+      }
+      ;
+      throw new Error("Failed pattern match at Count.State (line 184, column 27 - line 186, column 43): " + [v.constructor.name]);
+    }();
+    return mul2(countIncreaserContrib)(state3.tickSpeed);
   };
   var displayEN = function(n) {
-    var $21 = eq2(n)(zero2);
-    if ($21) {
+    var $37 = eq2(n)(zero2);
+    if ($37) {
       return show2(n);
     }
     ;
     return toStringWithDecimalPlaces(n)(3)(true);
+  };
+  var defaultSettings = {
+    updateRate: 30
+  };
+  var newGlobalState = {
+    count: zero2,
+    manualPower: one2,
+    tickSpeed: one2,
+    tickSpeedInc: tickSpeedIncreaser,
+    increasers: newIncreasers,
+    settings: defaultSettings
+  };
+  var buyTickSpeed = function(state3) {
+    var $38 = lessThan2(state3.count)(state3.tickSpeedInc.cost);
+    if ($38) {
+      return state3;
+    }
+    ;
+    return {
+      count: state3.count,
+      manualPower: state3.manualPower,
+      tickSpeed: state3.tickSpeed,
+      increasers: state3.increasers,
+      settings: state3.settings,
+      tickSpeedInc: updateIncreaser(one2)(state3.tickSpeedInc)
+    };
   };
   var buyIncreaser = function(id2) {
     return function(state3) {
@@ -4439,25 +4975,22 @@
       }
       ;
       if (v instanceof Just) {
+        var $40 = lessThan2(state3.count)(v.value0.cost);
+        if ($40) {
+          return state3;
+        }
+        ;
         return {
           count: sub2(state3.count)(v.value0.cost),
           manualPower: state3.manualPower,
           tickSpeed: state3.tickSpeed,
-          increasers: insert2(id2)({
-            owned: add2(v.value0.owned)(one2),
-            bought: add2(v.value0.bought)(one2),
-            cost: ceil(mul2(v.value0.cost)(v.value0.costPerPurch)),
-            multiplier: mul2(v.value0.multiplier)(v.value0.multPerPurch),
-            costPerPurch: v.value0.costPerPurch,
-            displayPrio: v.value0.displayPrio,
-            multPerPurch: v.value0.multPerPurch,
-            name: v.value0.name,
-            targets: v.value0.targets
-          })(state3.increasers)
+          increasers: insert2(id2)(updateIncreaser(one2)(v.value0))(state3.increasers),
+          settings: state3.settings,
+          tickSpeedInc: state3.tickSpeedInc
         };
       }
       ;
-      throw new Error("Failed pattern match at Count.State (line 91, column 25 - line 101, column 4): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Count.State (line 140, column 25 - line 145, column 4): " + [v.constructor.name]);
     };
   };
 
@@ -4526,15 +5059,15 @@
     }
     var Scheduler = function() {
       var limit = 1024;
-      var size4 = 0;
+      var size5 = 0;
       var ix = 0;
       var queue = new Array(limit);
       var draining = false;
       function drain() {
         var thunk;
         draining = true;
-        while (size4 !== 0) {
-          size4--;
+        while (size5 !== 0) {
+          size5--;
           thunk = queue[ix];
           queue[ix] = void 0;
           ix = (ix + 1) % limit;
@@ -4548,13 +5081,13 @@
         },
         enqueue: function(cb) {
           var i2, tmp;
-          if (size4 === limit) {
+          if (size5 === limit) {
             tmp = draining;
             drain();
             draining = tmp;
           }
-          queue[(ix + size4) % limit] = cb;
-          size4++;
+          queue[(ix + size5) % limit] = cb;
+          size5++;
           if (!draining) {
             drain();
           }
@@ -5783,206 +6316,6 @@
     return Action3;
   }();
 
-  // output/Data.Array/foreign.js
-  var replicateFill = function(count) {
-    return function(value12) {
-      if (count < 1) {
-        return [];
-      }
-      var result = new Array(count);
-      return result.fill(value12);
-    };
-  };
-  var replicatePolyfill = function(count) {
-    return function(value12) {
-      var result = [];
-      var n = 0;
-      for (var i2 = 0; i2 < count; i2++) {
-        result[n++] = value12;
-      }
-      return result;
-    };
-  };
-  var replicate = typeof Array.prototype.fill === "function" ? replicateFill : replicatePolyfill;
-  var fromFoldableImpl = function() {
-    function Cons3(head3, tail) {
-      this.head = head3;
-      this.tail = tail;
-    }
-    var emptyList = {};
-    function curryCons(head3) {
-      return function(tail) {
-        return new Cons3(head3, tail);
-      };
-    }
-    function listToArray(list) {
-      var result = [];
-      var count = 0;
-      var xs = list;
-      while (xs !== emptyList) {
-        result[count++] = xs.head;
-        xs = xs.tail;
-      }
-      return result;
-    }
-    return function(foldr5) {
-      return function(xs) {
-        return listToArray(foldr5(curryCons)(emptyList)(xs));
-      };
-    };
-  }();
-  var length2 = function(xs) {
-    return xs.length;
-  };
-  var findIndexImpl = function(just) {
-    return function(nothing) {
-      return function(f) {
-        return function(xs) {
-          for (var i2 = 0, l = xs.length; i2 < l; i2++) {
-            if (f(xs[i2]))
-              return just(i2);
-          }
-          return nothing;
-        };
-      };
-    };
-  };
-  var _deleteAt = function(just) {
-    return function(nothing) {
-      return function(i2) {
-        return function(l) {
-          if (i2 < 0 || i2 >= l.length)
-            return nothing;
-          var l1 = l.slice();
-          l1.splice(i2, 1);
-          return just(l1);
-        };
-      };
-    };
-  };
-  var sortByImpl = function() {
-    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from2, to) {
-      var mid;
-      var i2;
-      var j;
-      var k;
-      var x;
-      var y;
-      var c;
-      mid = from2 + (to - from2 >> 1);
-      if (mid - from2 > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, from2, mid);
-      if (to - mid > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
-      i2 = from2;
-      j = mid;
-      k = from2;
-      while (i2 < mid && j < to) {
-        x = xs2[i2];
-        y = xs2[j];
-        c = fromOrdering(compare2(x)(y));
-        if (c > 0) {
-          xs1[k++] = y;
-          ++j;
-        } else {
-          xs1[k++] = x;
-          ++i2;
-        }
-      }
-      while (i2 < mid) {
-        xs1[k++] = xs2[i2++];
-      }
-      while (j < to) {
-        xs1[k++] = xs2[j++];
-      }
-    }
-    return function(compare2) {
-      return function(fromOrdering) {
-        return function(xs) {
-          var out;
-          if (xs.length < 2)
-            return xs;
-          out = xs.slice(0);
-          mergeFromTo(compare2, fromOrdering, out, xs.slice(0), 0, xs.length);
-          return out;
-        };
-      };
-    };
-  }();
-
-  // output/Data.Array.ST/foreign.js
-  var sortByImpl2 = function() {
-    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from2, to) {
-      var mid;
-      var i2;
-      var j;
-      var k;
-      var x;
-      var y;
-      var c;
-      mid = from2 + (to - from2 >> 1);
-      if (mid - from2 > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, from2, mid);
-      if (to - mid > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
-      i2 = from2;
-      j = mid;
-      k = from2;
-      while (i2 < mid && j < to) {
-        x = xs2[i2];
-        y = xs2[j];
-        c = fromOrdering(compare2(x)(y));
-        if (c > 0) {
-          xs1[k++] = y;
-          ++j;
-        } else {
-          xs1[k++] = x;
-          ++i2;
-        }
-      }
-      while (i2 < mid) {
-        xs1[k++] = xs2[i2++];
-      }
-      while (j < to) {
-        xs1[k++] = xs2[j++];
-      }
-    }
-    return function(compare2) {
-      return function(fromOrdering) {
-        return function(xs) {
-          return function() {
-            if (xs.length < 2)
-              return xs;
-            mergeFromTo(compare2, fromOrdering, xs, xs.slice(0), 0, xs.length);
-            return xs;
-          };
-        };
-      };
-    };
-  }();
-
-  // output/Data.Array/index.js
-  var fromJust4 = /* @__PURE__ */ fromJust();
-  var findIndex = /* @__PURE__ */ function() {
-    return findIndexImpl(Just.create)(Nothing.value);
-  }();
-  var deleteAt = /* @__PURE__ */ function() {
-    return _deleteAt(Just.create)(Nothing.value);
-  }();
-  var deleteBy = function(v) {
-    return function(v1) {
-      return function(v2) {
-        if (v2.length === 0) {
-          return [];
-        }
-        ;
-        return maybe(v2)(function(i2) {
-          return fromJust4(deleteAt(i2)(v2));
-        })(findIndex(v(v1))(v2));
-      };
-    };
-  };
-
   // output/Data.Nullable/foreign.js
   var nullImpl = null;
   function nullable(a2, r, f) {
@@ -6691,7 +7024,7 @@
       return r;
     };
   }
-  var keys = Object.keys || toArrayWithKey(function(k) {
+  var keys3 = Object.keys || toArrayWithKey(function(k) {
     return function() {
       return k;
     };
@@ -7357,10 +7690,10 @@
       throw new Error("Failed pattern match at Data.CatList (line 108, column 1 - line 108, column 54): " + [v.constructor.name, v1.constructor.name]);
     };
   };
-  var foldr4 = function(k) {
+  var foldr5 = function(k) {
     return function(b2) {
       return function(q2) {
-        var foldl2 = function($copy_v) {
+        var foldl3 = function($copy_v) {
           return function($copy_v1) {
             return function($copy_v2) {
               var $tco_var_v = $copy_v;
@@ -7400,7 +7733,7 @@
               var v = uncons2(xs);
               if (v instanceof Nothing) {
                 $tco_done1 = true;
-                return foldl2(function(x) {
+                return foldl3(function(x) {
                   return function(i2) {
                     return i2(x);
                   };
@@ -7439,7 +7772,7 @@
           return CatNil.value;
         }
         ;
-        return foldr4(link)(CatNil.value)(v.value1);
+        return foldr5(link)(CatNil.value)(v.value1);
       }()));
     }
     ;
@@ -8060,8 +8393,16 @@
     return element(Nothing.value);
   }();
   var h1 = /* @__PURE__ */ element2("h1");
+  var h2 = /* @__PURE__ */ element2("h2");
   var h3 = /* @__PURE__ */ element2("h3");
+  var h3_ = /* @__PURE__ */ h3([]);
   var h4 = /* @__PURE__ */ element2("h4");
+  var h4_ = /* @__PURE__ */ h4([]);
+  var h5 = /* @__PURE__ */ element2("h5");
+  var table = /* @__PURE__ */ element2("table");
+  var td = /* @__PURE__ */ element2("td");
+  var tr = /* @__PURE__ */ element2("tr");
+  var tr_ = /* @__PURE__ */ tr([]);
   var div2 = /* @__PURE__ */ element2("div");
   var button = /* @__PURE__ */ element2("button");
   var button_ = /* @__PURE__ */ button([]);
@@ -8102,11 +8443,12 @@
   var forever2 = /* @__PURE__ */ forever(monadRecAff);
   var discard2 = /* @__PURE__ */ discard(discardUnit)(bindAff);
   var liftEffect3 = /* @__PURE__ */ liftEffect(monadEffectAff);
-  var append5 = /* @__PURE__ */ append(semigroupArray);
-  var map8 = /* @__PURE__ */ map(functorArray);
   var greaterThanOrEq2 = /* @__PURE__ */ greaterThanOrEq(ordEN);
-  var toUnfoldable3 = /* @__PURE__ */ toUnfoldable(unfoldableArray);
+  var map8 = /* @__PURE__ */ map(functorArray);
+  var toUnfoldable4 = /* @__PURE__ */ toUnfoldable(unfoldableArray);
+  var eq3 = /* @__PURE__ */ eq(eqEN);
   var bind3 = /* @__PURE__ */ bind(bindHalogenM);
+  var get2 = /* @__PURE__ */ get(monadStateHalogenM);
   var bindFlipped4 = /* @__PURE__ */ bindFlipped(bindHalogenM);
   var pure5 = /* @__PURE__ */ pure(applicativeHalogenM);
   var modify_3 = /* @__PURE__ */ modify_2(monadStateHalogenM);
@@ -8141,6 +8483,47 @@
     Tick2.value = new Tick2();
     return Tick2;
   }();
+  var MaxIncreaser = /* @__PURE__ */ function() {
+    function MaxIncreaser2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    MaxIncreaser2.create = function(value0) {
+      return new MaxIncreaser2(value0);
+    };
+    return MaxIncreaser2;
+  }();
+  var BuyTickSpeed = /* @__PURE__ */ function() {
+    function BuyTickSpeed2() {
+    }
+    ;
+    BuyTickSpeed2.value = new BuyTickSpeed2();
+    return BuyTickSpeed2;
+  }();
+  var MaxTickSpeed = /* @__PURE__ */ function() {
+    function MaxTickSpeed2() {
+    }
+    ;
+    MaxTickSpeed2.value = new MaxTickSpeed2();
+    return MaxTickSpeed2;
+  }();
+  var MaxAll = /* @__PURE__ */ function() {
+    function MaxAll2() {
+    }
+    ;
+    MaxAll2.value = new MaxAll2();
+    return MaxAll2;
+  }();
+  var Debug = /* @__PURE__ */ function() {
+    function Debug2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    Debug2.create = function(value0) {
+      return new Debug2(value0);
+    };
+    return Debug2;
+  }();
   var timer = function(dictMonadAff) {
     var MonadEffect0 = dictMonadAff.MonadEffect0();
     var Monad0 = MonadEffect0.Monad0();
@@ -8148,32 +8531,61 @@
     var liftEffect12 = liftEffect(MonadEffect0);
     var liftAff2 = liftAff(dictMonadAff);
     var pure13 = pure(Monad0.Applicative0());
-    return function(val) {
-      return bind15(liftEffect12(create))(function(v) {
-        return bind15(liftAff2(forkAff(forever2(discard2(delay(30))(function() {
-          return liftEffect3(notify(v.listener)(val));
-        })))))(function() {
-          return pure13(v.emitter);
+    return function(tickRate) {
+      return function(val) {
+        return bind15(liftEffect12(create))(function(v) {
+          return bind15(liftAff2(forkAff(forever2(discard2(delay(tickRate))(function() {
+            return liftEffect3(notify(v.listener)(val));
+          })))))(function() {
+            return pure13(v.emitter);
+          });
         });
-      });
+      };
+    };
+  };
+  var makeIncreaserRow = function(state3) {
+    return function(v) {
+      var bm = [style("display: inline-block; width: 15%; align: center")];
+      return tr_([td(bm)([h3_([text(v.value1.name)])]), td(bm)([h4_([text("\xD7" + displayEN(v.value1.multiplier))])]), td(bm)([h3_([text(displayEN(v.value1.owned))])]), function() {
+        var $45 = greaterThanOrEq2(state3.count)(v.value1.cost);
+        if ($45) {
+          return td(bm)([button([onClick(function(v1) {
+            return new BuyIncreaser(v.value0);
+          })])([text("Buy for " + displayEN(v.value1.cost))])]);
+        }
+        ;
+        return td(bm)([button_([text("Can't Afford " + displayEN(v.value1.cost))])]);
+      }(), td(bm)([button([onClick(function(v1) {
+        return new MaxIncreaser(v.value0);
+      })])([text("Buy Max")])])]);
     };
   };
   var render = function(state3) {
+    var increaserRows = map8(makeIncreaserRow(state3))(toUnfoldable4(state3.increasers));
     var blockmargin = [style("display: inline-block; margin-right: 20px")];
-    return div2([style("text-align: center;")])(append5([h4(blockmargin)([text("You have")]), h1(blockmargin)([text(displayEN(state3.count))]), h4(blockmargin)([text("Count.")]), br_, button([onClick(function(v) {
+    return div2([style("text-align: center;")])([h4(blockmargin)([text("You have")]), h1(blockmargin)([text(displayEN(state3.count))]), h4(blockmargin)([text("Count.")]), br_, h5(blockmargin)([text("You are making")]), h3(blockmargin)([text(displayEN(getCountPerSecond(state3)))]), h5(blockmargin)([text("Count per second.")]), br_, h5(blockmargin)([text("Ticks are ticking")]), h3(blockmargin)([text(displayEN(state3.tickSpeed))]), h5(blockmargin)([text(function() {
+      var $48 = eq3(state3.tickSpeed)(one2);
+      if ($48) {
+        return "time per second.";
+      }
+      ;
+      return "times per second.";
+    }())]), br_, button([onClick(function(v) {
       return Increment.value;
-    })])([text("Increment Count")])])(map8(function(v) {
-      return div2([style("text-align: center;")])([h3(blockmargin)([text(v.value1.name)]), h4(blockmargin)([text("\xD7" + displayEN(v.value1.multiplier))]), h3(blockmargin)([text(displayEN(v.value1.owned))]), function() {
-        var $38 = greaterThanOrEq2(state3.count)(v.value1.cost);
-        if ($38) {
-          return button([onClick(function(v1) {
-            return new BuyIncreaser(v.value0);
-          })])([text("Buy for " + displayEN(v.value1.cost))]);
-        }
-        ;
-        return button_([text("Can't Afford " + displayEN(v.value1.cost))]);
-      }()]);
-    })(toUnfoldable3(state3.increasers))));
+    })])([text("Increment Count")]), button([onClick(function(v) {
+      return MaxAll.value;
+    })])([text("Max All")]), br_, h2(blockmargin)([text("Multiply Tickspeed by " + displayEN(state3.tickSpeedInc.multPerPurch))]), function() {
+      var $49 = greaterThanOrEq2(state3.count)(state3.tickSpeedInc.cost);
+      if ($49) {
+        return button([onClick(function(v) {
+          return BuyTickSpeed.value;
+        })])([text("Buy for " + displayEN(state3.tickSpeedInc.cost))]);
+      }
+      ;
+      return button_([text("Can't Afford " + displayEN(state3.tickSpeedInc.cost))]);
+    }(), button([onClick(function(v) {
+      return MaxTickSpeed.value;
+    })])([text("Buy Max")]), br_, table([style("table-layout: fixed; width: 75%; margin-left: auto; margin-right: auto")])(increaserRows)]);
   };
   var initialState = function(v) {
     return newGlobalState;
@@ -8182,30 +8594,57 @@
     var timer1 = timer(monadAffHalogenM(dictMonadAff));
     return function(v) {
       if (v instanceof Initialize2) {
-        return bind3(bindFlipped4(subscribe2)(timer1(Tick.value)))(function() {
-          return pure5(unit);
+        return bind3(get2)(function(s) {
+          return bind3(bindFlipped4(subscribe2)(timer1(s.settings.updateRate)(Tick.value)))(function() {
+            return pure5(unit);
+          });
         });
       }
       ;
       if (v instanceof Increment) {
-        return modify_3(function(state3) {
-          return manualCount(state3);
-        });
+        return modify_3(manualCount);
       }
       ;
       if (v instanceof BuyIncreaser) {
-        return modify_3(function(state3) {
-          return buyIncreaser(v.value0)(state3);
-        });
+        return modify_3(buyIncreaser(v.value0));
       }
       ;
       if (v instanceof Tick) {
+        return modify_3(tick);
+      }
+      ;
+      if (v instanceof BuyTickSpeed) {
+        return modify_3(buyTickSpeed);
+      }
+      ;
+      if (v instanceof MaxIncreaser) {
+        return modify_3(maxIncreaser(v.value0));
+      }
+      ;
+      if (v instanceof MaxTickSpeed) {
+        return modify_3(maxTickSpeed);
+      }
+      ;
+      if (v instanceof MaxAll) {
+        return modify_3(maxAll);
+      }
+      ;
+      if (v instanceof Debug) {
         return modify_3(function(state3) {
-          return tick(one2)(state3);
+          var $54 = {};
+          for (var $55 in state3) {
+            if ({}.hasOwnProperty.call(state3, $55)) {
+              $54[$55] = state3[$55];
+            }
+            ;
+          }
+          ;
+          $54.count = grahamsNumber;
+          return $54;
         });
       }
       ;
-      throw new Error("Failed pattern match at Count.RootComponent (line 72, column 16 - line 81, column 39): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Count.RootComponent (line 96, column 16 - line 116, column 80): " + [v.constructor.name]);
     };
   };
   var rootComponent = function(dictMonadAff) {

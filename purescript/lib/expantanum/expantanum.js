@@ -1881,3 +1881,4 @@ export const _toStringWithDecimalPlaces = function (x, places, applyToOpNums) {
     return x.toStringWithDecimalPlaces(places, applyToOpNums);
 }
 export const _fromString = ExpantaNum.fromString;
+export const _fromNumber = ExpantaNum.fromNumber;

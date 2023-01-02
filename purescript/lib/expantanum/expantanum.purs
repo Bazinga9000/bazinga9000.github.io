@@ -16,6 +16,7 @@ module ExpantaNum
   , fact
   , factorial
   , floor
+  , fromNumber
   , fromString
   , gamma
   , generalLogarithm
@@ -174,6 +175,7 @@ foreign import _toNumber :: EN -> Number
 foreign import _toPrecision :: Fn3 EN Int Boolean String
 foreign import _toStringWithDecimalPlaces :: Fn3 EN Int Boolean String
 foreign import _fromString :: String -> EN
+foreign import _fromNumber :: Number -> EN
 -------------------------------------------
 -- UNCURRIED/UNUNDERSCORED DERIVATIONS
 -- These are what are actually exported
@@ -356,6 +358,8 @@ toStringWithDecimalPlaces :: EN -> Int -> Boolean -> String
 toStringWithDecimalPlaces a b c = runFn3 _toStringWithDecimalPlaces a b c
 fromString :: String -> EN
 fromString = _fromString
+fromNumber :: Number -> EN
+fromNumber = _fromNumber
 mkEN :: String -> EN
 mkEN = fromString
 -------------------------------------------

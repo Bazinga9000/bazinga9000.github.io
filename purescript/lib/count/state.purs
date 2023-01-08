@@ -1,12 +1,14 @@
 module Count.State where
 
-import Prelude hiding (zero, one)
-import ExpantaNum
 import Data.Foldable
 import Data.Map
-import Data.Map as M
-import Data.Tuple
 import Data.Maybe
+import Data.Tuple
+import ExpantaNum
+import Prelude hiding (zero, one)
+
+import Count.Constants as C
+import Data.Map as M
 
 type GlobalState = {
     count :: EN, --the almighty count
@@ -33,7 +35,7 @@ newGlobalState = {
 
 defaultSettings :: Settings
 defaultSettings = {
-    updateRate: 30.0
+    updateRate: C.defaultUpdateRate
 }
 
 data Target = TCount | TIncreaser String
@@ -57,10 +59,10 @@ tickSpeedIncreaser = {
     owned: zero,
     bought: zero,
     baseCost: one,
-    cost: one,
-    costPerPurch: mkEN "5",
+    cost: C.baseTickSpeedCost,
+    costPerPurch: C.baseTickSpeedCostScaling,
     multiplier: one,
-    multPerPurch: mkEN "1.02",
+    multPerPurch: C.baseTickSpeedMult,
     targets: []
 }
 
@@ -71,11 +73,11 @@ newIncreasers = M.fromFoldable [
         isVisible: true,
         owned: zero,
         bought: zero,
-        baseCost: one,
-        cost: one,
-        costPerPurch: mkEN "1.25",
+        baseCost: C.baseI1Cost,
+        cost: C.baseI1Cost,
+        costPerPurch: C.baseI1CostScaling,
         multiplier: one,
-        multPerPurch: mkEN "1.08",
+        multPerPurch: C.baseIncreaserMult,
         targets: [TCount]
     },
     Tuple "2" {
@@ -83,11 +85,11 @@ newIncreasers = M.fromFoldable [
         isVisible: true,
         owned: zero,
         bought: zero,
-        baseCost: mkEN "1000",
-        cost: mkEN "1000",
-        costPerPurch: mkEN "1.25",
+        baseCost: C.baseI2Cost,
+        cost: C.baseI2Cost,
+        costPerPurch: C.baseI2CostScaling,
         multiplier: one,
-        multPerPurch: mkEN "1.08",
+        multPerPurch: C.baseIncreaserMult,
         targets: [TIncreaser "1"]
     },
     Tuple "3" {
@@ -95,11 +97,11 @@ newIncreasers = M.fromFoldable [
         isVisible: true,
         owned: zero,
         bought: zero,
-        baseCost: mkEN "1e6",
-        cost: mkEN "1e6",
-        costPerPurch: mkEN "1.25",
+        baseCost: C.baseI3Cost,
+        cost: C.baseI3Cost,
+        costPerPurch: C.baseI3CostScaling,
         multiplier: one,
-        multPerPurch: mkEN "1.08",
+        multPerPurch: C.baseIncreaserMult,
         targets: [TIncreaser "2"]
     }
 ]
@@ -170,7 +172,10 @@ maxTickSpeed state = let inc = state.tickSpeedInc in
   let amountToBuy = affordGeometricSeries state.count inc.baseCost inc.costPerPurch inc.bought in
   if not $ isPos amountToBuy then state else
   let totalCost = sumGeometricSeries amountToBuy inc.baseCost inc.costPerPurch inc.bought in
-  state { tickSpeedInc = updateIncreaser amountToBuy inc}
+  state { 
+    count = state.count - totalCost, 
+    tickSpeedInc = updateIncreaser amountToBuy inc
+  }
 
 maxAll :: GlobalState -> GlobalState
 maxAll = maxTickSpeed >>> maxAllIncreasers

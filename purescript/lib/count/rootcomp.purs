@@ -64,7 +64,7 @@ render state =
             HH.button_ [ HH.text $ "Can't Afford " <> displayEN inc.cost ]
     , HH.button [ HE.onClick \_ -> MaxTickSpeed] [ HH.text $ "Buy Max"]    
     , HH.br_
-    -- , HH.button [ HE.onClick \_ -> Debug GainGrahamsNumberCount] [ HH.text "grahams number"]
+    -- , HH.button [ HE.onClick \_ - Debug GainGrahamsNumberCount] [ HH.text "grahams number"]
     , HH.table [HP.style "table-layout: fixed; width: 75%; margin-left: auto; margin-right: auto"] increaserRows
     ] where
     increaserRows = map (makeIncreaserRow state) (M.toUnfoldable state.increasers)

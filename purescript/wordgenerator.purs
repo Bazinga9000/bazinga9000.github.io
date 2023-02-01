@@ -1,9 +1,9 @@
-module Tsal.CoreInstituteQuiz where
+module WordGenerator where
 
 import Prelude
 import Effect (Effect)
 import Utils.AppRunner
-import Tsal.CoreInstituteQuiz.RootComponent
+import WordGenerator.RootComponent
 
 main :: Effect Unit
 main = runApp rootComponent

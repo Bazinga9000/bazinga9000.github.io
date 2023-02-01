@@ -6,15 +6,12 @@ import Data.Tuple
 import Prelude
 import Tsal.CoreInstituteQuiz.State
 
-import Data.Map as M
 import Data.Tuple as T
-import Effect (Effect)
 import Effect.Aff.Class (class MonadAff)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
-import Halogen.Subscription as HS
 
 data Action = RegisterAnswer String | Back | ShowAll | ShowYours
 

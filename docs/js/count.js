@@ -9748,11 +9748,18 @@
     };
   };
 
+  // output/Utils.AppRunner/index.js
+  var bind6 = /* @__PURE__ */ bind(bindAff);
+  var runApp = function(rootComponent3) {
+    return runHalogenAff(bind6(awaitBody)(function(body2) {
+      return runUI2(rootComponent3)(unit)(body2);
+    }));
+  };
+
   // output/Count/index.js
   var show3 = /* @__PURE__ */ show(showEN);
   var add3 = /* @__PURE__ */ add(semiringEN);
   var show1 = /* @__PURE__ */ show(showString);
-  var bind6 = /* @__PURE__ */ bind(bindAff);
   var rootComponent2 = /* @__PURE__ */ rootComponent(monadAffAff);
   var test = function __do2() {
     log2(show3(grahamsNumber))();
@@ -9763,9 +9770,7 @@
   };
   var main2 = function __do3() {
     test();
-    return runHalogenAff(bind6(awaitBody)(function(body2) {
-      return runUI2(rootComponent2)(unit)(body2);
-    }))();
+    return runApp(rootComponent2)();
   };
 
   // <stdin>

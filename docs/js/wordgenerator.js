@@ -7999,18 +7999,18 @@
   var fold3 = /* @__PURE__ */ fold2(monoidString);
   var replicateM2 = /* @__PURE__ */ replicateM(/* @__PURE__ */ monadGenT(monadIdentity));
   var tsalVowels = ["a", "e", "i", "o", "u"];
-  var tsalInitialConsonants = ["p", "t", "k", "b", "d", "g", "s", "lh", "sh", "x", "z", "zh", "xh", "TS", "ch", "kh", "DZ", "jh", "m", "n", "rh", "r", "l"];
-  var tsalInitialConsonantsWithJ = /* @__PURE__ */ append5(tsalInitialConsonants)(/* @__PURE__ */ singleton7(""));
+  var tsalInitialConsonants = ["p", "t", "k", "b", "d", "g", "s", "lh", "sh", "x", "z", "zh", "xh", "TS", "ch", "kh", "DZ", "j", "m", "n", "rh", "r", "l"];
   var tsalInitialConsonantsWithW = /* @__PURE__ */ append5(tsalInitialConsonants)(/* @__PURE__ */ singleton7(""));
+  var tsalInitialConsonantsWithY = /* @__PURE__ */ append5(tsalInitialConsonants)(/* @__PURE__ */ singleton7(""));
   var tsalFinalConsonants = tsalInitialConsonants;
   var tsalSyllableList = /* @__PURE__ */ function() {
     return bind6(frequency2([new Tuple(2, pure9([])), new Tuple(5, map20(function(x) {
       return [x];
     })(elements2(tsalInitialConsonants))), new Tuple(1, map20(function(x) {
-      return [x, "j"];
-    })(elements2(tsalInitialConsonantsWithW))), new Tuple(1, map20(function(x) {
+      return [x, "y"];
+    })(elements2(tsalInitialConsonantsWithY))), new Tuple(1, map20(function(x) {
       return [x, "w"];
-    })(elements2(tsalInitialConsonantsWithJ)))]))(function(initial) {
+    })(elements2(tsalInitialConsonantsWithW)))]))(function(initial) {
       return bind6(frequency2([new Tuple(2, map20(function(x) {
         return [x];
       })(elements2(tsalVowels))), new Tuple(1, map20(function(x) {

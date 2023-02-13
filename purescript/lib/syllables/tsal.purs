@@ -15,16 +15,16 @@ import Data.String.Pattern
 
 
 tsalConsonants :: NonEmptyArray String
-tsalConsonants = NonEmptyArray ["p","t","k","b","d","g","s","lh","sh","x","z","zh","xh","TS","ch","kh","DZ","jh","m","n","rh","r","l","j","w"]
+tsalConsonants = NonEmptyArray ["p","t","k","b","d","g","s","lh","sh","x","z","zh","xh","TS","ch","kh","DZ","j","m","n","rh","r","l","y","w"]
 
 tsalInitialConsonants :: NonEmptyArray String
-tsalInitialConsonants = NonEmptyArray ["p","t","k","b","d","g","s","lh","sh","x","z","zh","xh","TS","ch","kh","DZ","jh","m","n","rh","r","l"]
+tsalInitialConsonants = NonEmptyArray ["p","t","k","b","d","g","s","lh","sh","x","z","zh","xh","TS","ch","kh","DZ","j","m","n","rh","r","l"]
 
 tsalInitialConsonantsWithW :: NonEmptyArray String
 tsalInitialConsonantsWithW = tsalInitialConsonants <> singleton ""
 
-tsalInitialConsonantsWithJ :: NonEmptyArray String
-tsalInitialConsonantsWithJ = tsalInitialConsonants <> singleton ""
+tsalInitialConsonantsWithY :: NonEmptyArray String
+tsalInitialConsonantsWithY = tsalInitialConsonants <> singleton ""
 
 tsalVowels :: NonEmptyArray String
 tsalVowels = NonEmptyArray ["a", "e", "i", "o", "u"]
@@ -39,8 +39,8 @@ tsalSyllableList = do
     initial <- frequency $ NonEmptyArray [
         Tuple 2.0 $ pure [], -- null initial 
         Tuple 5.0 $ (\x -> [x]) <$> elements tsalInitialConsonants, -- consonant initial 
-        Tuple 1.0 $ (\x -> [x, "j"]) <$> elements tsalInitialConsonantsWithW, -- Cw
-        Tuple 1.0 $ (\x -> [x, "w"]) <$> elements tsalInitialConsonantsWithJ -- Cj
+        Tuple 1.0 $ (\x -> [x, "y"]) <$> elements tsalInitialConsonantsWithY, -- Cj
+        Tuple 1.0 $ (\x -> [x, "w"]) <$> elements tsalInitialConsonantsWithW -- Cw
     ]
     rime <- frequency $ NonEmptyArray [
         Tuple 2.0 $ (\x -> [x]) <$> elements tsalVowels, -- short vowel

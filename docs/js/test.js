@@ -5,8 +5,8 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __commonJS = (cb, mod3) => function __require() {
-    return mod3 || (0, cb[__getOwnPropNames(cb)[0]])((mod3 = { exports: {} }).exports, mod3), mod3.exports;
+  var __commonJS = (cb, mod4) => function __require() {
+    return mod4 || (0, cb[__getOwnPropNames(cb)[0]])((mod4 = { exports: {} }).exports, mod4), mod4.exports;
   };
   var __copyProps = (to, from2, except, desc) => {
     if (from2 && typeof from2 === "object" || typeof from2 === "function") {
@@ -16,9 +16,9 @@
     }
     return to;
   };
-  var __toESM = (mod3, isNodeMode, target) => (target = mod3 != null ? __create(__getProtoOf(mod3)) : {}, __copyProps(
-    isNodeMode || !mod3 || !mod3.__esModule ? __defProp(target, "default", { value: mod3, enumerable: true }) : target,
-    mod3
+  var __toESM = (mod4, isNodeMode, target) => (target = mod4 != null ? __create(__getProtoOf(mod4)) : {}, __copyProps(
+    isNodeMode || !mod4 || !mod4.__esModule ? __defProp(target, "default", { value: mod4, enumerable: true }) : target,
+    mod4
   ));
 
   // ../node_modules/decimal.js/decimal.js
@@ -1476,7 +1476,7 @@
           return x;
         }
         function naturalExponential(x, sd) {
-          var denominator, guard2, j, pow5, sum3, t, wpr, rep = 0, i = 0, k = 0, Ctor = x.constructor, rm = Ctor.rounding, pr = Ctor.precision;
+          var denominator, guard2, j, pow5, sum4, t, wpr, rep = 0, i = 0, k = 0, Ctor = x.constructor, rm = Ctor.rounding, pr = Ctor.precision;
           if (!x.d || !x.d[0] || x.e > 17) {
             return new Ctor(x.d ? !x.d[0] ? 1 : x.s < 0 ? 0 : 1 / 0 : x.s ? x.s < 0 ? 0 : x : 0 / 0);
           }
@@ -1493,35 +1493,35 @@
           }
           guard2 = Math.log(mathpow(2, k)) / Math.LN10 * 2 + 5 | 0;
           wpr += guard2;
-          denominator = pow5 = sum3 = new Ctor(1);
+          denominator = pow5 = sum4 = new Ctor(1);
           Ctor.precision = wpr;
           for (; ; ) {
             pow5 = finalise(pow5.times(x), wpr, 1);
             denominator = denominator.times(++i);
-            t = sum3.plus(divide(pow5, denominator, wpr, 1));
-            if (digitsToString(t.d).slice(0, wpr) === digitsToString(sum3.d).slice(0, wpr)) {
+            t = sum4.plus(divide(pow5, denominator, wpr, 1));
+            if (digitsToString(t.d).slice(0, wpr) === digitsToString(sum4.d).slice(0, wpr)) {
               j = k;
               while (j--)
-                sum3 = finalise(sum3.times(sum3), wpr, 1);
+                sum4 = finalise(sum4.times(sum4), wpr, 1);
               if (sd == null) {
-                if (rep < 3 && checkRoundingDigits(sum3.d, wpr - guard2, rm, rep)) {
+                if (rep < 3 && checkRoundingDigits(sum4.d, wpr - guard2, rm, rep)) {
                   Ctor.precision = wpr += 10;
                   denominator = pow5 = t = new Ctor(1);
                   i = 0;
                   rep++;
                 } else {
-                  return finalise(sum3, Ctor.precision = pr, rm, external = true);
+                  return finalise(sum4, Ctor.precision = pr, rm, external = true);
                 }
               } else {
                 Ctor.precision = pr;
-                return sum3;
+                return sum4;
               }
             }
-            sum3 = t;
+            sum4 = t;
           }
         }
         function naturalLogarithm(y, sd) {
-          var c, c0, denominator, e2, numerator, rep, sum3, t, wpr, x1, x2, n = 1, guard2 = 10, x = y, xd = x.d, Ctor = x.constructor, rm = Ctor.rounding, pr = Ctor.precision;
+          var c, c0, denominator, e2, numerator, rep, sum4, t, wpr, x1, x2, n = 1, guard2 = 10, x = y, xd = x.d, Ctor = x.constructor, rm = Ctor.rounding, pr = Ctor.precision;
           if (x.s < 0 || !xd || !xd[0] || !x.e && xd[0] == 1 && xd.length == 1) {
             return new Ctor(xd && !xd[0] ? -1 / 0 : x.s != 1 ? NaN : xd ? 0 : x);
           }
@@ -1555,32 +1555,32 @@
             return sd == null ? finalise(x, pr, rm, external = true) : x;
           }
           x1 = x;
-          sum3 = numerator = x = divide(x.minus(1), x.plus(1), wpr, 1);
+          sum4 = numerator = x = divide(x.minus(1), x.plus(1), wpr, 1);
           x2 = finalise(x.times(x), wpr, 1);
           denominator = 3;
           for (; ; ) {
             numerator = finalise(numerator.times(x2), wpr, 1);
-            t = sum3.plus(divide(numerator, new Ctor(denominator), wpr, 1));
-            if (digitsToString(t.d).slice(0, wpr) === digitsToString(sum3.d).slice(0, wpr)) {
-              sum3 = sum3.times(2);
+            t = sum4.plus(divide(numerator, new Ctor(denominator), wpr, 1));
+            if (digitsToString(t.d).slice(0, wpr) === digitsToString(sum4.d).slice(0, wpr)) {
+              sum4 = sum4.times(2);
               if (e2 !== 0)
-                sum3 = sum3.plus(getLn10(Ctor, wpr + 2, pr).times(e2 + ""));
-              sum3 = divide(sum3, new Ctor(n), wpr, 1);
+                sum4 = sum4.plus(getLn10(Ctor, wpr + 2, pr).times(e2 + ""));
+              sum4 = divide(sum4, new Ctor(n), wpr, 1);
               if (sd == null) {
-                if (checkRoundingDigits(sum3.d, wpr - guard2, rm, rep)) {
+                if (checkRoundingDigits(sum4.d, wpr - guard2, rm, rep)) {
                   Ctor.precision = wpr += guard2;
                   t = numerator = x = divide(x1.minus(1), x1.plus(1), wpr, 1);
                   x2 = finalise(x.times(x), wpr, 1);
                   denominator = rep = 1;
                 } else {
-                  return finalise(sum3, Ctor.precision = pr, rm, external = true);
+                  return finalise(sum4, Ctor.precision = pr, rm, external = true);
                 }
               } else {
                 Ctor.precision = pr;
-                return sum3;
+                return sum4;
               }
             }
-            sum3 = t;
+            sum4 = t;
             denominator += 2;
           }
         }
@@ -2100,7 +2100,7 @@
           Decimal4.clamp = clamp2;
           Decimal4.cos = cos3;
           Decimal4.cosh = cosh2;
-          Decimal4.div = div4;
+          Decimal4.div = div5;
           Decimal4.exp = exp3;
           Decimal4.floor = floor4;
           Decimal4.hypot = hypot;
@@ -2110,7 +2110,7 @@
           Decimal4.log2 = log22;
           Decimal4.max = max4;
           Decimal4.min = min4;
-          Decimal4.mod = mod3;
+          Decimal4.mod = mod4;
           Decimal4.mul = mul3;
           Decimal4.pow = pow4;
           Decimal4.random = random;
@@ -2120,7 +2120,7 @@
           Decimal4.sinh = sinh2;
           Decimal4.sqrt = sqrt3;
           Decimal4.sub = sub3;
-          Decimal4.sum = sum2;
+          Decimal4.sum = sum3;
           Decimal4.tan = tan3;
           Decimal4.tanh = tanh2;
           Decimal4.trunc = trunc2;
@@ -2137,7 +2137,7 @@
           Decimal4.config(obj);
           return Decimal4;
         }
-        function div4(x, y) {
+        function div5(x, y) {
           return new this(x).div(y);
         }
         function exp3(x) {
@@ -2185,7 +2185,7 @@
         function min4() {
           return maxOrMin(this, arguments, "gt");
         }
-        function mod3(x, y) {
+        function mod4(x, y) {
           return new this(x).mod(y);
         }
         function mul3(x, y) {
@@ -2272,7 +2272,7 @@
         function sub3(x, y) {
           return new this(x).sub(y);
         }
-        function sum2() {
+        function sum3() {
           var i = 0, args = arguments, x = new this(args[i]);
           external = false;
           for (; x.s && ++i < args.length; )
@@ -2444,6 +2444,9 @@
   };
   var mul = function(dict) {
     return dict.mul;
+  };
+  var add = function(dict) {
+    return dict.add;
   };
 
   // output/Data.Ring/index.js
@@ -2633,11 +2636,11 @@
 
   // output/Data.Ord/foreign.js
   var unsafeCompareImpl = function(lt) {
-    return function(eq4) {
+    return function(eq5) {
       return function(gt) {
         return function(x) {
           return function(y) {
-            return x < y ? lt : x === y ? eq4 : gt;
+            return x < y ? lt : x === y ? eq5 : gt;
           };
         };
       };
@@ -2755,6 +2758,10 @@
   var showIntImpl = function(n) {
     return n.toString();
   };
+  var showNumberImpl = function(n) {
+    var str = n.toString();
+    return isNaN(str + ".0") ? str : str + ".0";
+  };
   var showStringImpl = function(s) {
     var l = s.length;
     return '"' + s.replace(
@@ -2798,6 +2805,9 @@
   // output/Data.Show/index.js
   var showString = {
     show: showStringImpl
+  };
+  var showNumber = {
+    show: showNumberImpl
   };
   var showInt = {
     show: showIntImpl
@@ -3339,6 +3349,11 @@
       };
     };
   };
+  var unsafeIndexImpl = function(xs) {
+    return function(n) {
+      return xs[n];
+    };
+  };
 
   // output/Data.Array.ST/foreign.js
   var sortByImpl2 = function() {
@@ -3420,6 +3435,15 @@
   // output/Data.Foldable/index.js
   var foldr = function(dict) {
     return dict.foldr;
+  };
+  var foldl = function(dict) {
+    return dict.foldl;
+  };
+  var sum = function(dictFoldable) {
+    var foldl2 = foldl(dictFoldable);
+    return function(dictSemiring) {
+      return foldl2(add(dictSemiring))(zero(dictSemiring));
+    };
   };
   var foldMapDefaultR = function(dictFoldable) {
     var foldr2 = foldr(dictFoldable);
@@ -3591,6 +3615,9 @@
 
   // output/Data.Array/index.js
   var append2 = /* @__PURE__ */ append(semigroupArray);
+  var unsafeIndex = function() {
+    return unsafeIndexImpl;
+  };
   var tail = /* @__PURE__ */ function() {
     return unconsImpl($$const(Nothing.value))(function(v) {
       return function(xs) {
@@ -4320,11 +4347,448 @@
     });
   }();
 
+  // output/Tsal.Calendar/index.js
+  var unsafeIndex2 = /* @__PURE__ */ unsafeIndex();
+  var mod3 = /* @__PURE__ */ mod(euclideanRingInt);
+  var sum2 = /* @__PURE__ */ sum(foldableArray)(semiringInt);
+  var div4 = /* @__PURE__ */ div(euclideanRingInt);
+  var W = /* @__PURE__ */ function() {
+    function W2() {
+    }
+    ;
+    W2.value = new W2();
+    return W2;
+  }();
+  var B = /* @__PURE__ */ function() {
+    function B2() {
+    }
+    ;
+    B2.value = new B2();
+    return B2;
+  }();
+  var G = /* @__PURE__ */ function() {
+    function G2() {
+    }
+    ;
+    G2.value = new G2();
+    return G2;
+  }();
+  var TsalTime = /* @__PURE__ */ function() {
+    function TsalTime2(value0, value1, value2) {
+      this.value0 = value0;
+      this.value1 = value1;
+      this.value2 = value2;
+    }
+    ;
+    TsalTime2.create = function(value0) {
+      return function(value1) {
+        return function(value2) {
+          return new TsalTime2(value0, value1, value2);
+        };
+      };
+    };
+    return TsalTime2;
+  }();
+  var Black = /* @__PURE__ */ function() {
+    function Black2() {
+    }
+    ;
+    Black2.value = new Black2();
+    return Black2;
+  }();
+  var Midnight = /* @__PURE__ */ function() {
+    function Midnight2() {
+    }
+    ;
+    Midnight2.value = new Midnight2();
+    return Midnight2;
+  }();
+  var Blue = /* @__PURE__ */ function() {
+    function Blue2() {
+    }
+    ;
+    Blue2.value = new Blue2();
+    return Blue2;
+  }();
+  var Cyan = /* @__PURE__ */ function() {
+    function Cyan2() {
+    }
+    ;
+    Cyan2.value = new Cyan2();
+    return Cyan2;
+  }();
+  var Teal = /* @__PURE__ */ function() {
+    function Teal2() {
+    }
+    ;
+    Teal2.value = new Teal2();
+    return Teal2;
+  }();
+  var Green = /* @__PURE__ */ function() {
+    function Green2() {
+    }
+    ;
+    Green2.value = new Green2();
+    return Green2;
+  }();
+  var Forest = /* @__PURE__ */ function() {
+    function Forest2() {
+    }
+    ;
+    Forest2.value = new Forest2();
+    return Forest2;
+  }();
+  var Yellowgreen = /* @__PURE__ */ function() {
+    function Yellowgreen2() {
+    }
+    ;
+    Yellowgreen2.value = new Yellowgreen2();
+    return Yellowgreen2;
+  }();
+  var Yellow = /* @__PURE__ */ function() {
+    function Yellow2() {
+    }
+    ;
+    Yellow2.value = new Yellow2();
+    return Yellow2;
+  }();
+  var Lightyellow = /* @__PURE__ */ function() {
+    function Lightyellow2() {
+    }
+    ;
+    Lightyellow2.value = new Lightyellow2();
+    return Lightyellow2;
+  }();
+  var Orange = /* @__PURE__ */ function() {
+    function Orange2() {
+    }
+    ;
+    Orange2.value = new Orange2();
+    return Orange2;
+  }();
+  var Pink = /* @__PURE__ */ function() {
+    function Pink2() {
+    }
+    ;
+    Pink2.value = new Pink2();
+    return Pink2;
+  }();
+  var Red = /* @__PURE__ */ function() {
+    function Red2() {
+    }
+    ;
+    Red2.value = new Red2();
+    return Red2;
+  }();
+  var Crimson = /* @__PURE__ */ function() {
+    function Crimson2() {
+    }
+    ;
+    Crimson2.value = new Crimson2();
+    return Crimson2;
+  }();
+  var Magenta = /* @__PURE__ */ function() {
+    function Magenta2() {
+    }
+    ;
+    Magenta2.value = new Magenta2();
+    return Magenta2;
+  }();
+  var Purple = /* @__PURE__ */ function() {
+    function Purple2() {
+    }
+    ;
+    Purple2.value = new Purple2();
+    return Purple2;
+  }();
+  var Purplepink = /* @__PURE__ */ function() {
+    function Purplepink2() {
+    }
+    ;
+    Purplepink2.value = new Purplepink2();
+    return Purplepink2;
+  }();
+  var White = /* @__PURE__ */ function() {
+    function White2() {
+    }
+    ;
+    White2.value = new White2();
+    return White2;
+  }();
+  var TsalDate = /* @__PURE__ */ function() {
+    function TsalDate2(value0, value1, value2) {
+      this.value0 = value0;
+      this.value1 = value1;
+      this.value2 = value2;
+    }
+    ;
+    TsalDate2.create = function(value0) {
+      return function(value1) {
+        return function(value2) {
+          return new TsalDate2(value0, value1, value2);
+        };
+      };
+    };
+    return TsalDate2;
+  }();
+  var TsalDateTime = /* @__PURE__ */ function() {
+    function TsalDateTime2(value0, value1) {
+      this.value0 = value0;
+      this.value1 = value1;
+    }
+    ;
+    TsalDateTime2.create = function(value0) {
+      return function(value1) {
+        return new TsalDateTime2(value0, value1);
+      };
+    };
+    return TsalDateTime2;
+  }();
+  var yearCycle = /* @__PURE__ */ function() {
+    var whiteCycle = [G.value, G.value, G.value, G.value, G.value, G.value, W.value];
+    var blackCycle = [G.value, G.value, G.value, G.value, G.value, G.value, G.value, B.value];
+    var longCycle = concat([whiteCycle, blackCycle]);
+    return concat([concat(replicate(13)(longCycle)), blackCycle]);
+  }();
+  var tsalSecondsInTime = function(v) {
+    var ms = toNumber2(((v.value1 * 12 | 0) * 12 | 0) * 12 | 0);
+    var hs = toNumber2((((v.value0 * 12 | 0) * 12 | 0) * 12 | 0) * 12 | 0);
+    return v.value2 + ms + hs;
+  };
+  var tsalSecondsInDay = /* @__PURE__ */ function() {
+    return toNumber2((((12 * 12 | 0) * 12 | 0) * 12 | 0) * 12 | 0);
+  }();
+  var testEpoch = /* @__PURE__ */ function() {
+    return new TsalDateTime(new TsalDate(5136, Black.value, 1), new Just(new TsalTime(0, 0, 0)));
+  }();
+  var getYearType = function(y) {
+    return unsafeIndex2(yearCycle)(mod3(y - 1 | 0)(203));
+  };
+  var eqTsalYearType = {
+    eq: function(x) {
+      return function(y) {
+        if (x instanceof W && y instanceof W) {
+          return true;
+        }
+        ;
+        if (x instanceof B && y instanceof B) {
+          return true;
+        }
+        ;
+        if (x instanceof G && y instanceof G) {
+          return true;
+        }
+        ;
+        return false;
+      };
+    }
+  };
+  var eq4 = /* @__PURE__ */ eq(eqTsalYearType);
+  var daysInMonth = function(v) {
+    if (v instanceof Black) {
+      return 40;
+    }
+    ;
+    if (v instanceof Midnight) {
+      return 39;
+    }
+    ;
+    if (v instanceof Blue) {
+      return 40;
+    }
+    ;
+    if (v instanceof Cyan) {
+      return 39;
+    }
+    ;
+    if (v instanceof Teal) {
+      return 40;
+    }
+    ;
+    if (v instanceof Green) {
+      return 39;
+    }
+    ;
+    if (v instanceof Forest) {
+      return 40;
+    }
+    ;
+    if (v instanceof Yellowgreen) {
+      return 39;
+    }
+    ;
+    if (v instanceof Yellow) {
+      return 40;
+    }
+    ;
+    if (v instanceof Lightyellow) {
+      return 39;
+    }
+    ;
+    if (v instanceof Orange) {
+      return 40;
+    }
+    ;
+    if (v instanceof Pink) {
+      return 39;
+    }
+    ;
+    if (v instanceof Red) {
+      return 40;
+    }
+    ;
+    if (v instanceof Crimson) {
+      return 39;
+    }
+    ;
+    if (v instanceof Magenta) {
+      return 40;
+    }
+    ;
+    if (v instanceof Purple) {
+      return 39;
+    }
+    ;
+    if (v instanceof Purplepink) {
+      return 40;
+    }
+    ;
+    if (v instanceof White) {
+      return 39;
+    }
+    ;
+    throw new Error("Failed pattern match at Tsal.Calendar (line 80, column 1 - line 80, column 32): " + [v.constructor.name]);
+  };
+  var daysInYear = function(v) {
+    if (v instanceof G) {
+      return 711;
+    }
+    ;
+    if (v instanceof W) {
+      return 711 - daysInMonth(Black.value) | 0;
+    }
+    ;
+    if (v instanceof B) {
+      return 711 - daysInMonth(White.value) | 0;
+    }
+    ;
+    throw new Error("Failed pattern match at Tsal.Calendar (line 124, column 1 - line 124, column 34): " + [v.constructor.name]);
+  };
+  var yearLengthCycle = /* @__PURE__ */ map(functorArray)(daysInYear)(yearCycle);
+  var tsalSecondsIn203Cycle = /* @__PURE__ */ function() {
+    return tsalSecondsInDay * toNumber2(sum2(yearLengthCycle));
+  }();
+  var daysBeforeMonthG = function(v) {
+    if (v instanceof Black) {
+      return 0;
+    }
+    ;
+    if (v instanceof Midnight) {
+      return (40 * 1 | 0) + (39 * 0 | 0) | 0;
+    }
+    ;
+    if (v instanceof Blue) {
+      return (40 * 1 | 0) + (39 * 1 | 0) | 0;
+    }
+    ;
+    if (v instanceof Cyan) {
+      return (40 * 2 | 0) + (39 * 1 | 0) | 0;
+    }
+    ;
+    if (v instanceof Teal) {
+      return (40 * 2 | 0) + (39 * 2 | 0) | 0;
+    }
+    ;
+    if (v instanceof Green) {
+      return (40 * 3 | 0) + (39 * 2 | 0) | 0;
+    }
+    ;
+    if (v instanceof Forest) {
+      return (40 * 3 | 0) + (39 * 3 | 0) | 0;
+    }
+    ;
+    if (v instanceof Yellowgreen) {
+      return (40 * 4 | 0) + (39 * 3 | 0) | 0;
+    }
+    ;
+    if (v instanceof Yellow) {
+      return (40 * 4 | 0) + (39 * 4 | 0) | 0;
+    }
+    ;
+    if (v instanceof Lightyellow) {
+      return (40 * 5 | 0) + (39 * 4 | 0) | 0;
+    }
+    ;
+    if (v instanceof Orange) {
+      return (40 * 5 | 0) + (39 * 5 | 0) | 0;
+    }
+    ;
+    if (v instanceof Pink) {
+      return (40 * 6 | 0) + (39 * 5 | 0) | 0;
+    }
+    ;
+    if (v instanceof Red) {
+      return (40 * 6 | 0) + (39 * 6 | 0) | 0;
+    }
+    ;
+    if (v instanceof Crimson) {
+      return (40 * 7 | 0) + (39 * 6 | 0) | 0;
+    }
+    ;
+    if (v instanceof Magenta) {
+      return (40 * 7 | 0) + (39 * 7 | 0) | 0;
+    }
+    ;
+    if (v instanceof Purple) {
+      return (40 * 8 | 0) + (39 * 7 | 0) | 0;
+    }
+    ;
+    if (v instanceof Purplepink) {
+      return (40 * 8 | 0) + (39 * 8 | 0) | 0;
+    }
+    ;
+    if (v instanceof White) {
+      return (40 * 9 | 0) + (39 * 8 | 0) | 0;
+    }
+    ;
+    throw new Error("Failed pattern match at Tsal.Calendar (line 101, column 1 - line 101, column 37): " + [v.constructor.name]);
+  };
+  var tsalSecondsInDate = function(v) {
+    var y$prime = v.value0 - 1 | 0;
+    var yearIndex = mod3(y$prime)(203);
+    var whiteYearAdjustment = function() {
+      var $70 = eq4(getYearType(v.value0))(W.value);
+      if ($70) {
+        return -40 | 0;
+      }
+      ;
+      return 0;
+    }();
+    var numCycles = toNumber2(div4(y$prime)(203));
+    var prevCycleSeconds = tsalSecondsIn203Cycle * numCycles;
+    var currentYearSeconds = tsalSecondsInDay * toNumber2(whiteYearAdjustment + daysBeforeMonthG(v.value1) | 0);
+    var currentMonthSeconds = tsalSecondsInDay * toNumber2(v.value2 - 1 | 0);
+    var currentCycleSeconds = tsalSecondsInDay * toNumber2(sum2(slice(0)(yearIndex)(yearLengthCycle)));
+    return prevCycleSeconds + currentCycleSeconds + currentYearSeconds + currentMonthSeconds;
+  };
+  var tsalSecondsInDateTime = function(v) {
+    if (v.value1 instanceof Nothing) {
+      return tsalSecondsInDate(v.value0);
+    }
+    ;
+    if (v.value1 instanceof Just) {
+      return tsalSecondsInTime(v.value1.value0) + tsalSecondsInDate(v.value0);
+    }
+    ;
+    throw new Error("Failed pattern match at Tsal.Calendar (line 172, column 1 - line 172, column 48): " + [v.constructor.name]);
+  };
+
   // output/TestPurescript/index.js
   var fromJust4 = /* @__PURE__ */ fromJust();
   var show3 = /* @__PURE__ */ show(showDecimal);
   var show12 = /* @__PURE__ */ show(showBaseRepresentation);
   var show23 = /* @__PURE__ */ show(showString);
+  var show32 = /* @__PURE__ */ show(showNumber);
   var main = function __do() {
     initArgam();
     var d = fromJust4(fromString("-123456789.2347823470000000000000001"));
@@ -4335,7 +4799,9 @@
     log(show23(convertToNumberSystem(argam)(60)(d)))();
     log(show23(convertToNumberSystem(argam)(120)(d)))();
     log(show23(convertToNumberSystem(computerese)(10)(d)))();
-    return log(show23(nameInNumberSystem(argam)(10)(d)))();
+    log(show23(nameInNumberSystem(argam)(10)(d)))();
+    log(show32(tsalSecondsIn203Cycle))();
+    return log(show32(tsalSecondsInDateTime(testEpoch)))();
   };
 
   // <stdin>

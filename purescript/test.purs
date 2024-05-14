@@ -5,6 +5,8 @@ import Data.Maybe
 import NumberSystems
 import NumberSystems.Systems
 import Prelude
+import Tsal.Calendar
+import Data.Array
 
 import Effect (Effect)
 import Effect.Console (log)
@@ -23,3 +25,5 @@ main = do
   log $ show $ convertToNumberSystem argam 120 d
   log $ show $ convertToNumberSystem computerese 10 d
   log $ show $ nameInNumberSystem argam 10 d
+  log $ show $ tsalSecondsIn203Cycle
+  log $ show $ tsalSecondsInDateTime $ testEpoch --TsalDateTime (TsalDate 1 Red 17) (Just (TsalTime 0 0 0.0))

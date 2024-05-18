@@ -152,9 +152,13 @@ includesContext = makeListOfStringsContext "includes" "include" (\s -> "/js/" ++
 externIncludesContext :: Context String
 externIncludesContext = makeListOfStringsContext "extincludes" "include" id
 
+lateIncludesContext :: Context String
+lateIncludesContext = makeListOfStringsContext "lateincludes" "include" (\s -> "/js/" ++ s ++ ".js")
+
 fullContext :: Context String
 fullContext = externIncludesContext
            <> includesContext
+           <> lateIncludesContext
            <> mathContext
            <> defaultContext
 

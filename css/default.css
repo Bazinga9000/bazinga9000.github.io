@@ -33,6 +33,12 @@ body {
     font-display: swap;
 }
 
+@font-face {
+  font-family: 'gothica';
+  src: 
+    url('/fonts/gothica/Gothica-Bold.ttf') format('truetype');
+}
+
 button {
   background: #202020;
   border: 2px solid #ffffff;

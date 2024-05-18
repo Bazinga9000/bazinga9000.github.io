@@ -14,7 +14,10 @@ to generate this file without the comments in this block.
 , dependencies =
   [ "aff"
   , "arrays"
+  , "canvas"
+  , "colors"
   , "console"
+  , "debug"
   , "decimals"
   , "effect"
   , "foldable-traversable"
@@ -27,14 +30,20 @@ to generate this file without the comments in this block.
   , "lcg"
   , "lists"
   , "maybe"
+  , "numbers"
   , "ordered-collections"
   , "partial"
   , "prelude"
+  , "refs"
   , "strings"
   , "stringutils"
   , "tailrec"
   , "transformers"
   , "tuples"
+  , "web-dom"
+  , "web-events"
+  , "web-html"
+  , "web-uievents"
   ]
 , packages = ./packages.dhall
 , sources = [ "purescript/**/*.purs", "purescript/**.purs" ]

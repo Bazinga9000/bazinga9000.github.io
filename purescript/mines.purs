@@ -248,8 +248,10 @@ renderTable mr = void $ unsafePartial do
   let (Just table) = T.fromElement table' 
 
   -- reduce table to atoms
-  Just tbody <- firstChild (T.toNode table)
-  removeChild tbody (T.toNode table)
+  tbody' <- firstChild (T.toNode table)
+  case tbody' of 
+    Nothing -> pure unit 
+    (Just tbody) -> removeChild tbody (T.toNode table)
 
   m <- read mr
 

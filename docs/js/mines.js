@@ -5593,8 +5593,8 @@
                 }
                 ;
                 if (clue.flagState instanceof Just) {
-                  return fromMaybe("x")(bind12(index(mineDistribution)(clue.flagState.value0))(function($108) {
-                    return Just.create(show1(mineOf($108)));
+                  return fromMaybe("x")(bind12(index(mineDistribution)(clue.flagState.value0))(function($107) {
+                    return Just.create(show1(mineOf($107)));
                   }));
                 }
                 ;
@@ -5790,27 +5790,33 @@
       if (v instanceof Just) {
         var v1 = fromElement(v.value0);
         if (v1 instanceof Just) {
-          var v2 = firstChild(toNode2(v1.value0))();
-          if (v2 instanceof Just) {
-            removeChild(v2.value0)(toNode2(v1.value0))();
-            var m = read(mr)();
-            var totalCount = size(m.map) - sum2(map14(countOf)(m.mineDistribution)) | 0;
-            var revealedCount = size(filter5(function(c) {
-              return c.revealed && isNothing(c.mine);
-            })(m.map));
-            var v3 = map15(fromHTMLElement2)(insertRow(v1.value0))();
-            if (v3 instanceof Just) {
-              addCellWithText(v3.value0)("\u25A3")();
-              addCellWithText(v3.value0)(makeFractionalString(revealedCount)(totalCount))();
-              return sequence2(map14(function(k) {
-                return makeFlagTableRow(v1.value0)(getFlagCount(m)(k));
-              })(range(0)(length(m.presentMines) - 1 | 0)))();
+          var tbody$prime = firstChild(toNode2(v1.value0))();
+          (function() {
+            if (tbody$prime instanceof Nothing) {
+              return unit;
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 260, column 3 - line 260, column 63): " + [v3.constructor.name]);
+            if (tbody$prime instanceof Just) {
+              return removeChild(tbody$prime.value0)(toNode2(v1.value0))();
+            }
+            ;
+            throw new Error("Failed pattern match at Mines (line 252, column 3 - line 254, column 55): " + [tbody$prime.constructor.name]);
+          })();
+          var m = read(mr)();
+          var totalCount = size(m.map) - sum2(map14(countOf)(m.mineDistribution)) | 0;
+          var revealedCount = size(filter5(function(c) {
+            return c.revealed && isNothing(c.mine);
+          })(m.map));
+          var v2 = map15(fromHTMLElement2)(insertRow(v1.value0))();
+          if (v2 instanceof Just) {
+            addCellWithText(v2.value0)("\u25A3")();
+            addCellWithText(v2.value0)(makeFractionalString(revealedCount)(totalCount))();
+            return sequence2(map14(function(k) {
+              return makeFlagTableRow(v1.value0)(getFlagCount(m)(k));
+            })(range(0)(length(m.presentMines) - 1 | 0)))();
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 251, column 3 - line 251, column 44): " + [v2.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 262, column 3 - line 262, column 63): " + [v2.constructor.name]);
         }
         ;
         throw new Error("Failed pattern match at Mines (line 248, column 7 - line 248, column 42): " + [v1.constructor.name]);
@@ -5847,8 +5853,8 @@
     return function(mr) {
       return function(e) {
         return $$void3(function __do3() {
-          var npn = map15(function($109) {
-            return toNonElementParentNode(toDocument($109));
+          var npn = map15(function($108) {
+            return toNonElementParentNode(toDocument($108));
           })(bindFlipped2(document2)(windowImpl))();
           var v = getElementById("minefield")(npn)();
           if (v instanceof Just) {
@@ -5868,14 +5874,14 @@
               var pressedButtons = button(v1.value0);
               logShow22(pressedButtons)();
               (function() {
-                var $95 = !member2(minefieldCoords)(m.map);
-                if ($95) {
+                var $94 = !member2(minefieldCoords)(m.map);
+                if ($94) {
                   return unit;
                 }
                 ;
                 if (m.gameState instanceof Ungenerated) {
-                  var $97 = pressedButtons !== 0;
-                  if ($97) {
+                  var $96 = pressedButtons !== 0;
+                  if ($96) {
                     return unit;
                   }
                   ;
@@ -5937,8 +5943,8 @@
   var setupEvents = function(settingsRef) {
     return function(minefieldRef) {
       return $$void3(function __do3() {
-        var npn = map15(function($110) {
-          return toNonElementParentNode(toDocument($110));
+        var npn = map15(function($109) {
+          return toNonElementParentNode(toDocument($109));
         })(bindFlipped2(document2)(windowImpl))();
         var v = getElementById("minefield")(npn)();
         if (v instanceof Just) {

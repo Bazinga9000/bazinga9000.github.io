@@ -6,6 +6,8 @@
 		<link rel="stylesheet" type="text/css" href="./css/default.css">
 		<link rel="icon" type="image/x-icon" href="./resources/favicon.ico">
 		
+			<link rel="stylesheet" type="text/css" href="./css/mines.css">
+		
 		
 		
 		
@@ -16,12 +18,18 @@
 		</h1>
 		<div id="content">
 			
+            <div class="container">
+    <canvas id="minefield" width="700" height="700" oncontextmenu="return false"></canvas>
+    <div>
+        <span>
             <input type="checkbox" id="autodecrement">
-<label for="autodecrement"> Automatic Clue Decrement </label><br>
-<table id="minecount">
-</table>
-<canvas id="minefield" width="800" height="800" oncontextmenu="return false">
-</canvas>
+            <label for="autodecrement"> Automatic Clue Decrement </label><br>
+        </span>
+        <table id="minecount"></table>
+    </div>
+</div>
+
+
         </div>
 		
 		<script src="./js/mines.js"></script>

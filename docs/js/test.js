@@ -2323,7 +2323,7 @@
   var import_decimal = __toESM(require_decimal(), 1);
   import_decimal.default.set({ precision: 30 });
   import_decimal.default.set({ modulo: import_decimal.default.EUCLID });
-  function fromInt(x) {
+  function fromNumber(x) {
     return new import_decimal.default(x);
   }
   function fromStringImpl(nothing) {
@@ -2822,7 +2822,7 @@
         return "false";
       }
       ;
-      throw new Error("Failed pattern match at Data.Show (line 23, column 1 - line 25, column 23): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Data.Show (line 29, column 1 - line 31, column 23): " + [v.constructor.name]);
     }
   };
   var show = function(dict) {
@@ -2901,9 +2901,9 @@
   };
   var semiringDecimal = {
     add: dAdd,
-    zero: /* @__PURE__ */ fromInt(0),
+    zero: /* @__PURE__ */ fromNumber(0),
     mul: dMul,
-    one: /* @__PURE__ */ fromInt(1)
+    one: /* @__PURE__ */ fromNumber(1)
   };
   var zero2 = /* @__PURE__ */ zero(semiringDecimal);
   var ringDecimal = {
@@ -3494,8 +3494,8 @@
         return function(pure4) {
           return function(f) {
             return function(array) {
-              function go(bot, top4) {
-                switch (top4 - bot) {
+              function go(bot, top3) {
+                switch (top3 - bot) {
                   case 0:
                     return pure4([]);
                   case 1:
@@ -3505,8 +3505,8 @@
                   case 3:
                     return apply2(apply2(map5(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
                   default:
-                    var pivot = bot + Math.floor((top4 - bot) / 4) * 2;
-                    return apply2(map5(concat2)(go(bot, pivot)))(go(pivot, top4));
+                    var pivot = bot + Math.floor((top3 - bot) / 4) * 2;
+                    return apply2(map5(concat2)(go(bot, pivot)))(go(pivot, top3));
                 }
               }
               return go(0, array.length);
@@ -3642,8 +3642,8 @@
         function $tco_loop(i) {
           var v = index(arr)(i);
           if (v instanceof Just) {
-            var $154 = p(v.value0);
-            if ($154) {
+            var $156 = p(v.value0);
+            if ($156) {
               $copy_i = i + 1 | 0;
               return;
             }
@@ -3657,7 +3657,7 @@
             return Nothing.value;
           }
           ;
-          throw new Error("Failed pattern match at Data.Array (line 964, column 5 - line 966, column 25): " + [v.constructor.name]);
+          throw new Error("Failed pattern match at Data.Array (line 1005, column 5 - line 1007, column 25): " + [v.constructor.name]);
         }
         ;
         while (!$tco_done) {
@@ -3688,7 +3688,7 @@
         };
       }
       ;
-      throw new Error("Failed pattern match at Data.Array (line 951, column 3 - line 957, column 30): " + [breakIndex.constructor.name]);
+      throw new Error("Failed pattern match at Data.Array (line 992, column 3 - line 998, column 30): " + [breakIndex.constructor.name]);
     };
   };
   var head = function(xs) {
@@ -3699,7 +3699,7 @@
       return span(p)(xs).rest;
     };
   };
-  var cons2 = function(x) {
+  var cons = function(x) {
     return function(xs) {
       return append2([x])(xs);
     };
@@ -3707,9 +3707,9 @@
   var concatMap = /* @__PURE__ */ flip(/* @__PURE__ */ bind(bindArray));
   var mapMaybe = function(f) {
     return concatMap(function() {
-      var $187 = maybe([])(singleton2);
-      return function($188) {
-        return $187(f($188));
+      var $191 = maybe([])(singleton2);
+      return function($192) {
+        return $191(f($192));
       };
     }());
   };
@@ -3808,8 +3808,8 @@
   }
 
   // output/Data.Enum/index.js
-  var top3 = /* @__PURE__ */ top(boundedInt);
-  var bottom3 = /* @__PURE__ */ bottom(boundedInt);
+  var bottom1 = /* @__PURE__ */ bottom(boundedChar);
+  var top1 = /* @__PURE__ */ top(boundedChar);
   var toEnum = function(dict) {
     return dict.toEnum;
   };
@@ -3819,7 +3819,7 @@
   var toEnumWithDefaults = function(dictBoundedEnum) {
     var toEnum1 = toEnum(dictBoundedEnum);
     var fromEnum1 = fromEnum(dictBoundedEnum);
-    var bottom1 = bottom(dictBoundedEnum.Bounded0());
+    var bottom22 = bottom(dictBoundedEnum.Bounded0());
     return function(low) {
       return function(high) {
         return function(x) {
@@ -3829,7 +3829,7 @@
           }
           ;
           if (v instanceof Nothing) {
-            var $140 = x < fromEnum1(bottom1);
+            var $140 = x < fromEnum1(bottom22);
             if ($140) {
               return low;
             }
@@ -3857,7 +3857,7 @@
     };
   };
   var charToEnum = function(v) {
-    if (v >= bottom3 && v <= top3) {
+    if (v >= toCharCode(bottom1) && v <= toCharCode(top1)) {
       return new Just(fromCharCode(v));
     }
     ;
@@ -3872,7 +3872,7 @@
   };
   var boundedEnumChar = /* @__PURE__ */ function() {
     return {
-      cardinality: toCharCode(top(boundedChar)) - toCharCode(bottom(boundedChar)) | 0,
+      cardinality: toCharCode(top1) - toCharCode(bottom1) | 0,
       toEnum: charToEnum,
       fromEnum: toCharCode,
       Bounded0: function() {
@@ -3888,7 +3888,7 @@
   var singleton3 = function(c) {
     return c;
   };
-  var length2 = function(s) {
+  var length3 = function(s) {
     return s.length;
   };
   var drop = function(n) {
@@ -3937,7 +3937,7 @@
     return 55296 <= cu && cu <= 56319;
   };
   var uncons = function(s) {
-    var v = length2(s);
+    var v = length3(s);
     if (v === 0) {
       return Nothing.value;
     }
@@ -3974,7 +3974,7 @@
   };
   var unsafeCodePointAt0Fallback = function(s) {
     var cu0 = fromEnum2(charAt(0)(s));
-    var $47 = isLead(cu0) && length2(s) > 1;
+    var $47 = isLead(cu0) && length3(s) > 1;
     if ($47) {
       var cu1 = fromEnum2(charAt(1)(s));
       var $48 = isTrail(cu1);
@@ -4087,7 +4087,7 @@
       var suffix$prime = toCodePointArray(v1);
       var rprefix = reverse(toCodePointArray(v));
       var trimletter = fromMaybe(codePointFromChar("?"))(head(rprefix));
-      var trimmedSuffix = fromCodePointArray(cons2(trimletter)(dropWhile(function(x) {
+      var trimmedSuffix = fromCodePointArray(cons(trimletter)(dropWhile(function(x) {
         return eq3(x)(trimletter);
       })(suffix$prime)));
       var trimmedPrefix = fromCodePointArray(reverse(dropWhile(function(x) {
@@ -4182,7 +4182,7 @@
       var n$prime = abs(n);
       var i = floor(n$prime);
       var f = sub2(n$prime)(i);
-      var base$prime = fromInt(base);
+      var base$prime = fromNumber(base);
       var handleFractionalPart$prime = function(v) {
         return function(v1) {
           if (v1 === 0) {
@@ -4192,7 +4192,7 @@
           var x$prime = mul2(v)(base$prime);
           var d = floor(x$prime);
           var m = sub2(x$prime)(d);
-          return cons2(toInteger(d))(handleFractionalPart$prime(m)(v1 - 1 | 0));
+          return cons(toInteger(d))(handleFractionalPart$prime(m)(v1 - 1 | 0));
         };
       };
       var handleFractionalPart = function(x) {
@@ -4203,27 +4203,27 @@
         };
       };
       var handleIntegerPart$prime = function(x) {
-        if (lessThan2(x)(fromInt(1))) {
+        if (lessThan2(x)(fromNumber(1))) {
           return [];
         }
         ;
         if (otherwise) {
           var m = floor(div3(x)(base$prime));
           var d = modulo(x)(base$prime);
-          return cons2(toInteger(d))(handleIntegerPart$prime(m));
+          return cons(toInteger(d))(handleIntegerPart$prime(m));
         }
         ;
         throw new Error("Failed pattern match at NumberSystems (line 53, column 3 - line 59, column 32): " + [x.constructor.name]);
       };
       var handleIntegerPart = function(x) {
-        var $43 = eq12(x)(fromInt(0));
+        var $43 = eq12(x)(fromNumber(0));
         if ($43) {
           return [0];
         }
         ;
         return reverse(handleIntegerPart$prime(x));
       };
-      return new BaseRepresentation(base, greaterThanOrEq2(n)(fromInt(0)), handleIntegerPart(i), handleFractionalPart(f)(maxDecimalPlaces));
+      return new BaseRepresentation(base, greaterThanOrEq2(n)(fromNumber(0)), handleIntegerPart(i), handleFractionalPart(f)(maxDecimalPlaces));
     };
   };
   var baseRepToString = function(v) {
@@ -4257,7 +4257,7 @@
         }
         ;
         if (!isFinite2(x)) {
-          var $56 = greaterThan2(x)(fromInt(0));
+          var $56 = greaterThan2(x)(fromNumber(0));
           if ($56) {
             return "\u221E";
           }
@@ -4306,7 +4306,7 @@
         }
         ;
         if (!isFinite2(x)) {
-          var $67 = greaterThan2(x)(fromInt(0));
+          var $67 = greaterThan2(x)(fromNumber(0));
           if ($67) {
             return "Infinity";
           }

@@ -660,7 +660,7 @@
             return v.value0;
           }
           ;
-          throw new Error("Failed pattern match at Control.Monad.Rec.Class (line 113, column 30 - line 113, column 44): " + [v.constructor.name]);
+          throw new Error("Failed pattern match at Control.Monad.Rec.Class (line 137, column 30 - line 137, column 44): " + [v.constructor.name]);
         };
         return function __do4() {
           var r = bindFlipped2($$new)(f(a2))();
@@ -677,7 +677,7 @@
                 return true;
               }
               ;
-              throw new Error("Failed pattern match at Control.Monad.Rec.Class (line 104, column 22 - line 109, column 28): " + [v.constructor.name]);
+              throw new Error("Failed pattern match at Control.Monad.Rec.Class (line 128, column 22 - line 133, column 28): " + [v.constructor.name]);
             }()) {
             }
             ;
@@ -6041,7 +6041,7 @@
         return unsafeCrashWith("unsafeFromRight: Left");
       }
       ;
-      throw new Error("Failed pattern match at Effect.Aff (line 407, column 21 - line 409, column 54): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Effect.Aff (line 412, column 21 - line 414, column 54): " + [v.constructor.name]);
     };
     var unsafeFromLeft = function(v) {
       if (v instanceof Left) {
@@ -6052,7 +6052,7 @@
         return unsafeCrashWith("unsafeFromLeft: Right");
       }
       ;
-      throw new Error("Failed pattern match at Effect.Aff (line 402, column 20 - line 404, column 55): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Effect.Aff (line 407, column 20 - line 409, column 55): " + [v.constructor.name]);
     };
     var isLeft = function(v) {
       if (v instanceof Left) {
@@ -6063,7 +6063,7 @@
         return false;
       }
       ;
-      throw new Error("Failed pattern match at Effect.Aff (line 397, column 12 - line 399, column 21): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Effect.Aff (line 402, column 12 - line 404, column 21): " + [v.constructor.name]);
     };
     return {
       isLeft,
@@ -6144,8 +6144,8 @@
     }
   };
   var liftEffect2 = /* @__PURE__ */ liftEffect(monadEffectAff);
-  var effectCanceler = function($74) {
-    return Canceler($$const(liftEffect2($74)));
+  var effectCanceler = function($75) {
+    return Canceler($$const(liftEffect2($75)));
   };
   var joinFiber = function(v) {
     return makeAff(function(k) {
@@ -6187,8 +6187,8 @@
   var $$try2 = /* @__PURE__ */ $$try(monadErrorAff);
   var runAff = function(k) {
     return function(aff) {
-      return launchAff(bindFlipped3(function($77) {
-        return liftEffect2(k($77));
+      return launchAff(bindFlipped3(function($80) {
+        return liftEffect2(k($80));
       })($$try2(aff)));
     };
   };
@@ -6210,9 +6210,9 @@
   var $lazy_applicativeParAff = /* @__PURE__ */ $runtime_lazy2("applicativeParAff", "Effect.Aff", function() {
     return {
       pure: function() {
-        var $79 = parallel(parallelAff);
-        return function($80) {
-          return $79(pure22($80));
+        var $82 = parallel(parallelAff);
+        return function($83) {
+          return $82(pure22($83));
         };
       }(),
       Apply0: function() {
@@ -6220,7 +6220,7 @@
       }
     };
   });
-  var applicativeParAff = /* @__PURE__ */ $lazy_applicativeParAff(131);
+  var applicativeParAff = /* @__PURE__ */ $lazy_applicativeParAff(136);
   var monadRecAff = {
     tailRecM: function(k) {
       var go2 = function(a2) {
@@ -6233,7 +6233,7 @@
             return go2(res.value0);
           }
           ;
-          throw new Error("Failed pattern match at Effect.Aff (line 102, column 7 - line 104, column 23): " + [res.constructor.name]);
+          throw new Error("Failed pattern match at Effect.Aff (line 104, column 7 - line 106, column 23): " + [res.constructor.name]);
         });
       };
       return go2;
@@ -7023,7 +7023,7 @@
       return NonEmptyList($200($201));
     };
   }();
-  var cons3 = function(y) {
+  var cons2 = function(y) {
     return function(v) {
       return new NonEmpty(y, new Cons(v.value0, v.value1));
     };
@@ -7471,7 +7471,7 @@
               }
               ;
               if (func instanceof Ap) {
-                return goLeft(dictApplicative)(fStack)(cons3(func.value1)(valStack))(nat)(func.value0)(count + 1 | 0);
+                return goLeft(dictApplicative)(fStack)(cons2(func.value1)(valStack))(nat)(func.value0)(count + 1 | 0);
               }
               ;
               throw new Error("Failed pattern match at Control.Applicative.Free (line 102, column 41 - line 105, column 81): " + [func.constructor.name]);
@@ -8700,9 +8700,7 @@
 
   // output/Web.HTML.HTMLDocument/foreign.js
   function _readyState(doc) {
-    return function() {
-      return doc.readyState;
-    };
+    return doc.readyState;
   }
 
   // output/Web.HTML.HTMLDocument.ReadyState/index.js
@@ -8747,17 +8745,16 @@
   var map9 = /* @__PURE__ */ map(functorEffect);
   var toParentNode = unsafeCoerce2;
   var toDocument = unsafeCoerce2;
-  var readyState = /* @__PURE__ */ function() {
-    var $2 = map9(function() {
+  var readyState = function(doc) {
+    return map9(function() {
       var $4 = fromMaybe(Loading.value);
       return function($5) {
         return $4(parse($5));
       };
-    }());
-    return function($3) {
-      return $2(_readyState($3));
-    };
-  }();
+    }())(function() {
+      return _readyState(doc);
+    });
+  };
 
   // output/Web.HTML.HTMLElement/foreign.js
   function _read(nothing, just, value12) {

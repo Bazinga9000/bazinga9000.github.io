@@ -18,14 +18,20 @@ import Web.UIEvent.MouseEvent
 
 import Data.Array (length, (..))
 import Data.Array as A
+import Data.DateTime.Instant (Instant, diff)
+import Data.Either (Either(..))
+import Data.Formatter.Number (formatNumber)
 import Data.Int (floor, toNumber)
+import Data.Time.Duration (Milliseconds(..), fromDuration)
 import Data.Traversable (sequence, sum)
 import Effect (Effect)
 import Effect.Console (logShow)
+import Effect.Now (now)
+import Effect.Timer (clearInterval, setInterval)
 import Partial.Unsafe (unsafePartial)
 import Random.LCG (randomSeed)
 import Web.DOM.Document (toNonElementParentNode)
-import Web.DOM.Element (getBoundingClientRect, toEventTarget)
+import Web.DOM.Element (getBoundingClientRect, setAttribute, toEventTarget, toNode)
 import Web.DOM.Node (firstChild, removeChild, setTextContent)
 import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
@@ -40,6 +46,7 @@ main = do
   --minefieldRef <- new $ blankMinefield 10 10 [MineCount magnetMine 15]
   --minefieldRef <- new $ blankMinefield 10 10 [MineCount standardMine 10, MineCount antiMine 10]
   minefieldRef <- new $ blankMinefield 15 15 [MineCount redMine 15, MineCount greenMine 15, MineCount blueMine 15]
+  --minefieldRef <- new $ blankMinefield 15 15 [MineCount standardMine 10]
   settingsRef <- defaultSettings >>= new
   draw settingsRef minefieldRef
   setupEvents settingsRef minefieldRef
@@ -73,6 +80,7 @@ draw :: Ref Settings -> Ref Minefield -> Effect Unit
 draw sr mr = do 
     drawMinefield sr mr
     renderTable mr
+    colorizeTimer mr
 
 {---------------------------------------
 BOARD DRAWING
@@ -102,7 +110,8 @@ drawSquare s m squareSize p@(IPoint p') = case (lookup p m.map) of
             drawCharge s x y squareSize clue m.displayMode
         else do
             let ctx = s.mfCtx
-            setFillStyle ctx "#999" 
+            let color = if m.gameState == Won then "#0c7" else "#999"
+            setFillStyle ctx color
             fillPath ctx $ rect ctx { 
                 x: x,
                 y: y,
@@ -169,6 +178,19 @@ drawFlag s x y squareSize clue mineDistribution = do
     setFont ctx "30px gothica"
     fillText ctx flagText (x + halfSize) (y + halfSize)
 
+colorizeTimer :: Ref Minefield -> Effect Unit 
+colorizeTimer mr = unsafePartial $ do
+    m <- read mr
+    let color = case m.gameState of
+            Ungenerated -> "#CCC"
+            Generated -> "#FFF"
+            Dead -> "#F00"
+            Won -> "#0F0"
+
+    npn <- map (toNonElementParentNode <<< toDocument) (document =<< window)
+    Just node <- getElementById "timer" npn
+    setAttribute "style" ("font-family: gothica; color: " <> color) node 
+
 
 {---------------------------------------
 EVENT HANDLING
@@ -197,28 +219,65 @@ onMinefieldClick sr mr e = void $ unsafePartial do
     logShow minefieldCoords
 
     let pressedButtons = button me
-    logShow pressedButtons
+    let prevState = m.gameState
     -- reveal squares, generating minefield if not generated
     if not $ member minefieldCoords m.map then pure unit else case m.gameState of 
         Ungenerated -> if pressedButtons /= 0 then pure unit else do 
+            -- generate minefield
             seed <- randomSeed
             let field = runOnceWithSeed (minefieldGenerator m minefieldCoords) seed
-            void $ modify (\_ -> field) mr  
+            void $ modify (\_ -> field) mr
+            -- start timer  
+            t <- now 
+            iid <- setInterval 4 (handleTimer mr t)
+            void $ modify (\st -> st {timerId = Just iid}) sr
             pure unit
-        Dead -> logShow "Dead"
         Generated -> case pressedButtons of 
             2 -> void $ modify (flagSquare minefieldCoords) mr 
             0 -> void $ modify (handleReveal minefieldCoords) mr where 
                 handleReveal p = case (lookup p m.map) of 
                     Nothing -> (\mf -> mf) 
                     (Just clue) -> if clue.revealed then chordSquare p else revealSquare p
+        _ -> pure unit
         
+
+    m' <- modify setWinningBoard mr
+
+    -- stop timer if this click ended the game
+    if m'.gameState /= Generated && prevState == Generated then do 
+        case s.timerId of
+            Nothing -> pure unit
+            (Just iid) -> clearInterval iid 
+    else pure unit
+
     draw sr mr
 
 onAutoDecClick :: Ref Settings -> Ref Minefield -> Event -> Effect Unit 
 onAutoDecClick sr mr _ = do
     _ <- modify (\s -> s {autoDecrement = not s.autoDecrement}) sr 
     draw sr mr
+
+handleTimer :: Ref Minefield -> Instant -> Effect Unit 
+handleTimer mr t = unsafePartial $ do
+
+    -- compute duration
+    t' <- now
+    let (elapsedTime :: Milliseconds)  = diff t' t
+    let (Milliseconds dur) = fromDuration elapsedTime
+    let centis = toNumber $ ((floor dur)/10) `mod` 100
+    let seconds = toNumber $ ((floor dur)/1000) `mod` 60
+    let minutes = dur/60000.0
+
+    let (Right centisString) = formatNumber "00" centis 
+    let (Right secondsString) = formatNumber "00" seconds 
+    let minutesString = show $ floor minutes
+
+    -- render it
+    npn <- map (toNonElementParentNode <<< toDocument) (document =<< window)
+    Just elem <- getElementById "timer" npn
+    setTextContent (minutesString <> ":" <> secondsString <> "." <> centisString) (toNode elem)
+
+    pure unit
 
 {---------------------------------------
 MINE COUNT TABLE RENDERING
@@ -256,8 +315,8 @@ renderTable mr = void $ unsafePartial do
   m <- read mr
 
   -- revealed cell count
-  let totalCount = (size m.map) - (sum $ map countOf m.mineDistribution)
-  let revealedCount = size $ filter (\c -> c.revealed && isNothing c.mine) m.map
+  let totalCount = countSafeSquares m 
+  let revealedCount = countRevealedSquares m
 
   Just revealedRow <- TR.fromHTMLElement <$> T.insertRow table
   addCellWithText revealedRow "▣"

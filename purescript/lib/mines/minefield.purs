@@ -2,7 +2,6 @@ module Mines.Minefield where
 
 import Control.Monad.Gen.Trans
 import Data.Map
-import Data.Map as M
 import Data.Maybe
 import Debug
 import Mines.Charge
@@ -11,7 +10,8 @@ import Prelude
 import Utils.IPoint
 
 import Data.Array (all, any, concat, concatMap, drop, elem, filter, fromFoldable, head, length, nub, tail, take, (!!), (..))
-import Data.Foldable (foldr, maximum)
+import Data.Foldable (foldr, maximum, sum)
+import Data.Map as M
 
 -- a clue contains all relevant information about a given square
 type Clue = {
@@ -33,7 +33,7 @@ defaultClue = {
 }
 
 -- are we dead yet?
-data GameState = Ungenerated | Generated | Dead 
+data GameState = Ungenerated | Generated | Dead | Won
 derive instance eqGameState :: Eq GameState
 
 -- decides how to render clues based on which charges are present
@@ -200,3 +200,12 @@ getFlagCount m k = do
         current: current, 
         total: total
     }
+
+countSafeSquares :: Minefield -> Int 
+countSafeSquares m = (size m.map) - (sum $ map countOf m.mineDistribution) 
+
+countRevealedSquares :: Minefield -> Int 
+countRevealedSquares m = size $ M.filter (\c -> c.revealed && isNothing c.mine) m.map 
+
+setWinningBoard :: Minefield -> Minefield
+setWinningBoard m = if (countSafeSquares m) == (countRevealedSquares m) then m {gameState = Won} else m

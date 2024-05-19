@@ -1,17 +1,22 @@
 module Mines.Settings where
 
+import Graphics.Canvas
 import Prelude
 
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
-import Graphics.Canvas
+import Effect.Timer (IntervalId)
 import Partial.Unsafe (unsafePartial)
 
 
 type Settings = {
+    -- config
     autoDecrement :: Boolean,
+
+    -- things renderers care about
     mfCanvas :: CanvasElement, 
-    mfCtx :: Context2D
+    mfCtx :: Context2D,
+    timerId :: Maybe IntervalId
 }
 
 
@@ -22,5 +27,6 @@ defaultSettings = unsafePartial do
     pure {
         autoDecrement: false, 
         mfCanvas: canvas, 
-        mfCtx: ctx 
+        mfCtx: ctx, 
+        timerId: Nothing
     }

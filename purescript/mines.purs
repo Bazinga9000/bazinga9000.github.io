@@ -254,7 +254,8 @@ onMinefieldClick sr mr e = void $ unsafePartial do
 
 onAutoDecClick :: Ref Settings -> Ref Minefield -> Event -> Effect Unit 
 onAutoDecClick sr mr _ = do
-    _ <- modify (\s -> s {autoDecrement = not s.autoDecrement}) sr 
+    ad <- getAutoDecrementValue
+    _ <- modify (\s -> s {autoDecrement = ad}) sr 
     draw sr mr
 
 handleTimer :: Ref Minefield -> Instant -> Effect Unit 

@@ -13,10 +13,14 @@ import Data.Array (all, any, concat, concatMap, drop, elem, filter, fromFoldable
 import Data.Foldable (foldr, maximum, sum)
 import Data.Map as M
 
+
+data Flag = Flag Int | UnknownMine
+derive instance eqFlag :: Eq Flag 
+
 -- a clue contains all relevant information about a given square
 type Clue = {
     revealed :: Boolean,
-    flagState :: Maybe Int,
+    flagState :: Maybe Flag,
     mine :: Maybe Mine,
     charge :: Maybe MineCharge,
     flagCharge :: Maybe MineCharge
@@ -156,14 +160,16 @@ revealAllMines m = m { map = updatedMap } where
 
 
 -- cycles the flag on a given square, updating relevant flag charges
-flagSquare :: IPoint -> Minefield -> Minefield
-flagSquare p m = if m.gameState /= Generated then m else case (lookup p m.map) of 
+flagSquare :: Boolean -> IPoint -> Minefield -> Minefield
+flagSquare qflags p m = if m.gameState /= Generated then m else case (lookup p m.map) of 
     Nothing -> m --void square, do nothing
     (Just clue) -> if clue.revealed then m else foldr updateFlagCharge m' toUpdate where
         toUpdate = unionVisibilities p m.presentMines
         m' = m {map = update (\c -> Just $ c {flagState = incrementFlagState c.flagState}) p m.map} 
-        incrementFlagState Nothing = Just 0 
-        incrementFlagState (Just k) = if k == (length m.mineDistribution) - 1 then Nothing else Just (k+1) 
+        incrementFlagState Nothing = Just (Flag 0)
+        incrementFlagState (Just (Flag k)) = if k == (length m.mineDistribution) - 1 then 
+            if (length m.mineDistribution == 1) || (not qflags) then Nothing else Just UnknownMine else Just (Flag (k+1)) 
+        incrementFlagState (Just UnknownMine) = Nothing
 
 
 
@@ -176,8 +182,11 @@ updateFlagCharge p m = case (lookup p m.map) of
         flagPointCharge p' = do 
             clue <- lookup p' m.map 
             flag <- clue.flagState 
-            flagMine <- m.presentMines !! flag
-            pure $ pointCharge flagMine (p .- p')
+            case flag of
+                Flag k -> do 
+                    flagMine <- m.presentMines !! k
+                    pure $ pointCharge flagMine (p .- p')
+                UnknownMine -> pure NoMines 
 
 chordSquare :: IPoint -> Minefield -> Minefield 
 chordSquare p m = if m.gameState /= Generated then m else case (lookup p m.map) of 
@@ -191,15 +200,21 @@ type FlagCount = {
     total :: Int
 }
 
-getFlagCount :: Minefield -> Int -> Maybe FlagCount 
-getFlagCount m k = do 
-    (MineCount (Mine mine _) total) <- (m.mineDistribution !! k) 
-    let current = size $ M.filter (\c -> c.flagState == Just k) m.map
-    pure {
-        mine: mine,
-        current: current, 
-        total: total
-    }
+getFlagCount :: Minefield -> Flag -> Maybe FlagCount 
+getFlagCount m fc = case fc of 
+    (Flag k) -> do
+        (MineCount (Mine mine _) total) <- (m.mineDistribution !! k) 
+        let current = size $ M.filter (\c -> c.flagState == Just fc) m.map
+        pure {
+            mine: mine,
+            current: current, 
+            total: total
+        }
+    UnknownMine -> pure {
+            mine: "?",
+            current: size $ M.filter (\c -> c.flagState == Just fc) m.map, 
+            total: 0
+        }
 
 countSafeSquares :: Minefield -> Int 
 countSafeSquares m = (size m.map) - (sum $ map countOf m.mineDistribution) 

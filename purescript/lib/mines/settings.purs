@@ -19,6 +19,7 @@ import Web.HTML.Window (document)
 type Settings = {
     -- config
     autoDecrement :: Boolean,
+    allowQuestionFlags :: Boolean,
 
     -- things renderers care about
     mfCanvas :: CanvasElement, 
@@ -27,10 +28,10 @@ type Settings = {
 }
 
 
-getAutoDecrementValue :: Effect Boolean
-getAutoDecrementValue = unsafePartial do
+getCheckboxValue :: String -> Effect Boolean
+getCheckboxValue s = unsafePartial do
     npn <- map (toNonElementParentNode <<< toDocument) (document =<< window)
-    Just adCheckbox' <- (getElementById "autodecrement" npn)
+    Just adCheckbox' <- (getElementById s npn)
     let (Just adCheckbox) = fromElement adCheckbox'
     checked adCheckbox
 
@@ -39,9 +40,11 @@ defaultSettings :: Effect Settings
 defaultSettings = unsafePartial do 
     Just canvas <- getCanvasElementById "minefield"
     ctx <- getContext2D canvas
-    ad <- getAutoDecrementValue
+    ad <- getCheckboxValue "autodecrement"
+    aqf <- getCheckboxValue "questionflags"
     pure {
         autoDecrement: ad, 
+        allowQuestionFlags: aqf,
         mfCanvas: canvas, 
         mfCtx: ctx, 
         timerId: Nothing

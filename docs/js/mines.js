@@ -431,11 +431,11 @@
 
   // output/Data.Ord/foreign.js
   var unsafeCompareImpl = function(lt) {
-    return function(eq6) {
+    return function(eq5) {
       return function(gt) {
         return function(x) {
           return function(y) {
-            return x < y ? lt : x === y ? eq6 : gt;
+            return x < y ? lt : x === y ? eq5 : gt;
           };
         };
       };
@@ -833,7 +833,7 @@
     };
   };
   var eqMaybe = function(dictEq) {
-    var eq6 = eq(dictEq);
+    var eq5 = eq(dictEq);
     return {
       eq: function(x) {
         return function(y) {
@@ -842,7 +842,7 @@
           }
           ;
           if (x instanceof Just && y instanceof Just) {
-            return eq6(x.value0)(y.value0);
+            return eq5(x.value0)(y.value0);
           }
           ;
           return false;
@@ -1886,10 +1886,10 @@
       }
       ;
       if (v instanceof Just) {
-        return map22(snd)(sortWith1(fst)(function __do4() {
+        return map22(snd)(sortWith1(fst)(function __do3() {
           var result = unsafeThaw(singleton2(v.value0))();
           foreach(indexedAndSorted)(function(v1) {
-            return function __do5() {
+            return function __do4() {
               var lst = map3(function() {
                 var $185 = function($187) {
                   return fromJust4(last($187));
@@ -4963,7 +4963,7 @@
     return getCanvasElementByIdImpl(elId, Just.create, Nothing.value);
   };
   var getCanvasDimensions = function(ce) {
-    return function __do4() {
+    return function __do3() {
       var w = getCanvasWidth(ce)();
       var h = getCanvasHeight(ce)();
       return {
@@ -4974,7 +4974,7 @@
   };
   var fillPath = function(ctx) {
     return function(path) {
-      return function __do4() {
+      return function __do3() {
         beginPath(ctx)();
         var a = path();
         fill(ctx)();
@@ -5476,7 +5476,7 @@
   // output/Effect.Random/index.js
   var randomInt = function(low2) {
     return function(high2) {
-      return function __do4() {
+      return function __do3() {
         var n = random();
         var asNumber = (toNumber(high2) - toNumber(low2) + 1) * n + toNumber(low2);
         return floor2(asNumber);
@@ -5572,11 +5572,11 @@
     return runState(runGenT$prime($309));
   };
   var resizeGenT = function(dictMonad) {
-    var map23 = map(dictMonad.Bind1().Apply0().Functor0());
+    var map24 = map(dictMonad.Bind1().Apply0().Functor0());
     return function(sz) {
       return function(g) {
         return function(v) {
-          return map23(map8(function(v1) {
+          return map24(map8(function(v1) {
             return {
               size: v.size,
               newSeed: v1.newSeed
@@ -5617,11 +5617,11 @@
     return replicateMRec(monadRecGenT(dictMonadRec));
   };
   var vectorOf = function(dictMonadRec) {
-    var map23 = map(functorGenT(dictMonadRec.Monad0().Bind1().Apply0().Functor0()));
+    var map24 = map(functorGenT(dictMonadRec.Monad0().Bind1().Apply0().Functor0()));
     var listOf1 = listOf(dictMonadRec);
     return function(k) {
       return function(g) {
-        return map23(toUnfoldable4)(listOf1(k)(g));
+        return map24(toUnfoldable4)(listOf1(k)(g));
       };
     };
   };
@@ -5648,7 +5648,7 @@
     })(lcgStep(dictMonad));
   };
   var chooseInt$prime = function(dictMonad) {
-    var map23 = map(functorGenT(dictMonad.Bind1().Apply0().Functor0()));
+    var map24 = map(functorGenT(dictMonad.Bind1().Apply0().Functor0()));
     var lcgStep1 = lcgStep(dictMonad);
     var apply2 = apply(applyGenT(dictMonad));
     return function(a) {
@@ -5658,9 +5658,9 @@
         var clamp3 = function(x) {
           return numA + remainder(x)(numB - numA + 1);
         };
-        var choose31BitPosNumber = map23(toNumber)(lcgStep1);
-        var choose32BitPosNumber = apply2(map23(add2)(choose31BitPosNumber))(map23(mul2(2))(choose31BitPosNumber));
-        return map23(function($320) {
+        var choose31BitPosNumber = map24(toNumber)(lcgStep1);
+        var choose32BitPosNumber = apply2(map24(add2)(choose31BitPosNumber))(map24(mul2(2))(choose31BitPosNumber));
+        return map24(function($320) {
           return floor2(clamp3($320));
         })(choose32BitPosNumber);
       };
@@ -5692,7 +5692,7 @@
     };
   };
   var choose = function(dictMonad) {
-    var map23 = map(functorGenT(dictMonad.Bind1().Apply0().Functor0()));
+    var map24 = map(functorGenT(dictMonad.Bind1().Apply0().Functor0()));
     var uniform1 = uniform(dictMonad);
     return function(a) {
       return function(b) {
@@ -5704,7 +5704,7 @@
         };
         var min$prime = scale2(min4(a)(b));
         var max$prime = scale2(max5(a)(b));
-        return map23(function() {
+        return map24(function() {
           var $321 = add2(min$prime);
           var $322 = mul2(max$prime - min$prime);
           return function($323) {
@@ -6048,13 +6048,12 @@
   var insert3 = /* @__PURE__ */ insert2(ordIPoint);
   var elem3 = /* @__PURE__ */ elem2(eqIPoint);
   var filter5 = /* @__PURE__ */ filter4(ordIPoint);
-  var eq4 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(eqInt));
   var sum2 = /* @__PURE__ */ sum(foldableArray)(semiringInt);
-  var eq22 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(eqMineCharge));
+  var eq13 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(eqMineCharge));
   var fromFoldable4 = /* @__PURE__ */ fromFoldable(foldableSet);
   var bind1 = /* @__PURE__ */ bind(/* @__PURE__ */ bindGenT(monadIdentity));
   var shuffle2 = /* @__PURE__ */ shuffle(monadRecIdentity);
-  var eq32 = /* @__PURE__ */ eq(eqIPoint);
+  var eq22 = /* @__PURE__ */ eq(eqIPoint);
   var pure1 = /* @__PURE__ */ pure(/* @__PURE__ */ applicativeGenT(monadIdentity));
   var append13 = /* @__PURE__ */ append(semigroupArray);
   var maximum2 = /* @__PURE__ */ maximum(ordInt)(foldableArray);
@@ -6100,6 +6099,23 @@
     Won2.value = new Won2();
     return Won2;
   }();
+  var Flag = /* @__PURE__ */ function() {
+    function Flag2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    Flag2.create = function(value0) {
+      return new Flag2(value0);
+    };
+    return Flag2;
+  }();
+  var UnknownMine = /* @__PURE__ */ function() {
+    function UnknownMine2() {
+    }
+    ;
+    UnknownMine2.value = new UnknownMine2();
+    return UnknownMine2;
+  }();
   var ClassicalOnly = /* @__PURE__ */ function() {
     function ClassicalOnly2() {
     }
@@ -6143,9 +6159,17 @@
         var flagPointCharge = function(p$prime) {
           return bind4(lookup2(p$prime)(m.map))(function(clue) {
             return bind4(clue.flagState)(function(flag) {
-              return bind4(index(m.presentMines)(flag))(function(flagMine) {
-                return pure5(pointCharge(flagMine)(sub2(p)(p$prime)));
-              });
+              if (flag instanceof Flag) {
+                return bind4(index(m.presentMines)(flag.value0))(function(flagMine) {
+                  return pure5(pointCharge(flagMine)(sub2(p)(p$prime)));
+                });
+              }
+              ;
+              if (flag instanceof UnknownMine) {
+                return pure5(NoMines.value);
+              }
+              ;
+              throw new Error("Failed pattern match at Mines.Minefield (line 185, column 13 - line 189, column 44): " + [flag.constructor.name]);
             });
           });
         };
@@ -6171,13 +6195,13 @@
         };
       }
       ;
-      throw new Error("Failed pattern match at Mines.Minefield (line 171, column 24 - line 180, column 50): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Mines.Minefield (line 177, column 24 - line 189, column 44): " + [v.constructor.name]);
     };
   };
   var revealAllMines = function(m) {
     var updatedMap = map13(function(c) {
-      var $74 = isJust(c.mine);
-      if ($74) {
+      var $80 = isJust(c.mine);
+      if ($80) {
         return {
           revealed: true,
           mine: c.mine,
@@ -6216,7 +6240,7 @@
         })(map$prime)(take(v.value0.value1)(points));
       }
       ;
-      throw new Error("Failed pattern match at Mines.Minefield (line 113, column 27 - line 117, column 62): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Mines.Minefield (line 117, column 27 - line 121, column 62): " + [v.constructor.name]);
     };
   };
   var mineOf = function(v) {
@@ -6233,20 +6257,6 @@
       return nub3(filter(function(x) {
         return all(elem3(x))(visibilities);
       })(concat(visibilities)));
-    };
-  };
-  var getFlagCount = function(m) {
-    return function(k) {
-      return bind4(index(m.mineDistribution)(k))(function(v) {
-        var current = size(filter5(function(c) {
-          return eq4(c.flagState)(new Just(k));
-        })(m.map));
-        return pure5({
-          mine: v.value0.value0,
-          current,
-          total: v.value1
-        });
-      });
     };
   };
   var eqGameState = {
@@ -6273,67 +6283,78 @@
     }
   };
   var notEq3 = /* @__PURE__ */ notEq(eqGameState);
-  var flagSquare = function(p) {
-    return function(m) {
-      var $95 = notEq3(m.gameState)(Generated.value);
-      if ($95) {
-        return m;
-      }
-      ;
-      var v = lookup2(p)(m.map);
-      if (v instanceof Nothing) {
-        return m;
-      }
-      ;
-      if (v instanceof Just) {
-        var toUpdate = unionVisibilities(p)(m.presentMines);
-        var incrementFlagState = function(v1) {
-          if (v1 instanceof Nothing) {
-            return new Just(0);
-          }
-          ;
-          if (v1 instanceof Just) {
-            var $98 = v1.value0 === (length(m.mineDistribution) - 1 | 0);
-            if ($98) {
-              return Nothing.value;
-            }
-            ;
-            return new Just(v1.value0 + 1 | 0);
-          }
-          ;
-          throw new Error("Failed pattern match at Mines.Minefield (line 165, column 9 - line 165, column 44): " + [v1.constructor.name]);
-        };
-        var m$prime = {
-          map: update2(function(c) {
-            return new Just({
-              flagState: incrementFlagState(c.flagState),
-              charge: c.charge,
-              flagCharge: c.flagCharge,
-              mine: c.mine,
-              revealed: c.revealed
-            });
-          })(p)(m.map),
-          bounds: m.bounds,
-          displayMode: m.displayMode,
-          gameState: m.gameState,
-          maximalExtent: m.maximalExtent,
-          mineDistribution: m.mineDistribution,
-          presentMines: m.presentMines
-        };
-        if (v.value0.revealed) {
+  var flagSquare = function(qflags) {
+    return function(p) {
+      return function(m) {
+        var $96 = notEq3(m.gameState)(Generated.value);
+        if ($96) {
           return m;
         }
         ;
-        return foldr4(updateFlagCharge)(m$prime)(toUpdate);
-      }
-      ;
-      throw new Error("Failed pattern match at Mines.Minefield (line 160, column 58 - line 166, column 107): " + [v.constructor.name]);
+        var v = lookup2(p)(m.map);
+        if (v instanceof Nothing) {
+          return m;
+        }
+        ;
+        if (v instanceof Just) {
+          var toUpdate = unionVisibilities(p)(m.presentMines);
+          var incrementFlagState = function(v1) {
+            if (v1 instanceof Nothing) {
+              return new Just(new Flag(0));
+            }
+            ;
+            if (v1 instanceof Just && v1.value0 instanceof Flag) {
+              var $99 = v1.value0.value0 === (length(m.mineDistribution) - 1 | 0);
+              if ($99) {
+                var $100 = length(m.mineDistribution) === 1 || !qflags;
+                if ($100) {
+                  return Nothing.value;
+                }
+                ;
+                return new Just(UnknownMine.value);
+              }
+              ;
+              return new Just(new Flag(v1.value0.value0 + 1 | 0));
+            }
+            ;
+            if (v1 instanceof Just && v1.value0 instanceof UnknownMine) {
+              return Nothing.value;
+            }
+            ;
+            throw new Error("Failed pattern match at Mines.Minefield (line 169, column 9 - line 169, column 51): " + [v1.constructor.name]);
+          };
+          var m$prime = {
+            map: update2(function(c) {
+              return new Just({
+                flagState: incrementFlagState(c.flagState),
+                charge: c.charge,
+                flagCharge: c.flagCharge,
+                mine: c.mine,
+                revealed: c.revealed
+              });
+            })(p)(m.map),
+            bounds: m.bounds,
+            displayMode: m.displayMode,
+            gameState: m.gameState,
+            maximalExtent: m.maximalExtent,
+            mineDistribution: m.mineDistribution,
+            presentMines: m.presentMines
+          };
+          if (v.value0.revealed) {
+            return m;
+          }
+          ;
+          return foldr4(updateFlagCharge)(m$prime)(toUpdate);
+        }
+        ;
+        throw new Error("Failed pattern match at Mines.Minefield (line 164, column 65 - line 172, column 56): " + [v.constructor.name]);
+      };
     };
   };
   var revealSquare = function(p) {
     return function(m) {
-      var $102 = notEq3(m.gameState)(Generated.value);
-      if ($102) {
+      var $106 = notEq3(m.gameState)(Generated.value);
+      if ($106) {
         return m;
       }
       ;
@@ -6343,8 +6364,8 @@
       }
       ;
       if (v instanceof Just) {
-        var $104 = v.value0.revealed || isJust(v.value0.flagState);
-        if ($104) {
+        var $108 = v.value0.revealed || isJust(v.value0.flagState);
+        if ($108) {
           return m;
         }
         ;
@@ -6390,13 +6411,57 @@
             return foldr4(revealSquare)(m$prime)(intersectVisibilities(p)(m.presentMines));
           }
           ;
-          throw new Error("Failed pattern match at Mines.Minefield (line 144, column 92 - line 149, column 93): " + [v.value0.charge.constructor.name]);
+          throw new Error("Failed pattern match at Mines.Minefield (line 148, column 92 - line 153, column 93): " + [v.value0.charge.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines.Minefield (line 142, column 74 - line 149, column 93): " + [v.value0.mine.constructor.name]);
+        throw new Error("Failed pattern match at Mines.Minefield (line 146, column 74 - line 153, column 93): " + [v.value0.mine.constructor.name]);
       }
       ;
-      throw new Error("Failed pattern match at Mines.Minefield (line 140, column 60 - line 149, column 93): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Mines.Minefield (line 144, column 60 - line 153, column 93): " + [v.constructor.name]);
+    };
+  };
+  var eqFlag = {
+    eq: function(x) {
+      return function(y) {
+        if (x instanceof Flag && y instanceof Flag) {
+          return x.value0 === y.value0;
+        }
+        ;
+        if (x instanceof UnknownMine && y instanceof UnknownMine) {
+          return true;
+        }
+        ;
+        return false;
+      };
+    }
+  };
+  var eq32 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(eqFlag));
+  var getFlagCount = function(m) {
+    return function(fc) {
+      if (fc instanceof Flag) {
+        return bind4(index(m.mineDistribution)(fc.value0))(function(v) {
+          var current = size(filter5(function(c) {
+            return eq32(c.flagState)(new Just(fc));
+          })(m.map));
+          return pure5({
+            mine: v.value0.value0,
+            current,
+            total: v.value1
+          });
+        });
+      }
+      ;
+      if (fc instanceof UnknownMine) {
+        return pure5({
+          mine: "?",
+          current: size(filter5(function(c) {
+            return eq32(c.flagState)(new Just(fc));
+          })(m.map)),
+          total: 0
+        });
+      }
+      ;
+      throw new Error("Failed pattern match at Mines.Minefield (line 204, column 21 - line 217, column 10): " + [fc.constructor.name]);
     };
   };
   var defaultClue = /* @__PURE__ */ function() {
@@ -6420,8 +6485,8 @@
     return size(m.map) - sum2(map11(countOf)(m.mineDistribution)) | 0;
   };
   var setWinningBoard = function(m) {
-    var $118 = countSafeSquares(m) === countRevealedSquares(m);
-    if ($118) {
+    var $133 = countSafeSquares(m) === countRevealedSquares(m);
+    if ($133) {
       return {
         map: m.map,
         gameState: Won.value,
@@ -6437,8 +6502,8 @@
   };
   var chordSquare = function(p) {
     return function(m) {
-      var $119 = notEq3(m.gameState)(Generated.value);
-      if ($119) {
+      var $134 = notEq3(m.gameState)(Generated.value);
+      if ($134) {
         return m;
       }
       ;
@@ -6448,15 +6513,15 @@
       }
       ;
       if (v instanceof Just) {
-        var $121 = eq22(v.value0.flagCharge)(v.value0.charge);
-        if ($121) {
+        var $136 = eq13(v.value0.flagCharge)(v.value0.charge);
+        if ($136) {
           return foldr4(revealSquare)(m)(unionVisibilities(p)(m.presentMines));
         }
         ;
         return m;
       }
       ;
-      throw new Error("Failed pattern match at Mines.Minefield (line 183, column 59 - line 186, column 73): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Mines.Minefield (line 192, column 59 - line 195, column 73): " + [v.constructor.name]);
     };
   };
   var chargeSingleMine = function(mines) {
@@ -6484,7 +6549,7 @@
           })(charges)(v.value0.value1);
         }
         ;
-        throw new Error("Failed pattern match at Mines.Minefield (line 121, column 36 - line 124, column 122): " + [v.constructor.name]);
+        throw new Error("Failed pattern match at Mines.Minefield (line 125, column 36 - line 128, column 122): " + [v.constructor.name]);
       };
     };
   };
@@ -6494,7 +6559,7 @@
       return bind1(shuffle2(squares))(function(pairs) {
         var safeSquares = unionVisibilities(initial)(blank.presentMines);
         var unsafePairs = filter(function(p) {
-          return !(eq32(p)(initial) || elem3(p)(safeSquares));
+          return !(eq22(p)(initial) || elem3(p)(safeSquares));
         })(pairs);
         var mineMap = placeMines(blank.mineDistribution)(unsafePairs);
         var emptyCharges = foldr4(function(k) {
@@ -6543,10 +6608,10 @@
           return v.y;
         })(fromFoldable4(keys2(grid))))) | 0;
         var displayMode = function() {
-          var $132 = any(usesColor)(mines);
-          if ($132) {
-            var $133 = any(usesClassical)(mines);
-            if ($133) {
+          var $147 = any(usesColor)(mines);
+          if ($147) {
+            var $148 = any(usesClassical)(mines);
+            if ($148) {
               return ComplexCharges.value;
             }
             ;
@@ -6710,36 +6775,40 @@
   // output/Mines.Settings/index.js
   var map15 = /* @__PURE__ */ map(functorEffect);
   var bindFlipped3 = /* @__PURE__ */ bindFlipped(bindEffect);
-  var getAutoDecrementValue = function __do() {
-    var npn = map15(function($14) {
-      return toNonElementParentNode(toDocument($14));
-    })(bindFlipped3(document2)(windowImpl))();
-    var v = getElementById("autodecrement")(npn)();
-    if (v instanceof Just) {
-      var v1 = fromElement(v.value0);
-      if (v1 instanceof Just) {
-        return checked(v1.value0)();
+  var getCheckboxValue = function(s) {
+    return function __do3() {
+      var npn = map15(function($14) {
+        return toNonElementParentNode(toDocument($14));
+      })(bindFlipped3(document2)(windowImpl))();
+      var v = getElementById(s)(npn)();
+      if (v instanceof Just) {
+        var v1 = fromElement(v.value0);
+        if (v1 instanceof Just) {
+          return checked(v1.value0)();
+        }
+        ;
+        throw new Error("Failed pattern match at Mines.Settings (line 35, column 9 - line 35, column 52): " + [v1.constructor.name]);
       }
       ;
-      throw new Error("Failed pattern match at Mines.Settings (line 34, column 9 - line 34, column 52): " + [v1.constructor.name]);
-    }
-    ;
-    throw new Error("Failed pattern match at Mines.Settings (line 33, column 5 - line 33, column 61): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Mines.Settings (line 34, column 5 - line 34, column 47): " + [v.constructor.name]);
+    };
   };
-  var defaultSettings = function __do2() {
+  var defaultSettings = function __do() {
     var v = getCanvasElementById("minefield")();
     if (v instanceof Just) {
       var ctx = getContext2D(v.value0)();
-      var ad = getAutoDecrementValue();
+      var ad = getCheckboxValue("autodecrement")();
+      var aqf = getCheckboxValue("questionflags")();
       return {
         autoDecrement: ad,
+        allowQuestionFlags: aqf,
         mfCanvas: v.value0,
         mfCtx: ctx,
         timerId: Nothing.value
       };
     }
     ;
-    throw new Error("Failed pattern match at Mines.Settings (line 40, column 5 - line 40, column 52): " + [v.constructor.name]);
+    throw new Error("Failed pattern match at Mines.Settings (line 41, column 5 - line 41, column 52): " + [v.constructor.name]);
   };
 
   // output/Web.DOM.Element/foreign.js
@@ -6886,16 +6955,18 @@
   var bind12 = /* @__PURE__ */ bind(bindMaybe);
   var show12 = /* @__PURE__ */ show(showMine);
   var lookup3 = /* @__PURE__ */ lookup(ordIPoint);
-  var eq5 = /* @__PURE__ */ eq(eqGameState);
+  var eq4 = /* @__PURE__ */ eq(eqGameState);
   var $$void3 = /* @__PURE__ */ $$void(functorEffect);
   var fromFoldable5 = /* @__PURE__ */ fromFoldable(foldableSet);
   var sequence2 = /* @__PURE__ */ sequence(traversableArray)(applicativeEffect);
   var map18 = /* @__PURE__ */ map(functorArray);
+  var map23 = /* @__PURE__ */ map(functorMap);
+  var notEq1 = /* @__PURE__ */ notEq(/* @__PURE__ */ eqMaybe(eqFlag));
   var logShow2 = /* @__PURE__ */ logShow(showString);
   var show22 = /* @__PURE__ */ show(showNumber);
   var logShow1 = /* @__PURE__ */ logShow(showIPoint);
   var member2 = /* @__PURE__ */ member(ordIPoint);
-  var notEq1 = /* @__PURE__ */ notEq(eqGameState);
+  var notEq22 = /* @__PURE__ */ notEq(eqGameState);
   var makeFractionalString = function(a) {
     return function(b) {
       return show6(a) + ("/" + show6(b));
@@ -6903,7 +6974,7 @@
   };
   var handleTimer = function(mr) {
     return function(t) {
-      return function __do4() {
+      return function __do3() {
         var t$prime = now();
         var v = diff2(t$prime)(t);
         var v1 = fromDuration2(v);
@@ -6915,8 +6986,8 @@
           var v3 = formatNumber("00")(seconds);
           if (v3 instanceof Right) {
             var minutesString = show6(floor2(minutes));
-            var npn = map17(function($131) {
-              return toNonElementParentNode(toDocument($131));
+            var npn = map17(function($149) {
+              return toNonElementParentNode(toDocument($149));
             })(bindFlipped4(document2)(windowImpl))();
             var v4 = getElementById("timer")(npn)();
             if (v4 instanceof Just) {
@@ -6924,19 +6995,19 @@
               return unit;
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 278, column 5 - line 278, column 44): " + [v4.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 294, column 5 - line 294, column 44): " + [v4.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 273, column 9 - line 273, column 58): " + [v3.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 289, column 9 - line 289, column 58): " + [v3.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 272, column 9 - line 272, column 56): " + [v2.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 288, column 9 - line 288, column 56): " + [v2.constructor.name]);
       };
     };
   };
   var getSquareSize = function(s) {
     return function(m) {
-      return function __do4() {
+      return function __do3() {
         var dims = getCanvasDimensions(s.mfCanvas)();
         var canvasLength = min7(dims.width)(dims.height);
         return canvasLength / toNumber(m.maximalExtent);
@@ -6953,7 +7024,7 @@
         return fromMaybe(NoMines.value)(v.charge);
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 141, column 1 - line 141, column 50): " + [v.constructor.name, v1.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 145, column 1 - line 145, column 50): " + [v.constructor.name, v1.constructor.name]);
     };
   };
   var drawFlag = function(s) {
@@ -6967,16 +7038,20 @@
                   return "";
                 }
                 ;
-                if (clue.flagState instanceof Just) {
-                  return fromMaybe("x")(bind12(index(mineDistribution)(clue.flagState.value0))(function($132) {
-                    return Just.create(show12(mineOf($132)));
+                if (clue.flagState instanceof Just && clue.flagState.value0 instanceof Flag) {
+                  return fromMaybe("x")(bind12(index(mineDistribution)(clue.flagState.value0.value0))(function($150) {
+                    return Just.create(show12(mineOf($150)));
                   }));
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 171, column 20 - line 173, column 95): " + [clue.flagState.constructor.name]);
+                if (clue.flagState instanceof Just && clue.flagState.value0 instanceof UnknownMine) {
+                  return "?";
+                }
+                ;
+                throw new Error("Failed pattern match at Mines (line 175, column 20 - line 178, column 38): " + [clue.flagState.constructor.name]);
               }();
               var halfSize = squareSize / 2;
-              return function __do4() {
+              return function __do3() {
                 setFillStyle(s.mfCtx)("#600")();
                 setTextAlign(s.mfCtx)(AlignCenter.value)();
                 setFont(s.mfCtx)("30px gothica")();
@@ -7006,7 +7081,7 @@
                 ;
                 if (v instanceof Charge) {
                   var halfSize = squareSize / 2;
-                  return function __do4() {
+                  return function __do3() {
                     setTextAlign(s.mfCtx)(AlignCenter.value)();
                     setTextBaseline(s.mfCtx)(BaselineMiddle.value)();
                     setFont(s.mfCtx)(show6(floor2(halfSize)) + "px gothica")();
@@ -7026,14 +7101,14 @@
                       return unit;
                     }
                     ;
-                    throw new Error("Failed pattern match at Mines (line 156, column 13 - line 165, column 44): " + [dm.constructor.name]);
+                    throw new Error("Failed pattern match at Mines (line 160, column 13 - line 169, column 44): " + [dm.constructor.name]);
                   };
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 147, column 16 - line 165, column 44): " + [v.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 151, column 16 - line 169, column 44): " + [v.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 145, column 39 - line 165, column 44): " + [clue.mine.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 149, column 39 - line 169, column 44): " + [clue.mine.constructor.name]);
             };
           };
         };
@@ -7054,9 +7129,9 @@
                 return "#F88";
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 128, column 17 - line 130, column 31): " + [clue.mine.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 132, column 17 - line 134, column 31): " + [clue.mine.constructor.name]);
             }();
-            return function __do4() {
+            return function __do3() {
               setFillStyle(s.mfCtx)(color)();
               return fillPath(s.mfCtx)(rect(s.mfCtx)({
                 x,
@@ -7082,7 +7157,7 @@
           if (v1 instanceof Just) {
             var x = toNumber(v.x) * squareSize;
             var y = toNumber(v.y) * squareSize;
-            return function __do4() {
+            return function __do3() {
               (function() {
                 if (v1.value0.revealed) {
                   drawBackground(s)(x)(y)(squareSize)(v1.value0)();
@@ -7090,8 +7165,8 @@
                 }
                 ;
                 var color = function() {
-                  var $93 = eq5(m.gameState)(Won.value);
-                  if ($93) {
+                  var $105 = eq4(m.gameState)(Won.value);
+                  if ($105) {
                     return "#0c7";
                   }
                   ;
@@ -7109,14 +7184,14 @@
             };
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 103, column 43 - line 121, column 58): " + [v1.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 107, column 43 - line 125, column 58): " + [v1.constructor.name]);
         };
       };
     };
   };
   var drawMinefield = function(sr) {
     return function(mr) {
-      return $$void3(function __do4() {
+      return $$void3(function __do3() {
         var m = read(mr)();
         var s = read(sr)();
         var dims = getCanvasDimensions(s.mfCanvas)();
@@ -7133,7 +7208,7 @@
     };
   };
   var colorizeTimer = function(mr) {
-    return function __do4() {
+    return function __do3() {
       var m = read(mr)();
       var color = function() {
         if (m.gameState instanceof Ungenerated) {
@@ -7152,28 +7227,28 @@
           return "#0F0";
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 184, column 17 - line 188, column 26): " + [m.gameState.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 190, column 17 - line 194, column 26): " + [m.gameState.constructor.name]);
       }();
-      var npn = map17(function($133) {
-        return toNonElementParentNode(toDocument($133));
+      var npn = map17(function($151) {
+        return toNonElementParentNode(toDocument($151));
       })(bindFlipped4(document2)(windowImpl))();
       var v = getElementById("timer")(npn)();
       if (v instanceof Just) {
         return setAttribute("style")("font-family: gothica; color: " + color)(v.value0)();
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 191, column 5 - line 191, column 44): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 197, column 5 - line 197, column 44): " + [v.constructor.name]);
     };
   };
   var addCellWithText = function(tr) {
     return function(s) {
-      return $$void3(function __do4() {
+      return $$void3(function __do3() {
         var v = map17(fromHTMLElement)(insertCell(tr))();
         if (v instanceof Just) {
           return setTextContent(s)(toNode(v.value0))();
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 292, column 5 - line 292, column 60): " + [v.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 308, column 5 - line 308, column 60): " + [v.constructor.name]);
       });
     };
   };
@@ -7184,94 +7259,168 @@
       }
       ;
       if (v1 instanceof Just) {
-        return $$void3(function __do4() {
+        return $$void3(function __do3() {
           var v2 = map17(fromHTMLElement2)(insertRow(v))();
           if (v2 instanceof Just) {
             addCellWithText(v2.value0)(v1.value0.mine)();
             return addCellWithText(v2.value0)(makeFractionalString(v1.value0.current)(v1.value0.total))();
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 298, column 5 - line 298, column 53): " + [v2.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 314, column 5 - line 314, column 53): " + [v2.constructor.name]);
         });
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 295, column 1 - line 295, column 73): " + [v.constructor.name, v1.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 311, column 1 - line 311, column 73): " + [v.constructor.name, v1.constructor.name]);
     };
   };
-  var renderTable = function(mr) {
-    return $$void3(function __do4() {
-      var d = map17(toDocument)(bindFlipped4(document2)(windowImpl))();
-      var npn = toNonElementParentNode(d);
-      var v = getElementById("minecount")(npn)();
-      if (v instanceof Just) {
-        var v1 = fromElement2(v.value0);
-        if (v1 instanceof Just) {
-          var tbody$prime = firstChild(toNode2(v1.value0))();
-          (function() {
-            if (tbody$prime instanceof Nothing) {
+  var renderTable = function(sr) {
+    return function(mr) {
+      return $$void3(function __do3() {
+        var d = map17(toDocument)(bindFlipped4(document2)(windowImpl))();
+        var npn = toNonElementParentNode(d);
+        var v = getElementById("minecount")(npn)();
+        if (v instanceof Just) {
+          var v1 = fromElement2(v.value0);
+          if (v1 instanceof Just) {
+            var tbody$prime = firstChild(toNode2(v1.value0))();
+            (function() {
+              if (tbody$prime instanceof Nothing) {
+                return unit;
+              }
+              ;
+              if (tbody$prime instanceof Just) {
+                return removeChild(tbody$prime.value0)(toNode2(v1.value0))();
+              }
+              ;
+              throw new Error("Failed pattern match at Mines (line 328, column 3 - line 330, column 55): " + [tbody$prime.constructor.name]);
+            })();
+            var m = read(mr)();
+            var s = read(sr)();
+            var totalCount = countSafeSquares(m);
+            var revealedCount = countRevealedSquares(m);
+            var v2 = map17(fromHTMLElement2)(insertRow(v1.value0))();
+            if (v2 instanceof Just) {
+              addCellWithText(v2.value0)("\u25A3")();
+              addCellWithText(v2.value0)(makeFractionalString(revealedCount)(totalCount))();
+              var flagArray = map18(Flag.create)(range(0)(length(m.presentMines) - 1 | 0));
+              $$void3(sequence2(map18(function(k) {
+                return makeFlagTableRow(v1.value0)(getFlagCount(m)(k));
+              })(flagArray)))();
+              var $122 = length(flagArray) !== 1 && s.allowQuestionFlags;
+              if ($122) {
+                return makeFlagTableRow(v1.value0)(getFlagCount(m)(UnknownMine.value))();
+              }
+              ;
               return unit;
             }
             ;
-            if (tbody$prime instanceof Just) {
-              return removeChild(tbody$prime.value0)(toNode2(v1.value0))();
-            }
-            ;
-            throw new Error("Failed pattern match at Mines (line 312, column 3 - line 314, column 55): " + [tbody$prime.constructor.name]);
-          })();
-          var m = read(mr)();
-          var totalCount = countSafeSquares(m);
-          var revealedCount = countRevealedSquares(m);
-          var v2 = map17(fromHTMLElement2)(insertRow(v1.value0))();
-          if (v2 instanceof Just) {
-            addCellWithText(v2.value0)("\u25A3")();
-            addCellWithText(v2.value0)(makeFractionalString(revealedCount)(totalCount))();
-            return sequence2(map18(function(k) {
-              return makeFlagTableRow(v1.value0)(getFlagCount(m)(k));
-            })(range(0)(length(m.presentMines) - 1 | 0)))();
+            throw new Error("Failed pattern match at Mines (line 339, column 3 - line 339, column 63): " + [v2.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 322, column 3 - line 322, column 63): " + [v2.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 324, column 7 - line 324, column 42): " + [v1.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 308, column 7 - line 308, column 42): " + [v1.constructor.name]);
-      }
-      ;
-      throw new Error("Failed pattern match at Mines (line 307, column 3 - line 307, column 50): " + [v.constructor.name]);
-    });
+        throw new Error("Failed pattern match at Mines (line 323, column 3 - line 323, column 50): " + [v.constructor.name]);
+      });
+    };
   };
   var draw = function(sr) {
     return function(mr) {
-      return function __do4() {
+      return function __do3() {
         drawMinefield(sr)(mr)();
-        renderTable(mr)();
+        renderTable(sr)(mr)();
         return colorizeTimer(mr)();
       };
     };
   };
-  var onAutoDecClick = function(sr) {
-    return function(mr) {
-      return function(v) {
-        return function __do4() {
-          var ad = getAutoDecrementValue();
-          modify(function(s) {
-            return {
-              autoDecrement: ad,
-              mfCanvas: s.mfCanvas,
-              mfCtx: s.mfCtx,
-              timerId: s.timerId
+  var onCheckboxClick = function(s) {
+    return function(f) {
+      return function(g) {
+        return function(sr) {
+          return function(mr) {
+            return function(v) {
+              return function __do3() {
+                var v1 = getCheckboxValue(s)();
+                modify(f(v1))(sr)();
+                modify(g(v1))(mr)();
+                return draw(sr)(mr)();
+              };
             };
-          })(sr)();
-          return draw(sr)(mr)();
+          };
         };
       };
     };
   };
+  var autoDecHandler = /* @__PURE__ */ onCheckboxClick("autodecrement")(function(a) {
+    return function(s) {
+      return {
+        autoDecrement: a,
+        allowQuestionFlags: s.allowQuestionFlags,
+        mfCanvas: s.mfCanvas,
+        mfCtx: s.mfCtx,
+        timerId: s.timerId
+      };
+    };
+  })(function(v) {
+    return function(m) {
+      return m;
+    };
+  });
+  var questionFlagHandler = /* @__PURE__ */ function() {
+    var g = function(v) {
+      return function(v1) {
+        if (v) {
+          return v1;
+        }
+        ;
+        if (!v) {
+          return {
+            map: map23(function(c) {
+              return {
+                flagState: function() {
+                  var $128 = notEq1(c.flagState)(new Just(UnknownMine.value));
+                  if ($128) {
+                    return c.flagState;
+                  }
+                  ;
+                  return Nothing.value;
+                }(),
+                charge: c.charge,
+                flagCharge: c.flagCharge,
+                mine: c.mine,
+                revealed: c.revealed
+              };
+            })(v1.map),
+            bounds: v1.bounds,
+            displayMode: v1.displayMode,
+            gameState: v1.gameState,
+            maximalExtent: v1.maximalExtent,
+            mineDistribution: v1.mineDistribution,
+            presentMines: v1.presentMines
+          };
+        }
+        ;
+        throw new Error("Failed pattern match at Mines (line 274, column 5 - line 274, column 17): " + [v.constructor.name, v1.constructor.name]);
+      };
+    };
+    return onCheckboxClick("questionflags")(function(a) {
+      return function(s) {
+        return {
+          autoDecrement: s.autoDecrement,
+          allowQuestionFlags: a,
+          mfCanvas: s.mfCanvas,
+          mfCtx: s.mfCtx,
+          timerId: s.timerId
+        };
+      };
+    })(g);
+  }();
   var onMinefieldClick = function(sr) {
     return function(mr) {
       return function(e) {
-        return $$void3(function __do4() {
-          var npn = map17(function($134) {
-            return toNonElementParentNode(toDocument($134));
+        return $$void3(function __do3() {
+          var npn = map17(function($152) {
+            return toNonElementParentNode(toDocument($152));
           })(bindFlipped4(document2)(windowImpl))();
           var v = getElementById("minefield")(npn)();
           if (v instanceof Just) {
@@ -7290,14 +7439,14 @@
               logShow1(minefieldCoords)();
               var pressedButtons = button(v1.value0);
               (function() {
-                var $115 = !member2(minefieldCoords)(m.map);
-                if ($115) {
+                var $131 = !member2(minefieldCoords)(m.map);
+                if ($131) {
                   return unit;
                 }
                 ;
                 if (m.gameState instanceof Ungenerated) {
-                  var $117 = pressedButtons !== 0;
-                  if ($117) {
+                  var $133 = pressedButtons !== 0;
+                  if ($133) {
                     return unit;
                   }
                   ;
@@ -7311,6 +7460,7 @@
                   $$void3(modify(function(st) {
                     return {
                       timerId: new Just(iid),
+                      allowQuestionFlags: st.allowQuestionFlags,
                       autoDecrement: st.autoDecrement,
                       mfCanvas: st.mfCanvas,
                       mfCtx: st.mfCtx
@@ -7321,7 +7471,7 @@
                 ;
                 if (m.gameState instanceof Generated) {
                   if (pressedButtons === 2) {
-                    return $$void3(modify(flagSquare(minefieldCoords))(mr))();
+                    return $$void3(modify(flagSquare(s.allowQuestionFlags)(minefieldCoords))(mr))();
                   }
                   ;
                   if (pressedButtons === 0) {
@@ -7341,20 +7491,20 @@
                         return revealSquare(p);
                       }
                       ;
-                      throw new Error("Failed pattern match at Mines (line 238, column 34 - line 240, column 91): " + [v2.constructor.name]);
+                      throw new Error("Failed pattern match at Mines (line 244, column 34 - line 246, column 91): " + [v2.constructor.name]);
                     };
                     return $$void3(modify(handleReveal(minefieldCoords))(mr))();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 235, column 22 - line 240, column 91): " + [pressedButtons.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 241, column 22 - line 246, column 91): " + [pressedButtons.constructor.name]);
                 }
                 ;
                 return unit;
               })();
               var m$prime = modify(setWinningBoard)(mr)();
               (function() {
-                var $122 = notEq1(m$prime.gameState)(Generated.value) && eq5(m.gameState)(Generated.value);
-                if ($122) {
+                var $138 = notEq22(m$prime.gameState)(Generated.value) && eq4(m.gameState)(Generated.value);
+                if ($138) {
                   if (s.timerId instanceof Nothing) {
                     return unit;
                   }
@@ -7363,7 +7513,7 @@
                     return clearInterval2(s.timerId.value0)();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 248, column 9 - line 250, column 44): " + [s.timerId.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 254, column 9 - line 256, column 44): " + [s.timerId.constructor.name]);
                 }
                 ;
                 return unit;
@@ -7371,19 +7521,19 @@
               return draw(sr)(mr)();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 206, column 9 - line 206, column 32): " + [v1.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 212, column 9 - line 212, column 32): " + [v1.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 203, column 5 - line 203, column 48): " + [v.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 209, column 5 - line 209, column 48): " + [v.constructor.name]);
         });
       };
     };
   };
   var setupEvents = function(settingsRef) {
     return function(minefieldRef) {
-      return $$void3(function __do4() {
-        var npn = map17(function($135) {
-          return toNonElementParentNode(toDocument($135));
+      return $$void3(function __do3() {
+        var npn = map17(function($153) {
+          return toNonElementParentNode(toDocument($153));
         })(bindFlipped4(document2)(windowImpl))();
         var v = getElementById("minefield")(npn)();
         if (v instanceof Just) {
@@ -7391,8 +7541,15 @@
           addEventListener("mousedown")(minefieldEvent)(true)(toEventTarget(v.value0))();
           var v1 = getElementById("autodecrement")(npn)();
           if (v1 instanceof Just) {
-            var autoDecrementEvent = eventListener(onAutoDecClick(settingsRef)(minefieldRef))();
-            return addEventListener("click")(autoDecrementEvent)(true)(toEventTarget(v1.value0))();
+            var autoDecrementEvent = eventListener(autoDecHandler(settingsRef)(minefieldRef))();
+            addEventListener("click")(autoDecrementEvent)(true)(toEventTarget(v1.value0))();
+            var v2 = getElementById("questionflags")(npn)();
+            if (v2 instanceof Just) {
+              var qfEvent = eventListener(questionFlagHandler(settingsRef)(minefieldRef))();
+              return addEventListener("click")(qfEvent)(true)(toEventTarget(v2.value0))();
+            }
+            ;
+            throw new Error("Failed pattern match at Mines (line 67, column 3 - line 67, column 52): " + [v2.constructor.name]);
           }
           ;
           throw new Error("Failed pattern match at Mines (line 63, column 3 - line 63, column 57): " + [v1.constructor.name]);
@@ -7402,7 +7559,7 @@
       });
     };
   };
-  var main = function __do3() {
+  var main = function __do2() {
     var minefieldRef = $$new(blankMinefield(15)(15)([new MineCount(redMine, 15), new MineCount(greenMine, 15), new MineCount(blueMine, 15)]))();
     var settingsRef = bind5(defaultSettings)($$new)();
     draw(settingsRef)(minefieldRef)();

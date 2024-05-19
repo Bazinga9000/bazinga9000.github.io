@@ -61,8 +61,12 @@ setupEvents settingsRef minefieldRef = void $ unsafePartial do
   addEventListener (EventType "mousedown") minefieldEvent true (toEventTarget minefieldNode) 
 
   Just autodecNode <- getElementById "autodecrement" npn 
-  autoDecrementEvent <- eventListener (onAutoDecClick settingsRef minefieldRef)
+  autoDecrementEvent <- eventListener (autoDecHandler settingsRef minefieldRef)
   addEventListener (EventType "click") autoDecrementEvent true (toEventTarget autodecNode)
+  
+  Just qfNode <- getElementById "questionflags" npn 
+  qfEvent <- eventListener (questionFlagHandler settingsRef minefieldRef)
+  addEventListener (EventType "click") qfEvent true (toEventTarget qfNode)
 
 getSquareSize :: Settings -> Minefield -> Effect Number
 getSquareSize s m = unsafePartial do
@@ -79,7 +83,7 @@ THE ONE TRUE DRAW CALL
 draw :: Ref Settings -> Ref Minefield -> Effect Unit
 draw sr mr = do 
     drawMinefield sr mr
-    renderTable mr
+    renderTable sr mr
     colorizeTimer mr
 
 {---------------------------------------
@@ -170,7 +174,9 @@ drawFlag s x y squareSize clue mineDistribution = do
     let ctx = s.mfCtx
     let flagText = case clue.flagState of 
             Nothing -> ""
-            (Just k) -> fromMaybe "x" (mineDistribution A.!! k >>= (mineOf >>> show >>> Just))
+            (Just (Flag k)) -> fromMaybe "x" (mineDistribution A.!! k >>= (mineOf >>> show >>> Just))
+            (Just UnknownMine) -> "?"
+
     let halfSize = squareSize / 2.0 
 
     setFillStyle ctx "#600"
@@ -233,7 +239,7 @@ onMinefieldClick sr mr e = void $ unsafePartial do
             void $ modify (\st -> st {timerId = Just iid}) sr
             pure unit
         Generated -> case pressedButtons of 
-            2 -> void $ modify (flagSquare minefieldCoords) mr 
+            2 -> void $ modify (flagSquare s.allowQuestionFlags minefieldCoords) mr 
             0 -> void $ modify (handleReveal minefieldCoords) mr where 
                 handleReveal p = case (lookup p m.map) of 
                     Nothing -> (\mf -> mf) 
@@ -252,11 +258,21 @@ onMinefieldClick sr mr e = void $ unsafePartial do
 
     draw sr mr
 
-onAutoDecClick :: Ref Settings -> Ref Minefield -> Event -> Effect Unit 
-onAutoDecClick sr mr _ = do
-    ad <- getAutoDecrementValue
-    _ <- modify (\s -> s {autoDecrement = ad}) sr 
-    draw sr mr
+
+onCheckboxClick :: String -> (Boolean -> Settings -> Settings) -> (Boolean -> Minefield -> Minefield) -> Ref Settings -> Ref Minefield -> Event -> Effect Unit 
+onCheckboxClick s f g sr mr _ = do 
+      v <- getCheckboxValue s 
+      _ <- modify (f v) sr
+      _ <- modify (g v) mr 
+      draw sr mr
+
+autoDecHandler :: Ref Settings -> Ref Minefield -> Event -> Effect Unit 
+autoDecHandler = onCheckboxClick "autodecrement" (\a s -> s {autoDecrement = a}) (\_ m -> m)
+
+questionFlagHandler :: Ref Settings -> Ref Minefield -> Event -> Effect Unit 
+questionFlagHandler = onCheckboxClick "questionflags" (\a s -> s {allowQuestionFlags = a}) g where 
+    g true m = m 
+    g false m = m {map = map (\c ->  c {flagState = if c.flagState /= Just UnknownMine then c.flagState else Nothing}) m.map}
 
 handleTimer :: Ref Minefield -> Instant -> Effect Unit 
 handleTimer mr t = unsafePartial $ do
@@ -300,8 +316,8 @@ makeFlagTableRow t (Just fc) = void $ unsafePartial do
     addCellWithText row (makeFractionalString fc.current fc.total) 
 
 
-renderTable :: Ref Minefield -> Effect Unit 
-renderTable mr = void $ unsafePartial do 
+renderTable :: Ref Settings -> Ref Minefield -> Effect Unit 
+renderTable sr mr = void $ unsafePartial do 
   d <- toDocument <$> (document =<< window)
   let npn = toNonElementParentNode d
   Just table' <- (getElementById "minecount" npn)
@@ -314,6 +330,7 @@ renderTable mr = void $ unsafePartial do
     (Just tbody) -> removeChild tbody (T.toNode table)
 
   m <- read mr
+  s <- read sr
 
   -- revealed cell count
   let totalCount = countSafeSquares m 
@@ -323,4 +340,6 @@ renderTable mr = void $ unsafePartial do
   addCellWithText revealedRow "▣"
   addCellWithText revealedRow (makeFractionalString revealedCount totalCount) 
  
-  sequence $ map (\k -> makeFlagTableRow table (getFlagCount m k)) (0..(length m.presentMines - 1))
+  let flagArray = map Flag (0..(length m.presentMines - 1))
+  void $ sequence $ map (\k -> makeFlagTableRow table (getFlagCount m k)) flagArray
+  if length flagArray /= 1 && s.allowQuestionFlags then makeFlagTableRow table (getFlagCount m UnknownMine) else pure unit

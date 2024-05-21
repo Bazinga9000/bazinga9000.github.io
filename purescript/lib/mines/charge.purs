@@ -1,11 +1,10 @@
 module Mines.Charge where
 
 import Prelude
-import Data.Number
-import Data.Int
 
 data MineCharge = NoMines | Charge Int Int Int Int
 derive instance eqMineCharge :: Eq MineCharge
+
 instance showMineCharge :: Show MineCharge where
     show NoMines = "NoMines"
     show (Charge f r b g) = "(Charge " <> show f <> " " <> show r <> " " <> show g <> " " <> show b <> ")"
@@ -44,3 +43,18 @@ hasClassical (Charge n _ _ _) = n /= 0
 hasColor :: MineCharge -> Boolean
 hasColor NoMines = false 
 hasColor (Charge _ r g b) = r /= 0 || g /= 0 || b /= 0
+
+
+normalizeCharge :: MineCharge -> MineCharge
+normalizeCharge NoMines = NoMines 
+normalizeCharge (Charge n r g b) = (Charge n r' g' b') where 
+    m = min (min r g) b 
+    r' = r - m 
+    g' = g - m 
+    b' = b - m
+
+equalModCancellation :: MineCharge -> MineCharge -> Boolean
+equalModCancellation NoMines NoMines = true
+equalModCancellation NoMines _ = false 
+equalModCancellation _ NoMines = false 
+equalModCancellation a b = (normalizeCharge a) == (normalizeCharge b)

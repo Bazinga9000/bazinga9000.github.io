@@ -188,10 +188,16 @@ updateFlagCharge p m = case (lookup p m.map) of
                     pure $ pointCharge flagMine (p .- p')
                 UnknownMine -> pure NoMines 
 
+
+-- allow dangerous chords
+isLegalChord :: Maybe MineCharge -> Maybe MineCharge -> Boolean 
+isLegalChord (Just a) (Just b) = equalModCancellation a b 
+isLegalChord _ _ = false
+
 chordSquare :: IPoint -> Minefield -> Minefield 
 chordSquare p m = if m.gameState /= Generated then m else case (lookup p m.map) of 
     Nothing -> m --void square, do nothing
-    (Just clue) ->  if clue.flagCharge == clue.charge then 
+    (Just clue) ->  if isLegalChord clue.flagCharge clue.charge then 
         foldr revealSquare m (unionVisibilities p m.presentMines) else m
 
 type FlagCount = {

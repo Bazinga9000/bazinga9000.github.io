@@ -6,6 +6,7 @@ import Prelude
 import Random.LCG
 import Utils.Generators
 
+import Color.HSLuv (hsluv)
 import Control.Monad.Gen as G
 import Data.Int (floor, toNumber)
 import Data.Number (sign, atan2, sqrt, pi)
@@ -51,7 +52,7 @@ classicalColor    k = runOnceWithSeed (toHexString <$> colorGen) (mkSeed k) wher
 
 
 colorChargeColor :: Int -> Int -> Int -> String 
-colorChargeColor r g b = if r == g && g == b then "#000000" else toHexString $ hsv angle 1.0 0.7 where    
+colorChargeColor r g b = if r == g && g == b then "#000000" else toHexString $ hsv angle 1.0 0.75 where    
     rp = r - b -- real part
     op = g - b -- omega part
     r3o2 = (sqrt 3.0) / 2.0

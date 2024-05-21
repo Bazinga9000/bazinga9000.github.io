@@ -16,6 +16,8 @@ import Web.Event.Event
 import Web.Event.EventTarget
 import Web.UIEvent.MouseEvent
 
+import Mines.Colortest
+
 import Data.Array (length, (..))
 import Data.Array as A
 import Data.DateTime.Instant (Instant, diff)
@@ -50,6 +52,7 @@ main = do
   settingsRef <- defaultSettings >>= new
   draw settingsRef minefieldRef
   setupEvents settingsRef minefieldRef
+  --colorTestRenderer -- uncomment this line to render some small charges for color testing
 
 
 setupEvents :: Ref Settings -> Ref Minefield -> Effect Unit 

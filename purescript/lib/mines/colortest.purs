@@ -1,21 +1,10 @@
 module Mines.Colortest where
 
 
-import Data.Map
 import Data.Maybe
-import Effect.Ref
-import Graphics.Canvas
 import Mines.Charge
 import Mines.ChargeDisplay
-import Mines.Mine
-import Mines.Minefield
-import Mines.Settings
 import Prelude
-import Utils.Generators
-import Utils.IPoint
-import Web.Event.Event
-import Web.Event.EventTarget
-import Web.UIEvent.MouseEvent
 
 import Data.Traversable (sequence)
 import Effect (Effect)

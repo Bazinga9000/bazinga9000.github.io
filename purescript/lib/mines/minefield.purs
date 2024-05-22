@@ -5,6 +5,7 @@ import Data.Map
 import Data.Maybe
 import Debug
 import Mines.Charge
+import Mines.Graphics
 import Mines.Mine
 import Prelude
 import Utils.IPoint
@@ -12,6 +13,7 @@ import Utils.IPoint
 import Data.Array (all, any, concat, concatMap, drop, elem, filter, fromFoldable, head, length, nub, tail, take, (!!), (..))
 import Data.Foldable (foldr, maximum, sum)
 import Data.Map as M
+import Data.Tuple
 
 
 data Flag = Flag Int | UnknownMine
@@ -23,7 +25,8 @@ type Clue = {
     flagState :: Maybe Flag,
     mine :: Maybe Mine,
     charge :: Maybe MineCharge,
-    flagCharge :: Maybe MineCharge
+    flagCharge :: Maybe MineCharge,
+    mineIndex :: Maybe Int
 }
 
 -- the clue on an ungenerated minefield
@@ -33,7 +36,8 @@ defaultClue = {
     flagState: Nothing,
     mine: Nothing, 
     charge: Nothing,
-    flagCharge: Nothing
+    flagCharge: Nothing,
+    mineIndex: Nothing
 }
 
 -- are we dead yet?
@@ -90,8 +94,8 @@ minefieldGenerator blank initial = do
     pairs <- shuffle $ squares
     let safeSquares = unionVisibilities initial blank.presentMines
     let unsafePairs = filter (\p -> not (p == initial || elem p safeSquares)) pairs
-    let mineMap = placeMines blank.mineDistribution unsafePairs
-    
+    let mineMap = placeMines blank.mineDistribution unsafePairs 0
+
     -- generate the total charge of each square
     let emptyCharges = foldr (\k m -> insert k NoMines m) empty pairs
     let chargeMap = foldr (chargeSingleMine mineMap) emptyCharges squares
@@ -101,8 +105,9 @@ minefieldGenerator blank initial = do
         revealed: false, 
         flagState: Nothing, 
         flagCharge: Nothing,
-        mine: lookup p mineMap, 
-        charge: lookup p chargeMap
+        mine: fst <$> lookup p mineMap, 
+        charge: lookup p chargeMap, 
+        mineIndex: snd <$> lookup p mineMap
     } m ) empty squares
 
     let m' = blank {
@@ -113,18 +118,19 @@ minefieldGenerator blank initial = do
     pure $ foldr revealSquare m' (safeSquares <> [initial])
 
 -- given a mine distribution and a list of points, place mines in those points according to the distribution
-placeMines :: Array MineCount -> Array IPoint -> (Map IPoint Mine)
-placeMines mines points = case (head mines) of
+-- uses the integer to keep track of mine indices
+placeMines :: Array MineCount -> Array IPoint -> Int -> (Map IPoint (Tuple Mine Int))
+placeMines mines points n = case (head mines) of
     Nothing -> empty
-    (Just (MineCount mine count)) -> foldr (\k m -> insert k mine m) map' (take count points) where 
+    (Just (MineCount mine count)) -> foldr (\k m -> insert k (Tuple mine n) m) map' (take count points) where 
         points' = drop count points 
-        map' = placeMines (fromMaybe [] $ tail mines) points'
+        map' = placeMines (fromMaybe [] $ tail mines) points' (n+1)
 
 -- adds the charges from a single mine onto a given global charge map
-chargeSingleMine :: (Map IPoint Mine) -> IPoint -> (Map IPoint MineCharge) -> (Map IPoint MineCharge)
+chargeSingleMine :: (Map IPoint (Tuple Mine Int)) -> IPoint -> (Map IPoint MineCharge) -> (Map IPoint MineCharge)
 chargeSingleMine mines p charges = case (lookup p mines) of 
     Nothing -> charges 
-    (Just (Mine _ valuations)) -> foldr (\(MineValuation p c) charges' -> addCharge charges' p c) charges valuations where
+    (Just (Tuple (Mine _ valuations) _)) -> foldr (\(MineValuation p c) charges' -> addCharge charges' p c) charges valuations where
         addCharge charges' point charge = update (\currentCharge -> Just $ currentCharge <> charge) (point .+ p) charges'
 
 -- the INTERSECTION of all mine visibilities aruond a square. used for the flood fill on clicking an empty square
@@ -143,14 +149,15 @@ unionVisibilities p mines = nub $ concatMap visibleSquares mines where
 revealSquare :: IPoint -> Minefield -> Minefield
 revealSquare p m = if m.gameState /= Generated then m else case (lookup p m.map) of 
     Nothing -> m --void square, do nothing
-    (Just clue) -> if clue.revealed || isJust clue.flagState then m else case clue.mine of 
-        (Just mine) -> revealAllMines $ m {gameState = Dead}
-        Nothing -> let m' = m {map = update (\c -> Just $ c {revealed = true}) p m.map} in case (clue.charge) of 
-            -- only show current square
-            Nothing -> m'
-            (Just (Charge _ _ _ _)) -> m' 
-            -- recursively reveal all guaranteed safe squares
-            (Just NoMines) -> foldr revealSquare m' (intersectVisibilities p m.presentMines)
+    (Just clue) -> if clue.revealed || isJust clue.flagState then m else 
+        let m' = m {map = update (\c -> Just $ c {revealed = true}) p m.map} in case clue.mine of 
+            (Just mine) -> m' {gameState = Dead}
+            Nothing -> case (clue.charge) of 
+                -- only show current square
+                Nothing -> m'
+                (Just (Charge _ _ _ _)) -> m' 
+                -- recursively reveal all guaranteed safe squares
+                (Just NoMines) -> foldr revealSquare m' (intersectVisibilities p m.presentMines)
 
 
 -- reveals all mines (used when you Die)
@@ -201,7 +208,7 @@ chordSquare p m = if m.gameState /= Generated then m else case (lookup p m.map) 
         foldr revealSquare m (unionVisibilities p m.presentMines) else m
 
 type FlagCount = {
-    mine :: String,
+    mine :: MineGraphics,
     current :: Int,
     total :: Int
 }
@@ -209,15 +216,16 @@ type FlagCount = {
 getFlagCount :: Minefield -> Flag -> Maybe FlagCount 
 getFlagCount m fc = case fc of 
     (Flag k) -> do
-        (MineCount (Mine mine _) total) <- (m.mineDistribution !! k) 
+        (MineCount _ total) <- (m.mineDistribution !! k) 
         let current = size $ M.filter (\c -> c.flagState == Just fc) m.map
+        let mineData = fromMaybe (fromSymbol "ERR") (m.presentMines !! k >>= (mineGraphicsOf >>> Just)) 
         pure {
-            mine: mine,
+            mine: mineData,
             current: current, 
             total: total
         }
     UnknownMine -> pure {
-            mine: "?",
+            mine: (fromSymbol "?") {flagColor = "#ffffff"},
             current: size $ M.filter (\c -> c.flagState == Just fc) m.map, 
             total: 0
         }

@@ -1,5 +1,6 @@
 module Mines.Mine where
 
+import Mines.Graphics
 import Mines.Charge
 import Prelude
 import Utils.IPoint
@@ -8,10 +9,10 @@ import Data.Array (any, foldr)
 
 data MineValuation = MineValuation IPoint MineCharge
 
-data Mine = Mine String (Array MineValuation)
+data Mine = Mine MineGraphics (Array MineValuation)
 
-instance showMine :: Show Mine where
-    show (Mine s _) = s
+mineGraphicsOf :: Mine -> MineGraphics
+mineGraphicsOf (Mine g _) = g
 
 usesClassical :: Mine -> Boolean 
 usesClassical (Mine _ vs) = any (\(MineValuation _ c) -> hasClassical c) vs
@@ -23,8 +24,8 @@ usesColor (Mine _ vs) = any (\(MineValuation _ c) -> hasColor c) vs
 pointCharge :: Mine -> IPoint -> MineCharge 
 pointCharge (Mine _ vs) p = foldr (\(MineValuation p' c') c -> if p == p' then c <> c' else c) NoMines vs
 
-constMooreMine :: String -> MineCharge -> Mine 
-constMooreMine s c = Mine s [
+constMooreMine :: MineGraphics -> MineCharge -> Mine 
+constMooreMine g c = Mine g [
     MineValuation (mkIPoint 1 1) c,
     MineValuation (mkIPoint 1 0) c,
     MineValuation (mkIPoint 1 (-1)) c,
@@ -36,28 +37,28 @@ constMooreMine s c = Mine s [
 ]
 
 emptyMine :: Mine 
-emptyMine = Mine "0" []
+emptyMine = Mine (fromSymbol "0") []
 
 standardMine :: Mine 
-standardMine = constMooreMine "X" (classicalCharge 1) 
+standardMine = constMooreMine standardMineGraphics (classicalCharge 1) 
 
 doubleMine :: Mine 
-doubleMine = constMooreMine "XX" (classicalCharge 2) 
+doubleMine = constMooreMine (fromSymbol "XX") (classicalCharge 2) 
 
 redMine :: Mine 
-redMine = constMooreMine "R" (redCharge 1)
+redMine = constMooreMine redMineGraphics (redCharge 1)
 
 greenMine :: Mine 
-greenMine = constMooreMine "G" (greenCharge 1)
+greenMine = constMooreMine greenMineGraphics (greenCharge 1)
 
 blueMine :: Mine 
-blueMine = constMooreMine "B" (blueCharge 1)
+blueMine = constMooreMine blueMineGraphics (blueCharge 1)
 
 antiMine :: Mine 
-antiMine = constMooreMine "A" (classicalCharge (-1))
+antiMine = constMooreMine antiMineGraphics (classicalCharge (-1))
 
 ferzMine :: Mine 
-ferzMine = Mine "F" [
+ferzMine = Mine (fromSymbol "F") [
     MineValuation (mkIPoint 1 1) (classicalCharge 1),
     MineValuation (mkIPoint 1 (-1)) (classicalCharge 1),
     MineValuation (mkIPoint (-1) 1) (classicalCharge 1),
@@ -65,7 +66,7 @@ ferzMine = Mine "F" [
 ]
 
 wazirMine :: Mine 
-wazirMine = Mine "W" [
+wazirMine = Mine (fromSymbol "W") [
     MineValuation (mkIPoint 1 0) (classicalCharge 1),
     MineValuation (mkIPoint 0 1) (classicalCharge 1),
     MineValuation (mkIPoint 0 (-1)) (classicalCharge 1),
@@ -73,7 +74,7 @@ wazirMine = Mine "W" [
 ]
 
 magnetMine :: Mine 
-magnetMine = Mine "M" [
+magnetMine = Mine (fromSymbol "M") [
     MineValuation (mkIPoint 1 1) (blueCharge 1),
     MineValuation (mkIPoint 0 1) (blueCharge 1),
     MineValuation (mkIPoint (-1) 1) (blueCharge 1),

@@ -22,6 +22,7 @@ to generate this file without the comments in this block.
   , "decimals"
   , "effect"
   , "either"
+  , "fetch"
   , "foldable-traversable"
   , "formatters"
   , "functions"

@@ -4,8 +4,11 @@ import Data.Map
 import Data.Maybe
 import Effect.Ref
 import Graphics.Canvas
+import Graphics.Path2D
 import Mines.Charge
 import Mines.ChargeDisplay
+import Mines.Colortest
+import Mines.Graphics
 import Mines.Mine
 import Mines.Minefield
 import Mines.Settings
@@ -16,25 +19,24 @@ import Web.Event.Event
 import Web.Event.EventTarget
 import Web.UIEvent.MouseEvent
 
-import Mines.Colortest
-
-import Data.Array (length, (..))
+import Data.Array (length, (..), (!!))
 import Data.Array as A
 import Data.DateTime.Instant (Instant, diff)
 import Data.Either (Either(..))
 import Data.Formatter.Number (formatNumber)
 import Data.Int (floor, toNumber)
 import Data.Time.Duration (Milliseconds(..), fromDuration)
-import Data.Traversable (sequence, sum)
+import Data.Traversable (sequence)
 import Effect (Effect)
 import Effect.Console (logShow)
 import Effect.Now (now)
 import Effect.Timer (clearInterval, setInterval)
+import Graphics.Canvas.Utils (toCanvasElement)
 import Partial.Unsafe (unsafePartial)
 import Random.LCG (randomSeed)
-import Web.DOM.Document (toNonElementParentNode)
+import Web.DOM.Document (createElement, toNonElementParentNode)
 import Web.DOM.Element (getBoundingClientRect, setAttribute, toEventTarget, toNode)
-import Web.DOM.Node (firstChild, removeChild, setTextContent)
+import Web.DOM.Node (appendChild, firstChild, removeChild, setTextContent)
 import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
 import Web.HTML.HTMLDocument (toDocument)
@@ -48,6 +50,7 @@ main = do
   --minefieldRef <- new $ blankMinefield 10 10 [MineCount magnetMine 15]
   --minefieldRef <- new $ blankMinefield 10 10 [MineCount standardMine 10, MineCount antiMine 10]
   minefieldRef <- new $ blankMinefield 15 15 [MineCount redMine 15, MineCount greenMine 15, MineCount blueMine 15]
+  --minefieldRef <- new $ blankMinefield 15 15 [MineCount redMine 15, MineCount greenMine 15, MineCount blueMine 15, MineCount standardMine 5]
   --minefieldRef <- new $ blankMinefield 15 15 [MineCount standardMine 10]
   settingsRef <- defaultSettings >>= new
   draw settingsRef minefieldRef
@@ -109,41 +112,64 @@ drawMinefield sr mr = void $ unsafePartial do
 drawSquare :: Settings -> Minefield -> Number -> IPoint -> Effect Unit
 drawSquare s m squareSize p@(IPoint p') = case (lookup p m.map) of 
     Nothing -> pure unit
-    (Just clue) -> do
+    (Just clue) -> let ctx = s.mfCtx in do
         let x = (toNumber $ p'.x) * squareSize
         let y = (toNumber $ p'.y) * squareSize
-        if clue.revealed then do  
-            drawBackground s x y squareSize clue 
-            drawCharge s x y squareSize clue m.displayMode
-        else do
-            let ctx = s.mfCtx
-            let color = if m.gameState == Won then "#0c7" else "#999"
-            setFillStyle ctx color
-            fillPath ctx $ rect ctx { 
-                x: x,
-                y: y,
-                width: squareSize,
-                height: squareSize
-            }  
-        drawFlag s x y squareSize clue m.mineDistribution
 
-            
-        
+        let boundRect = { 
+            x: x,
+            y: y,
+            width: squareSize,
+            height: squareSize
+        } 
 
-drawBackground :: Settings -> Number -> Number -> Number -> Clue -> Effect Unit 
-drawBackground s x y squareSize clue = do 
-    let color = case clue.mine of
-            Nothing -> "#FFF"
-            (Just _) -> "#F88"
-    
-    let ctx = s.mfCtx
-    setFillStyle ctx color
-    fillPath ctx $ rect ctx { 
-        x: x,
-        y: y,
-        width: squareSize,
-        height: squareSize} 
+        -- draw background 
+        let backgroundColor = if clue.revealed then case clue.mine of 
+                Nothing -> "#FFF"
+                (Just _) -> "#F88"
+            else if m.gameState == Won then "#0c7" else "#999"
 
+        setFillStyle ctx backgroundColor
+        fillPath ctx $ rect ctx boundRect
+
+        -- draw border
+        setStrokeStyle ctx "#000000"
+        strokePath ctx $ rect ctx boundRect 
+
+        if m.gameState == Ungenerated || m.gameState == Generated then 
+            -- the game is still actively being played
+            if clue.revealed then do  
+                drawCharge s x y squareSize clue m.displayMode
+            else 
+                drawFlag s boundRect clue m.mineDistribution
+        else 
+            -- the game is won/lost, uncover all mines
+            case clue.mine of 
+                Nothing -> if clue.revealed then do 
+                    drawCharge s x y squareSize clue m.displayMode
+                else do 
+                    drawFlag s boundRect clue m.mineDistribution
+                    if clue.flagState == Nothing then pure unit else do 
+                        -- misflag, flagged an empty cell
+                        drawMineGraphic ctx boundRect (MinePath misflagX) "#FFFFFF" 
+                (Just (Mine g _)) -> case clue.flagState of 
+                    Nothing -> drawMineGraphic ctx boundRect g.mineGraphic g.mineColor
+                    (Just UnknownMine) -> drawMineGraphic ctx boundRect g.mineGraphic g.mineColor
+                    (Just (Flag k)) -> let k' = fromMaybe k clue.mineIndex in do 
+                        logShow k 
+                        logShow k'
+                        if k == k' then -- correct flag
+                            drawFlag s boundRect clue m.mineDistribution
+                        else unsafePartial do 
+                            -- misflag, flagged mine incorrectly
+                            let offset = squareSize * 0.4 
+                            let dim = squareSize * 0.6
+                            let mineRect = {x: x, y: y + offset, width: dim, height: dim}
+                            let flagRect = {x: x + offset, y: y, width: dim, height: dim}
+                            drawMineGraphic ctx mineRect g.mineGraphic g.mineColor 
+                            let (Just (Mine fg _)) = m.presentMines !! k
+                            drawMineGraphic ctx flagRect fg.flagGraphic fg.flagColor
+                            drawMineGraphic ctx flagRect (MinePath misflagX) "#FFFFFF" 
 
 getDisplayCharge :: Clue -> Boolean -> MineCharge 
 getDisplayCharge clue true = (fromMaybe NoMines clue.charge) <> (negateCharge $ fromMaybe NoMines clue.flagCharge)
@@ -169,23 +195,42 @@ drawCharge s x y squareSize clue dm = case clue.mine of
                     let cc = (colorChargeColor r g b) 
                     setFillStyle ctx cc 
                     fillText ctx cm (x + halfSize) (y + halfSize)
-                ComplexCharges -> pure unit
+                ComplexCharges -> do 
+                    setFont ctx $ (show $ floor halfSize) <> "px gothica"
+                    let quarterSize = squareSize / 4.0
+                    let offset = halfSize * 0.15
+                    -- render clasical part
+                    setFillStyle ctx (classicalColor n)
+                    fillText ctx (show n) (x + halfSize - offset) (y + quarterSize)
+                    -- render color part 
+                    let cm = (colorChargeMagnitude r g b)
+                    let cc = (colorChargeColor r g b) 
+                    setFillStyle ctx cc 
+                    fillText ctx cm (x + halfSize + offset) (y + halfSize + quarterSize)
 
 
-drawFlag :: Settings -> Number -> Number -> Number -> Clue -> Array MineCount -> Effect Unit 
-drawFlag s x y squareSize clue mineDistribution = do
-    let ctx = s.mfCtx
-    let flagText = case clue.flagState of 
-            Nothing -> ""
-            (Just (Flag k)) -> fromMaybe "x" (mineDistribution A.!! k >>= (mineOf >>> show >>> Just))
-            (Just UnknownMine) -> "?"
+drawMineGraphic :: Context2D -> Rectangle -> MineGraphic -> String -> Effect Unit
+drawMineGraphic ctx rect g color = case g of 
+    (MineSymbol s) -> do
+        let halfSize = (rect.width) / 2.0 
+        setFillStyle ctx color
+        setTextAlign ctx AlignCenter
+        setFont ctx $ (show $ floor $ 1.2 * halfSize) <> "px gothica"
+        fillText ctx s (rect.x + halfSize) (rect.y + halfSize)
+    (MinePath p) -> do
+        setFillStyle ctx color
+        let offset = (rect.width) / 6.0
+        let dim = (rect.width) - (2.0 * offset)
+        let r = {x: rect.x + offset, y: rect.y + offset, width: dim, height: dim}
+        fillPath2D ctx p r
 
-    let halfSize = squareSize / 2.0 
-
-    setFillStyle ctx "#600"
-    setTextAlign ctx AlignCenter
-    setFont ctx "30px gothica"
-    fillText ctx flagText (x + halfSize) (y + halfSize)
+drawFlag :: Settings -> Rectangle -> Clue -> Array MineCount -> Effect Unit 
+drawFlag s rect clue mineDistribution = let ctx = s.mfCtx in case clue.flagState of
+    Nothing -> pure unit 
+    (Just (Flag k)) -> case (mineDistribution A.!! k >>= (mineOf >>> mineGraphicsOf >>> Just)) of
+        Nothing -> pure unit 
+        (Just g) -> drawMineGraphic ctx rect g.flagGraphic g.flagColor
+    (Just UnknownMine) -> drawMineGraphic ctx rect (MineSymbol "?") "#FFFFFF"
 
 colorizeTimer :: Ref Minefield -> Effect Unit 
 colorizeTimer mr = unsafePartial $ do
@@ -306,17 +351,31 @@ MINE COUNT TABLE RENDERING
 makeFractionalString :: Int -> Int -> String 
 makeFractionalString a b = show a <> "/" <> show b
 
-addCellWithText :: TR.HTMLTableRowElement -> String -> Effect Unit 
-addCellWithText tr s = void $ unsafePartial do 
-    Just newCell <- TD.fromHTMLElement <$> TR.insertCell tr
-    setTextContent s (TD.toNode newCell)
-
 makeFlagTableRow :: T.HTMLTableElement -> Maybe FlagCount -> Effect Unit 
 makeFlagTableRow _ Nothing = pure unit 
 makeFlagTableRow t (Just fc) = void $ unsafePartial do 
     Just row <- TR.fromHTMLElement <$> T.insertRow t
-    addCellWithText row fc.mine
-    addCellWithText row (makeFractionalString fc.current fc.total) 
+    case fc.mine.flagGraphic of 
+        (MineSymbol s) -> do
+            Just newCell <- TD.fromHTMLElement <$> TR.insertCell row
+            setTextContent s (TD.toNode newCell)
+            let style = "font-size: 50px; font-family: gothica; vertical-align: center; text-align: center; color: " <> fc.mine.flagColor
+            setAttribute "style" style (TD.toElement newCell)
+
+        (MinePath p) -> do
+            Just newCell <- TD.fromHTMLElement <$> TR.insertCell row 
+            ce <- ((createElement "canvas") <<< toDocument) =<< document =<< window 
+            setAttribute "width" "50px" ce
+            setAttribute "height" "50px" ce
+            let (Just canvas) = toCanvasElement ce
+            ctx <- getContext2D canvas
+            setFillStyle ctx fc.mine.flagColor
+            fillPath2D ctx p {x: 0.0, y: 0.0, width: 50.0, height: 50.0}
+            appendChild (toNode ce) (toNode $ TD.toElement newCell)
+
+    Just countCell <- TD.fromHTMLElement <$> TR.insertCell row
+    setTextContent (makeFractionalString fc.current fc.total) (TD.toNode countCell)
+    setAttribute "style" "font-family: gothica; vertical-align: center; text-align: center" (TD.toElement countCell)
 
 
 renderTable :: Ref Settings -> Ref Minefield -> Effect Unit 
@@ -340,9 +399,15 @@ renderTable sr mr = void $ unsafePartial do
   let revealedCount = countRevealedSquares m
 
   Just revealedRow <- TR.fromHTMLElement <$> T.insertRow table
-  addCellWithText revealedRow "▣"
-  addCellWithText revealedRow (makeFractionalString revealedCount totalCount) 
- 
+  Just revealedGlyphCell <- TD.fromHTMLElement <$> TR.insertCell revealedRow
+  setTextContent "▣" (TD.toNode revealedGlyphCell)
+  setAttribute "style" "font-size: 50px; vertical-align: center; text-align: center" (TD.toElement revealedGlyphCell)  
+
+  Just revealedCountCell <- TD.fromHTMLElement <$> TR.insertCell revealedRow
+  setTextContent (makeFractionalString revealedCount totalCount)  (TD.toNode revealedCountCell)
+  setAttribute "style" "font-family: gothica; vertical-align: center; text-align: center" (TD.toElement revealedCountCell)
+
+
   let flagArray = map Flag (0..(length m.presentMines - 1))
   void $ sequence $ map (\k -> makeFlagTableRow table (getFlagCount m k)) flagArray
   if length flagArray /= 1 && s.allowQuestionFlags then makeFlagTableRow table (getFlagCount m UnknownMine) else pure unit

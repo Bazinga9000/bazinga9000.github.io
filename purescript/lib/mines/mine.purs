@@ -1,11 +1,10 @@
 module Mines.Mine where
 
-import Mines.Graphics
 import Mines.Charge
+import Mines.Graphics
 import Prelude
 import Utils.IPoint
-
-import Data.Array (any, foldr)
+import Data.Array
 
 data MineValuation = MineValuation IPoint MineCharge
 
@@ -57,24 +56,17 @@ blueMine = constMooreMine blueMineGraphics (blueCharge 1)
 antiMine :: Mine 
 antiMine = constMooreMine antiMineGraphics (classicalCharge (-1))
 
-ferzMine :: Mine 
-ferzMine = Mine (fromSymbol "F") [
-    MineValuation (mkIPoint 1 1) (classicalCharge 1),
-    MineValuation (mkIPoint 1 (-1)) (classicalCharge 1),
-    MineValuation (mkIPoint (-1) 1) (classicalCharge 1),
-    MineValuation (mkIPoint (-1) (-1)) (classicalCharge 1)
-]
+antiRedMine :: Mine 
+antiRedMine = constMooreMine antiRedMineGraphics (redCharge (-1))
 
-wazirMine :: Mine 
-wazirMine = Mine (fromSymbol "W") [
-    MineValuation (mkIPoint 1 0) (classicalCharge 1),
-    MineValuation (mkIPoint 0 1) (classicalCharge 1),
-    MineValuation (mkIPoint 0 (-1)) (classicalCharge 1),
-    MineValuation (mkIPoint (-1) 0) (classicalCharge 1)
-]
+antiGreenMine :: Mine 
+antiGreenMine = constMooreMine antiGreenMineGraphics (greenCharge (-1))
+
+antiBlueMine :: Mine 
+antiBlueMine = constMooreMine antiBlueMineGraphics (blueCharge (-1))
 
 magnetMine :: Mine 
-magnetMine = Mine (fromSymbol "M") [
+magnetMine = Mine magnetMineGraphics [
     MineValuation (mkIPoint 1 1) (blueCharge 1),
     MineValuation (mkIPoint 0 1) (blueCharge 1),
     MineValuation (mkIPoint (-1) 1) (blueCharge 1),

@@ -18,5 +18,26 @@ lateincludes: mines
         <table id="minecount"></table>
         <!-- <table id="colortest"></table> --->
     </div>
+    <div>
+        <textarea id="scenarioinput" rows="8" cols="100">
+board:
+    width: 15
+    height: 15
+distribution:
+    - mine: redMine 
+      count: 15
+    - mine: greenMine 
+      count: 15
+    - mine: blueMine
+      count: 15
+        </textarea><br>
+        <button id="loadscenario">Load Custom Scenario</button>
+        <h4>Preset Scenarios</h4>
+        <button id="classicscenario">Classic</button>
+        <button id="antiminescenario">Antimines</button>
+        <button id="threecolorscenario">Three Colors</button>
+        <button id="sixcolorscenario">Six Colors</button>
+        <button id="magnetscenario">Magnet</button>
+    </div>
 </div>
 

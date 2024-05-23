@@ -11,7 +11,9 @@ import Mines.Colortest
 import Mines.Graphics
 import Mines.Mine
 import Mines.Minefield
+import Mines.Parsing
 import Mines.Settings
+import Mines.Templates
 import Prelude
 import Utils.Generators
 import Utils.IPoint
@@ -36,23 +38,21 @@ import Partial.Unsafe (unsafePartial)
 import Random.LCG (randomSeed)
 import Web.DOM.Document (createElement, toNonElementParentNode)
 import Web.DOM.Element (getBoundingClientRect, setAttribute, toEventTarget, toNode)
-import Web.DOM.Node (appendChild, firstChild, removeChild, setTextContent)
+import Web.DOM.Node (appendChild, firstChild, removeChild, setTextContent, textContent)
 import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
 import Web.HTML.HTMLDocument (toDocument)
 import Web.HTML.HTMLTableCellElement as TD
 import Web.HTML.HTMLTableElement as T
 import Web.HTML.HTMLTableRowElement as TR
+import Web.HTML.HTMLTextAreaElement as TA
 import Web.HTML.Window (document)
 
 main :: Effect Unit
 main = do
-  --minefieldRef <- new $ blankMinefield 10 10 [MineCount magnetMine 15]
-  --minefieldRef <- new $ blankMinefield 10 10 [MineCount standardMine 10, MineCount antiMine 10]
-  minefieldRef <- new $ blankMinefield 15 15 [MineCount redMine 15, MineCount greenMine 15, MineCount blueMine 15]
-  --minefieldRef <- new $ blankMinefield 15 15 [MineCount redMine 15, MineCount greenMine 15, MineCount blueMine 15, MineCount standardMine 5]
-  --minefieldRef <- new $ blankMinefield 15 15 [MineCount standardMine 10]
+  minefieldRef <- new $ blankMinefield 15 15 []
   settingsRef <- defaultSettings >>= new
+  scenarioLoad settingsRef minefieldRef
   draw settingsRef minefieldRef
   setupEvents settingsRef minefieldRef
   --colorTestRenderer -- uncomment this line to render some small charges for color testing
@@ -73,6 +73,17 @@ setupEvents settingsRef minefieldRef = void $ unsafePartial do
   Just qfNode <- getElementById "questionflags" npn 
   qfEvent <- eventListener (questionFlagHandler settingsRef minefieldRef)
   addEventListener (EventType "click") qfEvent true (toEventTarget qfNode)
+
+  Just scenarioButtonNode <- getElementById "loadscenario" npn 
+  scenarioLoadEvent <- eventListener (\_ -> scenarioLoad settingsRef minefieldRef)
+  addEventListener (EventType "click") scenarioLoadEvent true (toEventTarget scenarioButtonNode)
+
+  let presetScenario = setupPresetScenarioEvent settingsRef minefieldRef
+  presetScenario "classicscenario" classicScenario
+  presetScenario "antiminescenario" antiMineScenario
+  presetScenario "threecolorscenario" threeColorScenario
+  presetScenario "sixcolorscenario" sixColorScenario
+  presetScenario "magnetscenario" magnetScenario
 
 getSquareSize :: Settings -> Minefield -> Effect Number
 getSquareSize s m = unsafePartial do
@@ -343,6 +354,43 @@ handleTimer mr t = unsafePartial $ do
     setTextContent (minutesString <> ":" <> secondsString <> "." <> centisString) (toNode elem)
 
     pure unit
+
+scenarioLoad :: Ref Settings -> Ref Minefield -> Effect Unit 
+scenarioLoad sr mr = unsafePartial $ do
+    npn <- map (toNonElementParentNode <<< toDocument) (document =<< window)
+    Just node <- getElementById "scenarioinput" npn
+    let (Just input) = TA.fromElement node
+    scenario <- TA.value input
+    
+    case parseScenarioToMinefield scenario of
+            Left e -> logShow e
+            Right m -> void $ modify (\_ -> m) mr
+
+    --stop timer if started
+    s <- read sr
+    case s.timerId of
+            Nothing -> pure unit
+            (Just iid) -> unsafePartial $ do 
+                clearInterval iid
+                Just timer <- getElementById "timer" npn
+                setTextContent "0:00.00" (toNode timer)
+    draw sr mr
+
+
+setScenario :: String -> Ref Settings -> Ref Minefield -> Effect Unit
+setScenario scenario sr mr = unsafePartial $ do
+    npn <- map (toNonElementParentNode <<< toDocument) (document =<< window)
+    Just node <- getElementById "scenarioinput" npn
+    let (Just input) = TA.fromElement node
+    TA.setValue scenario input
+    scenarioLoad sr mr
+
+setupPresetScenarioEvent :: Ref Settings -> Ref Minefield -> String -> String -> Effect Unit
+setupPresetScenarioEvent sr mr id scenario = unsafePartial $ do
+    npn <- map (toNonElementParentNode <<< toDocument) (document =<< window)
+    Just scenarioChangeNode <- getElementById id npn 
+    scenarioChangeEvent <- eventListener (\_ -> setScenario scenario sr mr)
+    addEventListener (EventType "click") scenarioChangeEvent true (toEventTarget scenarioChangeNode)
 
 {---------------------------------------
 MINE COUNT TABLE RENDERING

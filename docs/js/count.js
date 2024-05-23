@@ -196,10 +196,8 @@
   // output/Data.Semigroup/foreign.js
   var concatArray = function(xs) {
     return function(ys) {
-      if (xs.length === 0)
-        return ys;
-      if (ys.length === 0)
-        return xs;
+      if (xs.length === 0) return ys;
+      if (ys.length === 0) return xs;
       return xs.concat(ys);
     };
   };
@@ -341,6 +339,7 @@
     var l = s.length;
     return '"' + s.replace(
       /[\0-\x1F\x7F"\\]/g,
+      // eslint-disable-line no-control-regex
       function(c, i2) {
         switch (c) {
           case '"':
@@ -534,10 +533,8 @@
     var state3 = 0;
     var val;
     return function(lineNumber) {
-      if (state3 === 2)
-        return val;
-      if (state3 === 1)
-        throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
+      if (state3 === 2) return val;
+      if (state3 === 1) throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
       state3 = 1;
       val = init2();
       state3 = 2;
@@ -840,8 +837,23 @@
   (function(globalScope) {
     "use strict";
     var ExpantaNum2 = {
+      // The maximum number of operators stored in array.
+      // If the number of operations exceed the limit, then the least significant operations will be discarded.
+      // This is to prevent long loops and eating away of memory and processing time.
+      // 1000 means there are at maximum of 1000 elements in array.
+      // It is not recommended to make this number too big.
+      // `ExpantaNum.maxOps = 1000;`
       maxOps: 1e3,
+      // Specify what format is used when serializing for JSON.stringify
+      // 
+      // JSON   0 JSON object
+      // STRING 1 String
       serializeMode: 0,
+      // Level of debug information printed in console
+      // 
+      // NONE   0 Show no information.
+      // NORMAL 1 Show operations.
+      // ALL    2 Show everything.
       debug: 0
     }, external = true, expantaNumError = "[ExpantaNumError] ", invalidArgument = expantaNumError + "Invalid argument: ", isExpantaNum = /^[-\+]*(Infinity|NaN|(J+|J\^\d+ )?(10(\^+|\{[1-9]\d*\})|\(10(\^+|\{[1-9]\d*\})\)\^[1-9]\d* )*((\d+(\.\d*)?|\d*\.\d+)?([Ee][-\+]*))*(0|\d+(\.\d*)?|\d*\.\d+))$/, MAX_SAFE_INTEGER = 9007199254740991, MAX_E = Math.log10(MAX_SAFE_INTEGER), P = {}, Q = {}, R = {};
     R.ZERO = 0;
@@ -880,24 +892,16 @@
       return new ExpantaNum2(x).neg();
     };
     P.compareTo = P.cmp = function(other2) {
-      if (!(other2 instanceof ExpantaNum2))
-        other2 = new ExpantaNum2(other2);
-      if (isNaN(this.array[0][1]) || isNaN(other2.array[0][1]))
-        return NaN;
-      if (this.array[0][1] == Infinity && other2.array[0][1] != Infinity)
-        return this.sign;
-      if (this.array[0][1] != Infinity && other2.array[0][1] == Infinity)
-        return -other2.sign;
-      if (this.array.length == 1 && this.array[0][1] === 0 && other2.array.length == 1 && other2.array[0][1] === 0)
-        return 0;
-      if (this.sign != other2.sign)
-        return this.sign;
+      if (!(other2 instanceof ExpantaNum2)) other2 = new ExpantaNum2(other2);
+      if (isNaN(this.array[0][1]) || isNaN(other2.array[0][1])) return NaN;
+      if (this.array[0][1] == Infinity && other2.array[0][1] != Infinity) return this.sign;
+      if (this.array[0][1] != Infinity && other2.array[0][1] == Infinity) return -other2.sign;
+      if (this.array.length == 1 && this.array[0][1] === 0 && other2.array.length == 1 && other2.array[0][1] === 0) return 0;
+      if (this.sign != other2.sign) return this.sign;
       var m = this.sign;
       var r;
-      if (this.layer > other2.layer)
-        r = 1;
-      else if (this.layer < other2.layer)
-        r = -1;
+      if (this.layer > other2.layer) r = 1;
+      else if (this.layer < other2.layer) r = -1;
       else {
         var e, f;
         for (var i2 = 0, l = Math.min(this.array.length, other2.array.length); i2 < l; ++i2) {
@@ -1015,34 +1019,29 @@
       return new ExpantaNum2(x).isInfinite();
     };
     P.isInteger = P.isint = function() {
-      if (this.sign == -1)
-        return this.abs().isint();
-      if (this.gt(ExpantaNum2.MAX_SAFE_INTEGER))
-        return true;
+      if (this.sign == -1) return this.abs().isint();
+      if (this.gt(ExpantaNum2.MAX_SAFE_INTEGER)) return true;
       return Number.isInteger(this.toNumber());
     };
     Q.isInteger = Q.isint = function(x) {
       return new ExpantaNum2(x).isint();
     };
     P.floor = function() {
-      if (this.isInteger())
-        return this.clone();
+      if (this.isInteger()) return this.clone();
       return new ExpantaNum2(Math.floor(this.toNumber()));
     };
     Q.floor = function(x) {
       return new ExpantaNum2(x).floor();
     };
     P.ceiling = P.ceil = function() {
-      if (this.isInteger())
-        return this.clone();
+      if (this.isInteger()) return this.clone();
       return new ExpantaNum2(Math.ceil(this.toNumber()));
     };
     Q.ceiling = Q.ceil = function(x) {
       return new ExpantaNum2(x).ceil();
     };
     P.round = function() {
-      if (this.isInteger())
-        return this.clone();
+      if (this.isInteger()) return this.clone();
       return new ExpantaNum2(Math.round(this.toNumber()));
     };
     Q.round = function(x) {
@@ -1051,22 +1050,14 @@
     P.plus = P.add = function(other2) {
       var x = this.clone();
       other2 = new ExpantaNum2(other2);
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log(this + "+" + other2);
-      if (x.sign == -1)
-        return x.neg().add(other2.neg()).neg();
-      if (other2.sign == -1)
-        return x.sub(other2.neg());
-      if (x.eq(ExpantaNum2.ZERO))
-        return other2;
-      if (other2.eq(ExpantaNum2.ZERO))
-        return x;
-      if (x.isNaN() || other2.isNaN() || x.isInfinite() && other2.isInfinite() && x.eq(other2.neg()))
-        return ExpantaNum2.NaN.clone();
-      if (x.isInfinite())
-        return x;
-      if (other2.isInfinite())
-        return other2;
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(this + "+" + other2);
+      if (x.sign == -1) return x.neg().add(other2.neg()).neg();
+      if (other2.sign == -1) return x.sub(other2.neg());
+      if (x.eq(ExpantaNum2.ZERO)) return other2;
+      if (other2.eq(ExpantaNum2.ZERO)) return x;
+      if (x.isNaN() || other2.isNaN() || x.isInfinite() && other2.isInfinite() && x.eq(other2.neg())) return ExpantaNum2.NaN.clone();
+      if (x.isInfinite()) return x;
+      if (other2.isInfinite()) return other2;
       var p2 = x.min(other2);
       var q2 = x.max(other2);
       var op0 = q2.operator(0);
@@ -1089,22 +1080,14 @@
     P.minus = P.sub = function(other2) {
       var x = this.clone();
       other2 = new ExpantaNum2(other2);
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log(x + "-" + other2);
-      if (x.sign == -1)
-        return x.neg().sub(other2.neg()).neg();
-      if (other2.sign == -1)
-        return x.add(other2.neg());
-      if (x.eq(other2))
-        return ExpantaNum2.ZERO.clone();
-      if (other2.eq(ExpantaNum2.ZERO))
-        return x;
-      if (x.isNaN() || other2.isNaN() || x.isInfinite() && other2.isInfinite())
-        return ExpantaNum2.NaN.clone();
-      if (x.isInfinite())
-        return x;
-      if (other2.isInfinite())
-        return other2.neg();
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(x + "-" + other2);
+      if (x.sign == -1) return x.neg().sub(other2.neg()).neg();
+      if (other2.sign == -1) return x.add(other2.neg());
+      if (x.eq(other2)) return ExpantaNum2.ZERO.clone();
+      if (other2.eq(ExpantaNum2.ZERO)) return x;
+      if (x.isNaN() || other2.isNaN() || x.isInfinite() && other2.isInfinite()) return ExpantaNum2.NaN.clone();
+      if (x.isInfinite()) return x;
+      if (other2.isInfinite()) return other2.neg();
       var p2 = x.min(other2);
       var q2 = x.max(other2);
       var n = other2.gt(x);
@@ -1130,27 +1113,17 @@
     P.times = P.mul = function(other2) {
       var x = this.clone();
       other2 = new ExpantaNum2(other2);
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log(x + "*" + other2);
-      if (x.sign * other2.sign == -1)
-        return x.abs().mul(other2.abs()).neg();
-      if (x.sign == -1)
-        return x.abs().mul(other2.abs());
-      if (x.isNaN() || other2.isNaN() || x.eq(ExpantaNum2.ZERO) && other2.isInfinite() || x.isInfinite() && other2.abs().eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.NaN.clone();
-      if (other2.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.ZERO.clone();
-      if (other2.eq(ExpantaNum2.ONE))
-        return x.clone();
-      if (x.isInfinite())
-        return x;
-      if (other2.isInfinite())
-        return other2;
-      if (x.max(other2).gt(ExpantaNum2.EE_MAX_SAFE_INTEGER))
-        return x.max(other2);
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(x + "*" + other2);
+      if (x.sign * other2.sign == -1) return x.abs().mul(other2.abs()).neg();
+      if (x.sign == -1) return x.abs().mul(other2.abs());
+      if (x.isNaN() || other2.isNaN() || x.eq(ExpantaNum2.ZERO) && other2.isInfinite() || x.isInfinite() && other2.abs().eq(ExpantaNum2.ZERO)) return ExpantaNum2.NaN.clone();
+      if (other2.eq(ExpantaNum2.ZERO)) return ExpantaNum2.ZERO.clone();
+      if (other2.eq(ExpantaNum2.ONE)) return x.clone();
+      if (x.isInfinite()) return x;
+      if (other2.isInfinite()) return other2;
+      if (x.max(other2).gt(ExpantaNum2.EE_MAX_SAFE_INTEGER)) return x.max(other2);
       var n = x.toNumber() * other2.toNumber();
-      if (n <= MAX_SAFE_INTEGER)
-        return new ExpantaNum2(n);
+      if (n <= MAX_SAFE_INTEGER) return new ExpantaNum2(n);
       return ExpantaNum2.pow(10, x.log10().add(other2.log10()));
     };
     Q.times = Q.mul = function(x, y) {
@@ -1159,45 +1132,30 @@
     P.divide = P.div = function(other2) {
       var x = this.clone();
       other2 = new ExpantaNum2(other2);
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log(x + "/" + other2);
-      if (x.sign * other2.sign == -1)
-        return x.abs().div(other2.abs()).neg();
-      if (x.sign == -1)
-        return x.abs().div(other2.abs());
-      if (x.isNaN() || other2.isNaN() || x.isInfinite() && other2.isInfinite() || x.eq(ExpantaNum2.ZERO) && other2.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.NaN.clone();
-      if (other2.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.POSITIVE_INFINITY.clone();
-      if (other2.eq(ExpantaNum2.ONE))
-        return x.clone();
-      if (x.eq(other2))
-        return ExpantaNum2.ONE.clone();
-      if (x.isInfinite())
-        return x;
-      if (other2.isInfinite())
-        return ExpantaNum2.ZERO.clone();
-      if (x.max(other2).gt(ExpantaNum2.EE_MAX_SAFE_INTEGER))
-        return x.gt(other2) ? x.clone() : ExpantaNum2.ZERO.clone();
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(x + "/" + other2);
+      if (x.sign * other2.sign == -1) return x.abs().div(other2.abs()).neg();
+      if (x.sign == -1) return x.abs().div(other2.abs());
+      if (x.isNaN() || other2.isNaN() || x.isInfinite() && other2.isInfinite() || x.eq(ExpantaNum2.ZERO) && other2.eq(ExpantaNum2.ZERO)) return ExpantaNum2.NaN.clone();
+      if (other2.eq(ExpantaNum2.ZERO)) return ExpantaNum2.POSITIVE_INFINITY.clone();
+      if (other2.eq(ExpantaNum2.ONE)) return x.clone();
+      if (x.eq(other2)) return ExpantaNum2.ONE.clone();
+      if (x.isInfinite()) return x;
+      if (other2.isInfinite()) return ExpantaNum2.ZERO.clone();
+      if (x.max(other2).gt(ExpantaNum2.EE_MAX_SAFE_INTEGER)) return x.gt(other2) ? x.clone() : ExpantaNum2.ZERO.clone();
       var n = x.toNumber() / other2.toNumber();
-      if (n <= MAX_SAFE_INTEGER)
-        return new ExpantaNum2(n);
+      if (n <= MAX_SAFE_INTEGER) return new ExpantaNum2(n);
       var pw = ExpantaNum2.pow(10, x.log10().sub(other2.log10()));
       var fp = pw.floor();
-      if (pw.sub(fp).lt(new ExpantaNum2(1e-9)))
-        return fp;
+      if (pw.sub(fp).lt(new ExpantaNum2(1e-9))) return fp;
       return pw;
     };
     Q.divide = Q.div = function(x, y) {
       return new ExpantaNum2(x).div(y);
     };
     P.reciprocate = P.rec = function() {
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log(this + "^-1");
-      if (this.isNaN() || this.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.NaN.clone();
-      if (this.abs().gt("2e323"))
-        return ExpantaNum2.ZERO.clone();
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(this + "^-1");
+      if (this.isNaN() || this.eq(ExpantaNum2.ZERO)) return ExpantaNum2.NaN.clone();
+      if (this.abs().gt("2e323")) return ExpantaNum2.ZERO.clone();
       return new ExpantaNum2(1 / this);
     };
     Q.reciprocate = Q.rec = function(x) {
@@ -1205,23 +1163,18 @@
     };
     P.modular = P.mod = function(other2) {
       other2 = new ExpantaNum2(other2);
-      if (other2.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.ZERO.clone();
-      if (this.sign * other2.sign == -1)
-        return this.abs().mod(other2.abs()).neg();
-      if (this.sign == -1)
-        return this.abs().mod(other2.abs());
+      if (other2.eq(ExpantaNum2.ZERO)) return ExpantaNum2.ZERO.clone();
+      if (this.sign * other2.sign == -1) return this.abs().mod(other2.abs()).neg();
+      if (this.sign == -1) return this.abs().mod(other2.abs());
       return this.sub(this.div(other2).floor().mul(other2));
     };
     Q.modular = Q.mod = function(x, y) {
       return new ExpantaNum2(x).mod(y);
     };
     var f_gamma = function(n) {
-      if (!isFinite(n))
-        return n;
+      if (!isFinite(n)) return n;
       if (n < -50) {
-        if (n == Math.trunc(n))
-          return Number.NEGATIVE_INFINITY;
+        if (n == Math.trunc(n)) return Number.NEGATIVE_INFINITY;
         return 0;
       }
       var scal1 = 1;
@@ -1254,16 +1207,12 @@
     };
     P.gamma = function() {
       var x = this.clone();
-      if (x.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER))
-        return x;
-      if (x.gt(ExpantaNum2.E_MAX_SAFE_INTEGER))
-        return ExpantaNum2.exp(x);
-      if (x.gt(ExpantaNum2.MAX_SAFE_INTEGER))
-        return ExpantaNum2.exp(ExpantaNum2.mul(x, ExpantaNum2.ln(x).sub(1)));
+      if (x.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER)) return x;
+      if (x.gt(ExpantaNum2.E_MAX_SAFE_INTEGER)) return ExpantaNum2.exp(x);
+      if (x.gt(ExpantaNum2.MAX_SAFE_INTEGER)) return ExpantaNum2.exp(ExpantaNum2.mul(x, ExpantaNum2.ln(x).sub(1)));
       var n = x.operator(0);
       if (n > 1) {
-        if (n < 24)
-          return new ExpantaNum2(f_gamma(x.sign * n));
+        if (n < 24) return new ExpantaNum2(f_gamma(x.sign * n));
         var t = n - 1;
         var l = 0.9189385332046727;
         l += (t + 0.5) * Math.log(t);
@@ -1273,15 +1222,13 @@
         var lm = 12 * np;
         var adj = 1 / lm;
         var l2 = l + adj;
-        if (l2 == l)
-          return ExpantaNum2.exp(l);
+        if (l2 == l) return ExpantaNum2.exp(l);
         l = l2;
         np *= n2;
         lm = 360 * np;
         adj = 1 / lm;
         l2 = l - adj;
-        if (l2 == l)
-          return ExpantaNum2.exp(l);
+        if (l2 == l) return ExpantaNum2.exp(l);
         l = l2;
         np *= n2;
         lm = 1260 * np;
@@ -1292,8 +1239,7 @@
         lt = 1 / lm;
         l -= lt;
         return ExpantaNum2.exp(l);
-      } else
-        return this.rec();
+      } else return this.rec();
     };
     Q.gamma = function(x) {
       return new ExpantaNum2(x).gamma();
@@ -1302,22 +1248,15 @@
     P.factorial = P.fact = function() {
       var x = this.clone();
       var f = ExpantaNum2.factorials;
-      if (x.lt(ExpantaNum2.ZERO) || !x.isint())
-        return x.add(1).gamma();
-      if (x.lte(170))
-        return new ExpantaNum2(f[+x]);
+      if (x.lt(ExpantaNum2.ZERO) || !x.isint()) return x.add(1).gamma();
+      if (x.lte(170)) return new ExpantaNum2(f[+x]);
       var errorFixer = 1;
       var e = +x;
-      if (e < 500)
-        e += 163879 / 209018880 * Math.pow(e, 5);
-      if (e < 1e3)
-        e += -571 / 2488320 * Math.pow(e, 4);
-      if (e < 5e4)
-        e += -139 / 51840 * Math.pow(e, 3);
-      if (e < 1e7)
-        e += 1 / 288 * Math.pow(e, 2);
-      if (e < 1e20)
-        e += 1 / 12 * e;
+      if (e < 500) e += 163879 / 209018880 * Math.pow(e, 5);
+      if (e < 1e3) e += -571 / 2488320 * Math.pow(e, 4);
+      if (e < 5e4) e += -139 / 51840 * Math.pow(e, 3);
+      if (e < 1e7) e += 1 / 288 * Math.pow(e, 2);
+      if (e < 1e20) e += 1 / 12 * e;
       return x.div(ExpantaNum2.E).pow(x).mul(x.mul(ExpantaNum2.PI).mul(2).sqrt()).times(errorFixer);
     };
     Q.factorial = Q.fact = function(x) {
@@ -1325,27 +1264,18 @@
     };
     P.toPower = P.pow = function(other2) {
       other2 = new ExpantaNum2(other2);
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log(this + "^" + other2);
-      if (other2.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.ONE.clone();
-      if (other2.eq(ExpantaNum2.ONE))
-        return this.clone();
-      if (other2.lt(ExpantaNum2.ZERO))
-        return this.pow(other2.neg()).rec();
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(this + "^" + other2);
+      if (other2.eq(ExpantaNum2.ZERO)) return ExpantaNum2.ONE.clone();
+      if (other2.eq(ExpantaNum2.ONE)) return this.clone();
+      if (other2.lt(ExpantaNum2.ZERO)) return this.pow(other2.neg()).rec();
       if (this.lt(ExpantaNum2.ZERO) && other2.isint()) {
-        if (other2.mod(2).lt(ExpantaNum2.ONE))
-          return this.abs().pow(other2);
+        if (other2.mod(2).lt(ExpantaNum2.ONE)) return this.abs().pow(other2);
         return this.abs().pow(other2).neg();
       }
-      if (this.lt(ExpantaNum2.ZERO))
-        return ExpantaNum2.NaN.clone();
-      if (this.eq(ExpantaNum2.ONE))
-        return ExpantaNum2.ONE.clone();
-      if (this.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.ZERO.clone();
-      if (this.max(other2).gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER))
-        return this.max(other2);
+      if (this.lt(ExpantaNum2.ZERO)) return ExpantaNum2.NaN.clone();
+      if (this.eq(ExpantaNum2.ONE)) return ExpantaNum2.ONE.clone();
+      if (this.eq(ExpantaNum2.ZERO)) return ExpantaNum2.ZERO.clone();
+      if (this.max(other2).gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER)) return this.max(other2);
       if (this.eq(10)) {
         if (other2.gt(ExpantaNum2.ZERO)) {
           other2.operator(1, other2.operator(1) + 1 || 1);
@@ -1355,11 +1285,9 @@
           return new ExpantaNum2(Math.pow(10, other2.toNumber()));
         }
       }
-      if (other2.lt(ExpantaNum2.ONE))
-        return this.root(other2.rec());
+      if (other2.lt(ExpantaNum2.ONE)) return this.root(other2.rec());
       var n = Math.pow(this.toNumber(), other2.toNumber());
-      if (n <= MAX_SAFE_INTEGER)
-        return new ExpantaNum2(n);
+      if (n <= MAX_SAFE_INTEGER) return new ExpantaNum2(n);
       return ExpantaNum2.pow(10, this.log10().mul(other2));
     };
     Q.toPower = Q.pow = function(x, y) {
@@ -1385,24 +1313,15 @@
     };
     P.root = function(other2) {
       other2 = new ExpantaNum2(other2);
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log(this + "root" + other2);
-      if (other2.eq(ExpantaNum2.ONE))
-        return this.clone();
-      if (other2.lt(ExpantaNum2.ZERO))
-        return this.root(other2.neg()).rec();
-      if (other2.lt(ExpantaNum2.ONE))
-        return this.pow(other2.rec());
-      if (this.lt(ExpantaNum2.ZERO) && other2.isint() && other2.mod(2).eq(ExpantaNum2.ONE))
-        return this.neg().root(other2).neg();
-      if (this.lt(ExpantaNum2.ZERO))
-        return ExpantaNum2.NaN.clone();
-      if (this.eq(ExpantaNum2.ONE))
-        return ExpantaNum2.ONE.clone();
-      if (this.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.ZERO.clone();
-      if (this.max(other2).gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER))
-        return this.gt(other2) ? this.clone() : ExpantaNum2.ZERO.clone();
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(this + "root" + other2);
+      if (other2.eq(ExpantaNum2.ONE)) return this.clone();
+      if (other2.lt(ExpantaNum2.ZERO)) return this.root(other2.neg()).rec();
+      if (other2.lt(ExpantaNum2.ONE)) return this.pow(other2.rec());
+      if (this.lt(ExpantaNum2.ZERO) && other2.isint() && other2.mod(2).eq(ExpantaNum2.ONE)) return this.neg().root(other2).neg();
+      if (this.lt(ExpantaNum2.ZERO)) return ExpantaNum2.NaN.clone();
+      if (this.eq(ExpantaNum2.ONE)) return ExpantaNum2.ONE.clone();
+      if (this.eq(ExpantaNum2.ZERO)) return ExpantaNum2.ZERO.clone();
+      if (this.max(other2).gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER)) return this.gt(other2) ? this.clone() : ExpantaNum2.ZERO.clone();
       return ExpantaNum2.pow(10, this.log10().div(other2));
     };
     Q.root = function(x, y) {
@@ -1410,18 +1329,12 @@
     };
     P.generalLogarithm = P.log10 = function() {
       var x = this.clone();
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log("log" + this);
-      if (x.lt(ExpantaNum2.ZERO))
-        return ExpantaNum2.NaN.clone();
-      if (x.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.NEGATIVE_INFINITY.clone();
-      if (x.lte(ExpantaNum2.MAX_SAFE_INTEGER))
-        return new ExpantaNum2(Math.log10(x.toNumber()));
-      if (!x.isFinite())
-        return x;
-      if (x.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER))
-        return x;
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log("log" + this);
+      if (x.lt(ExpantaNum2.ZERO)) return ExpantaNum2.NaN.clone();
+      if (x.eq(ExpantaNum2.ZERO)) return ExpantaNum2.NEGATIVE_INFINITY.clone();
+      if (x.lte(ExpantaNum2.MAX_SAFE_INTEGER)) return new ExpantaNum2(Math.log10(x.toNumber()));
+      if (!x.isFinite()) return x;
+      if (x.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER)) return x;
       x.operator(1, x.operator(1) - 1);
       return x.standardize();
     };
@@ -1429,8 +1342,7 @@
       return new ExpantaNum2(x).log10();
     };
     P.logarithm = P.logBase = function(base2) {
-      if (base2 === void 0)
-        base2 = Math.E;
+      if (base2 === void 0) base2 = Math.E;
       return this.log10().div(ExpantaNum2.log10(base2));
     };
     Q.logarithm = Q.logBase = function(x, base2) {
@@ -1444,38 +1356,28 @@
     };
     var OMEGA = 0.5671432904097838;
     var f_lambertw = function(z, tol) {
-      if (tol === void 0)
-        tol = 1e-10;
+      if (tol === void 0) tol = 1e-10;
       var w;
       var wn;
-      if (!Number.isFinite(z))
-        return z;
-      if (z === 0)
-        return z;
-      if (z === 1)
-        return OMEGA;
-      if (z < 10)
-        w = 0;
-      else
-        w = Math.log(z) - Math.log(Math.log(z));
+      if (!Number.isFinite(z)) return z;
+      if (z === 0) return z;
+      if (z === 1) return OMEGA;
+      if (z < 10) w = 0;
+      else w = Math.log(z) - Math.log(Math.log(z));
       for (var i2 = 0; i2 < 100; ++i2) {
         wn = (z * Math.exp(-w) + w * w) / (w + 1);
-        if (Math.abs(wn - w) < tol * Math.abs(wn))
-          return wn;
+        if (Math.abs(wn - w) < tol * Math.abs(wn)) return wn;
         w = wn;
       }
       throw Error("Iteration failed to converge: " + z);
     };
     var d_lambertw = function(z, tol) {
-      if (tol === void 0)
-        tol = 1e-10;
+      if (tol === void 0) tol = 1e-10;
       z = new ExpantaNum2(z);
       var w;
       var ew, wewz, wn;
-      if (!z.isFinite())
-        return z;
-      if (z === 0)
-        return z;
+      if (!z.isFinite()) return z;
+      if (z === 0) return z;
       if (z === 1) {
         return OMEGA;
       }
@@ -1484,82 +1386,60 @@
         ew = ExpantaNum2.exp(-w);
         wewz = w.sub(z.mul(ew));
         wn = w.sub(wewz.div(w.add(ExpantaNum2.ONE).sub(w.add(2).mul(wewz).div(ExpantaNum2.mul(2, w).add(2)))));
-        if (ExpantaNum2.abs(wn.sub(w)).lt(ExpantaNum2.abs(wn).mul(tol)))
-          return wn;
+        if (ExpantaNum2.abs(wn.sub(w)).lt(ExpantaNum2.abs(wn).mul(tol))) return wn;
         w = wn;
       }
       throw Error("Iteration failed to converge: " + z);
     };
     P.lambertw = function() {
       var x = this.clone();
-      if (x.isNaN())
-        return x;
-      if (x.lt(-0.3678794411710499))
-        throw Error("lambertw is unimplemented for results less than -1, sorry!");
-      if (x.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER))
-        return x;
+      if (x.isNaN()) return x;
+      if (x.lt(-0.3678794411710499)) throw Error("lambertw is unimplemented for results less than -1, sorry!");
+      if (x.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER)) return x;
       if (x.gt(ExpantaNum2.EE_MAX_SAFE_INTEGER)) {
         x.operator(1, x.operator(1) - 1);
         return x;
       }
-      if (x.gt(ExpantaNum2.MAX_SAFE_INTEGER))
-        return d_lambertw(x);
-      else
-        return new ExpantaNum2(f_lambertw(x.sign * x.operator(0)));
+      if (x.gt(ExpantaNum2.MAX_SAFE_INTEGER)) return d_lambertw(x);
+      else return new ExpantaNum2(f_lambertw(x.sign * x.operator(0)));
     };
     Q.lambertw = function(x) {
       return new ExpantaNum2(x).lambertw();
     };
     P.tetrate = P.tetr = function(other2, payload) {
-      if (payload === void 0)
-        payload = ExpantaNum2.ONE;
+      if (payload === void 0) payload = ExpantaNum2.ONE;
       var t = this.clone();
       other2 = new ExpantaNum2(other2);
       payload = new ExpantaNum2(payload);
-      if (payload.neq(ExpantaNum2.ONE))
-        other2 = other2.add(payload.slog(t));
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log(t + "^^" + other2);
+      if (payload.neq(ExpantaNum2.ONE)) other2 = other2.add(payload.slog(t));
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(t + "^^" + other2);
       var negln;
-      if (t.isNaN() || other2.isNaN() || payload.isNaN())
-        return ExpantaNum2.NaN.clone();
+      if (t.isNaN() || other2.isNaN() || payload.isNaN()) return ExpantaNum2.NaN.clone();
       if (other2.isInfinite() && other2.sign > 0) {
-        if (t.gte(Math.exp(1 / Math.E)))
-          return ExpantaNum2.POSITIVE_INFINITY.clone();
+        if (t.gte(Math.exp(1 / Math.E))) return ExpantaNum2.POSITIVE_INFINITY.clone();
         negln = t.ln().neg();
         return negln.lambertw().div(negln);
       }
-      if (other2.lte(-2))
-        return ExpantaNum2.NaN.clone();
+      if (other2.lte(-2)) return ExpantaNum2.NaN.clone();
       if (t.eq(ExpantaNum2.ZERO)) {
-        if (other2.eq(ExpantaNum2.ZERO))
-          return ExpantaNum2.NaN.clone();
-        if (other2.mod(2).eq(ExpantaNum2.ZERO))
-          return ExpantaNum2.ZERO.clone();
+        if (other2.eq(ExpantaNum2.ZERO)) return ExpantaNum2.NaN.clone();
+        if (other2.mod(2).eq(ExpantaNum2.ZERO)) return ExpantaNum2.ZERO.clone();
         return ExpantaNum2.ONE.clone();
       }
       if (t.eq(ExpantaNum2.ONE)) {
-        if (other2.eq(ExpantaNum2.ONE.neg()))
-          return ExpantaNum2.NaN.clone();
+        if (other2.eq(ExpantaNum2.ONE.neg())) return ExpantaNum2.NaN.clone();
         return ExpantaNum2.ONE.clone();
       }
-      if (other2.eq(ExpantaNum2.ONE.neg()))
-        return ExpantaNum2.ZERO.clone();
-      if (other2.eq(ExpantaNum2.ZERO))
-        return ExpantaNum2.ONE.clone();
-      if (other2.eq(ExpantaNum2.ONE))
-        return t;
-      if (other2.eq(2))
-        return t.pow(t);
+      if (other2.eq(ExpantaNum2.ONE.neg())) return ExpantaNum2.ZERO.clone();
+      if (other2.eq(ExpantaNum2.ZERO)) return ExpantaNum2.ONE.clone();
+      if (other2.eq(ExpantaNum2.ONE)) return t;
+      if (other2.eq(2)) return t.pow(t);
       if (t.eq(2)) {
-        if (other2.eq(3))
-          return new ExpantaNum2(16);
-        if (other2.eq(4))
-          return new ExpantaNum2(65536);
+        if (other2.eq(3)) return new ExpantaNum2(16);
+        if (other2.eq(4)) return new ExpantaNum2(65536);
       }
       var m = t.max(other2);
-      if (m.gt("10^^^" + MAX_SAFE_INTEGER))
-        return m;
+      if (m.gt("10^^^" + MAX_SAFE_INTEGER)) return m;
       if (m.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER) || other2.gt(ExpantaNum2.MAX_SAFE_INTEGER)) {
         if (this.lt(Math.exp(1 / Math.E))) {
           negln = t.ln().neg();
@@ -1593,8 +1473,7 @@
           ++f;
         }
       }
-      if (i2 == 100 || this.lt(Math.exp(1 / Math.E)))
-        f = 0;
+      if (i2 == 100 || this.lt(Math.exp(1 / Math.E))) f = 0;
       r.operator(1, r.operator(1) + f || f);
       r.standardize();
       return r;
@@ -1609,15 +1488,11 @@
       return new ExpantaNum2(x).iteratedexp(other, payload);
     };
     P.iteratedlog = function(base2, other2) {
-      if (base2 === void 0)
-        base2 = 10;
-      if (other2 === void 0)
-        other2 = ExpantaNum2.ONE.clone();
+      if (base2 === void 0) base2 = 10;
+      if (other2 === void 0) other2 = ExpantaNum2.ONE.clone();
       var t = this.clone();
-      if (other2.eq(ExpantaNum2.ZERO))
-        return t;
-      if (other2.eq(ExpantaNum2.ONE))
-        return t.logBase(base2);
+      if (other2.eq(ExpantaNum2.ZERO)) return t;
+      if (other2.eq(ExpantaNum2.ONE)) return t.logBase(base2);
       base2 = new ExpantaNum2(base2);
       other2 = new ExpantaNum2(other2);
       return base2.tetr(t.slog(base2).sub(other2));
@@ -1626,10 +1501,8 @@
       return new ExpantaNum2(x).iteratedlog(y, z);
     };
     P.layeradd = function(other2, base2) {
-      if (base2 === void 0)
-        base2 = 10;
-      if (other2 === void 0)
-        other2 = ExpantaNum2.ONE.clone();
+      if (base2 === void 0) base2 = 10;
+      if (other2 === void 0) other2 = ExpantaNum2.ONE.clone();
       var t = this.clone();
       base2 = new ExpantaNum2(base2);
       other2 = new ExpantaNum2(other2);
@@ -1646,12 +1519,9 @@
     };
     P.ssqrt = P.ssrt = function() {
       var x = this.clone();
-      if (x.lt(Math.exp(-1 / Math.E)))
-        return ExpantaNum2.NaN.clone();
-      if (!x.isFinite())
-        return x;
-      if (x.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER))
-        return x;
+      if (x.lt(Math.exp(-1 / Math.E))) return ExpantaNum2.NaN.clone();
+      if (!x.isFinite()) return x;
+      if (x.gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER)) return x;
       if (x.gt(ExpantaNum2.EE_MAX_SAFE_INTEGER)) {
         x.operator(1, x.operator(1) - 1);
         return x;
@@ -1663,32 +1533,22 @@
       return new ExpantaNum2(x).ssqrt();
     };
     P.slog = function(base2) {
-      if (base2 === void 0)
-        base2 = 10;
+      if (base2 === void 0) base2 = 10;
       var x = new ExpantaNum2(this);
       base2 = new ExpantaNum2(base2);
-      if (x.isNaN() || base2.isNaN() || x.isInfinite() && base2.isInfinite())
-        return ExpantaNum2.NaN.clone();
-      if (x.isInfinite())
-        return x;
-      if (base2.isInfinite())
-        return ExpantaNum2.ZERO.clone();
-      if (x.lt(ExpantaNum2.ZERO))
-        return ExpantaNum2.ONE.neg();
-      if (x.eq(ExpantaNum2.ONE))
-        return ExpantaNum2.ZERO.clone();
-      if (x.eq(base2))
-        return ExpantaNum2.ONE.clone();
+      if (x.isNaN() || base2.isNaN() || x.isInfinite() && base2.isInfinite()) return ExpantaNum2.NaN.clone();
+      if (x.isInfinite()) return x;
+      if (base2.isInfinite()) return ExpantaNum2.ZERO.clone();
+      if (x.lt(ExpantaNum2.ZERO)) return ExpantaNum2.ONE.neg();
+      if (x.eq(ExpantaNum2.ONE)) return ExpantaNum2.ZERO.clone();
+      if (x.eq(base2)) return ExpantaNum2.ONE.clone();
       if (base2.lt(Math.exp(1 / Math.E))) {
         var a2 = ExpantaNum2.tetr(base2, Infinity);
-        if (x.eq(a2))
-          return ExpantaNum2.POSITIVE_INFINITY.clone();
-        if (x.gt(a2))
-          return ExpantaNum2.NaN.clone();
+        if (x.eq(a2)) return ExpantaNum2.POSITIVE_INFINITY.clone();
+        if (x.gt(a2)) return ExpantaNum2.NaN.clone();
       }
       if (x.max(base2).gt("10^^^" + MAX_SAFE_INTEGER)) {
-        if (x.gt(base2))
-          return x;
+        if (x.gt(base2)) return x;
         return ExpantaNum2.ZERO.clone();
       }
       if (x.max(base2).gt(ExpantaNum2.TETRATED_MAX_SAFE_INTEGER)) {
@@ -1732,57 +1592,42 @@
     P.arrow = function(arrows) {
       var t = this.clone();
       arrows = new ExpantaNum2(arrows);
-      if (!arrows.isint() || arrows.lt(ExpantaNum2.ZERO))
-        return function(other2) {
-          return ExpantaNum2.NaN.clone();
-        };
-      if (arrows.eq(ExpantaNum2.ZERO))
-        return function(other2) {
-          return t.mul(other2);
-        };
-      if (arrows.eq(ExpantaNum2.ONE))
-        return function(other2) {
-          return t.pow(other2);
-        };
-      if (arrows.eq(2))
-        return function(other2) {
-          return t.tetr(other2);
-        };
+      if (!arrows.isint() || arrows.lt(ExpantaNum2.ZERO)) return function(other2) {
+        return ExpantaNum2.NaN.clone();
+      };
+      if (arrows.eq(ExpantaNum2.ZERO)) return function(other2) {
+        return t.mul(other2);
+      };
+      if (arrows.eq(ExpantaNum2.ONE)) return function(other2) {
+        return t.pow(other2);
+      };
+      if (arrows.eq(2)) return function(other2) {
+        return t.tetr(other2);
+      };
       return function(other2) {
         var depth;
-        if (arguments.length == 2)
-          depth = arguments[1];
-        else
-          depth = 0;
+        if (arguments.length == 2) depth = arguments[1];
+        else depth = 0;
         other2 = new ExpantaNum2(other2);
         var r;
-        if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-          console.log(t + "{" + arrows + "}" + other2);
-        if (t.isNaN() || other2.isNaN())
-          return ExpantaNum2.NaN.clone();
-        if (other2.lt(ExpantaNum2.ZERO))
-          return ExpantaNum2.NaN.clone();
+        if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log(t + "{" + arrows + "}" + other2);
+        if (t.isNaN() || other2.isNaN()) return ExpantaNum2.NaN.clone();
+        if (other2.lt(ExpantaNum2.ZERO)) return ExpantaNum2.NaN.clone();
         if (t.eq(ExpantaNum2.ZERO)) {
-          if (other2.eq(ExpantaNum2.ONE))
-            return ExpantaNum2.ZERO.clone();
+          if (other2.eq(ExpantaNum2.ONE)) return ExpantaNum2.ZERO.clone();
           return ExpantaNum2.NaN.clone();
         }
-        if (t.eq(ExpantaNum2.ONE))
-          return ExpantaNum2.ONE.clone();
-        if (other2.eq(ExpantaNum2.ZERO))
-          return ExpantaNum2.ONE.clone();
-        if (other2.eq(ExpantaNum2.ONE))
-          return t.clone();
+        if (t.eq(ExpantaNum2.ONE)) return ExpantaNum2.ONE.clone();
+        if (other2.eq(ExpantaNum2.ZERO)) return ExpantaNum2.ONE.clone();
+        if (other2.eq(ExpantaNum2.ONE)) return t.clone();
         if (arrows.gt(ExpantaNum2.MAX_SAFE_INTEGER)) {
           r = arrows.clone();
           r.layer++;
           return r;
         }
         var arrowsNum = arrows.toNumber();
-        if (other2.eq(2))
-          return t.arrow(arrowsNum - 1)(t, depth + 1);
-        if (t.max(other2).gt("10{" + (arrowsNum + 1) + "}" + MAX_SAFE_INTEGER))
-          return t.max(other2);
+        if (other2.eq(2)) return t.arrow(arrowsNum - 1)(t, depth + 1);
+        if (t.max(other2).gt("10{" + (arrowsNum + 1) + "}" + MAX_SAFE_INTEGER)) return t.max(other2);
         if (t.gt("10{" + arrowsNum + "}" + MAX_SAFE_INTEGER) || other2.gt(ExpantaNum2.MAX_SAFE_INTEGER)) {
           if (t.gt("10{" + arrowsNum + "}" + MAX_SAFE_INTEGER)) {
             r = t.clone();
@@ -1811,8 +1656,7 @@
             --f;
           }
         }
-        if (i2 == 100)
-          f = 0;
+        if (i2 == 100) f = 0;
         r.operator(arrowsNum - 1, r.operator(arrowsNum - 1) + f || f);
         r.standardize();
         return r;
@@ -1829,14 +1673,12 @@
     };
     Q.hyper = function(z) {
       z = new ExpantaNum2(z);
-      if (z.eq(ExpantaNum2.ZERO))
-        return function(x, y) {
-          return new ExpantaNum2(y).eq(ExpantaNum2.ZERO) ? new ExpantaNum2(x) : new ExpantaNum2(x).add(ExpantaNum2.ONE);
-        };
-      if (z.eq(ExpantaNum2.ONE))
-        return function(x, y) {
-          return ExpantaNum2.add(x, y);
-        };
+      if (z.eq(ExpantaNum2.ZERO)) return function(x, y) {
+        return new ExpantaNum2(y).eq(ExpantaNum2.ZERO) ? new ExpantaNum2(x) : new ExpantaNum2(x).add(ExpantaNum2.ONE);
+      };
+      if (z.eq(ExpantaNum2.ONE)) return function(x, y) {
+        return ExpantaNum2.add(x, y);
+      };
       return function(x, y) {
         return new ExpantaNum2(x).arrow(z.sub(2))(y);
       };
@@ -1845,18 +1687,12 @@
       var t = this.clone();
       other2 = new ExpantaNum2(other2);
       var r;
-      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL)
-        console.log("{" + t + "," + other2 + ",1,2}");
-      if (other2.lte(ExpantaNum2.ZERO) || !other2.isint())
-        return ExpantaNum2.NaN.clone();
-      if (other2.eq(ExpantaNum2.ONE))
-        return t.clone();
-      if (!t.isint())
-        return ExpantaNum2.NaN.clone();
-      if (t.eq(2))
-        return new ExpantaNum2(4);
-      if (other2.gt(ExpantaNum2.MAX_SAFE_INTEGER))
-        return ExpantaNum2.POSITIVE_INFINITY.clone();
+      if (ExpantaNum2.debug >= ExpantaNum2.NORMAL) console.log("{" + t + "," + other2 + ",1,2}");
+      if (other2.lte(ExpantaNum2.ZERO) || !other2.isint()) return ExpantaNum2.NaN.clone();
+      if (other2.eq(ExpantaNum2.ONE)) return t.clone();
+      if (!t.isint()) return ExpantaNum2.NaN.clone();
+      if (t.eq(2)) return new ExpantaNum2(4);
+      if (other2.gt(ExpantaNum2.MAX_SAFE_INTEGER)) return ExpantaNum2.POSITIVE_INFINITY.clone();
       var f = other2.toNumber() - 1;
       r = t;
       for (var i2 = 0; f !== 0 && r.lt(ExpantaNum2.MAX_SAFE_INTEGER) && i2 < 100; ++i2) {
@@ -1865,8 +1701,7 @@
           --f;
         }
       }
-      if (i2 == 100)
-        f = 0;
+      if (i2 == 100) f = 0;
       r.layer += f;
       r.standardize();
       return r;
@@ -1912,13 +1747,10 @@
     P.standardize = function() {
       var b2;
       var x = this;
-      if (ExpantaNum2.debug >= ExpantaNum2.ALL)
-        console.log(x.toString());
-      if (!x.array || !x.array.length)
-        x.array = [[0, 0]];
+      if (ExpantaNum2.debug >= ExpantaNum2.ALL) console.log(x.toString());
+      if (!x.array || !x.array.length) x.array = [[0, 0]];
       if (x.sign != 1 && x.sign != -1) {
-        if (typeof x.sign != "number")
-          x.sign = Number(x.sign);
+        if (typeof x.sign != "number") x.sign = Number(x.sign);
         x.sign = x.sign < 0 ? -1 : 1;
       }
       if (x.layer > MAX_SAFE_INTEGER) {
@@ -1926,8 +1758,7 @@
         x.layer = 0;
         return x;
       }
-      if (Number.isInteger(x.layer))
-        x.layer = Math.floor(x.layer);
+      if (Number.isInteger(x.layer)) x.layer = Math.floor(x.layer);
       for (var i2 = 0; i2 < x.array.length; ++i2) {
         var e = x.array[i2];
         if (e[0] === null || e[0] === void 0) {
@@ -1946,36 +1777,28 @@
           x.array = [[0, Infinity]];
           return x;
         }
-        if (!Number.isInteger(e[0]))
-          e[0] = Math.floor(e[0]);
-        if (e[0] !== 0 && !Number.isInteger(e[1]))
-          e[1] = Math.floor(e[1]);
+        if (!Number.isInteger(e[0])) e[0] = Math.floor(e[0]);
+        if (e[0] !== 0 && !Number.isInteger(e[1])) e[1] = Math.floor(e[1]);
       }
       do {
-        if (ExpantaNum2.debug >= ExpantaNum2.ALL)
-          console.log(x.toString());
+        if (ExpantaNum2.debug >= ExpantaNum2.ALL) console.log(x.toString());
         b2 = false;
         x.array.sort(function(a2, b3) {
           return a2[0] > b3[0] ? 1 : a2[0] < b3[0] ? -1 : 0;
         });
-        if (x.array.length > ExpantaNum2.maxOps)
-          x.array.splice(0, x.array.length - ExpantaNum2.maxOps);
-        if (!x.array.length)
-          x.array = [[0, 0]];
+        if (x.array.length > ExpantaNum2.maxOps) x.array.splice(0, x.array.length - ExpantaNum2.maxOps);
+        if (!x.array.length) x.array = [[0, 0]];
         if (x.array[x.array.length - 1][0] > MAX_SAFE_INTEGER) {
           x.layer++;
           x.array = [[0, x.array[x.array.length - 1][0]]];
           b2 = true;
         } else if (x.layer && x.array.length == 1 && x.array[0][0] === 0) {
           x.layer--;
-          if (x.array[0][1] === 0)
-            x.array = [[0, 10]];
-          else
-            x.array = [[0, 10], [Math.round(x.array[0][1]), 1]];
+          if (x.array[0][1] === 0) x.array = [[0, 10]];
+          else x.array = [[0, 10], [Math.round(x.array[0][1]), 1]];
           b2 = true;
         }
-        if (x.array.length < ExpantaNum2.maxOps && x.array[0][0] !== 0)
-          x.array.unshift([0, 10]);
+        if (x.array.length < ExpantaNum2.maxOps && x.array[0][0] !== 0) x.array.unshift([0, 10]);
         for (i2 = 0; i2 < x.array.length - 1; ++i2) {
           if (x.array[i2][0] == x.array[i2 + 1][0]) {
             x.array[i2][1] += x.array[i2 + 1][1];
@@ -2011,8 +1834,7 @@
           x.array[0][1] = 10;
         }
         if (x.array.length >= 2 && x.array[0][0] === 0 && x.array[1][0] != 1) {
-          if (x.array[0][1])
-            x.array.splice(1, 0, [x.array[1][0] - 1, x.array[0][1]]);
+          if (x.array[0][1]) x.array.splice(1, 0, [x.array[1][0] - 1, x.array[0][1]]);
           x.array[0][1] = 1;
           if (x.array[2][1] > 1) {
             x.array[2][1]--;
@@ -2038,53 +1860,37 @@
           }
         }
       } while (b2);
-      if (!x.array.length)
-        x.array = [[0, 0]];
+      if (!x.array.length) x.array = [[0, 0]];
       return x;
     };
     P.toNumber = function() {
-      if (this.sign == -1)
-        return -1 * this.abs();
-      if (this.array.length >= 2 && (this.array[1][0] >= 2 || this.array[1][1] >= 2 || this.array[1][1] == 1 && this.array[0][1] > Math.log10(Number.MAX_VALUE)))
-        return Infinity;
-      if (this.array.length >= 2 && this.array[1][1] == 1)
-        return Math.pow(10, this.array[0][1]);
+      if (this.sign == -1) return -1 * this.abs();
+      if (this.array.length >= 2 && (this.array[1][0] >= 2 || this.array[1][1] >= 2 || this.array[1][1] == 1 && this.array[0][1] > Math.log10(Number.MAX_VALUE))) return Infinity;
+      if (this.array.length >= 2 && this.array[1][1] == 1) return Math.pow(10, this.array[0][1]);
       return this.array[0][1];
     };
     P.toString = function() {
-      if (this.sign == -1)
-        return "-" + this.abs();
-      if (isNaN(this.array[0][1]))
-        return "NaN";
-      if (!isFinite(this.array[0][1]))
-        return "Infinity";
+      if (this.sign == -1) return "-" + this.abs();
+      if (isNaN(this.array[0][1])) return "NaN";
+      if (!isFinite(this.array[0][1])) return "Infinity";
       var s = "";
-      if (!this.layer)
-        s += "";
-      else if (this.layer < 3)
-        s += "J".repeat(this.layer);
-      else
-        s += "J^" + this.layer + " ";
+      if (!this.layer) s += "";
+      else if (this.layer < 3) s += "J".repeat(this.layer);
+      else s += "J^" + this.layer + " ";
       if (this.array.length >= 3 || this.array.length == 2 && this.array[1][0] >= 2) {
         for (var i2 = this.array.length - 1; i2 >= 2; --i2) {
           var e = this.array[i2];
           var q2 = e[0] >= 5 ? "{" + e[0] + "}" : "^".repeat(e[0]);
-          if (e[1] > 1)
-            s += "(10" + q2 + ")^" + e[1] + " ";
-          else if (e[1] == 1)
-            s += "10" + q2;
+          if (e[1] > 1) s += "(10" + q2 + ")^" + e[1] + " ";
+          else if (e[1] == 1) s += "10" + q2;
         }
       }
       var op0 = this.operator(0);
       var op1 = this.operator(1);
-      if (!op1)
-        s += String(op0);
-      else if (op1 < 3)
-        s += "e".repeat(op1 - 1) + Math.pow(10, op0 - Math.floor(op0)) + "e" + Math.floor(op0);
-      else if (op1 < 8)
-        s += "e".repeat(op1) + op0;
-      else
-        s += "(10^)^" + op1 + " " + op0;
+      if (!op1) s += String(op0);
+      else if (op1 < 3) s += "e".repeat(op1 - 1) + Math.pow(10, op0 - Math.floor(op0)) + "e" + Math.floor(op0);
+      else if (op1 < 8) s += "e".repeat(op1) + op0;
+      else s += "(10^)^" + op1 + " " + op0;
       return s;
     };
     var decimalPlaces = function decimalPlaces2(value12, places) {
@@ -2094,21 +1900,15 @@
       return parseFloat(rounded.toFixed(Math.max(len - numDigits, 0)));
     };
     P.toStringWithDecimalPlaces = function(places, applyToOpNums) {
-      if (this.sign == -1)
-        return "-" + this.abs();
-      if (isNaN(this.array[0][1]))
-        return "NaN";
-      if (!isFinite(this.array[0][1]))
-        return "Infinity";
+      if (this.sign == -1) return "-" + this.abs();
+      if (isNaN(this.array[0][1])) return "NaN";
+      if (!isFinite(this.array[0][1])) return "Infinity";
       var b2 = 0;
       var s = "";
       var m = Math.pow(10, places);
-      if (!this.layer)
-        s += "";
-      else if (this.layer < 3)
-        s += "J".repeat(this.layer);
-      else
-        s += "J^" + this.layer + " ";
+      if (!this.layer) s += "";
+      else if (this.layer < 3) s += "J".repeat(this.layer);
+      else s += "J^" + this.layer + " ";
       if (this.array.length >= 3 || this.array.length == 2 && this.array[1][0] >= 2) {
         for (var i2 = this.array.length - 1; !b2 && i2 >= 2; --i2) {
           var e = this.array[i2];
@@ -2123,10 +1923,8 @@
             b2 = this.array[i2 - 1][1];
           }
           var q2 = w >= 5 ? "{" + w + "}" : "^".repeat(w);
-          if (x > 1)
-            s += "(10" + q2 + ")^" + x + " ";
-          else if (x == 1)
-            s += "10" + q2;
+          if (x > 1) s += "(10" + q2 + ")^" + x + " ";
+          else if (x == 1) s += "10" + q2;
         }
       }
       var k = this.operator(0);
@@ -2135,37 +1933,26 @@
         k = Math.log10(k);
         ++l;
       }
-      if (b2)
-        s += decimalPlaces(b2, places);
-      else if (!l)
-        s += String(decimalPlaces(k, places));
-      else if (l < 3)
-        s += "e".repeat(l - 1) + decimalPlaces(Math.pow(10, k - Math.floor(k)), places) + "e" + decimalPlaces(Math.floor(k), places);
-      else if (l < 8)
-        s += "e".repeat(l) + decimalPlaces(k, places);
-      else if (applyToOpNums)
-        s += "(10^)^" + decimalPlaces(l, places) + " " + decimalPlaces(k, places);
-      else
-        s += "(10^)^" + l + " " + decimalPlaces(k, places);
+      if (b2) s += decimalPlaces(b2, places);
+      else if (!l) s += String(decimalPlaces(k, places));
+      else if (l < 3) s += "e".repeat(l - 1) + decimalPlaces(Math.pow(10, k - Math.floor(k)), places) + "e" + decimalPlaces(Math.floor(k), places);
+      else if (l < 8) s += "e".repeat(l) + decimalPlaces(k, places);
+      else if (applyToOpNums) s += "(10^)^" + decimalPlaces(l, places) + " " + decimalPlaces(k, places);
+      else s += "(10^)^" + l + " " + decimalPlaces(k, places);
       return s;
     };
     P.toExponential = function(places, applyToOpNums) {
-      if (this.array.length == 1)
-        return (this.sign * this.array[0][1]).toExponential(places);
+      if (this.array.length == 1) return (this.sign * this.array[0][1]).toExponential(places);
       return this.toStringWithDecimalPlaces(places, applyToOpNums);
     };
     P.toFixed = function(places, applyToOpNums) {
-      if (this.array.length == 1)
-        return (this.sign * this.array[0][1]).toFixed(places);
+      if (this.array.length == 1) return (this.sign * this.array[0][1]).toFixed(places);
       return this.toStringWithDecimalPlaces(places, applyToOpNums);
     };
     P.toPrecision = function(places, applyToOpNums) {
-      if (this.array[0][1] === 0)
-        return (this.sign * this.array[0][1]).toFixed(places - 1, applyToOpNums);
-      if (this.array.length == 1 && this.array[0][1] < 1e-6)
-        return this.toExponential(places - 1, applyToOpNums);
-      if (this.array.length == 1 && places > Math.log10(this.array[0][1]))
-        return this.toFixed(places - Math.floor(Math.log10(this.array[0][1])) - 1, applyToOpNums);
+      if (this.array[0][1] === 0) return (this.sign * this.array[0][1]).toFixed(places - 1, applyToOpNums);
+      if (this.array.length == 1 && this.array[0][1] < 1e-6) return this.toExponential(places - 1, applyToOpNums);
+      if (this.array.length == 1 && places > Math.log10(this.array[0][1])) return this.toFixed(places - Math.floor(Math.log10(this.array[0][1])) - 1, applyToOpNums);
       return this.toExponential(places - 1, applyToOpNums);
     };
     P.valueOf = function() {
@@ -2174,8 +1961,7 @@
     P.toJSON = function() {
       if (ExpantaNum2.serializeMode == ExpantaNum2.JSON) {
         var a2 = [];
-        for (var i2 = 0; i2 < this.array.length; ++i2)
-          a2.push([this.array[i2][0], this.array[i2][1]]);
+        for (var i2 = 0; i2 < this.array.length; ++i2) a2.push([this.array[i2][0], this.array[i2][1]]);
         return {
           array: a2,
           layer: this.layer,
@@ -2186,37 +1972,26 @@
       }
     };
     P.toHyperE = function() {
-      if (this.layer)
-        throw Error(expantaNumError + "Sorry, but this prototype doesn't support correct Hyper-E notation for numbers larger than 10{MSI}10");
-      if (this.sign == -1)
-        return "-" + this.abs().toHyperE();
-      if (isNaN(this.array[0][1]))
-        return "NaN";
-      if (!isFinite(this.array[0][1]))
-        return "Infinity";
-      if (this.lt(ExpantaNum2.MAX_SAFE_INTEGER))
-        return String(this.array[0][1]);
-      if (this.lt(ExpantaNum2.E_MAX_SAFE_INTEGER))
-        return "E" + this.array[0][1];
+      if (this.layer) throw Error(expantaNumError + "Sorry, but this prototype doesn't support correct Hyper-E notation for numbers larger than 10{MSI}10");
+      if (this.sign == -1) return "-" + this.abs().toHyperE();
+      if (isNaN(this.array[0][1])) return "NaN";
+      if (!isFinite(this.array[0][1])) return "Infinity";
+      if (this.lt(ExpantaNum2.MAX_SAFE_INTEGER)) return String(this.array[0][1]);
+      if (this.lt(ExpantaNum2.E_MAX_SAFE_INTEGER)) return "E" + this.array[0][1];
       var r = "E" + this.operator(0) + "#" + this.operator(1);
       var l = 1;
       for (var i2 = Math.ceil(this.getOperatorIndex(2)); i2 < this.array.length; ++i2) {
-        if (l + 1 < this.array[i2][0])
-          r += "#1".repeat(this.array[i2][0] - l - 1);
+        if (l + 1 < this.array[i2][0]) r += "#1".repeat(this.array[i2][0] - l - 1);
         l = this.array[i2][0];
         r += "#" + (this.array[i2][1] + 1);
       }
-      if (!this.layer)
-        r = "" + r;
-      else if (this.layer < 3)
-        r = "J".repeat(this.layer) + r;
-      else
-        r = "J^" + this.layer + " " + r;
+      if (!this.layer) r = "" + r;
+      else if (this.layer < 3) r = "J".repeat(this.layer) + r;
+      else r = "J^" + this.layer + " " + r;
       return r;
     };
     Q.fromNumber = function(input3) {
-      if (typeof input3 != "number")
-        throw Error(invalidArgument + "Expected Number");
+      if (typeof input3 != "number") throw Error(invalidArgument + "Expected Number");
       var x = new ExpantaNum2();
       x.array[0][1] = Math.abs(input3);
       x.sign = input3 < 0 ? -1 : 1;
@@ -2224,8 +1999,7 @@
       return x;
     };
     Q.fromString = function(input3) {
-      if (typeof input3 != "string")
-        throw Error(invalidArgument + "Expected String");
+      if (typeof input3 != "string") throw Error(invalidArgument + "Expected String");
       var isJSON = false;
       if (typeof input3 == "string" && (input3[0] == "[" || input3[0] == "{")) {
         try {
@@ -2251,10 +2025,8 @@
         negateIt = signs.match(/-/g).length % 2 == 1;
         input3 = input3.substring(numSigns);
       }
-      if (input3 == "NaN")
-        x.array = [[0, NaN]];
-      else if (input3 == "Infinity")
-        x.array = [[0, Infinity]];
+      if (input3 == "NaN") x.array = [[0, NaN]];
+      else if (input3 == "Infinity") x.array = [[0, Infinity]];
       else {
         var a2, b2, c, d, i2;
         if (input3[0] == "J") {
@@ -2300,30 +2072,22 @@
             } else if (arrows == 2) {
               a2 = x.array.length >= 2 && x.array[1][0] == 1 ? x.array[1][1] : 0;
               b2 = x.array[0][1];
-              if (b2 >= 1e10)
-                ++a2;
-              if (b2 >= 10)
-                ++a2;
+              if (b2 >= 1e10) ++a2;
+              if (b2 >= 10) ++a2;
               x.array[0][1] = a2;
-              if (x.array.length >= 2 && x.array[1][0] == 1)
-                x.array.splice(1, 1);
+              if (x.array.length >= 2 && x.array[1][0] == 1) x.array.splice(1, 1);
               d = x.getOperatorIndex(2);
-              if (Number.isInteger(d))
-                x.array[d][1] += c;
-              else
-                x.array.splice(Math.ceil(d), 0, [2, c]);
+              if (Number.isInteger(d)) x.array[d][1] += c;
+              else x.array.splice(Math.ceil(d), 0, [2, c]);
             } else {
               a2 = x.operator(arrows - 1);
               b2 = x.operator(arrows - 2);
-              if (b2 >= 10)
-                ++a2;
+              if (b2 >= 10) ++a2;
               d = x.getOperatorIndex(arrows);
               x.array.splice(1, Math.ceil(d) - 1);
               x.array[0][1] = a2;
-              if (Number.isInteger(d))
-                x.array[1][1] += c;
-              else
-                x.array.splice(1, 0, [arrows, c]);
+              if (Number.isInteger(d)) x.array[1][1] += c;
+              else x.array.splice(1, 0, [arrows, c]);
             }
           } else {
             break;
@@ -2333,10 +2097,8 @@
         b2 = [x.array[0][1], 0];
         c = 1;
         for (i2 = a2.length - 1; i2 >= 0; --i2) {
-          if (a2[i2])
-            d = Number(a2[i2]);
-          else
-            d = 1;
+          if (a2[i2]) d = Number(a2[i2]);
+          else d = 1;
           if (b2[0] < MAX_E && b2[1] === 0) {
             b2[0] = Math.pow(10, c * b2[0]);
           } else if (c == -1) {
@@ -2368,14 +2130,11 @@
         }
         x.array[0][1] = b2[0];
         if (b2[1]) {
-          if (x.array.length >= 2 && x.array[1][0] == 1)
-            x.array[1][1] += b2[1];
-          else
-            x.array.splice(1, 0, [1, b2[1]]);
+          if (x.array.length >= 2 && x.array[1][0] == 1) x.array[1][1] += b2[1];
+          else x.array.splice(1, 0, [1, b2[1]]);
         }
       }
-      if (negateIt)
-        x.sign *= -1;
+      if (negateIt) x.sign *= -1;
       x.standardize();
       return x;
     };
@@ -2398,53 +2157,38 @@
       }
       var x = new ExpantaNum2();
       var i2;
-      if (!array.length)
-        x.array = [[0, 0]];
+      if (!array.length) x.array = [[0, 0]];
       else if (typeof array[0] == "number") {
         x.array = [];
         for (i2 = 0; i2 < array.length; i2++) {
-          if (typeof array[i2] != "number")
-            throw Error(invalidArgument + "Expected Array of Number");
+          if (typeof array[i2] != "number") throw Error(invalidArgument + "Expected Array of Number");
           x.array.push([i2, array[i2]]);
         }
       } else if (array[0] instanceof Array) {
         x.array = [];
         for (i2 = 0; i2 < array.length; i2++) {
-          if (!(array[i2] instanceof Array) || typeof array[i2][0] != "number" || typeof array[i2][1] != "number")
-            throw Error(invalidArgument + "Expected Array of pair of Number");
+          if (!(array[i2] instanceof Array) || typeof array[i2][0] != "number" || typeof array[i2][1] != "number") throw Error(invalidArgument + "Expected Array of pair of Number");
           x.array.push([array[i2][0], array[i2][1]]);
         }
-      } else
-        throw Error(invalidArgument + "Expected Array of Number or Array of pair of Number");
-      if (sign2)
-        x.sign = Number(sign2);
-      else
-        x.sign = 1;
+      } else throw Error(invalidArgument + "Expected Array of Number or Array of pair of Number");
+      if (sign2) x.sign = Number(sign2);
+      else x.sign = 1;
       x.standardize();
       return x;
     };
     Q.fromObject = function(input3) {
-      if (typeof input3 != "object")
-        throw Error(invalidArgument + "Expected Object");
-      if (input3 === null)
-        return ExpantaNum2.ZERO.clone();
-      if (input3 instanceof Array)
-        return ExpantaNum2.fromArray(input3);
-      if (input3 instanceof ExpantaNum2)
-        return new ExpantaNum2(input3);
-      if (!(input3.array instanceof Array))
-        throw Error(invalidArgument + "Expected that property 'array' exists");
-      if (input3.sign !== void 0 && typeof input3.sign != "number")
-        throw Error(invalidArgument + "Expected that property 'sign' is Number");
-      if (input3.layer !== void 0 && typeof input3.layer != "number")
-        throw Error(invalidArgument + "Expected that property 'layer' is Number");
+      if (typeof input3 != "object") throw Error(invalidArgument + "Expected Object");
+      if (input3 === null) return ExpantaNum2.ZERO.clone();
+      if (input3 instanceof Array) return ExpantaNum2.fromArray(input3);
+      if (input3 instanceof ExpantaNum2) return new ExpantaNum2(input3);
+      if (!(input3.array instanceof Array)) throw Error(invalidArgument + "Expected that property 'array' exists");
+      if (input3.sign !== void 0 && typeof input3.sign != "number") throw Error(invalidArgument + "Expected that property 'sign' is Number");
+      if (input3.layer !== void 0 && typeof input3.layer != "number") throw Error(invalidArgument + "Expected that property 'layer' is Number");
       return ExpantaNum2.fromArray(input3.array, input3.sign, input3.layer);
     };
     Q.fromJSON = function(input3) {
-      if (typeof input3 == "object")
-        return ExpantaNum2.fromObject(parsedObject);
-      if (typeof input3 != "string")
-        throw Error(invalidArgument + "Expected String");
+      if (typeof input3 == "object") return ExpantaNum2.fromObject(parsedObject);
+      if (typeof input3 != "string") throw Error(invalidArgument + "Expected String");
       var parsedObject, x;
       try {
         parsedObject = JSON.parse(input3);
@@ -2458,8 +2202,7 @@
       return x;
     };
     Q.fromHyperE = function(input3) {
-      if (typeof input3 != "string")
-        throw Error(invalidArgument + "Expected String");
+      if (typeof input3 != "string") throw Error(invalidArgument + "Expected String");
       var x = new ExpantaNum2();
       x.array = [[0, 0]];
       if (!/^[-\+]*(0|[1-9]\d*(\.\d*)?|Infinity|NaN|E[1-9]\d*(\.\d*)?(#[1-9]\d*)*)$/.test(input3)) {
@@ -2474,10 +2217,8 @@
         negateIt = signs.match(/-/g).length % 2 === 0;
         input3 = input3.substring(numSigns);
       }
-      if (input3 == "NaN")
-        x.array = [[0, NaN]];
-      else if (input3 == "Infinity")
-        x.array = [[0, Infinity]];
+      if (input3 == "NaN") x.array = [[0, NaN]];
+      else if (input3 == "Infinity") x.array = [[0, Infinity]];
       else if (input3[0] != "E") {
         x.array[0][1] = Number(input3);
       } else if (input3.indexOf("#") == -1) {
@@ -2493,58 +2234,42 @@
           x.array[i2] = [i2, t];
         }
       }
-      if (negateIt)
-        x.sign *= -1;
+      if (negateIt) x.sign *= -1;
       x.standardize();
       return x;
     };
     P.getOperatorIndex = function(i2) {
-      if (typeof i2 != "number")
-        i2 = Number(i2);
-      if (!isFinite(i2))
-        throw Error(invalidArgument + "Index out of range.");
+      if (typeof i2 != "number") i2 = Number(i2);
+      if (!isFinite(i2)) throw Error(invalidArgument + "Index out of range.");
       var a2 = this.array;
       var min5 = 0, max6 = a2.length - 1;
-      if (a2[max6][0] < i2)
-        return max6 + 0.5;
-      if (a2[min5][0] > i2)
-        return -0.5;
+      if (a2[max6][0] < i2) return max6 + 0.5;
+      if (a2[min5][0] > i2) return -0.5;
       while (min5 != max6) {
-        if (a2[min5][0] == i2)
-          return min5;
-        if (a2[max6][0] == i2)
-          return max6;
+        if (a2[min5][0] == i2) return min5;
+        if (a2[max6][0] == i2) return max6;
         var mid = Math.floor((min5 + max6) / 2);
         if (min5 == mid || a2[mid][0] == i2) {
           min5 = mid;
           break;
         }
-        if (a2[mid][0] < i2)
-          min5 = mid;
-        if (a2[mid][0] > i2)
-          max6 = mid;
+        if (a2[mid][0] < i2) min5 = mid;
+        if (a2[mid][0] > i2) max6 = mid;
       }
       return a2[min5][0] == i2 ? min5 : min5 + 0.5;
     };
     P.getOperator = function(i2) {
-      if (typeof i2 != "number")
-        i2 = Number(i2);
-      if (!isFinite(i2))
-        throw Error(invalidArgument + "Index out of range.");
+      if (typeof i2 != "number") i2 = Number(i2);
+      if (!isFinite(i2)) throw Error(invalidArgument + "Index out of range.");
       var ai = this.getOperatorIndex(i2);
-      if (Number.isInteger(ai))
-        return this.array[ai][1];
-      else
-        return i2 === 0 ? 10 : 0;
+      if (Number.isInteger(ai)) return this.array[ai][1];
+      else return i2 === 0 ? 10 : 0;
     };
     P.setOperator = function(i2, value12) {
-      if (typeof i2 != "number")
-        i2 = Number(i2);
-      if (!isFinite(i2))
-        throw Error(invalidArgument + "Index out of range.");
+      if (typeof i2 != "number") i2 = Number(i2);
+      if (!isFinite(i2)) throw Error(invalidArgument + "Index out of range.");
       var ai = this.getOperatorIndex(i2);
-      if (Number.isInteger(ai))
-        this.array[ai][1] = value12;
+      if (Number.isInteger(ai)) this.array[ai][1] = value12;
       else {
         ai = Math.ceil(ai);
         this.array.splice(ai, 0, [i2, value12]);
@@ -2552,16 +2277,13 @@
       this.standardize();
     };
     P.operator = function(i2, value12) {
-      if (value12 === void 0)
-        return this.getOperator(i2);
-      else
-        this.setOperator(i2, value12);
+      if (value12 === void 0) return this.getOperator(i2);
+      else this.setOperator(i2, value12);
     };
     P.clone = function() {
       var temp = new ExpantaNum2();
       var array = [];
-      for (var i2 = 0; i2 < this.array.length; ++i2)
-        array.push([this.array[i2][0], this.array[i2][1]]);
+      for (var i2 = 0; i2 < this.array.length; ++i2) array.push([this.array[i2][0], this.array[i2][1]]);
       temp.array = array;
       temp.sign = this.sign;
       temp.layer = this.layer;
@@ -2571,8 +2293,7 @@
       var i2, p2, ps;
       function ExpantaNum3(input3, input22) {
         var x = this;
-        if (!(x instanceof ExpantaNum3))
-          return new ExpantaNum3(input3, input22);
+        if (!(x instanceof ExpantaNum3)) return new ExpantaNum3(input3, input22);
         x.constructor = ExpantaNum3;
         var parsedObject = null;
         if (typeof input3 == "string" && (input3[0] == "[" || input3[0] == "{")) {
@@ -2594,8 +2315,7 @@
           temp = ExpantaNum3.fromArray(input3, input22);
         } else if (input3 instanceof ExpantaNum3) {
           temp = [];
-          for (var i3 = 0; i3 < input3.array.length; ++i3)
-            temp.push([input3.array[i3][0], input3.array[i3][1]]);
+          for (var i3 = 0; i3 < input3.array.length; ++i3) temp.push([input3.array[i3][0], input3.array[i3][1]]);
           temp2 = input3.sign;
           temp3 = input3.layer;
         } else if (typeof input3 == "object") {
@@ -2629,13 +2349,10 @@
           ExpantaNum3[prop3] = Q[prop3];
         }
       }
-      if (obj === void 0)
-        obj = {};
+      if (obj === void 0) obj = {};
       if (obj) {
         ps = ["maxOps", "serializeMode", "debug"];
-        for (i2 = 0; i2 < ps.length; )
-          if (!obj.hasOwnProperty(p2 = ps[i2++]))
-            obj[p2] = this[p2];
+        for (i2 = 0; i2 < ps.length; ) if (!obj.hasOwnProperty(p2 = ps[i2++])) obj[p2] = this[p2];
       }
       ExpantaNum3.config(obj);
       return ExpantaNum3;
@@ -2674,10 +2391,8 @@
       ];
       for (i2 = 0; i2 < ps.length; i2 += 3) {
         if ((v = obj[p2 = ps[i2]]) !== void 0) {
-          if (Math.floor(v) === v && v >= ps[i2 + 1] && v <= ps[i2 + 2])
-            this[p2] = v;
-          else
-            throw Error(invalidArgument + p2 + ": " + v);
+          if (Math.floor(v) === v && v >= ps[i2 + 1] && v <= ps[i2 + 2]) this[p2] = v;
+          else throw Error(invalidArgument + p2 + ": " + v);
         }
       }
       return this;
@@ -3072,56 +2787,6 @@
     return dict.foldMapWithIndex;
   };
 
-  // output/Data.Traversable/foreign.js
-  var traverseArrayImpl = function() {
-    function array1(a2) {
-      return [a2];
-    }
-    function array2(a2) {
-      return function(b2) {
-        return [a2, b2];
-      };
-    }
-    function array3(a2) {
-      return function(b2) {
-        return function(c) {
-          return [a2, b2, c];
-        };
-      };
-    }
-    function concat2(xs) {
-      return function(ys) {
-        return xs.concat(ys);
-      };
-    }
-    return function(apply2) {
-      return function(map18) {
-        return function(pure10) {
-          return function(f) {
-            return function(array) {
-              function go2(bot, top2) {
-                switch (top2 - bot) {
-                  case 0:
-                    return pure10([]);
-                  case 1:
-                    return map18(array1)(f(array[bot]));
-                  case 2:
-                    return apply2(map18(array2)(f(array[bot])))(f(array[bot + 1]));
-                  case 3:
-                    return apply2(apply2(map18(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
-                  default:
-                    var pivot = bot + Math.floor((top2 - bot) / 4) * 2;
-                    return apply2(map18(concat2)(go2(bot, pivot)))(go2(pivot, top2));
-                }
-              }
-              return go2(0, array.length);
-            };
-          };
-        };
-      };
-    };
-  }();
-
   // output/Data.Unfoldable/foreign.js
   var unfoldrArrayImpl = function(isNothing2) {
     return function(fromJust5) {
@@ -3133,8 +2798,7 @@
               var value12 = b2;
               while (true) {
                 var maybe2 = f(value12);
-                if (isNothing2(maybe2))
-                  return result;
+                if (isNothing2(maybe2)) return result;
                 var tuple = fromJust5(maybe2);
                 result.push(fst2(tuple));
                 value12 = snd2(tuple);
@@ -3159,8 +2823,7 @@
                 var tuple = f(value12);
                 result.push(fst2(tuple));
                 var maybe2 = snd2(tuple);
-                if (isNothing2(maybe2))
-                  return result;
+                if (isNothing2(maybe2)) return result;
                 value12 = fromJust5(maybe2);
               }
             };
@@ -4486,33 +4149,6 @@
     };
   };
   var replicate = typeof Array.prototype.fill === "function" ? replicateFill : replicatePolyfill;
-  var fromFoldableImpl = function() {
-    function Cons3(head3, tail) {
-      this.head = head3;
-      this.tail = tail;
-    }
-    var emptyList = {};
-    function curryCons(head3) {
-      return function(tail) {
-        return new Cons3(head3, tail);
-      };
-    }
-    function listToArray(list) {
-      var result = [];
-      var count = 0;
-      var xs = list;
-      while (xs !== emptyList) {
-        result[count++] = xs.head;
-        xs = xs.tail;
-      }
-      return result;
-    }
-    return function(foldr6) {
-      return function(xs) {
-        return listToArray(foldr6(curryCons)(emptyList)(xs));
-      };
-    };
-  }();
   var length2 = function(xs) {
     return xs.length;
   };
@@ -4521,8 +4157,7 @@
       return function(f) {
         return function(xs) {
           for (var i2 = 0, l = xs.length; i2 < l; i2++) {
-            if (f(xs[i2]))
-              return just(i2);
+            if (f(xs[i2])) return just(i2);
           }
           return nothing;
         };
@@ -4533,8 +4168,7 @@
     return function(nothing) {
       return function(i2) {
         return function(l) {
-          if (i2 < 0 || i2 >= l.length)
-            return nothing;
+          if (i2 < 0 || i2 >= l.length) return nothing;
           var l1 = l.slice();
           l1.splice(i2, 1);
           return just(l1);
@@ -4542,106 +4176,6 @@
       };
     };
   };
-  var sortByImpl = function() {
-    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from2, to) {
-      var mid;
-      var i2;
-      var j;
-      var k;
-      var x;
-      var y;
-      var c;
-      mid = from2 + (to - from2 >> 1);
-      if (mid - from2 > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, from2, mid);
-      if (to - mid > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
-      i2 = from2;
-      j = mid;
-      k = from2;
-      while (i2 < mid && j < to) {
-        x = xs2[i2];
-        y = xs2[j];
-        c = fromOrdering(compare2(x)(y));
-        if (c > 0) {
-          xs1[k++] = y;
-          ++j;
-        } else {
-          xs1[k++] = x;
-          ++i2;
-        }
-      }
-      while (i2 < mid) {
-        xs1[k++] = xs2[i2++];
-      }
-      while (j < to) {
-        xs1[k++] = xs2[j++];
-      }
-    }
-    return function(compare2) {
-      return function(fromOrdering) {
-        return function(xs) {
-          var out;
-          if (xs.length < 2)
-            return xs;
-          out = xs.slice(0);
-          mergeFromTo(compare2, fromOrdering, out, xs.slice(0), 0, xs.length);
-          return out;
-        };
-      };
-    };
-  }();
-
-  // output/Data.Array.ST/foreign.js
-  var sortByImpl2 = function() {
-    function mergeFromTo(compare2, fromOrdering, xs1, xs2, from2, to) {
-      var mid;
-      var i2;
-      var j;
-      var k;
-      var x;
-      var y;
-      var c;
-      mid = from2 + (to - from2 >> 1);
-      if (mid - from2 > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, from2, mid);
-      if (to - mid > 1)
-        mergeFromTo(compare2, fromOrdering, xs2, xs1, mid, to);
-      i2 = from2;
-      j = mid;
-      k = from2;
-      while (i2 < mid && j < to) {
-        x = xs2[i2];
-        y = xs2[j];
-        c = fromOrdering(compare2(x)(y));
-        if (c > 0) {
-          xs1[k++] = y;
-          ++j;
-        } else {
-          xs1[k++] = x;
-          ++i2;
-        }
-      }
-      while (i2 < mid) {
-        xs1[k++] = xs2[i2++];
-      }
-      while (j < to) {
-        xs1[k++] = xs2[j++];
-      }
-    }
-    return function(compare2) {
-      return function(fromOrdering) {
-        return function(xs) {
-          return function() {
-            if (xs.length < 2)
-              return xs;
-            mergeFromTo(compare2, fromOrdering, xs, xs.slice(0), 0, xs.length);
-            return xs;
-          };
-        };
-      };
-    };
-  }();
 
   // output/Data.Array/index.js
   var fromJust4 = /* @__PURE__ */ fromJust();
@@ -4747,14 +4281,14 @@
       return {
         name: inc.name,
         isVisible: inc.isVisible,
+        baseCost: inc.baseCost,
+        costPerPurch: inc.costPerPurch,
+        multPerPurch: inc.multPerPurch,
+        targets: inc.targets,
         owned: add2(inc.owned)(n),
         bought: add2(inc.bought)(n),
-        baseCost: inc.baseCost,
         cost: mul2(inc.cost)(pow(inc.costPerPurch)(n)),
-        costPerPurch: inc.costPerPurch,
-        multiplier: mul2(inc.multiplier)(pow(inc.multPerPurch)(n)),
-        multPerPurch: inc.multPerPurch,
-        targets: inc.targets
+        multiplier: mul2(inc.multiplier)(pow(inc.multPerPurch)(n))
       };
     };
   };
@@ -4774,10 +4308,10 @@
     return {
       count: state3.count,
       manualPower: state3.manualPower,
-      tickSpeed: state3.tickSpeedInc.multiplier,
       increasers: state3.increasers,
       settings: state3.settings,
-      tickSpeedInc: state3.tickSpeedInc
+      tickSpeedInc: state3.tickSpeedInc,
+      tickSpeed: state3.tickSpeedInc.multiplier
     };
   };
   var newIncreasers = /* @__PURE__ */ function() {
@@ -4825,11 +4359,11 @@
     ;
     var totalCost = sumGeometricSeries(amountToBuy)(state3.tickSpeedInc.baseCost)(state3.tickSpeedInc.costPerPurch)(state3.tickSpeedInc.bought);
     return {
-      count: sub2(state3.count)(totalCost),
       manualPower: state3.manualPower,
       tickSpeed: state3.tickSpeed,
       increasers: state3.increasers,
       settings: state3.settings,
+      count: sub2(state3.count)(totalCost),
       tickSpeedInc: updateIncreaser(amountToBuy)(state3.tickSpeedInc)
     };
   };
@@ -4849,12 +4383,12 @@
         ;
         var totalCost = sumGeometricSeries(amountToBuy)(v.value0.baseCost)(v.value0.costPerPurch)(v.value0.bought);
         return {
-          count: sub2(state3.count)(totalCost),
           manualPower: state3.manualPower,
           tickSpeed: state3.tickSpeed,
-          increasers: insert2(id2)(updateIncreaser(amountToBuy)(v.value0))(state3.increasers),
           settings: state3.settings,
-          tickSpeedInc: state3.tickSpeedInc
+          tickSpeedInc: state3.tickSpeedInc,
+          count: sub2(state3.count)(totalCost),
+          increasers: insert2(id2)(updateIncreaser(amountToBuy)(v.value0))(state3.increasers)
         };
       }
       ;
@@ -4869,12 +4403,12 @@
   };
   var manualCount = function(state3) {
     return {
-      count: add2(state3.count)(state3.manualPower),
       manualPower: state3.manualPower,
       tickSpeed: state3.tickSpeed,
       increasers: state3.increasers,
       settings: state3.settings,
-      tickSpeedInc: state3.tickSpeedInc
+      tickSpeedInc: state3.tickSpeedInc,
+      count: add2(state3.count)(state3.manualPower)
     };
   };
   var handleTarget = function(state3) {
@@ -4882,12 +4416,12 @@
       return function(delta) {
         if (target6 instanceof TCount) {
           return {
-            count: add2(state3.count)(delta),
             manualPower: state3.manualPower,
             tickSpeed: state3.tickSpeed,
             increasers: state3.increasers,
             settings: state3.settings,
-            tickSpeedInc: state3.tickSpeedInc
+            tickSpeedInc: state3.tickSpeedInc,
+            count: add2(state3.count)(delta)
           };
         }
         ;
@@ -4896,9 +4430,10 @@
             count: state3.count,
             manualPower: state3.manualPower,
             tickSpeed: state3.tickSpeed,
+            settings: state3.settings,
+            tickSpeedInc: state3.tickSpeedInc,
             increasers: update2(function(inc) {
               return new Just({
-                owned: add2(inc.owned)(delta),
                 baseCost: inc.baseCost,
                 bought: inc.bought,
                 cost: inc.cost,
@@ -4907,11 +4442,10 @@
                 multPerPurch: inc.multPerPurch,
                 multiplier: inc.multiplier,
                 name: inc.name,
-                targets: inc.targets
+                targets: inc.targets,
+                owned: add2(inc.owned)(delta)
               });
-            })(target6.value0)(state3.increasers),
-            settings: state3.settings,
-            tickSpeedInc: state3.tickSpeedInc
+            })(target6.value0)(state3.increasers)
           };
         }
         ;
@@ -5001,12 +4535,12 @@
         }
         ;
         return {
-          count: sub2(state3.count)(v.value0.cost),
           manualPower: state3.manualPower,
           tickSpeed: state3.tickSpeed,
-          increasers: insert2(id2)(updateIncreaser(one2)(v.value0))(state3.increasers),
           settings: state3.settings,
-          tickSpeedInc: state3.tickSpeedInc
+          tickSpeedInc: state3.tickSpeedInc,
+          count: sub2(state3.count)(v.value0.cost),
+          increasers: insert2(id2)(updateIncreaser(one2)(v.value0))(state3.increasers)
         };
       }
       ;
@@ -5532,46 +5066,45 @@
         var count = 0;
         var kills2 = {};
         var tmp, kid;
-        loop:
-          while (true) {
-            tmp = null;
-            switch (step4.tag) {
-              case FORKED:
-                if (step4._3 === EMPTY) {
-                  tmp = fibers[step4._1];
-                  kills2[count++] = tmp.kill(error4, function(result) {
-                    return function() {
-                      count--;
-                      if (count === 0) {
-                        cb2(result)();
-                      }
-                    };
-                  });
-                }
-                if (head3 === null) {
-                  break loop;
-                }
-                step4 = head3._2;
-                if (tail === null) {
-                  head3 = null;
-                } else {
-                  head3 = tail._1;
-                  tail = tail._2;
-                }
-                break;
-              case MAP:
-                step4 = step4._2;
-                break;
-              case APPLY:
-              case ALT:
-                if (head3) {
-                  tail = new Aff2(CONS, head3, tail);
-                }
-                head3 = step4;
-                step4 = step4._1;
-                break;
-            }
+        loop: while (true) {
+          tmp = null;
+          switch (step4.tag) {
+            case FORKED:
+              if (step4._3 === EMPTY) {
+                tmp = fibers[step4._1];
+                kills2[count++] = tmp.kill(error4, function(result) {
+                  return function() {
+                    count--;
+                    if (count === 0) {
+                      cb2(result)();
+                    }
+                  };
+                });
+              }
+              if (head3 === null) {
+                break loop;
+              }
+              step4 = head3._2;
+              if (tail === null) {
+                head3 = null;
+              } else {
+                head3 = tail._1;
+                tail = tail._2;
+              }
+              break;
+            case MAP:
+              step4 = step4._2;
+              break;
+            case APPLY:
+            case ALT:
+              if (head3) {
+                tail = new Aff2(CONS, head3, tail);
+              }
+              head3 = step4;
+              step4 = step4._1;
+              break;
           }
+        }
         if (count === 0) {
           cb2(util.right(void 0))();
         } else {
@@ -5592,101 +5125,100 @@
           step4 = result;
           fail2 = null;
         }
-        loop:
-          while (true) {
-            lhs = null;
-            rhs = null;
-            tmp = null;
-            kid = null;
-            if (interrupt !== null) {
-              return;
-            }
-            if (head3 === null) {
-              cb(fail2 || step4)();
-              return;
-            }
-            if (head3._3 !== EMPTY) {
-              return;
-            }
-            switch (head3.tag) {
-              case MAP:
-                if (fail2 === null) {
-                  head3._3 = util.right(head3._1(util.fromRight(step4)));
-                  step4 = head3._3;
-                } else {
-                  head3._3 = fail2;
-                }
-                break;
-              case APPLY:
-                lhs = head3._1._3;
-                rhs = head3._2._3;
-                if (fail2) {
-                  head3._3 = fail2;
-                  tmp = true;
-                  kid = killId++;
-                  kills[kid] = kill2(early, fail2 === lhs ? head3._2 : head3._1, function() {
-                    return function() {
-                      delete kills[kid];
-                      if (tmp) {
-                        tmp = false;
-                      } else if (tail === null) {
-                        join3(fail2, null, null);
-                      } else {
-                        join3(fail2, tail._1, tail._2);
-                      }
-                    };
-                  });
-                  if (tmp) {
-                    tmp = false;
-                    return;
-                  }
-                } else if (lhs === EMPTY || rhs === EMPTY) {
-                  return;
-                } else {
-                  step4 = util.right(util.fromRight(lhs)(util.fromRight(rhs)));
-                  head3._3 = step4;
-                }
-                break;
-              case ALT:
-                lhs = head3._1._3;
-                rhs = head3._2._3;
-                if (lhs === EMPTY && util.isLeft(rhs) || rhs === EMPTY && util.isLeft(lhs)) {
-                  return;
-                }
-                if (lhs !== EMPTY && util.isLeft(lhs) && rhs !== EMPTY && util.isLeft(rhs)) {
-                  fail2 = step4 === lhs ? rhs : lhs;
-                  step4 = null;
-                  head3._3 = fail2;
-                } else {
-                  head3._3 = step4;
-                  tmp = true;
-                  kid = killId++;
-                  kills[kid] = kill2(early, step4 === lhs ? head3._2 : head3._1, function() {
-                    return function() {
-                      delete kills[kid];
-                      if (tmp) {
-                        tmp = false;
-                      } else if (tail === null) {
-                        join3(step4, null, null);
-                      } else {
-                        join3(step4, tail._1, tail._2);
-                      }
-                    };
-                  });
-                  if (tmp) {
-                    tmp = false;
-                    return;
-                  }
-                }
-                break;
-            }
-            if (tail === null) {
-              head3 = null;
-            } else {
-              head3 = tail._1;
-              tail = tail._2;
-            }
+        loop: while (true) {
+          lhs = null;
+          rhs = null;
+          tmp = null;
+          kid = null;
+          if (interrupt !== null) {
+            return;
           }
+          if (head3 === null) {
+            cb(fail2 || step4)();
+            return;
+          }
+          if (head3._3 !== EMPTY) {
+            return;
+          }
+          switch (head3.tag) {
+            case MAP:
+              if (fail2 === null) {
+                head3._3 = util.right(head3._1(util.fromRight(step4)));
+                step4 = head3._3;
+              } else {
+                head3._3 = fail2;
+              }
+              break;
+            case APPLY:
+              lhs = head3._1._3;
+              rhs = head3._2._3;
+              if (fail2) {
+                head3._3 = fail2;
+                tmp = true;
+                kid = killId++;
+                kills[kid] = kill2(early, fail2 === lhs ? head3._2 : head3._1, function() {
+                  return function() {
+                    delete kills[kid];
+                    if (tmp) {
+                      tmp = false;
+                    } else if (tail === null) {
+                      join3(fail2, null, null);
+                    } else {
+                      join3(fail2, tail._1, tail._2);
+                    }
+                  };
+                });
+                if (tmp) {
+                  tmp = false;
+                  return;
+                }
+              } else if (lhs === EMPTY || rhs === EMPTY) {
+                return;
+              } else {
+                step4 = util.right(util.fromRight(lhs)(util.fromRight(rhs)));
+                head3._3 = step4;
+              }
+              break;
+            case ALT:
+              lhs = head3._1._3;
+              rhs = head3._2._3;
+              if (lhs === EMPTY && util.isLeft(rhs) || rhs === EMPTY && util.isLeft(lhs)) {
+                return;
+              }
+              if (lhs !== EMPTY && util.isLeft(lhs) && rhs !== EMPTY && util.isLeft(rhs)) {
+                fail2 = step4 === lhs ? rhs : lhs;
+                step4 = null;
+                head3._3 = fail2;
+              } else {
+                head3._3 = step4;
+                tmp = true;
+                kid = killId++;
+                kills[kid] = kill2(early, step4 === lhs ? head3._2 : head3._1, function() {
+                  return function() {
+                    delete kills[kid];
+                    if (tmp) {
+                      tmp = false;
+                    } else if (tail === null) {
+                      join3(step4, null, null);
+                    } else {
+                      join3(step4, tail._1, tail._2);
+                    }
+                  };
+                });
+                if (tmp) {
+                  tmp = false;
+                  return;
+                }
+              }
+              break;
+          }
+          if (tail === null) {
+            head3 = null;
+          } else {
+            head3 = tail._1;
+            tail = tail._2;
+          }
+        }
       }
       function resolve(fiber) {
         return function(result) {
@@ -5703,71 +5235,70 @@
         var head3 = null;
         var tail = null;
         var tmp, fid;
-        loop:
-          while (true) {
-            tmp = null;
-            fid = null;
-            switch (status) {
-              case CONTINUE:
-                switch (step4.tag) {
-                  case MAP:
-                    if (head3) {
-                      tail = new Aff2(CONS, head3, tail);
-                    }
-                    head3 = new Aff2(MAP, step4._1, EMPTY, EMPTY);
-                    step4 = step4._2;
-                    break;
-                  case APPLY:
-                    if (head3) {
-                      tail = new Aff2(CONS, head3, tail);
-                    }
-                    head3 = new Aff2(APPLY, EMPTY, step4._2, EMPTY);
-                    step4 = step4._1;
-                    break;
-                  case ALT:
-                    if (head3) {
-                      tail = new Aff2(CONS, head3, tail);
-                    }
-                    head3 = new Aff2(ALT, EMPTY, step4._2, EMPTY);
-                    step4 = step4._1;
-                    break;
-                  default:
-                    fid = fiberId++;
-                    status = RETURN;
-                    tmp = step4;
-                    step4 = new Aff2(FORKED, fid, new Aff2(CONS, head3, tail), EMPTY);
-                    tmp = Fiber(util, supervisor, tmp);
-                    tmp.onComplete({
-                      rethrow: false,
-                      handler: resolve(step4)
-                    })();
-                    fibers[fid] = tmp;
-                    if (supervisor) {
-                      supervisor.register(tmp);
-                    }
-                }
-                break;
-              case RETURN:
-                if (head3 === null) {
-                  break loop;
-                }
-                if (head3._1 === EMPTY) {
-                  head3._1 = step4;
-                  status = CONTINUE;
-                  step4 = head3._2;
-                  head3._2 = EMPTY;
-                } else {
-                  head3._2 = step4;
-                  step4 = head3;
-                  if (tail === null) {
-                    head3 = null;
-                  } else {
-                    head3 = tail._1;
-                    tail = tail._2;
+        loop: while (true) {
+          tmp = null;
+          fid = null;
+          switch (status) {
+            case CONTINUE:
+              switch (step4.tag) {
+                case MAP:
+                  if (head3) {
+                    tail = new Aff2(CONS, head3, tail);
                   }
+                  head3 = new Aff2(MAP, step4._1, EMPTY, EMPTY);
+                  step4 = step4._2;
+                  break;
+                case APPLY:
+                  if (head3) {
+                    tail = new Aff2(CONS, head3, tail);
+                  }
+                  head3 = new Aff2(APPLY, EMPTY, step4._2, EMPTY);
+                  step4 = step4._1;
+                  break;
+                case ALT:
+                  if (head3) {
+                    tail = new Aff2(CONS, head3, tail);
+                  }
+                  head3 = new Aff2(ALT, EMPTY, step4._2, EMPTY);
+                  step4 = step4._1;
+                  break;
+                default:
+                  fid = fiberId++;
+                  status = RETURN;
+                  tmp = step4;
+                  step4 = new Aff2(FORKED, fid, new Aff2(CONS, head3, tail), EMPTY);
+                  tmp = Fiber(util, supervisor, tmp);
+                  tmp.onComplete({
+                    rethrow: false,
+                    handler: resolve(step4)
+                  })();
+                  fibers[fid] = tmp;
+                  if (supervisor) {
+                    supervisor.register(tmp);
+                  }
+              }
+              break;
+            case RETURN:
+              if (head3 === null) {
+                break loop;
+              }
+              if (head3._1 === EMPTY) {
+                head3._1 = step4;
+                status = CONTINUE;
+                step4 = head3._2;
+                head3._2 = EMPTY;
+              } else {
+                head3._2 = step4;
+                step4 = head3;
+                if (tail === null) {
+                  head3 = null;
+                } else {
+                  head3 = tail._1;
+                  tail = tail._2;
                 }
-            }
+              }
           }
+        }
         root2 = step4;
         for (fid = 0; fid < fiberId; fid++) {
           fibers[fid].run();
@@ -5888,7 +5419,7 @@
       return Aff.Fiber(util, null, aff);
     };
   }
-  var _delay = function() {
+  var _delay = /* @__PURE__ */ function() {
     function setDelay(n, k) {
       if (n === 0 && typeof setImmediate !== "undefined") {
         return setImmediate(k);
@@ -6006,10 +5537,8 @@
     var state3 = 0;
     var val;
     return function(lineNumber) {
-      if (state3 === 2)
-        return val;
-      if (state3 === 1)
-        throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
+      if (state3 === 2) return val;
+      if (state3 === 1) throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
       state3 = 1;
       val = init2();
       state3 = 2;
@@ -6714,10 +6243,8 @@
     var state3 = 0;
     var val;
     return function(lineNumber) {
-      if (state3 === 2)
-        return val;
-      if (state3 === 1)
-        throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
+      if (state3 === 2) return val;
+      if (state3 === 1) throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
       state3 = 1;
       val = init2();
       state3 = 2;
@@ -7104,10 +6631,8 @@
     var state3 = 0;
     var val;
     return function(lineNumber) {
-      if (state3 === 2)
-        return val;
-      if (state3 === 1)
-        throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
+      if (state3 === 2) return val;
+      if (state3 === 1) throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
       state3 = 1;
       val = init2();
       state3 = 2;
@@ -7816,10 +7341,8 @@
     var state3 = 0;
     var val;
     return function(lineNumber) {
-      if (state3 === 2)
-        return val;
-      if (state3 === 1)
-        throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
+      if (state3 === 2) return val;
+      if (state3 === 1) throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
       state3 = 1;
       val = init2();
       state3 = 2;
@@ -8293,10 +7816,8 @@
     var state3 = 0;
     var val;
     return function(lineNumber) {
-      if (state3 === 2)
-        return val;
-      if (state3 === 1)
-        throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
+      if (state3 === 2) return val;
+      if (state3 === 1) throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
       state3 = 1;
       val = init2();
       state3 = 2;
@@ -8672,11 +8193,11 @@
       initialState,
       render,
       "eval": mkEval({
-        handleAction: handleAction(dictMonadAff),
         handleQuery: defaultEval.handleQuery,
         receive: defaultEval.receive,
-        initialize: new Just(Initialize2.value),
-        finalize: defaultEval.finalize
+        finalize: defaultEval.finalize,
+        handleAction: handleAction(dictMonadAff),
+        initialize: new Just(Initialize2.value)
       })
     });
   };
@@ -9031,7 +8552,6 @@
                 if (otherwise) {
                   return discard1(liftEffect5(write({
                     component: v2.component,
-                    state: v3.value1,
                     refs: v2.refs,
                     children: v2.children,
                     childrenIn: v2.childrenIn,
@@ -9045,7 +8565,8 @@
                     fresh: v2.fresh,
                     subscriptions: v2.subscriptions,
                     forks: v2.forks,
-                    lifecycleHandlers: v2.lifecycleHandlers
+                    lifecycleHandlers: v2.lifecycleHandlers,
+                    state: v3.value1
                   })(ref2)))(function() {
                     return discard1(handleLifecycle(v2.lifecycleHandlers)(render2(v2.lifecycleHandlers)(ref2)))(function() {
                       return pure7(v3.value0);
@@ -9162,7 +8683,6 @@
             return {
               component: st.component,
               state: st.state,
-              refs: alter2($$const(v.value1))(v.value0)(st.refs),
               children: st.children,
               childrenIn: st.childrenIn,
               childrenOut: st.childrenOut,
@@ -9175,7 +8695,8 @@
               fresh: st.fresh,
               subscriptions: st.subscriptions,
               forks: st.forks,
-              lifecycleHandlers: st.lifecycleHandlers
+              lifecycleHandlers: st.lifecycleHandlers,
+              refs: alter2($$const(v.value1))(v.value0)(st.refs)
             };
           })));
         }
@@ -9393,7 +8914,6 @@
                   component: ds$prime.component,
                   state: ds$prime.state,
                   refs: ds$prime.refs,
-                  children: children2,
                   childrenIn: ds$prime.childrenIn,
                   childrenOut: ds$prime.childrenOut,
                   selfRef: ds$prime.selfRef,
@@ -9401,11 +8921,12 @@
                   pendingQueries: ds$prime.pendingQueries,
                   pendingOuts: ds$prime.pendingOuts,
                   pendingHandlers: ds$prime.pendingHandlers,
-                  rendering: new Just(rendering),
                   fresh: ds$prime.fresh,
                   subscriptions: ds$prime.subscriptions,
                   forks: ds$prime.forks,
-                  lifecycleHandlers: ds$prime.lifecycleHandlers
+                  lifecycleHandlers: ds$prime.lifecycleHandlers,
+                  rendering: new Just(rendering),
+                  children: children2
                 };
               }))();
               return when2(shouldProcessHandlers)(flip(tailRecM3)(unit)(function(v1) {
@@ -9571,10 +9092,8 @@
     var state3 = 0;
     var val;
     return function(lineNumber) {
-      if (state3 === 2)
-        return val;
-      if (state3 === 1)
-        throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
+      if (state3 === 2) return val;
+      if (state3 === 1) throw new ReferenceError(name15 + " was needed before it finished initializing (module " + moduleName + ", line " + lineNumber + ")", moduleName, lineNumber);
       state3 = 1;
       val = init2();
       state3 = 2;

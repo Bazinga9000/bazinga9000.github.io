@@ -20,6 +20,7 @@ import Utils.IPoint
 import Web.Event.Event
 import Web.Event.EventTarget
 import Web.UIEvent.MouseEvent
+import Web.UIEvent.KeyboardEvent as KE
 
 import Data.Array (length, (..), (!!))
 import Data.Array as A
@@ -37,6 +38,7 @@ import Graphics.Canvas.Utils (toCanvasElement)
 import Partial.Unsafe (unsafePartial)
 import Random.LCG (randomSeed)
 import Web.DOM.Document (createElement, toNonElementParentNode)
+import Web.DOM.Document as D
 import Web.DOM.Element (getBoundingClientRect, setAttribute, toEventTarget, toNode)
 import Web.DOM.Node (appendChild, firstChild, removeChild, setTextContent, textContent)
 import Web.DOM.NonElementParentNode (getElementById)
@@ -84,6 +86,10 @@ setupEvents settingsRef minefieldRef = void $ unsafePartial do
   presetScenario "threecolorscenario" threeColorScenario
   presetScenario "sixcolorscenario" sixColorScenario
   presetScenario "magnetscenario" magnetScenario
+
+  d <- map (toDocument) (document =<< window)
+  resetBoardListener <- eventListener (resetBoardEvent settingsRef minefieldRef)
+  addEventListener (EventType "keydown") resetBoardListener true (D.toEventTarget d)
 
 getSquareSize :: Settings -> Minefield -> Effect Number
 getSquareSize s m = unsafePartial do
@@ -391,6 +397,11 @@ setupPresetScenarioEvent sr mr id scenario = unsafePartial $ do
     Just scenarioChangeNode <- getElementById id npn 
     scenarioChangeEvent <- eventListener (\_ -> setScenario scenario sr mr)
     addEventListener (EventType "click") scenarioChangeEvent true (toEventTarget scenarioChangeNode)
+
+resetBoardEvent :: Ref Settings -> Ref Minefield -> Event -> Effect Unit
+resetBoardEvent sr mr e = unsafePartial do
+    let (Just keyboardEvent) = KE.fromEvent e
+    if KE.key keyboardEvent == "r" then scenarioLoad sr mr else pure unit
 
 {---------------------------------------
 MINE COUNT TABLE RENDERING

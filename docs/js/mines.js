@@ -7399,12 +7399,12 @@
     return [sequence3];
   }
   function extend2(target5, source2) {
-    var index5, length9, key, sourceKeys;
+    var index5, length9, key2, sourceKeys;
     if (source2) {
       sourceKeys = Object.keys(source2);
       for (index5 = 0, length9 = sourceKeys.length; index5 < length9; index5 += 1) {
-        key = sourceKeys[index5];
-        target5[key] = source2[key];
+        key2 = sourceKeys[index5];
+        target5[key2] = source2[key2];
       }
     }
     return target5;
@@ -8019,11 +8019,11 @@
   var BASE64_MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r";
   function resolveYamlBinary(data) {
     if (data === null) return false;
-    var code, idx, bitlen = 0, max10 = data.length, map20 = BASE64_MAP;
+    var code2, idx, bitlen = 0, max10 = data.length, map20 = BASE64_MAP;
     for (idx = 0; idx < max10; idx++) {
-      code = map20.indexOf(data.charAt(idx));
-      if (code > 64) continue;
-      if (code < 0) return false;
+      code2 = map20.indexOf(data.charAt(idx));
+      if (code2 > 64) continue;
+      if (code2 < 0) return false;
       bitlen += 6;
     }
     return bitlen % 8 === 0;
@@ -8153,10 +8153,10 @@
   var _hasOwnProperty$2 = Object.prototype.hasOwnProperty;
   function resolveYamlSet(data) {
     if (data === null) return true;
-    var key, object = data;
-    for (key in object) {
-      if (_hasOwnProperty$2.call(object, key)) {
-        if (object[key] !== null) return false;
+    var key2, object = data;
+    for (key2 in object) {
+      if (_hasOwnProperty$2.call(object, key2)) {
+        if (object[key2] !== null) return false;
       }
     }
     return true;
@@ -8361,16 +8361,16 @@
     }
   }
   function mergeMappings(state3, destination, source2, overridableKeys) {
-    var sourceKeys, key, index5, quantity;
+    var sourceKeys, key2, index5, quantity;
     if (!common.isObject(source2)) {
       throwError3(state3, "cannot merge mappings; the provided source object is unacceptable");
     }
     sourceKeys = Object.keys(source2);
     for (index5 = 0, quantity = sourceKeys.length; index5 < quantity; index5 += 1) {
-      key = sourceKeys[index5];
-      if (!_hasOwnProperty$1.call(destination, key)) {
-        destination[key] = source2[key];
-        overridableKeys[key] = true;
+      key2 = sourceKeys[index5];
+      if (!_hasOwnProperty$1.call(destination, key2)) {
+        destination[key2] = source2[key2];
+        overridableKeys[key2] = true;
       }
     }
   }
@@ -10212,6 +10212,7 @@
 
   // output/Web.DOM.Document/index.js
   var toNonElementParentNode = unsafeCoerce2;
+  var toEventTarget = unsafeCoerce2;
 
   // output/Web.DOM.NonElementParentNode/foreign.js
   function _getElementById(id3) {
@@ -10408,7 +10409,7 @@
 
   // output/Web.DOM.Element/index.js
   var toNode3 = unsafeCoerce2;
-  var toEventTarget = unsafeCoerce2;
+  var toEventTarget2 = unsafeCoerce2;
 
   // output/Web.DOM.Node/foreign.js
   var getEffProp3 = function(name15) {
@@ -10480,6 +10481,14 @@
     };
   }
 
+  // output/Web.UIEvent.KeyboardEvent/foreign.js
+  function key(e) {
+    return e.key;
+  }
+
+  // output/Web.UIEvent.KeyboardEvent/index.js
+  var fromEvent = /* @__PURE__ */ unsafeReadProtoTagged("KeyboardEvent");
+
   // output/Web.UIEvent.MouseEvent/foreign.js
   function clientX(e) {
     return e.clientX;
@@ -10492,7 +10501,7 @@
   }
 
   // output/Web.UIEvent.MouseEvent/index.js
-  var fromEvent = /* @__PURE__ */ unsafeReadProtoTagged("MouseEvent");
+  var fromEvent2 = /* @__PURE__ */ unsafeReadProtoTagged("MouseEvent");
 
   // output/Mines/index.js
   var show7 = /* @__PURE__ */ show(showInt);
@@ -10548,16 +10557,16 @@
                   return setAttribute("style")(style)(toElement(v32.value0))();
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 408, column 13 - line 408, column 69): " + [v32.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 419, column 13 - line 419, column 69): " + [v32.constructor.name]);
               }
               ;
               if (v1.value0.mine.flagGraphic instanceof MinePath) {
                 var v32 = map19(fromHTMLElement)(insertCell(v2.value0))();
                 if (v32 instanceof Just) {
                   var ce = bindFlipped4(function() {
-                    var $227 = createElement("canvas");
-                    return function($228) {
-                      return $227(toDocument($228));
+                    var $232 = createElement("canvas");
+                    return function($233) {
+                      return $232(toDocument($233));
                     };
                   }())(bindFlipped4(document2)(windowImpl))();
                   setAttribute("width")("50px")(ce)();
@@ -10575,13 +10584,13 @@
                     return appendChild(toNode3(ce))(toNode3(toElement(v32.value0)))();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 418, column 17 - line 418, column 51): " + [v4.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 429, column 17 - line 429, column 51): " + [v4.constructor.name]);
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 414, column 13 - line 414, column 69): " + [v32.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 425, column 13 - line 425, column 69): " + [v32.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 406, column 5 - line 422, column 68): " + [v1.value0.mine.flagGraphic.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 417, column 5 - line 433, column 68): " + [v1.value0.mine.flagGraphic.constructor.name]);
             })();
             var v3 = map19(fromHTMLElement)(insertCell(v2.value0))();
             if (v3 instanceof Just) {
@@ -10589,14 +10598,14 @@
               return setAttribute("style")("font-family: gothica; vertical-align: center; text-align: center")(toElement(v3.value0))();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 424, column 5 - line 424, column 63): " + [v3.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 435, column 5 - line 435, column 63): " + [v3.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 405, column 5 - line 405, column 53): " + [v2.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 416, column 5 - line 416, column 53): " + [v2.constructor.name]);
         });
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 402, column 1 - line 402, column 73): " + [v.constructor.name, v1.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 413, column 1 - line 413, column 73): " + [v.constructor.name, v1.constructor.name]);
     };
   };
   var renderTable = function(sr) {
@@ -10618,7 +10627,7 @@
                 return removeChild(tbody$prime.value0)(toNode2(v1.value0))();
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 438, column 3 - line 440, column 55): " + [tbody$prime.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 449, column 3 - line 451, column 55): " + [tbody$prime.constructor.name]);
             })();
             var m = read(mr)();
             var s = read(sr)();
@@ -10638,27 +10647,27 @@
                   $$void3(sequence2(map110(function(k) {
                     return makeFlagTableRow(v1.value0)(getFlagCount(m)(k));
                   })(flagArray)))();
-                  var $122 = length(flagArray) !== 1 && s.allowQuestionFlags;
-                  if ($122) {
+                  var $124 = length(flagArray) !== 1 && s.allowQuestionFlags;
+                  if ($124) {
                     return makeFlagTableRow(v1.value0)(getFlagCount(m)(UnknownMine.value))();
                   }
                   ;
                   return unit;
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 454, column 3 - line 454, column 77): " + [v4.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 465, column 3 - line 465, column 77): " + [v4.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 450, column 3 - line 450, column 77): " + [v3.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 461, column 3 - line 461, column 77): " + [v3.constructor.name]);
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 449, column 3 - line 449, column 63): " + [v2.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 460, column 3 - line 460, column 63): " + [v2.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 434, column 7 - line 434, column 42): " + [v1.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 445, column 7 - line 445, column 42): " + [v1.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 433, column 3 - line 433, column 50): " + [v.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 444, column 3 - line 444, column 50): " + [v.constructor.name]);
       });
     };
   };
@@ -10676,8 +10685,8 @@
           var v3 = formatNumber("00")(seconds);
           if (v3 instanceof Right) {
             var minutesString = show7(floor2(minutes));
-            var npn = map19(function($229) {
-              return toNonElementParentNode(toDocument($229));
+            var npn = map19(function($234) {
+              return toNonElementParentNode(toDocument($234));
             })(bindFlipped4(document2)(windowImpl))();
             var v4 = getElementById("timer")(npn)();
             if (v4 instanceof Just) {
@@ -10685,13 +10694,13 @@
               return unit;
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 353, column 5 - line 353, column 44): " + [v4.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 359, column 5 - line 359, column 44): " + [v4.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 348, column 9 - line 348, column 58): " + [v3.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 354, column 9 - line 354, column 58): " + [v3.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 347, column 9 - line 347, column 56): " + [v2.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 353, column 9 - line 353, column 56): " + [v2.constructor.name]);
       };
     };
   };
@@ -10714,7 +10723,7 @@
         return fromMaybe(NoMines.value)(v.charge);
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 185, column 1 - line 185, column 50): " + [v.constructor.name, v1.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 191, column 1 - line 191, column 50): " + [v.constructor.name, v1.constructor.name]);
     };
   };
   var drawMineGraphic = function(ctx) {
@@ -10746,7 +10755,7 @@
             };
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 224, column 36 - line 236, column 27): " + [g.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 230, column 36 - line 242, column 27): " + [g.constructor.name]);
         };
       };
     };
@@ -10760,8 +10769,8 @@
           }
           ;
           if (clue.flagState instanceof Just && clue.flagState.value0 instanceof Flag) {
-            var v = bind12(index(mineDistribution)(clue.flagState.value0.value0))(function($230) {
-              return Just.create(mineGraphicsOf(mineOf($230)));
+            var v = bind12(index(mineDistribution)(clue.flagState.value0.value0))(function($235) {
+              return Just.create(mineGraphicsOf(mineOf($235)));
             });
             if (v instanceof Nothing) {
               return pure8(unit);
@@ -10771,14 +10780,14 @@
               return drawMineGraphic(s.mfCtx)(rect2)(v.value0.flagGraphic)(v.value0.flagColor);
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 241, column 24 - line 243, column 71): " + [v.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 247, column 24 - line 249, column 71): " + [v.constructor.name]);
           }
           ;
           if (clue.flagState instanceof Just && clue.flagState.value0 instanceof UnknownMine) {
             return drawMineGraphic(s.mfCtx)(rect2)(new MineSymbol("?"))("#FFFFFF");
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 239, column 62 - line 244, column 78): " + [clue.flagState.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 245, column 62 - line 250, column 78): " + [clue.flagState.constructor.name]);
         };
       };
     };
@@ -10829,14 +10838,14 @@
                       return fillText(s.mfCtx)(cm)(x + halfSize + offset)(y + halfSize + quarterSize)();
                     }
                     ;
-                    throw new Error("Failed pattern match at Mines (line 200, column 13 - line 220, column 89): " + [dm.constructor.name]);
+                    throw new Error("Failed pattern match at Mines (line 206, column 13 - line 226, column 89): " + [dm.constructor.name]);
                   };
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 191, column 16 - line 220, column 89): " + [v.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 197, column 16 - line 226, column 89): " + [v.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 189, column 39 - line 220, column 89): " + [clue.mine.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 195, column 39 - line 226, column 89): " + [clue.mine.constructor.name]);
             };
           };
         };
@@ -10871,11 +10880,11 @@
                   return "#F88";
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 138, column 53 - line 140, column 35): " + [v1.value0.mine.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 144, column 53 - line 146, column 35): " + [v1.value0.mine.constructor.name]);
               }
               ;
-              var $163 = eq4(m.gameState)(Won.value);
-              if ($163) {
+              var $165 = eq4(m.gameState)(Won.value);
+              if ($165) {
                 return "#0c7";
               }
               ;
@@ -10886,8 +10895,8 @@
               fillPath(s.mfCtx)(rect(s.mfCtx)(boundRect))();
               setStrokeStyle(s.mfCtx)("#000000")();
               strokePath(s.mfCtx)(rect(s.mfCtx)(boundRect))();
-              var $164 = eq4(m.gameState)(Ungenerated.value) || eq4(m.gameState)(Generated.value);
-              if ($164) {
+              var $166 = eq4(m.gameState)(Ungenerated.value) || eq4(m.gameState)(Generated.value);
+              if ($166) {
                 if (v1.value0.revealed) {
                   return drawCharge(s)(x)(y)(squareSize)(v1.value0)(m.displayMode)();
                 }
@@ -10901,8 +10910,8 @@
                 }
                 ;
                 drawFlag(s)(boundRect)(v1.value0)(m.mineDistribution)();
-                var $168 = eq15(v1.value0.flagState)(Nothing.value);
-                if ($168) {
+                var $170 = eq15(v1.value0.flagState)(Nothing.value);
+                if ($170) {
                   return unit;
                 }
                 ;
@@ -10922,8 +10931,8 @@
                   var k$prime = fromMaybe(v1.value0.flagState.value0.value0)(v1.value0.mineIndex);
                   logShow2(v1.value0.flagState.value0.value0)();
                   logShow2(k$prime)();
-                  var $171 = v1.value0.flagState.value0.value0 === k$prime;
-                  if ($171) {
+                  var $173 = v1.value0.flagState.value0.value0 === k$prime;
+                  if ($173) {
                     return drawFlag(s)(boundRect)(v1.value0)(m.mineDistribution)();
                   }
                   ;
@@ -10948,17 +10957,17 @@
                     return drawMineGraphic(s.mfCtx)(flagRect)(new MinePath(misflagX))("#FFFFFF")();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 181, column 33 - line 181, column 73): " + [v2.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 187, column 33 - line 187, column 73): " + [v2.constructor.name]);
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 166, column 38 - line 183, column 87): " + [v1.value0.flagState.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 172, column 38 - line 189, column 87): " + [v1.value0.flagState.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 158, column 13 - line 183, column 87): " + [v1.value0.mine.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 164, column 13 - line 189, column 87): " + [v1.value0.mine.constructor.name]);
             };
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 124, column 43 - line 183, column 87): " + [v1.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 130, column 43 - line 189, column 87): " + [v1.constructor.name]);
         };
       };
     };
@@ -11001,17 +11010,17 @@
           return "#0F0";
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 249, column 17 - line 253, column 26): " + [m.gameState.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 255, column 17 - line 259, column 26): " + [m.gameState.constructor.name]);
       }();
-      var npn = map19(function($231) {
-        return toNonElementParentNode(toDocument($231));
+      var npn = map19(function($236) {
+        return toNonElementParentNode(toDocument($236));
       })(bindFlipped4(document2)(windowImpl))();
       var v = getElementById("timer")(npn)();
       if (v instanceof Just) {
         return setAttribute("style")("font-family: gothica; color: " + color)(v.value0)();
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 256, column 5 - line 256, column 44): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 262, column 5 - line 262, column 44): " + [v.constructor.name]);
     };
   };
   var draw = function(sr) {
@@ -11064,8 +11073,8 @@
                 mineIndex: c.mineIndex,
                 revealed: c.revealed,
                 flagState: function() {
-                  var $187 = notEq1(c.flagState)(new Just(UnknownMine.value));
-                  if ($187) {
+                  var $189 = notEq1(c.flagState)(new Just(UnknownMine.value));
+                  if ($189) {
                     return c.flagState;
                   }
                   ;
@@ -11076,7 +11085,7 @@
           };
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 333, column 5 - line 333, column 17): " + [v.constructor.name, v1.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 339, column 5 - line 339, column 17): " + [v.constructor.name, v1.constructor.name]);
       };
     };
     return onCheckboxClick("questionflags")(function(a) {
@@ -11095,13 +11104,13 @@
     return function(mr) {
       return function(e) {
         return $$void3(function __do3() {
-          var npn = map19(function($232) {
-            return toNonElementParentNode(toDocument($232));
+          var npn = map19(function($237) {
+            return toNonElementParentNode(toDocument($237));
           })(bindFlipped4(document2)(windowImpl))();
           var v = getElementById("minefield")(npn)();
           if (v instanceof Just) {
             var cbr = getBoundingClientRect(v.value0)();
-            var v1 = fromEvent(e);
+            var v1 = fromEvent2(e);
             if (v1 instanceof Just) {
               var x = toNumber(clientX(v1.value0)) - cbr.left;
               var y = toNumber(clientY(v1.value0)) - cbr.top;
@@ -11115,14 +11124,14 @@
               logShow22(minefieldCoords)();
               var pressedButtons = button(v1.value0);
               (function() {
-                var $190 = !member2(minefieldCoords)(m.map);
-                if ($190) {
+                var $192 = !member2(minefieldCoords)(m.map);
+                if ($192) {
                   return unit;
                 }
                 ;
                 if (m.gameState instanceof Ungenerated) {
-                  var $192 = pressedButtons !== 0;
-                  if ($192) {
+                  var $194 = pressedButtons !== 0;
+                  if ($194) {
                     return unit;
                   }
                   ;
@@ -11167,20 +11176,20 @@
                         return revealSquare(p);
                       }
                       ;
-                      throw new Error("Failed pattern match at Mines (line 303, column 34 - line 305, column 91): " + [v2.constructor.name]);
+                      throw new Error("Failed pattern match at Mines (line 309, column 34 - line 311, column 91): " + [v2.constructor.name]);
                     };
                     return $$void3(modify(handleReveal(minefieldCoords))(mr))();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 300, column 22 - line 305, column 91): " + [pressedButtons.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 306, column 22 - line 311, column 91): " + [pressedButtons.constructor.name]);
                 }
                 ;
                 return unit;
               })();
               var m$prime = modify(setWinningBoard)(mr)();
               (function() {
-                var $197 = notEq22(m$prime.gameState)(Generated.value) && eq4(m.gameState)(Generated.value);
-                if ($197) {
+                var $199 = notEq22(m$prime.gameState)(Generated.value) && eq4(m.gameState)(Generated.value);
+                if ($199) {
                   if (s.timerId instanceof Nothing) {
                     return unit;
                   }
@@ -11189,7 +11198,7 @@
                     return clearInterval2(s.timerId.value0)();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 313, column 9 - line 315, column 44): " + [s.timerId.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 319, column 9 - line 321, column 44): " + [s.timerId.constructor.name]);
                 }
                 ;
                 return unit;
@@ -11197,10 +11206,10 @@
               return draw(sr)(mr)();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 271, column 9 - line 271, column 32): " + [v1.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 277, column 9 - line 277, column 32): " + [v1.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 268, column 5 - line 268, column 48): " + [v.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 274, column 5 - line 274, column 48): " + [v.constructor.name]);
         });
       };
     };
@@ -11208,8 +11217,8 @@
   var scenarioLoad = function(sr) {
     return function(mr) {
       return function __do3() {
-        var npn = map19(function($233) {
-          return toNonElementParentNode(toDocument($233));
+        var npn = map19(function($238) {
+          return toNonElementParentNode(toDocument($238));
         })(bindFlipped4(document2)(windowImpl))();
         var v = getElementById("scenarioinput")(npn)();
         if (v instanceof Just) {
@@ -11228,7 +11237,7 @@
                 })(mr))();
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 365, column 5 - line 367, column 50): " + [v2.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 371, column 5 - line 373, column 50): " + [v2.constructor.name]);
             })();
             var s = read(sr)();
             (function() {
@@ -11243,18 +11252,35 @@
                   return setTextContent("0:00.00")(toNode3(v2.value0))();
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 375, column 17 - line 375, column 57): " + [v2.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 381, column 17 - line 381, column 57): " + [v2.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 371, column 5 - line 376, column 56): " + [s.timerId.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 377, column 5 - line 382, column 56): " + [s.timerId.constructor.name]);
             })();
             return draw(sr)(mr)();
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 362, column 9 - line 362, column 43): " + [v1.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 368, column 9 - line 368, column 43): " + [v1.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 361, column 5 - line 361, column 52): " + [v.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 367, column 5 - line 367, column 52): " + [v.constructor.name]);
+      };
+    };
+  };
+  var resetBoardEvent = function(sr) {
+    return function(mr) {
+      return function(e) {
+        var v = fromEvent(e);
+        if (v instanceof Just) {
+          var $216 = key(v.value0) === "r";
+          if ($216) {
+            return scenarioLoad(sr)(mr);
+          }
+          ;
+          return pure8(unit);
+        }
+        ;
+        throw new Error("Failed pattern match at Mines (line 403, column 9 - line 403, column 46): " + [v.constructor.name]);
       };
     };
   };
@@ -11262,8 +11288,8 @@
     return function(sr) {
       return function(mr) {
         return function __do3() {
-          var npn = map19(function($234) {
-            return toNonElementParentNode(toDocument($234));
+          var npn = map19(function($239) {
+            return toNonElementParentNode(toDocument($239));
           })(bindFlipped4(document2)(windowImpl))();
           var v = getElementById("scenarioinput")(npn)();
           if (v instanceof Just) {
@@ -11273,10 +11299,10 @@
               return scenarioLoad(sr)(mr)();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 384, column 9 - line 384, column 43): " + [v1.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 390, column 9 - line 390, column 43): " + [v1.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 383, column 5 - line 383, column 52): " + [v.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 389, column 5 - line 389, column 52): " + [v.constructor.name]);
         };
       };
     };
@@ -11286,18 +11312,18 @@
       return function(id3) {
         return function(scenario) {
           return function __do3() {
-            var npn = map19(function($235) {
-              return toNonElementParentNode(toDocument($235));
+            var npn = map19(function($240) {
+              return toNonElementParentNode(toDocument($240));
             })(bindFlipped4(document2)(windowImpl))();
             var v = getElementById(id3)(npn)();
             if (v instanceof Just) {
               var scenarioChangeEvent = eventListener(function(v1) {
                 return setScenario(scenario)(sr)(mr);
               })();
-              return addEventListener("click")(scenarioChangeEvent)(true)(toEventTarget(v.value0))();
+              return addEventListener("click")(scenarioChangeEvent)(true)(toEventTarget2(v.value0))();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 391, column 5 - line 391, column 53): " + [v.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 397, column 5 - line 397, column 53): " + [v.constructor.name]);
           };
         };
       };
@@ -11321,45 +11347,48 @@
   var setupEvents = function(settingsRef) {
     return function(minefieldRef) {
       return $$void3(function __do3() {
-        var npn = map19(function($236) {
-          return toNonElementParentNode(toDocument($236));
+        var npn = map19(function($241) {
+          return toNonElementParentNode(toDocument($241));
         })(bindFlipped4(document2)(windowImpl))();
         var v = getElementById("minefield")(npn)();
         if (v instanceof Just) {
           var minefieldEvent = eventListener(onMinefieldClick(settingsRef)(minefieldRef))();
-          addEventListener("mousedown")(minefieldEvent)(true)(toEventTarget(v.value0))();
+          addEventListener("mousedown")(minefieldEvent)(true)(toEventTarget2(v.value0))();
           var v1 = getElementById("autodecrement")(npn)();
           if (v1 instanceof Just) {
             var autoDecrementEvent = eventListener(autoDecHandler(settingsRef)(minefieldRef))();
-            addEventListener("click")(autoDecrementEvent)(true)(toEventTarget(v1.value0))();
+            addEventListener("click")(autoDecrementEvent)(true)(toEventTarget2(v1.value0))();
             var v2 = getElementById("questionflags")(npn)();
             if (v2 instanceof Just) {
               var qfEvent = eventListener(questionFlagHandler(settingsRef)(minefieldRef))();
-              addEventListener("click")(qfEvent)(true)(toEventTarget(v2.value0))();
+              addEventListener("click")(qfEvent)(true)(toEventTarget2(v2.value0))();
               var v3 = getElementById("loadscenario")(npn)();
               if (v3 instanceof Just) {
                 var scenarioLoadEvent = eventListener(function(v4) {
                   return scenarioLoad(settingsRef)(minefieldRef);
                 })();
-                addEventListener("click")(scenarioLoadEvent)(true)(toEventTarget(v3.value0))();
+                addEventListener("click")(scenarioLoadEvent)(true)(toEventTarget2(v3.value0))();
                 var presetScenario = setupPresetScenarioEvent(settingsRef)(minefieldRef);
                 presetScenario("classicscenario")(classicScenario)();
                 presetScenario("antiminescenario")(antiMineScenario)();
                 presetScenario("threecolorscenario")(threeColorScenario)();
                 presetScenario("sixcolorscenario")(sixColorScenario)();
-                return presetScenario("magnetscenario")(magnetScenario)();
+                presetScenario("magnetscenario")(magnetScenario)();
+                var d = map19(toDocument)(bindFlipped4(document2)(windowImpl))();
+                var resetBoardListener = eventListener(resetBoardEvent(settingsRef)(minefieldRef))();
+                return addEventListener("keydown")(resetBoardListener)(true)(toEventTarget(d))();
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 77, column 3 - line 77, column 63): " + [v3.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 79, column 3 - line 79, column 63): " + [v3.constructor.name]);
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 73, column 3 - line 73, column 52): " + [v2.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 75, column 3 - line 75, column 52): " + [v2.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 69, column 3 - line 69, column 57): " + [v1.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 71, column 3 - line 71, column 57): " + [v1.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 65, column 3 - line 65, column 55): " + [v.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 67, column 3 - line 67, column 55): " + [v.constructor.name]);
       });
     };
   };

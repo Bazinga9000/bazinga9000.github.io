@@ -6,18 +6,17 @@ import Prelude
 import Random.LCG
 import Utils.Generators
 
-import Color.HSLuv (hsluv)
-import Control.Monad.Gen as G
 import Data.Int (floor, toNumber)
 import Data.Number (sign, atan2, sqrt, pi)
+import Data.Ord (abs)
 
 
 classicalColorGenerator :: Gen Color 
 classicalColorGenerator = do 
-    r <- chooseInt 0 150
-    g <- chooseInt 0 150
-    b <- chooseInt 0 150
-    pure $ rgb r g b
+    h <- choose 0.0 360.0
+    s <- choose 0.4 1.0
+    v <- choose 0.5 1.0
+    pure $ hsv h s v
 
 classicalColor :: Int -> String
 classicalColor (-9) = "#CBBCA6"
@@ -39,15 +38,13 @@ classicalColor    6 = "#457A7A"
 classicalColor    7 = "#1B1B1B"
 classicalColor    8 = "#7A7A7A"
 classicalColor    9 = "#CBBC16"
-classicalColor    k = runOnceWithSeed (toHexString <$> colorGen) (mkSeed k) where
+classicalColor    k = runOnceWithSeed (toHexString <$> colorGen) (lcgNextMany (1001 * initialSeed) (mkSeed initialSeed)) where
+    initialSeed = (abs k)
     colorGen = if k > 0 then classicalColorGenerator else do
         c <- classicalColorGenerator
-        brightnessFactor <- G.chooseFloat 0.2 0.4
-        brightnessSign <- sign <$> G.chooseFloat (-1.0) 1.0
-
-        hueFactor <- G.chooseFloat (-20.0) 20.0
-        
-        let c' = lighten (brightnessSign * brightnessFactor) c 
+        brightnessFactor <- choose (-0.1) (0.3)
+        hueFactor <- choose (-30.0) 30.0
+        let c' = lighten brightnessFactor c 
         pure $ rotateHue hueFactor c'
 
 

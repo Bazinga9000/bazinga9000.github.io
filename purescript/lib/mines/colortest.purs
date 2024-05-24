@@ -6,6 +6,7 @@ import Mines.Charge
 import Mines.ChargeDisplay
 import Prelude
 
+import Data.Array (concatMap, (..))
 import Data.Traversable (sequence)
 import Effect (Effect)
 import Partial.Unsafe (unsafePartial)
@@ -22,6 +23,8 @@ import Web.HTML.Window (document)
 
 
 chargeTestArray :: Array MineCharge 
+chargeTestArray = map classicalCharge (concatMap (\x -> [x, -x]) (0 .. 50))
+{-
 chargeTestArray = [
     Charge 0 0 0 1,
     Charge 0 0 1 0,
@@ -60,16 +63,18 @@ chargeTestArray = [
     Charge 0 4 1 0, 
     Charge 0 4 3 0
 ]
+-}
 
 addChargeTestCell :: T.HTMLTableElement -> MineCharge -> Effect Unit 
 addChargeTestCell _ (NoMines) = pure unit
-addChargeTestCell tr (Charge _ r g b) = void $ unsafePartial do 
+addChargeTestCell tr (Charge n r g b) = void $ unsafePartial do 
     Just row <- TR.fromHTMLElement <$> T.insertRow tr
     Just newCell <- TD.fromHTMLElement <$> TR.insertCell row
     let e = TD.toElement newCell
-    setAttribute "style" ("font-family: gothica; color: " <> colorChargeColor r g b) e
+    let color = if n /= 0 then classicalColor n else colorChargeColor r g b
+    setAttribute "style" ("font-family: gothica; color: " <> color) e
 
-    let t = show r <> "," <> show g <> "," <> show b <> " " <> (colorChargeMagnitude r g b)
+    let t = if n /= 0 then show n else show r <> "," <> show g <> "," <> show b <> " " <> (colorChargeMagnitude r g b)
     setTextContent t (TD.toNode newCell)
 
 colorTestRenderer :: Effect Unit

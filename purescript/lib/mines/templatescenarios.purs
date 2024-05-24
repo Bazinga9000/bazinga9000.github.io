@@ -50,17 +50,17 @@ sixColorScenario = """board:
     height: 15
 distribution:
     - mine: redMine 
-      count: 10
+      count: 8
     - mine: greenMine 
-      count: 10
+      count: 8
     - mine: blueMine
-      count: 10
+      count: 8
     - mine: antiRedMine 
-      count: 10
+      count: 8
     - mine: antiGreenMine 
-      count: 10
+      count: 8
     - mine: antiBlueMine
-      count: 10
+      count: 8
 """
 
 redShiftScenario :: String

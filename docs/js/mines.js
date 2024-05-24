@@ -103,10 +103,10 @@
   };
   var applyFirst = function(dictApply) {
     var apply1 = apply(dictApply);
-    var map20 = map(dictApply.Functor0());
+    var map21 = map(dictApply.Functor0());
     return function(a) {
       return function(b) {
-        return apply1(map20($$const)(a))(b);
+        return apply1(map21($$const)(a))(b);
       };
     };
   };
@@ -762,12 +762,12 @@
   // output/Control.Monad/index.js
   var ap = function(dictMonad) {
     var bind8 = bind(dictMonad.Bind1());
-    var pure9 = pure(dictMonad.Applicative0());
+    var pure10 = pure(dictMonad.Applicative0());
     return function(f) {
       return function(a) {
         return bind8(f)(function(f$prime) {
           return bind8(a)(function(a$prime) {
-            return pure9(f$prime(a$prime));
+            return pure10(f$prime(a$prime));
           });
         });
       };
@@ -1704,23 +1704,23 @@
       };
     }
     return function(apply2) {
-      return function(map20) {
-        return function(pure9) {
+      return function(map21) {
+        return function(pure10) {
           return function(f) {
             return function(array) {
               function go2(bot, top4) {
                 switch (top4 - bot) {
                   case 0:
-                    return pure9([]);
+                    return pure10([]);
                   case 1:
-                    return map20(array1)(f(array[bot]));
+                    return map21(array1)(f(array[bot]));
                   case 2:
-                    return apply2(map20(array2)(f(array[bot])))(f(array[bot + 1]));
+                    return apply2(map21(array2)(f(array[bot])))(f(array[bot + 1]));
                   case 3:
-                    return apply2(apply2(map20(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
+                    return apply2(apply2(map21(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
                   default:
                     var pivot = bot + Math.floor((top4 - bot) / 4) * 2;
-                    return apply2(map20(concat2)(go2(bot, pivot)))(go2(pivot, top4));
+                    return apply2(map21(concat2)(go2(bot, pivot)))(go2(pivot, top4));
                 }
               }
               return go2(0, array.length);
@@ -1738,16 +1738,16 @@
   };
   var traversableMaybe = {
     traverse: function(dictApplicative) {
-      var pure9 = pure(dictApplicative);
-      var map20 = map(dictApplicative.Apply0().Functor0());
+      var pure10 = pure(dictApplicative);
+      var map21 = map(dictApplicative.Apply0().Functor0());
       return function(v) {
         return function(v1) {
           if (v1 instanceof Nothing) {
-            return pure9(Nothing.value);
+            return pure10(Nothing.value);
           }
           ;
           if (v1 instanceof Just) {
-            return map20(Just.create)(v(v1.value0));
+            return map21(Just.create)(v(v1.value0));
           }
           ;
           throw new Error("Failed pattern match at Data.Traversable (line 115, column 1 - line 119, column 33): " + [v.constructor.name, v1.constructor.name]);
@@ -1755,15 +1755,15 @@
       };
     },
     sequence: function(dictApplicative) {
-      var pure9 = pure(dictApplicative);
-      var map20 = map(dictApplicative.Apply0().Functor0());
+      var pure10 = pure(dictApplicative);
+      var map21 = map(dictApplicative.Apply0().Functor0());
       return function(v) {
         if (v instanceof Nothing) {
-          return pure9(Nothing.value);
+          return pure10(Nothing.value);
         }
         ;
         if (v instanceof Just) {
-          return map20(Just.create)(v.value0);
+          return map21(Just.create)(v.value0);
         }
         ;
         throw new Error("Failed pattern match at Data.Traversable (line 115, column 1 - line 119, column 33): " + [v.constructor.name]);
@@ -2586,12 +2586,12 @@
   };
   var bindExceptT = function(dictMonad) {
     var bind8 = bind(dictMonad.Bind1());
-    var pure9 = pure(dictMonad.Applicative0());
+    var pure10 = pure(dictMonad.Applicative0());
     return {
       bind: function(v) {
         return function(k) {
           return bind8(v)(either(function($187) {
-            return pure9(Left.create($187));
+            return pure10(Left.create($187));
           })(function(a) {
             var v1 = k(a);
             return v1;
@@ -2854,7 +2854,7 @@
   };
   var runParserT$prime = function(dictMonadRec) {
     var Monad0 = dictMonadRec.Monad0();
-    var map20 = map(Monad0.Bind1().Apply0().Functor0());
+    var map21 = map(Monad0.Bind1().Apply0().Functor0());
     var pure12 = pure(Monad0.Applicative0());
     var tailRecM3 = tailRecM(dictMonadRec);
     return function(state1) {
@@ -2871,7 +2871,7 @@
             ;
             if (v1 instanceof Lift) {
               $tco_done = true;
-              return map20(Loop.create)(v1.value0);
+              return map21(Loop.create)(v1.value0);
             }
             ;
             if (v1 instanceof Stop) {
@@ -2913,12 +2913,12 @@
     column: 1
   };
   var runParserT = function(dictMonadRec) {
-    var map20 = map(dictMonadRec.Monad0().Bind1().Apply0().Functor0());
+    var map21 = map(dictMonadRec.Monad0().Bind1().Apply0().Functor0());
     var runParserT$prime1 = runParserT$prime(dictMonadRec);
     return function(s) {
       return function(p) {
         var initialState = new ParseState(s, initialPos, false);
-        return map20(fst)(runParserT$prime1(initialState)(p));
+        return map21(fst)(runParserT$prime1(initialState)(p));
       };
     };
   };
@@ -5928,12 +5928,12 @@
     return v;
   };
   var functorStateT = function(dictFunctor) {
-    var map20 = map(dictFunctor);
+    var map21 = map(dictFunctor);
     return {
       map: function(f) {
         return function(v) {
           return function(s) {
-            return map20(function(v1) {
+            return map21(function(v1) {
               return new Tuple(f(v1.value0), v1.value1);
             })(v(s));
           };
@@ -5979,11 +5979,11 @@
     };
   };
   var applicativeStateT = function(dictMonad) {
-    var pure9 = pure(dictMonad.Applicative0());
+    var pure10 = pure(dictMonad.Applicative0());
     return {
       pure: function(a) {
         return function(s) {
-          return pure9(new Tuple(a, s));
+          return pure10(new Tuple(a, s));
         };
       },
       Apply0: function() {
@@ -5994,7 +5994,7 @@
   var monadRecStateT = function(dictMonadRec) {
     var Monad0 = dictMonadRec.Monad0();
     var bind8 = bind(Monad0.Bind1());
-    var pure9 = pure(Monad0.Applicative0());
+    var pure10 = pure(Monad0.Applicative0());
     var tailRecM3 = tailRecM(dictMonadRec);
     var monadStateT1 = monadStateT(Monad0);
     return {
@@ -6003,7 +6003,7 @@
           var f$prime = function(v) {
             var v1 = f(v.value0);
             return bind8(v1(v.value1))(function(v2) {
-              return pure9(function() {
+              return pure10(function() {
                 if (v2.value0 instanceof Loop) {
                   return new Loop(new Tuple(v2.value0.value0, v2.value1));
                 }
@@ -6027,12 +6027,12 @@
     };
   };
   var monadStateStateT = function(dictMonad) {
-    var pure9 = pure(dictMonad.Applicative0());
+    var pure10 = pure(dictMonad.Applicative0());
     var monadStateT1 = monadStateT(dictMonad);
     return {
       state: function(f) {
         return function($200) {
-          return pure9(f($200));
+          return pure10(f($200));
         };
       },
       Monad0: function() {
@@ -6170,18 +6170,18 @@
   };
   var replicateMRec = function(dictMonadRec) {
     var Monad0 = dictMonadRec.Monad0();
-    var pure9 = pure(Monad0.Applicative0());
+    var pure10 = pure(Monad0.Applicative0());
     var mapFlipped3 = mapFlipped(Monad0.Bind1().Apply0().Functor0());
     var tailRecM3 = tailRecM(dictMonadRec);
     return function(v) {
       return function(v1) {
         if (v <= 0) {
-          return pure9(Nil.value);
+          return pure10(Nil.value);
         }
         ;
         var go2 = function(v2) {
           if (v2.value1 === 0) {
-            return pure9(new Done(v2.value0));
+            return pure10(new Done(v2.value0));
           }
           ;
           return mapFlipped3(v1)(function(x) {
@@ -6263,10 +6263,10 @@
     var bind8 = bind(bindGenT(Monad0));
     var vectorOf1 = vectorOf(dictMonadRec);
     var chooseInt1 = chooseInt(Monad0);
-    var pure9 = pure(applicativeGenT(Monad0));
+    var pure10 = pure(applicativeGenT(Monad0));
     return function(xs) {
       return bind8(vectorOf1(length(xs))(chooseInt1(0)(top3)))(function(ns) {
-        return pure9(map12(snd)(sortBy(comparing2(fst))(zip(ns)(xs))));
+        return pure10(map12(snd)(sortBy(comparing2(fst))(zip(ns)(xs))));
       });
     };
   };
@@ -7332,9 +7332,29 @@
   };
 
   // output/Data.Argonaut.Decode.Decoders/index.js
+  var pure6 = /* @__PURE__ */ pure(applicativeEither);
+  var map15 = /* @__PURE__ */ map(functorEither);
   var lmap3 = /* @__PURE__ */ lmap(bifunctorEither);
   var composeKleisliFlipped2 = /* @__PURE__ */ composeKleisliFlipped(bindEither);
   var traverseWithIndex2 = /* @__PURE__ */ traverseWithIndex(traversableWithIndexArray)(applicativeEither);
+  var getFieldOptional = function(decoder) {
+    return function(obj) {
+      return function(str2) {
+        var decode = function() {
+          var $44 = lmap3(AtKey.create(str2));
+          return function($45) {
+            return $44(decoder($45));
+          };
+        }();
+        return maybe(pure6(Nothing.value))(function() {
+          var $46 = map15(Just.create);
+          return function($47) {
+            return $46(decode($47));
+          };
+        }())(lookup(str2)(obj));
+      };
+    };
+  };
   var getField = function(decoder) {
     return function(obj) {
       return function(str2) {
@@ -7552,11 +7572,11 @@
     "sequence",
     "mapping"
   ];
-  function compileStyleAliases(map20) {
+  function compileStyleAliases(map21) {
     var result = {};
-    if (map20 !== null) {
-      Object.keys(map20).forEach(function(style) {
-        map20[style].forEach(function(alias) {
+    if (map21 !== null) {
+      Object.keys(map21).forEach(function(style) {
+        map21[style].forEach(function(alias) {
           result[String(alias)] = style;
         });
       });
@@ -7683,7 +7703,7 @@
       return data !== null ? data : [];
     }
   });
-  var map15 = new type("tag:yaml.org,2002:map", {
+  var map16 = new type("tag:yaml.org,2002:map", {
     kind: "mapping",
     construct: function(data) {
       return data !== null ? data : {};
@@ -7693,7 +7713,7 @@
     explicit: [
       str,
       seq,
-      map15
+      map16
     ]
   });
   function resolveYamlNull(data) {
@@ -8019,9 +8039,9 @@
   var BASE64_MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r";
   function resolveYamlBinary(data) {
     if (data === null) return false;
-    var code2, idx, bitlen = 0, max10 = data.length, map20 = BASE64_MAP;
+    var code2, idx, bitlen = 0, max10 = data.length, map21 = BASE64_MAP;
     for (idx = 0; idx < max10; idx++) {
-      code2 = map20.indexOf(data.charAt(idx));
+      code2 = map21.indexOf(data.charAt(idx));
       if (code2 > 64) continue;
       if (code2 < 0) return false;
       bitlen += 6;
@@ -8029,14 +8049,14 @@
     return bitlen % 8 === 0;
   }
   function constructYamlBinary(data) {
-    var idx, tailbits, input = data.replace(/[\r\n=]/g, ""), max10 = input.length, map20 = BASE64_MAP, bits = 0, result = [];
+    var idx, tailbits, input = data.replace(/[\r\n=]/g, ""), max10 = input.length, map21 = BASE64_MAP, bits = 0, result = [];
     for (idx = 0; idx < max10; idx++) {
       if (idx % 4 === 0 && idx) {
         result.push(bits >> 16 & 255);
         result.push(bits >> 8 & 255);
         result.push(bits & 255);
       }
-      bits = bits << 6 | map20.indexOf(input.charAt(idx));
+      bits = bits << 6 | map21.indexOf(input.charAt(idx));
     }
     tailbits = max10 % 4 * 6;
     if (tailbits === 0) {
@@ -8052,32 +8072,32 @@
     return new Uint8Array(result);
   }
   function representYamlBinary(object) {
-    var result = "", bits = 0, idx, tail2, max10 = object.length, map20 = BASE64_MAP;
+    var result = "", bits = 0, idx, tail2, max10 = object.length, map21 = BASE64_MAP;
     for (idx = 0; idx < max10; idx++) {
       if (idx % 3 === 0 && idx) {
-        result += map20[bits >> 18 & 63];
-        result += map20[bits >> 12 & 63];
-        result += map20[bits >> 6 & 63];
-        result += map20[bits & 63];
+        result += map21[bits >> 18 & 63];
+        result += map21[bits >> 12 & 63];
+        result += map21[bits >> 6 & 63];
+        result += map21[bits & 63];
       }
       bits = (bits << 8) + object[idx];
     }
     tail2 = max10 % 3;
     if (tail2 === 0) {
-      result += map20[bits >> 18 & 63];
-      result += map20[bits >> 12 & 63];
-      result += map20[bits >> 6 & 63];
-      result += map20[bits & 63];
+      result += map21[bits >> 18 & 63];
+      result += map21[bits >> 12 & 63];
+      result += map21[bits >> 6 & 63];
+      result += map21[bits & 63];
     } else if (tail2 === 2) {
-      result += map20[bits >> 10 & 63];
-      result += map20[bits >> 4 & 63];
-      result += map20[bits << 2 & 63];
-      result += map20[64];
+      result += map21[bits >> 10 & 63];
+      result += map21[bits >> 4 & 63];
+      result += map21[bits << 2 & 63];
+      result += map21[64];
     } else if (tail2 === 1) {
-      result += map20[bits >> 2 & 63];
-      result += map20[bits << 4 & 63];
-      result += map20[64];
-      result += map20[64];
+      result += map21[bits >> 2 & 63];
+      result += map21[bits << 4 & 63];
+      result += map21[64];
+      result += map21[64];
     }
     return result;
   }
@@ -9397,14 +9417,14 @@
     "OFF"
   ];
   var DEPRECATED_BASE60_SYNTAX = /^[-+]?[0-9_]+(?::[0-9_]+)+(?:\.[0-9_]*)?$/;
-  function compileStyleMap(schema2, map20) {
+  function compileStyleMap(schema2, map21) {
     var result, keys4, index5, length9, tag, style, type2;
-    if (map20 === null) return {};
+    if (map21 === null) return {};
     result = {};
-    keys4 = Object.keys(map20);
+    keys4 = Object.keys(map21);
     for (index5 = 0, length9 = keys4.length; index5 < length9; index5 += 1) {
       tag = keys4[index5];
-      style = String(map20[tag]);
+      style = String(map21[tag]);
       if (tag.slice(0, 2) === "!!") {
         tag = "tag:yaml.org,2002:" + tag.slice(2);
       }
@@ -9975,7 +9995,7 @@
   var types = {
     binary,
     float,
-    map: map15,
+    map: map16,
     null: _null,
     pairs,
     set,
@@ -10042,22 +10062,22 @@
 
   // output/Data.YAML.Foreign.Decode/index.js
   var fail3 = /* @__PURE__ */ fail2(monadIdentity);
-  var pure6 = /* @__PURE__ */ pure(/* @__PURE__ */ applicativeExceptT(monadIdentity));
+  var pure7 = /* @__PURE__ */ pure(/* @__PURE__ */ applicativeExceptT(monadIdentity));
   var bind5 = /* @__PURE__ */ bind(/* @__PURE__ */ bindExceptT(monadIdentity));
   var parseYAML = function(yaml) {
     return parseYAMLImpl(function($6) {
       return fail3(ForeignError.create($6));
-    }, pure6, yaml);
+    }, pure7, yaml);
   };
   var parseYAMLToJson = function(yaml) {
     return bind5(parseYAML(yaml))(function($7) {
-      return pure6($7);
+      return pure7($7);
     });
   };
 
   // output/Mines.Parsing/index.js
   var bind6 = /* @__PURE__ */ bind(bindEither);
-  var pure7 = /* @__PURE__ */ pure(applicativeEither);
+  var pure8 = /* @__PURE__ */ pure(applicativeEither);
   var lookup4 = /* @__PURE__ */ lookup2(ordString);
   var BoardData = /* @__PURE__ */ function() {
     function BoardData2(value0, value1, value22) {
@@ -10078,32 +10098,99 @@
   var defaultMines = /* @__PURE__ */ function() {
     return fromFoldable3(ordString)(foldableArray)([new Tuple("standardMine", standardMine), new Tuple("doubleMine", doubleMine), new Tuple("antiMine", antiMine), new Tuple("redMine", redMine), new Tuple("blueMine", blueMine), new Tuple("greenMine", greenMine), new Tuple("magnetMine", magnetMine), new Tuple("antiRedMine", antiRedMine), new Tuple("antiGreenMine", antiGreenMine), new Tuple("antiBlueMine", antiBlueMine)]);
   }();
+  var decodeMineGraphic = function(j) {
+    return bind6(decodeJObject(j))(function(obj) {
+      return bind6(getFieldOptional(decodeString)(obj)("path"))(function(path) {
+        if (path instanceof Just) {
+          return pure8(MinePath.create(fromPathString(path.value0)));
+        }
+        ;
+        if (path instanceof Nothing) {
+          return bind6(getField(decodeString)(obj)("symbol"))(function(sym) {
+            return pure8(MineSymbol.create(sym));
+          });
+        }
+        ;
+        throw new Error("Failed pattern match at Mines.Parsing (line 64, column 5 - line 68, column 38): " + [path.constructor.name]);
+      });
+    });
+  };
+  var decodeMineCharge = function(j) {
+    return bind6(decodeArray(decodeInt)(j))(function(arr) {
+      if (arr.length === 4) {
+        return pure8(new Charge(arr[0], arr[1], arr[2], arr[3]));
+      }
+      ;
+      return new Left(new UnexpectedValue(j));
+    });
+  };
+  var decodeIPoint = function(j) {
+    return bind6(decodeArray(decodeInt)(j))(function(arr) {
+      if (arr.length === 2) {
+        return pure8(mkIPoint(arr[0])(arr[1]));
+      }
+      ;
+      return new Left(new UnexpectedValue(j));
+    });
+  };
+  var decodeMineValuation = function(j) {
+    return bind6(decodeJObject(j))(function(obj) {
+      return bind6(getField(decodeIPoint)(obj)("point"))(function(point) {
+        return bind6(getField(decodeMineCharge)(obj)("charge"))(function(charge) {
+          return pure8(new MineValuation(point, charge));
+        });
+      });
+    });
+  };
+  var decodeCustomMine = function(j) {
+    return bind6(decodeJObject(j))(function(obj) {
+      return bind6(getField(decodeMineGraphic)(obj)("mineGraphic"))(function(mineGraphic) {
+        return bind6(getField(decodeString)(obj)("mineColor"))(function(mineColor) {
+          return bind6(getField(decodeMineGraphic)(obj)("flagGraphic"))(function(flagGraphic2) {
+            return bind6(getField(decodeString)(obj)("flagColor"))(function(flagColor) {
+              return bind6(getField(decodeArray(decodeMineValuation))(obj)("neighborhoods"))(function(neighborhoods) {
+                var graphics = {
+                  mineGraphic,
+                  mineColor,
+                  flagGraphic: flagGraphic2,
+                  flagColor
+                };
+                return pure8(new Mine(graphics, neighborhoods));
+              });
+            });
+          });
+        });
+      });
+    });
+  };
   var decodeMine = function(j) {
-    var v = decodeString(j);
+    var v = decodeCustomMine(j);
     if (v instanceof Right) {
-      var v1 = lookup4(v.value0)(defaultMines);
-      if (v1 instanceof Nothing) {
-        return new Left(new UnexpectedValue(j));
-      }
-      ;
-      if (v1 instanceof Just) {
-        return pure7(v1.value0);
-      }
-      ;
-      throw new Error("Failed pattern match at Mines.Parsing (line 47, column 13 - line 49, column 41): " + [v1.constructor.name]);
+      return pure8(v.value0);
     }
     ;
     if (v instanceof Left) {
-      return new Left(new UnexpectedValue(j));
+      return bind6(decodeString(j))(function(s) {
+        var v1 = lookup4(s)(defaultMines);
+        if (v1 instanceof Nothing) {
+          return new Left(new UnexpectedValue(j));
+        }
+        ;
+        if (v1 instanceof Just) {
+          return pure8(v1.value0);
+        }
+        ;
+        throw new Error("Failed pattern match at Mines.Parsing (line 92, column 13 - line 94, column 41): " + [v1.constructor.name]);
+      });
     }
     ;
-    throw new Error("Failed pattern match at Mines.Parsing (line 45, column 5 - line 50, column 43): " + [v.constructor.name]);
+    throw new Error("Failed pattern match at Mines.Parsing (line 88, column 5 - line 94, column 41): " + [v.constructor.name]);
   };
   var decodeMineCount = function(j) {
     return bind6(decodeJObject(j))(function(obj) {
       return bind6(getField(decodeMine)(obj)("mine"))(function(mine) {
         return bind6(getField(decodeInt)(obj)("count"))(function(count) {
-          return pure7(new MineCount(mine, count));
+          return pure8(new MineCount(mine, count));
         });
       });
     });
@@ -10112,7 +10199,7 @@
     return bind6(decodeJObject(j))(function(obj) {
       return bind6(getField(decodeInt)(obj)("width"))(function(width8) {
         return bind6(getField(decodeInt)(obj)("height"))(function(height8) {
-          return pure7(new BoardData(width8, height8, []));
+          return pure8(new BoardData(width8, height8, []));
         });
       });
     });
@@ -10121,7 +10208,7 @@
     return bind6(decodeJObject(j))(function(obj) {
       return bind6(getField(decodeBoardData)(obj)("board"))(function(v) {
         return bind6(getField(decodeArray(decodeMineCount))(obj)("distribution"))(function(mineDistribution) {
-          return pure7(blankMinefield(v.value1)(v.value0)(mineDistribution));
+          return pure8(blankMinefield(v.value1)(v.value0)(mineDistribution));
         });
       });
     });
@@ -10142,10 +10229,10 @@
         return new Right(v1.value0);
       }
       ;
-      throw new Error("Failed pattern match at Mines.Parsing (line 77, column 16 - line 79, column 27): " + [v1.constructor.name]);
+      throw new Error("Failed pattern match at Mines.Parsing (line 122, column 16 - line 124, column 27): " + [v1.constructor.name]);
     }
     ;
-    throw new Error("Failed pattern match at Mines.Parsing (line 75, column 30 - line 79, column 27): " + [v.constructor.name]);
+    throw new Error("Failed pattern match at Mines.Parsing (line 120, column 30 - line 124, column 27): " + [v.constructor.name]);
   };
 
   // output/Web.DOM.Document/foreign.js
@@ -10224,9 +10311,9 @@
   }
 
   // output/Web.DOM.NonElementParentNode/index.js
-  var map16 = /* @__PURE__ */ map(functorEffect);
+  var map17 = /* @__PURE__ */ map(functorEffect);
   var getElementById = function(eid) {
-    var $2 = map16(toMaybe);
+    var $2 = map17(toMaybe);
     var $3 = _getElementById(eid);
     return function($4) {
       return $2($3($4));
@@ -10314,11 +10401,11 @@
   }
 
   // output/Mines.Settings/index.js
-  var map17 = /* @__PURE__ */ map(functorEffect);
+  var map18 = /* @__PURE__ */ map(functorEffect);
   var bindFlipped3 = /* @__PURE__ */ bindFlipped(bindEffect);
   var getCheckboxValue = function(s) {
     return function __do3() {
-      var npn = map17(function($14) {
+      var npn = map18(function($14) {
         return toNonElementParentNode(toDocument($14));
       })(bindFlipped3(document2)(windowImpl))();
       var v = getElementById(s)(npn)();
@@ -10355,6 +10442,7 @@
   // output/Mines.Templates/index.js
   var threeColorScenario = "board:\n    width: 15\n    height: 15\ndistribution:\n    - mine: redMine \n      count: 15\n    - mine: greenMine \n      count: 15\n    - mine: blueMine\n      count: 15\n";
   var sixColorScenario = "board:\n    width: 15\n    height: 15\ndistribution:\n    - mine: redMine \n      count: 10\n    - mine: greenMine \n      count: 10\n    - mine: blueMine\n      count: 10\n    - mine: antiRedMine \n      count: 10\n    - mine: antiGreenMine \n      count: 10\n    - mine: antiBlueMine\n      count: 10\n";
+  var redShiftScenario = 'board:\n    width: 15\n    height: 15\ndistribution: \n    - mine: \n          mineGraphic:\n            path: m525 0v225h150v-225zm-296.21 122.76-106.03 106.03 159.1 159.1 106.03-106.03zm742.4 0-159.1 159.1 106.08 106.03 159.05-159.1zm-371.21 177.24c-164.81 0-300 135.19-300 300s135.19 300 300 300c164.81 0 300-135.19 300-300s-135.19-300-300-300zm0 150c83.719 0 150 66.281 150 150s-66.281 150-150 150-150-66.281-150-150 66.281-150 150-150zm-600 75v150h225v-150zm975 0v150h225v-150zm-693.14 287.11-159.1 159.1 106.03 106.03 159.1-159.05zm636.32 0-106.08 106.08 159.1 159.05 106.03-106.03zm-393.19 162.89v225h150v-225z\n          mineColor: "#ffffee"\n          flagGraphic:\n            path: m525 0v225h150v-225zm-296.21 122.76-106.03 106.03 159.1 159.1 106.03-106.03zm742.4 0-159.1 159.1 106.08 106.03 159.05-159.1zm-371.21 177.24c-164.81 0-300 135.19-300 300s135.19 300 300 300c164.81 0 300-135.19 300-300s-135.19-300-300-300zm0 150c83.719 0 150 66.281 150 150s-66.281 150-150 150-150-66.281-150-150 66.281-150 150-150zm-600 75v150h225v-150zm975 0v150h225v-150zm-693.14 287.11-159.1 159.1 106.03 106.03 159.1-159.05zm636.32 0-106.08 106.08 159.1 159.05 106.03-106.03zm-393.19 162.89v225h150v-225z\n          flagColor: "#eeffff"\n          neighborhoods:\n            - point: [1,0]\n              charge: [0,0,0,1]\n            - point: [-1,0]\n              charge: [0,0,0,1]\n            - point: [0,1]\n              charge: [0,0,0,1]\n            - point: [0,-1]\n              charge: [0,0,0,1]\n            - point: [1,1]\n              charge: [0,0,1,0]\n            - point: [-1,1]\n              charge: [0,0,1,0]\n            - point: [1,-1]\n              charge: [0,0,1,0]\n            - point: [-1,-1]\n              charge: [0,0,1,0]\n            - point: [2,0]\n              charge: [0,1,0,0]\n            - point: [-2,0]\n              charge: [0,1,0,0]\n            - point: [0,2]\n              charge: [0,1,0,0]\n            - point: [0,-2]\n              charge: [0,1,0,0]\n      count: 30\n';
   var magnetScenario = "board:\n    width: 15\n    height: 15\ndistribution:\n    - mine: magnetMine \n      count: 30\n";
   var classicScenario = "board:\n    width: 15\n    height: 15\ndistribution:\n    - mine: standardMine \n      count: 30\n";
   var antiMineScenario = "board:\n    width: 15\n    height: 15\ndistribution:\n    - mine: standardMine \n      count: 15\n    - mine: antiMine \n      count: 15\n";
@@ -10453,9 +10541,9 @@
   }
 
   // output/Web.DOM.Node/index.js
-  var map18 = /* @__PURE__ */ map(functorEffect);
+  var map19 = /* @__PURE__ */ map(functorEffect);
   var firstChild = /* @__PURE__ */ function() {
-    var $25 = map18(toMaybe);
+    var $25 = map19(toMaybe);
     return function($26) {
       return $25(_firstChild($26));
     };
@@ -10505,10 +10593,10 @@
 
   // output/Mines/index.js
   var show7 = /* @__PURE__ */ show(showInt);
-  var pure8 = /* @__PURE__ */ pure(applicativeEffect);
+  var pure9 = /* @__PURE__ */ pure(applicativeEffect);
   var $$void3 = /* @__PURE__ */ $$void(functorEffect);
   var bind7 = /* @__PURE__ */ bind(bindEffect);
-  var map19 = /* @__PURE__ */ map(functorEffect);
+  var map20 = /* @__PURE__ */ map(functorEffect);
   var bindFlipped4 = /* @__PURE__ */ bindFlipped(bindEffect);
   var map110 = /* @__PURE__ */ map(functorArray);
   var sequence2 = /* @__PURE__ */ sequence(traversableArray)(applicativeEffect);
@@ -10541,27 +10629,27 @@
   var makeFlagTableRow = function(v) {
     return function(v1) {
       if (v1 instanceof Nothing) {
-        return pure8(unit);
+        return pure9(unit);
       }
       ;
       if (v1 instanceof Just) {
         return $$void3(function __do3() {
-          var v2 = map19(fromHTMLElement2)(insertRow(v))();
+          var v2 = map20(fromHTMLElement2)(insertRow(v))();
           if (v2 instanceof Just) {
             (function() {
               if (v1.value0.mine.flagGraphic instanceof MineSymbol) {
-                var v32 = map19(fromHTMLElement)(insertCell(v2.value0))();
+                var v32 = map20(fromHTMLElement)(insertCell(v2.value0))();
                 if (v32 instanceof Just) {
                   setTextContent(v1.value0.mine.flagGraphic.value0)(toNode(v32.value0))();
                   var style = "font-size: 50px; font-family: gothica; vertical-align: center; text-align: center; color: " + v1.value0.mine.flagColor;
                   return setAttribute("style")(style)(toElement(v32.value0))();
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 419, column 13 - line 419, column 69): " + [v32.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 420, column 13 - line 420, column 69): " + [v32.constructor.name]);
               }
               ;
               if (v1.value0.mine.flagGraphic instanceof MinePath) {
-                var v32 = map19(fromHTMLElement)(insertCell(v2.value0))();
+                var v32 = map20(fromHTMLElement)(insertCell(v2.value0))();
                 if (v32 instanceof Just) {
                   var ce = bindFlipped4(function() {
                     var $232 = createElement("canvas");
@@ -10584,34 +10672,34 @@
                     return appendChild(toNode3(ce))(toNode3(toElement(v32.value0)))();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 429, column 17 - line 429, column 51): " + [v4.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 430, column 17 - line 430, column 51): " + [v4.constructor.name]);
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 425, column 13 - line 425, column 69): " + [v32.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 426, column 13 - line 426, column 69): " + [v32.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 417, column 5 - line 433, column 68): " + [v1.value0.mine.flagGraphic.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 418, column 5 - line 434, column 68): " + [v1.value0.mine.flagGraphic.constructor.name]);
             })();
-            var v3 = map19(fromHTMLElement)(insertCell(v2.value0))();
+            var v3 = map20(fromHTMLElement)(insertCell(v2.value0))();
             if (v3 instanceof Just) {
               setTextContent(makeFractionalString(v1.value0.current)(v1.value0.total))(toNode(v3.value0))();
               return setAttribute("style")("font-family: gothica; vertical-align: center; text-align: center")(toElement(v3.value0))();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 435, column 5 - line 435, column 63): " + [v3.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 436, column 5 - line 436, column 63): " + [v3.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 416, column 5 - line 416, column 53): " + [v2.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 417, column 5 - line 417, column 53): " + [v2.constructor.name]);
         });
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 413, column 1 - line 413, column 73): " + [v.constructor.name, v1.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 414, column 1 - line 414, column 73): " + [v.constructor.name, v1.constructor.name]);
     };
   };
   var renderTable = function(sr) {
     return function(mr) {
       return $$void3(function __do3() {
-        var d = map19(toDocument)(bindFlipped4(document2)(windowImpl))();
+        var d = map20(toDocument)(bindFlipped4(document2)(windowImpl))();
         var npn = toNonElementParentNode(d);
         var v = getElementById("minecount")(npn)();
         if (v instanceof Just) {
@@ -10627,19 +10715,19 @@
                 return removeChild(tbody$prime.value0)(toNode2(v1.value0))();
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 449, column 3 - line 451, column 55): " + [tbody$prime.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 450, column 3 - line 452, column 55): " + [tbody$prime.constructor.name]);
             })();
             var m = read(mr)();
             var s = read(sr)();
             var totalCount = countSafeSquares(m);
             var revealedCount = countRevealedSquares(m);
-            var v2 = map19(fromHTMLElement2)(insertRow(v1.value0))();
+            var v2 = map20(fromHTMLElement2)(insertRow(v1.value0))();
             if (v2 instanceof Just) {
-              var v3 = map19(fromHTMLElement)(insertCell(v2.value0))();
+              var v3 = map20(fromHTMLElement)(insertCell(v2.value0))();
               if (v3 instanceof Just) {
                 setTextContent("\u25A3")(toNode(v3.value0))();
                 setAttribute("style")("font-size: 50px; vertical-align: center; text-align: center")(toElement(v3.value0))();
-                var v4 = map19(fromHTMLElement)(insertCell(v2.value0))();
+                var v4 = map20(fromHTMLElement)(insertCell(v2.value0))();
                 if (v4 instanceof Just) {
                   setTextContent(makeFractionalString(revealedCount)(totalCount))(toNode(v4.value0))();
                   setAttribute("style")("font-family: gothica; vertical-align: center; text-align: center")(toElement(v4.value0))();
@@ -10655,19 +10743,19 @@
                   return unit;
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 465, column 3 - line 465, column 77): " + [v4.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 466, column 3 - line 466, column 77): " + [v4.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 461, column 3 - line 461, column 77): " + [v3.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 462, column 3 - line 462, column 77): " + [v3.constructor.name]);
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 460, column 3 - line 460, column 63): " + [v2.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 461, column 3 - line 461, column 63): " + [v2.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 445, column 7 - line 445, column 42): " + [v1.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 446, column 7 - line 446, column 42): " + [v1.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 444, column 3 - line 444, column 50): " + [v.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 445, column 3 - line 445, column 50): " + [v.constructor.name]);
       });
     };
   };
@@ -10685,7 +10773,7 @@
           var v3 = formatNumber("00")(seconds);
           if (v3 instanceof Right) {
             var minutesString = show7(floor2(minutes));
-            var npn = map19(function($234) {
+            var npn = map20(function($234) {
               return toNonElementParentNode(toDocument($234));
             })(bindFlipped4(document2)(windowImpl))();
             var v4 = getElementById("timer")(npn)();
@@ -10694,13 +10782,13 @@
               return unit;
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 359, column 5 - line 359, column 44): " + [v4.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 360, column 5 - line 360, column 44): " + [v4.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 354, column 9 - line 354, column 58): " + [v3.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 355, column 9 - line 355, column 58): " + [v3.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 353, column 9 - line 353, column 56): " + [v2.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 354, column 9 - line 354, column 56): " + [v2.constructor.name]);
       };
     };
   };
@@ -10723,7 +10811,7 @@
         return fromMaybe(NoMines.value)(v.charge);
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 191, column 1 - line 191, column 50): " + [v.constructor.name, v1.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 192, column 1 - line 192, column 50): " + [v.constructor.name, v1.constructor.name]);
     };
   };
   var drawMineGraphic = function(ctx) {
@@ -10755,7 +10843,7 @@
             };
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 230, column 36 - line 242, column 27): " + [g.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 231, column 36 - line 243, column 27): " + [g.constructor.name]);
         };
       };
     };
@@ -10765,7 +10853,7 @@
       return function(clue) {
         return function(mineDistribution) {
           if (clue.flagState instanceof Nothing) {
-            return pure8(unit);
+            return pure9(unit);
           }
           ;
           if (clue.flagState instanceof Just && clue.flagState.value0 instanceof Flag) {
@@ -10773,21 +10861,21 @@
               return Just.create(mineGraphicsOf(mineOf($235)));
             });
             if (v instanceof Nothing) {
-              return pure8(unit);
+              return pure9(unit);
             }
             ;
             if (v instanceof Just) {
               return drawMineGraphic(s.mfCtx)(rect2)(v.value0.flagGraphic)(v.value0.flagColor);
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 247, column 24 - line 249, column 71): " + [v.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 248, column 24 - line 250, column 71): " + [v.constructor.name]);
           }
           ;
           if (clue.flagState instanceof Just && clue.flagState.value0 instanceof UnknownMine) {
             return drawMineGraphic(s.mfCtx)(rect2)(new MineSymbol("?"))("#FFFFFF");
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 245, column 62 - line 250, column 78): " + [clue.flagState.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 246, column 62 - line 251, column 78): " + [clue.flagState.constructor.name]);
         };
       };
     };
@@ -10799,13 +10887,13 @@
           return function(clue) {
             return function(dm) {
               if (clue.mine instanceof Just) {
-                return pure8(unit);
+                return pure9(unit);
               }
               ;
               if (clue.mine instanceof Nothing) {
                 var v = getDisplayCharge(clue)(s.autoDecrement);
                 if (v instanceof NoMines) {
-                  return pure8(unit);
+                  return pure9(unit);
                 }
                 ;
                 if (v instanceof Charge) {
@@ -10838,14 +10926,14 @@
                       return fillText(s.mfCtx)(cm)(x + halfSize + offset)(y + halfSize + quarterSize)();
                     }
                     ;
-                    throw new Error("Failed pattern match at Mines (line 206, column 13 - line 226, column 89): " + [dm.constructor.name]);
+                    throw new Error("Failed pattern match at Mines (line 207, column 13 - line 227, column 89): " + [dm.constructor.name]);
                   };
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 197, column 16 - line 226, column 89): " + [v.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 198, column 16 - line 227, column 89): " + [v.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 195, column 39 - line 226, column 89): " + [clue.mine.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 196, column 39 - line 227, column 89): " + [clue.mine.constructor.name]);
             };
           };
         };
@@ -10858,7 +10946,7 @@
         return function(v) {
           var v1 = lookup5(v)(m.map);
           if (v1 instanceof Nothing) {
-            return pure8(unit);
+            return pure9(unit);
           }
           ;
           if (v1 instanceof Just) {
@@ -10880,7 +10968,7 @@
                   return "#F88";
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 144, column 53 - line 146, column 35): " + [v1.value0.mine.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 145, column 53 - line 147, column 35): " + [v1.value0.mine.constructor.name]);
               }
               ;
               var $165 = eq4(m.gameState)(Won.value);
@@ -10957,17 +11045,17 @@
                     return drawMineGraphic(s.mfCtx)(flagRect)(new MinePath(misflagX))("#FFFFFF")();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 187, column 33 - line 187, column 73): " + [v2.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 188, column 33 - line 188, column 73): " + [v2.constructor.name]);
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 172, column 38 - line 189, column 87): " + [v1.value0.flagState.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 173, column 38 - line 190, column 87): " + [v1.value0.flagState.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 164, column 13 - line 189, column 87): " + [v1.value0.mine.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 165, column 13 - line 190, column 87): " + [v1.value0.mine.constructor.name]);
             };
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 130, column 43 - line 189, column 87): " + [v1.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 131, column 43 - line 190, column 87): " + [v1.constructor.name]);
         };
       };
     };
@@ -11010,9 +11098,9 @@
           return "#0F0";
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 255, column 17 - line 259, column 26): " + [m.gameState.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 256, column 17 - line 260, column 26): " + [m.gameState.constructor.name]);
       }();
-      var npn = map19(function($236) {
+      var npn = map20(function($236) {
         return toNonElementParentNode(toDocument($236));
       })(bindFlipped4(document2)(windowImpl))();
       var v = getElementById("timer")(npn)();
@@ -11020,7 +11108,7 @@
         return setAttribute("style")("font-family: gothica; color: " + color)(v.value0)();
       }
       ;
-      throw new Error("Failed pattern match at Mines (line 262, column 5 - line 262, column 44): " + [v.constructor.name]);
+      throw new Error("Failed pattern match at Mines (line 263, column 5 - line 263, column 44): " + [v.constructor.name]);
     };
   };
   var draw = function(sr) {
@@ -11085,7 +11173,7 @@
           };
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 339, column 5 - line 339, column 17): " + [v.constructor.name, v1.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 340, column 5 - line 340, column 17): " + [v.constructor.name, v1.constructor.name]);
       };
     };
     return onCheckboxClick("questionflags")(function(a) {
@@ -11104,7 +11192,7 @@
     return function(mr) {
       return function(e) {
         return $$void3(function __do3() {
-          var npn = map19(function($237) {
+          var npn = map20(function($237) {
             return toNonElementParentNode(toDocument($237));
           })(bindFlipped4(document2)(windowImpl))();
           var v = getElementById("minefield")(npn)();
@@ -11176,12 +11264,12 @@
                         return revealSquare(p);
                       }
                       ;
-                      throw new Error("Failed pattern match at Mines (line 309, column 34 - line 311, column 91): " + [v2.constructor.name]);
+                      throw new Error("Failed pattern match at Mines (line 310, column 34 - line 312, column 91): " + [v2.constructor.name]);
                     };
                     return $$void3(modify(handleReveal(minefieldCoords))(mr))();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 306, column 22 - line 311, column 91): " + [pressedButtons.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 307, column 22 - line 312, column 91): " + [pressedButtons.constructor.name]);
                 }
                 ;
                 return unit;
@@ -11198,7 +11286,7 @@
                     return clearInterval2(s.timerId.value0)();
                   }
                   ;
-                  throw new Error("Failed pattern match at Mines (line 319, column 9 - line 321, column 44): " + [s.timerId.constructor.name]);
+                  throw new Error("Failed pattern match at Mines (line 320, column 9 - line 322, column 44): " + [s.timerId.constructor.name]);
                 }
                 ;
                 return unit;
@@ -11206,10 +11294,10 @@
               return draw(sr)(mr)();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 277, column 9 - line 277, column 32): " + [v1.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 278, column 9 - line 278, column 32): " + [v1.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 274, column 5 - line 274, column 48): " + [v.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 275, column 5 - line 275, column 48): " + [v.constructor.name]);
         });
       };
     };
@@ -11217,7 +11305,7 @@
   var scenarioLoad = function(sr) {
     return function(mr) {
       return function __do3() {
-        var npn = map19(function($238) {
+        var npn = map20(function($238) {
           return toNonElementParentNode(toDocument($238));
         })(bindFlipped4(document2)(windowImpl))();
         var v = getElementById("scenarioinput")(npn)();
@@ -11237,7 +11325,7 @@
                 })(mr))();
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 371, column 5 - line 373, column 50): " + [v2.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 372, column 5 - line 374, column 50): " + [v2.constructor.name]);
             })();
             var s = read(sr)();
             (function() {
@@ -11252,18 +11340,18 @@
                   return setTextContent("0:00.00")(toNode3(v2.value0))();
                 }
                 ;
-                throw new Error("Failed pattern match at Mines (line 381, column 17 - line 381, column 57): " + [v2.constructor.name]);
+                throw new Error("Failed pattern match at Mines (line 382, column 17 - line 382, column 57): " + [v2.constructor.name]);
               }
               ;
-              throw new Error("Failed pattern match at Mines (line 377, column 5 - line 382, column 56): " + [s.timerId.constructor.name]);
+              throw new Error("Failed pattern match at Mines (line 378, column 5 - line 383, column 56): " + [s.timerId.constructor.name]);
             })();
             return draw(sr)(mr)();
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 368, column 9 - line 368, column 43): " + [v1.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 369, column 9 - line 369, column 43): " + [v1.constructor.name]);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 367, column 5 - line 367, column 52): " + [v.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 368, column 5 - line 368, column 52): " + [v.constructor.name]);
       };
     };
   };
@@ -11277,10 +11365,10 @@
             return scenarioLoad(sr)(mr);
           }
           ;
-          return pure8(unit);
+          return pure9(unit);
         }
         ;
-        throw new Error("Failed pattern match at Mines (line 403, column 9 - line 403, column 46): " + [v.constructor.name]);
+        throw new Error("Failed pattern match at Mines (line 404, column 9 - line 404, column 46): " + [v.constructor.name]);
       };
     };
   };
@@ -11288,7 +11376,7 @@
     return function(sr) {
       return function(mr) {
         return function __do3() {
-          var npn = map19(function($239) {
+          var npn = map20(function($239) {
             return toNonElementParentNode(toDocument($239));
           })(bindFlipped4(document2)(windowImpl))();
           var v = getElementById("scenarioinput")(npn)();
@@ -11299,10 +11387,10 @@
               return scenarioLoad(sr)(mr)();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 390, column 9 - line 390, column 43): " + [v1.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 391, column 9 - line 391, column 43): " + [v1.constructor.name]);
           }
           ;
-          throw new Error("Failed pattern match at Mines (line 389, column 5 - line 389, column 52): " + [v.constructor.name]);
+          throw new Error("Failed pattern match at Mines (line 390, column 5 - line 390, column 52): " + [v.constructor.name]);
         };
       };
     };
@@ -11312,7 +11400,7 @@
       return function(id3) {
         return function(scenario) {
           return function __do3() {
-            var npn = map19(function($240) {
+            var npn = map20(function($240) {
               return toNonElementParentNode(toDocument($240));
             })(bindFlipped4(document2)(windowImpl))();
             var v = getElementById(id3)(npn)();
@@ -11323,7 +11411,7 @@
               return addEventListener("click")(scenarioChangeEvent)(true)(toEventTarget2(v.value0))();
             }
             ;
-            throw new Error("Failed pattern match at Mines (line 397, column 5 - line 397, column 53): " + [v.constructor.name]);
+            throw new Error("Failed pattern match at Mines (line 398, column 5 - line 398, column 53): " + [v.constructor.name]);
           };
         };
       };
@@ -11347,7 +11435,7 @@
   var setupEvents = function(settingsRef) {
     return function(minefieldRef) {
       return $$void3(function __do3() {
-        var npn = map19(function($241) {
+        var npn = map20(function($241) {
           return toNonElementParentNode(toDocument($241));
         })(bindFlipped4(document2)(windowImpl))();
         var v = getElementById("minefield")(npn)();
@@ -11374,7 +11462,8 @@
                 presetScenario("threecolorscenario")(threeColorScenario)();
                 presetScenario("sixcolorscenario")(sixColorScenario)();
                 presetScenario("magnetscenario")(magnetScenario)();
-                var d = map19(toDocument)(bindFlipped4(document2)(windowImpl))();
+                presetScenario("redshiftscenario")(redShiftScenario)();
+                var d = map20(toDocument)(bindFlipped4(document2)(windowImpl))();
                 var resetBoardListener = eventListener(resetBoardEvent(settingsRef)(minefieldRef))();
                 return addEventListener("keydown")(resetBoardListener)(true)(toEventTarget(d))();
               }

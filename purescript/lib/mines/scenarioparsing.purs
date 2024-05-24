@@ -2,7 +2,9 @@ module Mines.Parsing where
 
 import Data.Argonaut.Parser
 import Data.YAML.Foreign.Decode
+import Graphics.Path2D
 import Mines.Charge
+import Mines.Graphics
 import Mines.Mine
 import Mines.Minefield
 import Prelude
@@ -11,12 +13,13 @@ import Utils.IPoint
 import Control.Monad.Except (runExcept)
 import Data.Argonaut (Json, JsonDecodeError(..))
 import Data.Argonaut.Decode.Class (class DecodeJson)
-import Data.Argonaut.Decode.Decoders (decodeArray, decodeInt, decodeJObject, decodeString, getField)
+import Data.Argonaut.Decode.Decoders (decodeArray, decodeInt, decodeJObject, decodeString, getField, getFieldOptional)
 import Data.Array (any, foldr)
 import Data.Either (Either(..))
 import Data.Map (Map, fromFoldable, lookup)
 import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple(..))
+import Debug (spy)
 
 decodeMineCharge :: Json -> Either JsonDecodeError MineCharge
 decodeMineCharge j = do 
@@ -24,6 +27,20 @@ decodeMineCharge j = do
     case arr of 
         [n, r, g, b] -> pure $ Charge n r g b
         _ -> Left $ UnexpectedValue j
+
+decodeIPoint :: Json -> Either JsonDecodeError IPoint
+decodeIPoint j = do
+    arr <- decodeArray decodeInt j
+    case arr of
+        [x, y] -> pure $ mkIPoint x y
+        _ -> Left $ UnexpectedValue j
+
+decodeMineValuation :: Json -> Either JsonDecodeError MineValuation
+decodeMineValuation j = do
+    obj <- decodeJObject j
+    point <- getField decodeIPoint obj "point"
+    charge <- getField decodeMineCharge obj "charge"
+    pure $ MineValuation point charge
 
 defaultMines :: Map String Mine 
 defaultMines = fromFoldable [
@@ -40,14 +57,42 @@ defaultMines = fromFoldable [
 ]
 
 
+decodeMineGraphic :: Json -> Either JsonDecodeError MineGraphic
+decodeMineGraphic j = do
+    obj <- decodeJObject j
+    path <- getFieldOptional decodeString obj "path"
+    case path of
+        Just s -> (pure <<< MinePath <<< fromPathString) s
+        Nothing -> do
+            sym <- getField decodeString obj "symbol"
+            (pure <<< MineSymbol) sym
+
+decodeCustomMine :: Json -> Either JsonDecodeError Mine
+decodeCustomMine j = do
+    obj <- decodeJObject j
+    mineGraphic <- getField decodeMineGraphic obj "mineGraphic"
+    mineColor <- getField decodeString obj "mineColor"
+    flagGraphic <- getField decodeMineGraphic obj "flagGraphic"
+    flagColor <- getField decodeString obj "flagColor"
+    neighborhoods <- getField (decodeArray decodeMineValuation) obj "neighborhoods"
+    let graphics = {
+        mineGraphic: mineGraphic,
+        mineColor: mineColor,
+        flagGraphic: flagGraphic,
+        flagColor: flagColor
+    }
+    pure $ Mine graphics neighborhoods
+
 decodeMine :: Json -> Either JsonDecodeError Mine 
 decodeMine j = do
-    case decodeString j of
-        Right s -> do
+    case decodeCustomMine j of
+        Right mine -> pure mine
+        Left _ -> do
+            s <- decodeString j
             case lookup s defaultMines of
                 Nothing -> Left $ UnexpectedValue j
                 (Just mine) -> pure mine
-        Left _ -> Left $ UnexpectedValue j -- NOT YET IMPLEMENTED
+            
 
 decodeMineCount :: Json -> Either JsonDecodeError MineCount
 decodeMineCount j = do

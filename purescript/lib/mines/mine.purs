@@ -80,3 +80,55 @@ magnetMine = Mine magnetMineGraphics [
     MineValuation (mkIPoint 0 (-2)) (redCharge 1),
     MineValuation (mkIPoint (-1) (-2)) (redCharge 1)    
 ]
+
+constDoubleMooreMine :: MineGraphics -> MineCharge -> Mine 
+constDoubleMooreMine g c = Mine g [
+    MineValuation (mkIPoint 1 1) c,
+    MineValuation (mkIPoint 1 0) c,
+    MineValuation (mkIPoint 1 (-1)) c,
+    MineValuation (mkIPoint 0 1) c,
+    MineValuation (mkIPoint 0 (-1)) c,
+    MineValuation (mkIPoint (-1) 1) c,
+    MineValuation (mkIPoint (-1) 0) c,
+    MineValuation (mkIPoint (-1) (-1)) c,
+    MineValuation (mkIPoint 2 2) c,
+    MineValuation (mkIPoint 2 1) c, 
+    MineValuation (mkIPoint 2 0) c,
+    MineValuation (mkIPoint 2 (-1)) c,
+    MineValuation (mkIPoint 2 (-2)) c,
+    MineValuation (mkIPoint 1 (-2)) c, 
+    MineValuation (mkIPoint 0 (-2)) c,
+    MineValuation (mkIPoint (-1) (-2)) c,
+    MineValuation (mkIPoint (-2) (-2)) c,
+    MineValuation (mkIPoint (-2) (-1)) c,
+    MineValuation (mkIPoint (-2) 0) c,
+    MineValuation (mkIPoint (-2) 1) c,
+    MineValuation (mkIPoint (-2) 2) c,
+    MineValuation (mkIPoint (-1) 2) c,
+    MineValuation (mkIPoint 0 2) c,
+    MineValuation (mkIPoint 1 2) c 
+]
+
+largeMine :: Mine
+largeMine = constDoubleMooreMine largeMineGraphics (classicalCharge 1)
+
+largeRedMine :: Mine 
+largeRedMine = constDoubleMooreMine largeRedMineGraphics (redCharge 1)
+
+largeGreenMine :: Mine 
+largeGreenMine = constDoubleMooreMine largeGreenMineGraphics (greenCharge 1)
+
+largeBlueMine :: Mine 
+largeBlueMine = constDoubleMooreMine largeBlueMineGraphics (blueCharge 1)
+
+largeAntiMine :: Mine 
+largeAntiMine = constDoubleMooreMine largeAntiMineGraphics (classicalCharge (-1))
+
+largeAntiRedMine :: Mine 
+largeAntiRedMine = constDoubleMooreMine largeAntiRedMineGraphics (redCharge (-1))
+
+largeAntiGreenMine :: Mine 
+largeAntiGreenMine = constDoubleMooreMine largeAntiGreenMineGraphics (greenCharge (-1))
+
+largeAntiBlueMine :: Mine 
+largeAntiBlueMine = constDoubleMooreMine largeAntiBlueMineGraphics (blueCharge (-1))

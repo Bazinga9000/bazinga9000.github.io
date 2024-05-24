@@ -102,3 +102,25 @@ distribution:
               charge: [0,1,0,0]
       count: 30
 """
+
+swathScenario :: String 
+swathScenario = """board:
+    width: 15
+    height: 15
+distribution:
+    - mine: largeMine 
+      count: 30
+"""
+
+swathThreeColorScenario :: String
+swathThreeColorScenario = """board:
+    width: 15
+    height: 15
+distribution:
+    - mine: largeRedMine 
+      count: 15
+    - mine: largeGreenMine 
+      count: 15
+    - mine: largeBlueMine
+      count: 15
+"""

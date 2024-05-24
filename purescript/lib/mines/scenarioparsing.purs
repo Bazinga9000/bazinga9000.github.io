@@ -53,7 +53,15 @@ defaultMines = fromFoldable [
     Tuple "magnetMine" magnetMine,
     Tuple "antiRedMine" antiRedMine,
     Tuple "antiGreenMine" antiGreenMine,
-    Tuple "antiBlueMine" antiBlueMine
+    Tuple "antiBlueMine" antiBlueMine,
+    Tuple "largeMine" largeMine,
+    Tuple "largeAntiMine" largeAntiMine, 
+    Tuple "largeRedMine" largeRedMine,
+    Tuple "largeBlueMine" largeBlueMine, 
+    Tuple "largeGreenMine" largeGreenMine,
+    Tuple "largeAntiRedMine" largeAntiRedMine,
+    Tuple "largeAntiGreenMine" largeAntiGreenMine,
+    Tuple "largeAntiBlueMine" largeAntiBlueMine
 ]
 
 

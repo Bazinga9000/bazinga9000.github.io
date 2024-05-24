@@ -87,6 +87,8 @@ setupEvents settingsRef minefieldRef = void $ unsafePartial do
   presetScenario "sixcolorscenario" sixColorScenario
   presetScenario "magnetscenario" magnetScenario
   presetScenario "redshiftscenario" redShiftScenario
+  presetScenario "swathscenario" swathScenario
+  presetScenario "swaththreecolorsscenario" swathThreeColorScenario
 
   d <- map (toDocument) (document =<< window)
   resetBoardListener <- eventListener (resetBoardEvent settingsRef minefieldRef)

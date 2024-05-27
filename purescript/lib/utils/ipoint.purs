@@ -24,10 +24,10 @@ instance monoidIPoint :: Monoid IPoint where
 
 
 latticeOneIndex :: Int -> Int -> Array IPoint 
-latticeOneIndex width height = concatMap (\i -> map (\j -> mkIPoint i j) (1 .. width)) (1 .. height)
+latticeOneIndex width height = concatMap (\i -> map (\j -> mkIPoint j i) (1 .. width)) (1 .. height)
 
 lattice :: Int -> Int -> Array IPoint 
-lattice width height = concatMap (\i -> map (\j -> mkIPoint i j) (0 .. (width - 1))) (0 .. (height - 1))
+lattice width height = concatMap (\i -> map (\j -> mkIPoint j i) (0 .. (width - 1))) (0 .. (height - 1))
 
 sub :: IPoint -> IPoint -> IPoint 
 sub (IPoint p) (IPoint q) = mkIPoint (p.x - q.x) (p.y - q.y)

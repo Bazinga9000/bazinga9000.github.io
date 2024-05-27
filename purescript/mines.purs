@@ -20,7 +20,6 @@ import Utils.IPoint
 import Web.Event.Event
 import Web.Event.EventTarget
 import Web.UIEvent.MouseEvent
-import Web.UIEvent.KeyboardEvent as KE
 
 import Data.Array (length, (..), (!!))
 import Data.Array as A
@@ -39,16 +38,19 @@ import Partial.Unsafe (unsafePartial)
 import Random.LCG (randomSeed)
 import Web.DOM.Document (createElement, toNonElementParentNode)
 import Web.DOM.Document as D
-import Web.DOM.Element (getBoundingClientRect, setAttribute, toEventTarget, toNode)
+import Web.DOM.Element (getBoundingClientRect, setAttribute, setClassName, toEventTarget, toNode)
 import Web.DOM.Node (appendChild, firstChild, removeChild, setTextContent, textContent)
 import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
 import Web.HTML.HTMLDocument (toDocument)
+import Web.HTML.HTMLElement (fromElement)
 import Web.HTML.HTMLTableCellElement as TD
 import Web.HTML.HTMLTableElement as T
 import Web.HTML.HTMLTableRowElement as TR
 import Web.HTML.HTMLTextAreaElement as TA
+import Web.HTML.Utils (clearChildren)
 import Web.HTML.Window (document)
+import Web.UIEvent.KeyboardEvent as KE
 
 main :: Effect Unit
 main = do
@@ -89,6 +91,7 @@ setupEvents settingsRef minefieldRef = void $ unsafePartial do
   presetScenario "redshiftscenario" redShiftScenario
   presetScenario "swathscenario" swathScenario
   presetScenario "swaththreecolorsscenario" swathThreeColorScenario
+  presetScenario "precisescenario" preciseScenario
 
   d <- map (toDocument) (document =<< window)
   resetBoardListener <- eventListener (resetBoardEvent settingsRef minefieldRef)
@@ -159,14 +162,14 @@ drawSquare s m squareSize p@(IPoint p') = case (lookup p m.map) of
         if m.gameState == Ungenerated || m.gameState == Generated then 
             -- the game is still actively being played
             if clue.revealed then do  
-                drawCharge s x y squareSize clue m.displayMode
+                drawCharge s.mfCtx s.autoDecrement x y squareSize clue m.displayMode
             else 
                 drawFlag s boundRect clue m.mineDistribution
         else 
             -- the game is won/lost, uncover all mines
             case clue.mine of 
                 Nothing -> if clue.revealed then do 
-                    drawCharge s x y squareSize clue m.displayMode
+                    drawCharge s.mfCtx s.autoDecrement x y squareSize clue m.displayMode
                 else do 
                     drawFlag s boundRect clue m.mineDistribution
                     if clue.flagState == Nothing then pure unit else do 
@@ -194,13 +197,12 @@ drawSquare s m squareSize p@(IPoint p') = case (lookup p m.map) of
 getDisplayCharge :: Clue -> Boolean -> MineCharge 
 getDisplayCharge clue true = (fromMaybe NoMines clue.charge) <> (negateCharge $ fromMaybe NoMines clue.flagCharge)
 getDisplayCharge clue false = (fromMaybe NoMines clue.charge)
-drawCharge :: Settings -> Number -> Number -> Number -> Clue -> ChargeDisplayMode -> Effect Unit 
-drawCharge s x y squareSize clue dm = case clue.mine of 
+drawCharge :: Context2D -> Boolean -> Number -> Number -> Number -> Clue -> ChargeDisplayMode -> Effect Unit 
+drawCharge ctx autoDecrement x y squareSize clue dm = case clue.mine of 
     (Just _) -> pure unit 
-    Nothing -> case getDisplayCharge clue s.autoDecrement of  
+    Nothing -> case getDisplayCharge clue autoDecrement of  
         NoMines -> pure unit 
         (Charge n r g b) -> do
-            let ctx = s.mfCtx 
             let halfSize = squareSize / 2.0 
             setTextAlign ctx AlignCenter
             setTextBaseline ctx BaselineMiddle
@@ -316,10 +318,10 @@ onMinefieldClick sr mr e = void $ unsafePartial do
         
 
     m' <- modify setWinningBoard mr
-
+    s' <- read sr
     -- stop timer if this click ended the game
-    if m'.gameState /= Generated && prevState == Generated then do 
-        case s.timerId of
+    if m'.gameState /= Generated && m'.gameState /= prevState then do 
+        case s'.timerId of
             Nothing -> pure unit
             (Just iid) -> clearInterval iid 
     else pure unit
@@ -384,6 +386,7 @@ scenarioLoad sr mr = unsafePartial $ do
                 Just timer <- getElementById "timer" npn
                 setTextContent "0:00.00" (toNode timer)
     draw sr mr
+    regenerateMineTooltips mr
 
 
 setScenario :: String -> Ref Settings -> Ref Minefield -> Effect Unit
@@ -473,3 +476,81 @@ renderTable sr mr = void $ unsafePartial do
   let flagArray = map Flag (0..(length m.presentMines - 1))
   void $ sequence $ map (\k -> makeFlagTableRow table (getFlagCount m k)) flagArray
   if length flagArray /= 1 && s.allowQuestionFlags then makeFlagTableRow table (getFlagCount m UnknownMine) else pure unit
+
+{---------------------------------------
+MINE INFO RENDERING
+---------------------------------------}
+
+regenerateMineTooltips :: Ref Minefield -> Effect Unit
+regenerateMineTooltips mr = unsafePartial do
+    npn <- map (toNonElementParentNode <<< toDocument) (document =<< window)
+    Just minetips <- getElementById "minetips" npn
+    -- clear existing canvases
+    let (Just e) = (fromElement minetips)
+    clearChildren e
+
+    m <- read mr
+    let d mine = do
+            ce <- ((createElement "canvas") <<< toDocument) =<< document =<< window 
+            setAttribute "width" "250px" ce
+            setAttribute "height" "250px" ce
+            setClassName "minetip" ce
+            let (Just canvas) = toCanvasElement ce
+            drawMineData mine m.displayMode canvas
+            appendChild (toNode ce) (toNode minetips)
+    
+    void $ sequence $ map d m.presentMines
+
+drawMineData :: Mine -> ChargeDisplayMode -> CanvasElement -> Effect Unit
+drawMineData m dm c = unsafePartial $ do
+    ctx <- getContext2D c
+    dims <- getCanvasDimensions c
+    let canvasLength = min dims.width dims.height
+    
+    let (Just mineDims) = getMineValuationDims m
+    let (IPoint bounds) = mineDims.max .- mineDims.min .+ (mkIPoint 1 1)
+
+    let squareSize = canvasLength / (toNumber $ max bounds.x bounds.y)
+
+    let points = (lattice bounds.x bounds.y)
+
+    let drawData p = do
+            let (IPoint p') = p
+            let x = toNumber p'.x * squareSize
+            let y = toNumber p'.y * squareSize
+            let boundRect = {x: x, y: y, width: squareSize, height: squareSize}
+            setFillStyle ctx "#FFFFFF"
+            fillPath ctx $ rect ctx boundRect
+
+            -- draw border
+            setStrokeStyle ctx "#000000"
+            strokePath ctx $ rect ctx boundRect 
+
+            let fakeClue = {
+                revealed: true,
+                flagState: Nothing,
+                mine: Nothing, 
+                charge: Just $ pointCharge m (p .+ mineDims.min),
+                flagCharge: Nothing,
+                mineIndex: Nothing
+            }
+            
+            drawCharge ctx false x y squareSize fakeClue dm
+
+    void $ sequence $ map drawData points
+
+    let (IPoint zeroPoint) = (mkIPoint 0 0) .- mineDims.min
+    let graphicRect = {
+        x: squareSize * toNumber zeroPoint.x,
+        y: squareSize * toNumber zeroPoint.y,
+        width: squareSize, 
+        height: squareSize
+    }
+    setFillStyle ctx "#999"
+    fillPath ctx $ rect ctx graphicRect
+    setStrokeStyle ctx "#000000"
+    strokePath ctx $ rect ctx graphicRect 
+    let g = mineGraphicsOf m
+
+    
+    drawMineGraphic ctx graphicRect g.flagGraphic g.flagColor

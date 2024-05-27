@@ -1,10 +1,13 @@
 module Mines.Mine where
 
+import Data.Array
 import Mines.Charge
 import Mines.Graphics
 import Prelude
 import Utils.IPoint
-import Data.Array
+
+import Data.Foldable (maximum, minimum)
+import Data.Maybe (Maybe(..))
 
 data MineValuation = MineValuation IPoint MineCharge
 
@@ -22,6 +25,16 @@ usesColor (Mine _ vs) = any (\(MineValuation _ c) -> hasColor c) vs
 -- the charge a mine exerts on a given point
 pointCharge :: Mine -> IPoint -> MineCharge 
 pointCharge (Mine _ vs) p = foldr (\(MineValuation p' c') c -> if p == p' then c <> c' else c) NoMines vs
+
+getMineValuationDims :: Mine -> Maybe {min :: IPoint, max :: IPoint}
+getMineValuationDims (Mine _ vs) = do
+    let xs = map (\(MineValuation (IPoint p) _) -> p.x) vs
+    let ys = map (\(MineValuation (IPoint p) _) -> p.y) vs
+    minX <- min 0 <$> minimum xs
+    maxX <- max 0 <$> maximum xs
+    minY <- min 0 <$> minimum ys
+    maxY <- max 0 <$> maximum ys
+    pure $ {min: mkIPoint minX minY, max: mkIPoint maxX maxY}
 
 constMooreMine :: MineGraphics -> MineCharge -> Mine 
 constMooreMine g c = Mine g [

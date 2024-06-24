@@ -39,6 +39,17 @@ body {
     url('/fonts/gothica/Gothica-Bold.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'tsalscript';
+  src: 
+    url('/fonts/tsalscript/Tsalscript.otf') format('opentype');
+}
+
+tsal {
+  font-family: tsalscript;
+  font-size: 40px;
+}
+
 button {
   background: #202020;
   border: 2px solid #ffffff;

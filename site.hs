@@ -44,7 +44,7 @@ main = hakyllWith config $ do
             route $ stripPrefixRoute "pages/" `composeRoutes` setExtension "html"
             compile $ compileWithDefaultOptions fullPandocCompiler
 
-        forM_ ["cgt"] $ \f -> do
+        forM_ ["cgt", "tsal"] $ \f -> do
             match (postFolder f ".html") $ do
                 route $ stripPrefixRoute "posts/"
                 compile $ postCompiler getResourceBody
@@ -83,7 +83,9 @@ main = hakyllWith config $ do
 Math In Pandoc
 -------------------------------------------------------------------------------}
 globalReaderOptions :: ReaderOptions
-globalReaderOptions = defaultHakyllReaderOptions
+globalReaderOptions = defaultHakyllReaderOptions {
+    readerExtensions = extensionsFromList [Ext_smart, Ext_grid_tables]
+}
 
 globalWriterOptions :: WriterOptions
 globalWriterOptions = defaultHakyllWriterOptions

@@ -1,0 +1,243 @@
+---
+title: Tsal - Phonology and Orthography
+kochtitle: "1: Phonology and Orthography"
+goto: /tsal.html
+extracss: tsalexp
+index: 1
+---
+
+-----------
+
+<center>"You speak with me and I speak with you."</center>
+<center>—*Sumerian Proverb*</center>
+
+-----------
+
+
+The first two things about a langauge one needs to learn are how you say it and how you write it. 
+
+## Phonology 
+
+
+### Sound Inventory
+
+Tsal's sound inventory consists of twenty-five consonants and five vowels, detailed in the following charts. The symbols in /slashes/ are the IPA representation of each sound. If you aren't familiar with the International Phonetic Alphabet or any particular sound, [this site](https://www.ipachart.com) is a good place to hear the sound spoken. The characters in parentheses are used when writing the language using the Latin alphabet, with another single-character option if your input method can handle non-ASCII characters:
+
+<center>
+
+
+<table style="text-align: center;">
+	<tbody>
+		<tr>
+			<td rowspan="2">__***Consonants***__</td>
+			<td colspan="2">**Labial**</td>
+			<td colspan="2">**Alveolar**</td>
+			<td colspan="2">**Postalveolar**</td>
+			<td>**Palatal**</td>
+			<td colspan="2">**Velar**</td>
+		</tr>
+		<tr>
+			<td>Voiceless</td>
+			<td>Voiced</td>
+			<td>Voiceless</td>
+			<td>Voiced</td>
+			<td>Voiceless</td>
+			<td>Voiced</td>
+			<td>Voiced</td>
+			<td>Voiceless</td>
+			<td>Voiced</td>
+		</tr>
+		<tr>
+			<td>**Nasal**</td>
+			<td></td>
+			<td>/m/</td>
+			<td></td>
+			<td>/n/</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Stop**</td>
+			<td>/p/</td>
+			<td>/b/</td>
+			<td>/t/</td>
+			<td>/d/</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>/k/</td>
+			<td>/g/</td>
+		</tr>
+		<tr>
+			<td>**Fricative**</td>
+			<td></td>
+			<td></td>
+			<td>/s/</td>
+			<td>/z/</td>
+			<td>/ʃ/ (sh, š)</td>
+			<td>/ʒ/ (zh, ž)</td>
+			<td></td>
+			<td>/x/</td>
+			<td>/ɣ/ (xh, ǧ)</td>
+		</tr>
+		<tr>
+			<td>**Affricate**</td>
+			<td></td>
+			<td></td>
+			<td>/ts/ (ṡ<sup id="ref1"><a href="#fn1">1</a></sup>)</td>
+			<td>/dz/ (ż<sup><a href="#fn1">1</a></sup>)</td>
+			<td>/tʃ/ (ch, č)</td>
+			<td>/dʒ/ (j)</td>
+			<td></td>
+			<td>/kx/ (q<sup><a href="#fn1">1</a></sup>)</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Lateral Fricative**</td>
+			<td></td>
+			<td></td>
+			<td>/ɬ/ (lh)</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Trill**</td>
+			<td></td>
+			<td></td>
+			<td>/r̥/ (rh)</td>
+			<td>/r/</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Approximant**</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>/l/</td>
+			<td></td>
+			<td></td>
+			<td>/j/ (y) </td>
+			<td></td>
+			<td>/w/</td>
+		</tr>
+	</tbody>
+</table>
+*(Yes, I romanize the /j/ sound as "y". I am an English speaker.)*
+
++------------------+------------+----------+-----------+
+| __***Vowels***__ | **Front**  | **Mid**  | **Back**  | 
++:================:+:==========:+:========:+:=========:+
+| **High**         | /i/ /iː/   |          | /u/ /uː/  |
++------------------+------------+----------+-----------+
+| **Mid**          | /e/ /eː/   |          | /o/ /oː/  |
++------------------+------------+----------+-----------+
+| **Low**          |            | /a/ /aː/ |           |
++------------------+------------+----------+-----------+
+*(The long vowels like /aː/ are romanized with a macron "ā" or an h "ah", depending on whether or not you can type macrons.)*
+
+</center>
+
+### Allophony
+
+Certain sounds get realized differently in certain environments. This will just be a list of sound changes (and as such will assume more IPA knowlege), so I've compressed it in this easily skippable box:
+
+<details>
+<summary>List of Allophones</summary>
+
+- /p/ and /b/ become [f] and [v] before front vowels.
+- The clusters /r̥ɬ/ and /rɬ/ become the affricates [t͡ɬ] and [d͡ɮ].
+- /ɬ/ becomes [θ] or [ð] after sibilants (/s/, /z/, /ʃ/, /ʒ/), matching the voicing of the sibilant.
+- The clusters /sj/, /zj/, /tsj/, /dzj/, /xj/, and /ɣj/ palatalize to [ɕ], [ʑ], [tɕ], [dʑ], [ç], and [ʝ].
+
+</details>
+
+### Syllable Structure and Timing
+
+A syllable in Tsal looks like this:
+
+<center>
++:---------------------:+:-------:+:------:+:---------------------:+
+| *Non-glide Consonant* | *Glide* | Vowel  | *Non-glide Consonant* |
++-----------------------+---------+--------+-----------------------+
+</center>
+
+The *glides* are the /j/ and /w/ sounds. Sounds italicized are optional. This means that a legal syllable in Tsal can be as simple as a single vowel /e/ or up to four phones long, like /kwon/. There is one additional restriction involving long vowels: If the vowel in a syllable is long, then that syllable may not have a final consonant. So while the syllable /kwon/ is legal, the syllable /kwoːn/ is not.
+
+Different languages have different rules for the *timing* of syllables when spoken. English is a *stress*-timed language, where there is a (roughly) equal amount of time between one stressed syllable and the next (we'll get to Tsal's stress rules in a moment). A language like Spanish is *syllable*-timed, where every syllable is of equal length. Tsal, along with languages like Japanese, fall into the category of *mora*-timed languages. 
+
+The **mora** is the basic unit of timing in languages such as Tsal. Each syllable has some number of morae, and the rules for assigning the morae of a syllable are as follows:
+
+- Consonants and glides before the vowel are free, they do not contribute to the mora count.
+- The vowel of a syllable is one mora if it is short, and two if it is long.
+- If a final consonant exists, it is worth one mora.
+
+Syllables worth one mora are called *light* and syllables with two morae are called *heavy*. This gives some context to the ban on syllables like /kwoːn/, since such a syllable would be worth three morae, and allowing such *superheavy* syllables is rare cross-linguistically. When Tsal is spoken, every mora is of equal length.
+
+Morae inform Tsal's rules for stress. If a word has at least one heavy syllable, stress goes on the *last* heavy syllable in the word. If there is no such syllable, stress goes on the second-to-last syllable. So, for example, the word xyeztyī has two heavy syllables, so the stress goes on the final syllable, tyī.    
+
+## Orthography
+
+Tsal's writing system is an *abugida*, which gives consonants center stage and marks vowels with a diacritic. The script has twenty-four consonant characters:
+
++-----------+----------------+-----------+----------------+-----------+----------------+
+| Consonant | Glyph          | Consonant | Glyph          | Consonant | Glyph          |
++:=========:+:==============:+:=========:+:==============:+:=========:+:==============:+
+| /p/       | <tsal>p</tsal> | /t/       | <tsal>t</tsal> | /k/       | <tsal>k</tsal> | 
++-----------+----------------+-----------+----------------+-----------+----------------+
+| /b/       | <tsal>b</tsal> | /d/       | <tsal>d</tsal> | /g/       | <tsal>g</tsal> | 
++-----------+----------------+-----------+----------------+-----------+----------------+
+| /m/       | <tsal>m</tsal> | /n/       | <tsal>n</tsal> | /s/       | <tsal>s</tsal> | 
++-----------+----------------+-----------+----------------+-----------+----------------+
+| /z/       | <tsal>z</tsal> | /ts/      | <tsal>c</tsal> | /dz/      | <tsal>D</tsal> | 
++-----------+----------------+-----------+----------------+-----------+----------------+
+| /l/       | <tsal>l</tsal> | /ɬ/       | <tsal>L</tsal> | /x/       | <tsal>x</tsal> | 
++-----------+----------------+-----------+----------------+-----------+----------------+
+| /ɣ/       | <tsal>X</tsal> | /kx/      | <tsal>K</tsal> | /ʃ/       | <tsal>S</tsal> | 
++-----------+----------------+-----------+----------------+-----------+----------------+
+| /ʒ/       | <tsal>Z</tsal> | /tʃ/      | <tsal>C</tsal> | /dʒ/      | <tsal>j</tsal> | 
++-----------+----------------+-----------+----------------+-----------+----------------+
+| /r/       | <tsal>r</tsal> | /r̥/       | <tsal>R</tsal> | ∅         | <tsal>h</tsal> | 
++-----------+----------------+-----------+----------------+-----------+----------------+
+<br>
+
+Vowels are written with a diacritic above the preceeding consonant. This is the reason the ∅ character exists, it serves as a carrier for vowels which would otherwise not have a consonant to attach to (here using /t/):
+<center>
+
++-----------------+-----------------+-----------------+-----------------+-----------------+
+| /ta/            | /te/            | /ti/            | /to/            | /tu/            |
++:===============:+:===============:+:===============:+:===============:+:===============:+
+| <tsal>ta</tsal> | <tsal>te</tsal> | <tsal>ti</tsal> | <tsal>to</tsal> | <tsal>tu</tsal> |
++-----------------+-----------------+-----------------+-----------------+-----------------+
+
+</center>
+
+The glides /j/ and /w/ are written with single and double dots below the consonant preceeding it. For example, /kye/ and /kwe/ are written <tsal>kye</tsal> and <tsal>kwe</tsal>. 
+
+The character <tsal>h</tsal> also serves the purpose of marking long vowels. If you use this character without a vowel diacritic on top of it, the previous vowel becomes long: Compare /pe/ <tsal>pe</tsal> and /peː/ <tsal>peh</tsal>.  Multiple characters are written with a single connecting line and the entire word is ended with a tick, as in <tsal>eksampol</tsal>. Final consonants are written exactly the same as other consonants, just without a vowel diacritic.
+
+This orthography reflects the timing and syllable rules of the language: Each "character", that is, a consonant and the diacritics attached to it, represents one mora. This is why the long-vowel mark acts similarly to a final consonant, as they both add one mora to the word.
+
+The script also has a hyphen character, <tsal>-</tsal>, used in some word derivations and compounds. It's not pronounced, but it is the exception to the one character one mora rule, as a mora may be fragmented across a hyphen, like in the sequence <tsal>n-yi</tsal>. It's often possible to tell whether Tsal speakers conceive of something as a word in its own right or just a compound of two words based on whether or not the words are split by a hyphen or just concatenated. As such, compound words might lose their hyphens as they persist in the language or drift semantically.
+
+-----------
+
+**Footnotes**
+
+<div id="footnotes">
+<ol>
+    <li id="fn1">The single-characters for the affricates /ts/, /dz/, and /kx/ are useful to show syllable structure information. For instance, the sequences romanized "xitsu" and "xiṡu" are different in that the former has one heavy and one light syllable, and the latter has two light syllables, meaning they are pronounced with different timing even though the clusters and their corresponding affricates are commonly phonetically identical. I don't use this word-initially because using two characters for the affricate is unambiguous there. Plus, I've been spelling the language "Tsal" for five years and calling it "Ṡal" just feels wrong. <a href="#ref1">↩</a></li>
+</ol>
+</div>
+
+-----------

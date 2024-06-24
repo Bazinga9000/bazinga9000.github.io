@@ -27,7 +27,7 @@ a:hover {
 }
 
 .boxfigure {
-  width: 25%
+  width: 25%;
   vertical-align : middle;
   display: table-cell;
   margin: 0 auto;
@@ -35,7 +35,7 @@ a:hover {
 }
 
 figure {
-    width: 100%
+    width: 100%;
     display:inline-block;
     margin:1%;
     margin-left:1.5%;

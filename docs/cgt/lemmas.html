@@ -32,28 +32,28 @@ $$\gdef\doubledown{\mathord{\Downarrow}}$$
 $$\gdef\tiny#1{\pmb{\boldsymbol{+}}_{#1}}$$
 $$\gdef\miny#1{\pmb{\boldsymbol{-}}_{#1}}$$
 			
-            <h2 id="what">What?</h2>
+            <h2>What?</h2>
 <p>This page serves only as a repository for definitions and lemmas that, while needed for some important proofs, are not important enough to merit breaking the flow of the narrative.</p>
 <p>If you aren’t looking at the proofs, you don’t need to read this page.</p>
 <p>This will be organized by the Part at which the lemma is first used in. This page will <em>not</em> explain any notation, so the extremely diligent among you who decided that they might try to familiarize themselves with the lemmas ahead of time are unfortunately out of luck (though I do respect the effort.)</p>
 <p>Definitions will lay out in the open. Proofs will be in their usual boxes.</p>
-<h2 id="introduced-for-part-6">Introduced for Part 6</h2>
+<h2>Introduced for Part 6</h2>
 <p><strong>Definition:</strong> <span class="math inline">\(\widetilde{\mathbb{G}}_n\)</span>, the set of <strong>positions born by day</strong> <span class="math inline">\(n\)</span>, is defined inductively as follows:
 <span class="math display">\[ \widetilde{\mathbb{G}}_0 = {0} \]</span>
 <span class="math display">\[ \widetilde{\mathbb{G}}_{n+1} = \{\game{L}{R} : L, R \subseteq \widetilde{\mathbb{G}}_n\} \]</span></p>
 <p><strong>Definition:</strong> <span class="math inline">\(\mathbb{G}_n\)</span>, the set of <strong>values born by day</strong> <span class="math inline">\(n\)</span> is the set of all values of positions in <span class="math inline">\(\widetilde{\mathbb{G}}_n\)</span>.</p>
 <p><strong>Definition:</strong> The <strong>birthday</strong> of a position <span class="math inline">\(G\)</span>, notated <span class="math inline">\(\operatorname{b}(G)\)</span>, is the least <span class="math inline">\(n\)</span> such that <span class="math inline">\(G \in \mathbb{G}_n\)</span>. A useful characterization of this definition is that <span class="math inline">\(\operatorname{b}(G)\)</span> is the maximal height of any branch of the game tree of <span class="math inline">\(G\)</span>.</p>
 <p><strong>Definition:</strong> A <strong>short</strong> position <span class="math inline">\(G\)</span> is a position whose birthday is a natural number. This corresponds to positions which both have finitely-deep and finitely-wide game trees.</p>
-<details>
-<summary>
-<strong>The Archimedian Principle for Integers:</strong> For any short position <span class="math inline">\(G\)</span>, there exists some natural number <span class="math inline">\(x\)</span> such that <span class="math inline">\(x &gt; G &gt; -x\)</span>
-</summary>
+<p>&lt;details&gt;
+&lt;summary&gt;</p>
+<p><strong>The Archimedian Principle for Integers:</strong> For any short position <span class="math inline">\(G\)</span>, there exists some natural number <span class="math inline">\(x\)</span> such that <span class="math inline">\(x &gt; G &gt; -x\)</span>
+&lt;/summary&gt;</p>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>Choose <span class="math inline">\(x &gt; \operatorname{b}(G)\)</span>. In either <span class="math inline">\(x - G\)</span> or <span class="math inline">\(x + G\)</span>, Ruby can make at most <span class="math inline">\(x-1\)</span> moves. Lazuli can thus win by making all their moves in <span class="math inline">\(x\)</span>.</p>
-<span class="math inline">\(\blacksquare\)</span>
-</details>
-<p><br></p>
+<p><span class="math inline">\(\blacksquare\)</span>
+&lt;/details&gt;</p>
+<p>&lt;br&gt;</p>
 
 <center>
 <div class="pagination">

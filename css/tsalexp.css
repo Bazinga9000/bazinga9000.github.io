@@ -1,0 +1,32 @@
+a {
+    color: #51e194;
+}
+
+a:hover {
+    color: #256643;
+}
+
+table, th, td {
+    border: 1px solid;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px;
+}
+
+details {
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    padding: 20px;
+}
+
+#content {
+    width: 66%;
+    margin: auto;
+    line-height: 180%;
+}

@@ -33,33 +33,45 @@ $$\gdef\tiny#1{\pmb{\boldsymbol{+}}_{#1}}$$
 $$\gdef\miny#1{\pmb{\boldsymbol{-}}_{#1}}$$
 			
             <hr />
-<p>&lt;center&gt;But who can count the stars of Heaven?&lt;/center&gt;
-&lt;center&gt;Who sing their influence on this lower world?&lt;/center&gt;
-&lt;center&gt;—James Thomson, <em>The Seasons, Winter</em>&lt;/center&gt;</p>
+<center>
+But who can count the stars of Heaven?
+</center>
+<center>
+Who sing their influence on this lower world?
+</center>
+<center>
+—James Thomson, <em>The Seasons, Winter</em>
+</center>
 <hr />
 <p>Recall back in Part 2 and the start of Part 3 when we looked at the single green branch:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/2/green.svg” width=“12.5%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/2/green.svg" width="12.5%" height="auto" />
+<figcaption>
 Figure 5.1: <span class="math inline">\(\star\)</span>
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>And we found out it is <span class="math inline">\(\game{0}{0}\)</span>, which we called <span class="math inline">\(\star\)</span>. Let’s look closely at some properties of <span class="math inline">\(\star\)</span>, and meet some of its friends.</p>
 <p>First up: What’s <span class="math inline">\(\star + \star\)</span>? We don’t need to break out the notation for this one, we can just look at Hackenbush branches, like so,</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/5/starstar.svg” width=“25%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/5/starstar.svg" width="25%" height="auto" />
+<figcaption>
 Figure 5.2: <span class="math inline">\(\star + \star\)</span>
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>to see that <span class="math inline">\(\star + \star = 0\)</span>, which is… interesting. This means that <span class="math inline">\(\star\)</span> is its own negative. This intuitively makes sense, as switching all the red and blue branches in a position with only green branches doesn’t change anything. Notationally, you can see that negating <span class="math inline">\(\impgame{0}\)</span> doesn’t change anything either, as zero is its own negative too.</p>
 <p>Let’s look at another set of branches:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/5/startwo.svg” width=“12.5%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/5/startwo.svg" width="12.5%" height="auto" />
+<figcaption>
 Figure 5.3: A stack of stars.
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>What about this one? This, too, is a first player win, since whoever goes first can just cut the bottom branch. That means that unlike our monochrome blue and red stacks, this acts differently from Figure 5.2, which we saw to be zero. What, then, is the value of this position? Is it perhaps <span class="math inline">\(\star\)</span>? We can solve this with branches too, but let’s look instead at the notation. Since <span class="math inline">\(\star\)</span> is its own negative, we can check if this game is <span class="math inline">\(\star\)</span> too by seeing if it makes zero when you add <span class="math inline">\(\star\)</span> to it.</p>
 <p>But what is the notation for this position? Each player has two options, the same two options. They can either chop the bottom branch and go to <span class="math inline">\(0\)</span>, or chop the top one and go to <span class="math inline">\(\star\)</span>. Thus, this position is <span class="math inline">\(\impgame{0,\star}\)</span>.</p>
 <p>So, we must check the sum position</p>
@@ -69,7 +81,7 @@ Figure 5.3: A stack of stars.
 <p>This leaves us with a conundrum. We have a new position and it doesn’t equal anything we’ve seen so far. The solution, of course, is to give it a new name. I introduce you to:</p>
 <p><span class="math display">\[ \star2 = \impgame{0,\star}\]</span></p>
 <p>Pronounced “star-two”. You’re probably asking yourself if you can form more “star numbers” by adding a <span class="math inline">\(\star2\)</span> to both sides, and so on, and the answer is yes. However, stacks of green Hackenbush branches will be far too cumbersome, so I must introduce you to the game that needs no introduction:</p>
-<h2>The Game of Nim</h2>
+<h2 id="the-game-of-nim">The Game of Nim</h2>
 <p>Yup, here we are. You can’t talk about math and games without bringing up Nim eventually. It’s very simple, and as we will soon see, very very powerful.</p>
 <p>The rules of the game of Nim are simple. You and your opponent are sat at a table, and that table has several heaps of coins on it. On your turn, you can remove any number of coins from any one heap. As this is a combinatorial game, whoever is left unable to move (when no heaps remain) loses.</p>
 <p>Our star numbers show up in Nim a <em>lot</em>, to the point where they are called <em>nimbers</em>.</p>
@@ -87,7 +99,7 @@ Figure 5.3: A stack of stars.
 <p><span class="math display">\[ \textcolor{#34c173}{\boxed{n}\boxed{m}} \]</span></p>
 <p>Since all nimbers are their own negatives, finding out who wins this position is enough to compare <span class="math inline">\(\star n\)</span> and <span class="math inline">\(\star m\)</span>. If <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are equal, the position is zero by the Tweedledee and Tweedledum Argument (the second player can just copy the first’s moves on the other heap). If they aren’t equal (let’s say <span class="math inline">\(n &gt; m\)</span>), the first player can move from <span class="math inline">\(\star n\)</span> to <span class="math inline">\(\star m\)</span>, leaving the second with <span class="math inline">\(\star m + \star m = 0\)</span>. What this means is that any two different nimbers are confused with each other, and they are all confused with zero.</p>
 <p>But what <em>is</em> the value of <span class="math inline">\(\star n + \star m\)</span>? How can we do arithmetic on these nimbers? There’s actually a very clever method of doing it which might be familiar to the programmers in the audience:</p>
-<h2>Nimber Arithmetic</h2>
+<h2 id="nimber-arithmetic">Nimber Arithmetic</h2>
 <p>The first important property of nimber addition is that <span class="math inline">\(\star n + \star n = 0\)</span>, as we saw above. But what can we say about positions that are not equal to each other?</p>
 <p>As it turns out, there’s a nice property that you get when you add some pairs of nimbers together, which is sufficient to discern how <em>any</em> two nimbers act: we need only examine <em>powers of two</em>.</p>
 <p>For an example, consider the Nim position</p>
@@ -103,10 +115,10 @@ Figure 5.3: A stack of stars.
 <span class="math display">\[ \textcolor{#34c173}{\boxed{2}\boxed{4}\boxed{6}} \]</span>
 <span class="math display">\[ \textcolor{#34c173}{\boxed{2}\boxed{8}\boxed{10}} \]</span></p>
 <p>And, after enough effort (or by reading the following proof), you can convince yourself of the fact that</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Proposition:</strong> For <span class="math inline">\(n \neq m\)</span>, <span class="math inline">\(\star(2^n) + \star(2^m) = \star(2^n + 2^m)\)</span>
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Proposition:</strong> For <span class="math inline">\(n \neq m\)</span>, <span class="math inline">\(\star(2^n) + \star(2^m) = \star(2^n + 2^m)\)</span>
+</summary>
 <hr />
 <p><strong>Proof:</strong> By strong induction.</p>
 <p>Suppose that, for all <span class="math inline">\(b\)</span> and <span class="math inline">\(a\)</span> where <span class="math inline">\(0 \geq b &lt; a &lt; k\)</span>, that <span class="math inline">\(\star(2^b) + \star(2^a) = \star(2^b + 2^a)\)</span>.</p>
@@ -117,17 +129,21 @@ Figure 5.3: A stack of stars.
 <p><span class="math display">\[ \textcolor{#34c173}{\boxed{2^a}\boxed{2^k}\boxed{2^a + 2^k}} \]</span></p>
 <p>or, in terms of the nimbers, <span class="math inline">\(\star(2^a) + \star(2^k) + \star(2^a + 2^k)\)</span>, is zero by presenting a winning strategy for the second player.</p>
 <p>On the first move, the first player has three options:</p>
-<p>1) If the first player moves <span class="math inline">\(\star(2^a) \to \star x\)</span> for some <span class="math inline">\(x\)</span>, the second player can move <span class="math inline">\(\star(2^a + 2^k) \to \star x + \star (2^k)\)</span> (this sum is a nimber <span class="math inline">\(\star y\)</span> where <span class="math inline">\(y &lt; k\)</span> by induction, so this is possible)
-2) If the first player moves <span class="math inline">\(\star(2^k) \to \star x\)</span> for some <span class="math inline">\(x\)</span>, the second player again moves <span class="math inline">\(\star(2^a + 2^k) \to \star x + \star (2^a)\)</span> (which is possible by the same reasoning as in Case 1)
-3) If the first player moves in <span class="math inline">\(\star(2^a + 2^k) \to \star x\)</span> for some <span class="math inline">\(x\)</span>, the second player is always able to do one of these two moves (note that these are just the first and second cases with the players reversed):
-a) Move <span class="math inline">\(\star(2^a) \to \star y\)</span> where <span class="math inline">\(\star y + \star(2^k) = \star x\)</span>
-b) Move <span class="math inline">\(\star(2^k) \to \star y\)</span> where <span class="math inline">\(\star y + \star(2^a) = \star x\)</span></p>
+<ol type="1">
+<li>If the first player moves <span class="math inline">\(\star(2^a) \to \star x\)</span> for some <span class="math inline">\(x\)</span>, the second player can move <span class="math inline">\(\star(2^a + 2^k) \to \star x + \star (2^k)\)</span> (this sum is a nimber <span class="math inline">\(\star y\)</span> where <span class="math inline">\(y &lt; k\)</span> by induction, so this is possible)</li>
+<li>If the first player moves <span class="math inline">\(\star(2^k) \to \star x\)</span> for some <span class="math inline">\(x\)</span>, the second player again moves <span class="math inline">\(\star(2^a + 2^k) \to \star x + \star (2^a)\)</span> (which is possible by the same reasoning as in Case 1)</li>
+<li>If the first player moves in <span class="math inline">\(\star(2^a + 2^k) \to \star x\)</span> for some <span class="math inline">\(x\)</span>, the second player is always able to do one of these two moves (note that these are just the first and second cases with the players reversed):
+<ol type="a">
+<li>Move <span class="math inline">\(\star(2^a) \to \star y\)</span> where <span class="math inline">\(\star y + \star(2^k) = \star x\)</span></li>
+<li>Move <span class="math inline">\(\star(2^k) \to \star y\)</span> where <span class="math inline">\(\star y + \star(2^a) = \star x\)</span></li>
+</ol></li>
+</ol>
 <p>Case 1 leaves the first player in a position with value <span class="math inline">\(\star x + \star(2^k) + (\star x + \star(2^k)) = 0\)</span>
 Case 2 leaves the first player in a position with value <span class="math inline">\(\star(2^a) + \star x + (\star x + \star(2^a)) = 0\)</span>
 Case 3 leaves the first player in the same outcome as either Case 1 or Case 2, depending on which sub-case player 2 is able to take.</p>
 <p>In all three cases, the first player is left in a zero position, so they lose, meaning that the original position is zero and <span class="math inline">\(\star(2^a) + \star(2^k) = \star(2^a + 2^k)\)</span></p>
 <p><span class="math inline">\(\blacksquare\)</span></p>
-<p>&lt;/details&gt;</p>
+</details>
 <p>With that, we can add any pair of nimbers together. The method for doing so leverages the rules for powers of two.</p>
 <p>Suppose a cabal of mathematicians jumped you on the side of the road and demanded to know the value of the Nim position</p>
 <p><span class="math display">\[ \textcolor{#34c173}{\boxed{104}\boxed{45}} \]</span></p>
@@ -141,7 +157,7 @@ Case 3 leaves the first player in the same outcome as either Case 1 or Case 2, d
 <p>For a more concise description of how to compute the sum of two nimbers that highlights that this operation is really exclusive or, you can take every <span class="math inline">\(\star n\)</span>, write out its <span class="math inline">\(n\)</span> in binary, line them up, and then count the columns. If a column has an <em>even</em> number of ones, the final answer will have a <span class="math inline">\(0\)</span> in that position. If the count is odd, you get a <span class="math inline">\(1\)</span> in that position.</p>
 <p>Excellent. This lets us characterize a lot of impartial positions. However, there’s a type of impartial position involving nimbers that we haven’t learned how to deal with yet. Nimbers have options for all lower nimbers, but what if we skip some? What about a position like <span class="math inline">\(\impgame{0, \star, \star2, \star4, \star30}\)</span>?</p>
 <p>To find out what this position is, we will learn the second way of simplifying positions, which when combined with removing dominated options will allow us to simplify <em>any</em> position, <em>entirely</em>.</p>
-<h2>Reversible Moves and the Mex Rule</h2>
+<h2 id="reversible-moves-and-the-mex-rule">Reversible Moves and the Mex Rule</h2>
 <p>To understand the concept of a <em>reversible move</em>, I will introduce you to a slight variant of Nim, called Poker-Nim. The rules are the same, but each player is allowed to keep any coins they remove from the heap. On their turn, instead of removing coins, the player may create a new heap using as many of their collected coins as they wish, or add to an existing heap.</p>
 <p>Surely this new ability allows a lot of new strategy in the game of Poker-Nim, right? As it turns out, not really. Consider the following scenario:</p>
 <p>After a long and grueling game of Poker-Nim, you have left your oponent with the position</p>
@@ -160,14 +176,15 @@ Likewise, we say that Lazuli’s move to <span class="math inline">\(A\)</span> 
 <p>Suppose we start in a position, <span class="math inline">\(G\)</span>. You then decide to move from <span class="math inline">\(G\)</span> to <span class="math inline">\(H\)</span>. If your opponent has <em>any</em> option from <span class="math inline">\(H\)</span> that leaves them in a position <em>at least as good for them</em> as <span class="math inline">\(G\)</span> was, then your move to <span class="math inline">\(H\)</span> was reversible. If we give that option of the opponent’s a name, <span class="math inline">\(I\)</span>, we say that <span class="math inline">\(H\)</span> was <em>reversible through</em> <span class="math inline">\(I\)</span>.</p>
 <p>Another way to think about reversible moves is that if a player’s move is reversible, their opponent has an “undo button” which can bring the position back to what it was, or they have a “super undo button” which reverts the position to something even better for them.</p>
 <p>Now, how do we use this to simplify positions? Your first thought might be that reversible moves can simply be deleted, but that isn’t always the case. Remember, sometimes your opponent has a “super undo button”, leaving the position in a <em>better</em> state for them, and that definitely affects the value. How do we account for this? We cannot simply remove a reversible option, we must replace it with <em>all the new options</em> that exist after the “undo button” is pressed.</p>
-<p>&lt;details&gt;
-&lt;summary&gt; <strong>Theorem:</strong> Consider a position
+<details>
+<summary>
+<strong>Theorem:</strong> Consider a position
 <span class="math display">\[G = \game{A, B, C, \cdots}{X, Y, Z, \cdots}\]</span>
 If <span class="math inline">\(A\)</span> is reversible through <span class="math inline">\(H\)</span>, then
 <span class="math display">\[G = \game{H^{L}, B, C, \cdots}{X, Y, Z}\]</span>
 where <span class="math inline">\(H^{L}\)</span> ranges over all of Lazuli’s options from <span class="math inline">\(H\)</span>. Likewise, if <span class="math inline">\(X\)</span> is reversible through <span class="math inline">\(W\)</span>, then
 <span class="math display">\[G = \game{A, B, C, \cdots}{W^{R}, Y, Z}\]</span>
-&lt;/summary&gt;</p>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>We show only the case for Lazuli’s reversible move. The argument for Ruby is similar.</p>
@@ -185,22 +202,26 @@ where <span class="math inline">\(H^{L}\)</span> ranges over all of Lazuli’s o
 </ul></li>
 <li>Now, suppose Ruby moved <span class="math inline">\(G' \to H^{L}\)</span>. (In this case we need to show that Lazuli wins.) Since we know that <span class="math inline">\(H \leq G\)</span>, <span class="math inline">\(G \geq H\)</span>, meaning that Lazuli wins <span class="math inline">\(G - H\)</span> playing second. Therefore, any of Ruby’s options in <span class="math inline">\(G - H\)</span> have a winning response by Lazuli. Since <span class="math inline">\(G - H^{L}\)</span> is one such option, Lazuli has a winning response and wins.</li>
 </ul>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>Here’s a tree, originally from <em>Siegel</em>, marked up in color by me, that might help:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/5/reversetree.png” width=“50%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/5/reversetree.png" width="50%" height="auto" />
+<figcaption>
 Figure 5.4: Bypassing a reversible move
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>If <span class="math inline">\(C^R \leq G\)</span>, then if Lazuli moves to <span class="math inline">\(C\)</span>, Ruby can undo any progress that move gave Lazuli by moving to <span class="math inline">\(C^R\)</span>. So, whatever properties that <span class="math inline">\(C\)</span> has are irrelevant, as moving to <span class="math inline">\(C\)</span> will just force a move back to <span class="math inline">\(C^R\)</span>. What bypassing reversible moves allows us to do is cut out the middleman (<span class="math inline">\(C\)</span>) and just replace it with whatever Lazuli’s options are after the inevitable move happens, which in this case are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, leaving the position as</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/5/reversetree2.png” width=“50%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/5/reversetree2.png" width="50%" height="auto" />
+<figcaption>
 Figure 5.5: Figure 5.4 after the reversible move <span class="math inline">\(C\)</span> is bypassed.
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>This potential addition of new options makes it seem like the position got more complicated, but in reality what happened is that we “skipped” a level in the tree, which makes the entire position simpler. In fact, combining this with the removal of dominated options allows you to get a single simplest form for any position! The proof of this fact isn’t very illuminating, so I skip it, but the assidious reader can verify it for themself.</p>
 <p>Note that if the new position is <em>equal</em> to the old, all those new options are duplicates, so the simplified position just has the reversible move omitted.</p>
 <p>What this bypassing allows us to do in the case of nimbers is find the value of positions like <span class="math inline">\(\impgame{0, \star, \star2, \star4, \star30}\)</span>. In this particular position, if either player moves to <span class="math inline">\(\star4\)</span> or <span class="math inline">\(\star30\)</span>, the other player can reverse it using the interesting move of going to <span class="math inline">\(\star3\)</span>. Moving to either <span class="math inline">\(\star4\)</span> or <span class="math inline">\(\star30\)</span> is much like the Poker-Nim game I outlined above. All it does is buy time.</p>
@@ -208,35 +229,37 @@ Figure 5.5: Figure 5.4 after the reversible move <span class="math inline">\(C\)
 <p>The name for this property is that <span class="math inline">\(3\)</span> is what is called the <strong>minimum excludant</strong> (commonly shortened to just <strong>mex</strong>) of the set <span class="math inline">\(\{0, 1, 2, 4, 30\}\)</span>, and this gives us the <strong>Mex Rule</strong>:</p>
 <p>If we have a position <span class="math inline">\(\impgame{\star a, \star b, \star c, \cdots}\)</span>, then it is equal to <span class="math inline">\(\star x\)</span>, where <span class="math inline">\(x = \operatorname{mex}(\{a,b,c,\cdots\})\)</span>.</p>
 <p>This Mex rule allows us to quickly and elegantly get a powerful result in combinatorial game theory:</p>
-<h2>The Sprague-Grundy Theorem</h2>
+<h2 id="the-sprague-grundy-theorem">The Sprague-Grundy Theorem</h2>
 <p>If you are a fellow UMD student who knows me, you will have incessantly heard me making jokes about this theorem. What follows is an example of one such joke:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/5/funny.jpeg” width=“50%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/5/funny.jpeg" width="50%" height="auto" />
+<figcaption>
 Joke 5.6: A Most Excellent Meme
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>At long last, I will explain myself. The Sprague-Grundy Theorem allows us to show a very powerful fact:</p>
 <p><strong>Every impartial position is equal to <span class="math inline">\(\star n\)</span> for some <span class="math inline">\(n\)</span>.</strong></p>
 <p>This means that not only is every impartial <em>game</em> equivalent to Nim, every position therein is equivalent to <em>a single Nim heap!</em></p>
 <p>Why is this true?</p>
 <p>Let’s think about how impartial games <em>end</em>, and work our way back up. The only possible position that an impartial game can end at is <span class="math inline">\(0 = \star0\)</span>, since if one player has no options the other must not have any either (since every sub-position of an impartial position is also impartial). If you recall how I represented a position using a tree when talking about reversible moves, we can think of these <span class="math inline">\(0\)</span>’s as the bottom level. We can then go up a level, and use the Mex rule to show that this level is some <span class="math inline">\(\star n\)</span>. And then we can go another level up and show that this, too, is some <span class="math inline">\(\star n\)</span>. We can keep doing this until we reach the top, to show that whatever impartial position we can come up with is some nimber.</p>
 <p>The formal proof of this fact is basically identical to that explanation with a bit more mathematical language and a bit less handwaving, but here it is for completeness:</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>The Sprague-Grundy Theorem:</strong> Every impartial position is equal to <span class="math inline">\(\star n\)</span> for some <span class="math inline">\(n\)</span>.
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>The Sprague-Grundy Theorem:</strong> Every impartial position is equal to <span class="math inline">\(\star n\)</span> for some <span class="math inline">\(n\)</span>.
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>By Induction.</p>
 <p><em>Base Case</em>: <span class="math inline">\(0 = \star0\)</span></p>
 <p><em>Inductive Case</em>: Consider an impartial position <span class="math inline">\(G = \impgame{A, B, C, \cdots}\)</span> and suppose all options are equal to nimbers. Thus, by the Mex Rule, so is <span class="math inline">\(G\)</span>.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>Incredible! All of that babbling about Nim and nimbers was actually incredibly valuable. With the knowledge of this theorem, the Mex Rule, and some practice adding nimbers, you can become unbeatable at many simple games (and, with even more knowledge from later parts, you can become a master of All Green Hackenbush, too). What you choose to <em>do</em> with such an ability is left as exercise.</p>
 <p>By the way: you will encounter nimbers in multitudes throughout this series from now on. They aren’t going away.</p>
 <p>There’s one peculiar property of nimbers that we haven’t gone into too much detail about, though, that they’re in between all positive numbers and all negative numbers. This property isn’t unique to nimbers, and there are a whole host of positions lying really, <em>really</em> close to zero. We’ll get to that in Part 6.</p>
-<h2>Summary of Part 5</h2>
+<h2 id="summary-of-part-5">Summary of Part 5</h2>
 <ul>
 <li>A <em>nimber</em> <span class="math inline">\(\star n\)</span> is a position constructed by allowing both players the option of moving to all previous nimbers, <span class="math inline">\(\impgame{\star 0, \star 1, \cdots, \star(n-1)}\)</span>.</li>
 <li><span class="math inline">\(\star0 = 0\)</span>, and <span class="math inline">\(\star1 = \star\)</span></li>
@@ -247,7 +270,7 @@ Joke 5.6: A Most Excellent Meme
 <li>If you have a position like <span class="math inline">\(\impgame{\star a, \star b, \star c, \cdots}\)</span>, the value of the position is <span class="math inline">\(\star x\)</span>, where <span class="math inline">\(x = \operatorname{mex}(a,b,c,\cdots)\)</span>, the smallest number not in the set, by the Mex Rule.</li>
 <li>Every impartial position is equal to some nimber.</li>
 </ul>
-<h2>In Part 6, we will</h2>
+<h2 id="in-part-6-we-will">In Part 6, we will</h2>
 <ul>
 <li>Examine some infinitely small positions and compare them with each other.</li>
 <li>Encounter some pretty Hackenbush flowers.</li>

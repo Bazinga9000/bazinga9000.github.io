@@ -33,19 +33,31 @@ $$\gdef\tiny#1{\pmb{\boldsymbol{+}}_{#1}}$$
 $$\gdef\miny#1{\pmb{\boldsymbol{-}}_{#1}}$$
 			
             <hr />
-<p>&lt;center&gt;To see a World in a Grain of Sand&lt;/center&gt;
-&lt;center&gt;And a Heaven in a Wild Flower,&lt;/center&gt;
-&lt;center&gt;Hold Infinity in the palm of your hand&lt;/center&gt;
-&lt;center&gt;And Eternity in an hour.&lt;/center&gt;
-&lt;center&gt;—William Blake, <em>Auguries of Innocence</em>&lt;/center&gt;</p>
+<center>
+To see a World in a Grain of Sand
+</center>
+<center>
+And a Heaven in a Wild Flower,
+</center>
+<center>
+Hold Infinity in the palm of your hand
+</center>
+<center>
+And Eternity in an hour.
+</center>
+<center>
+—William Blake, <em>Auguries of Innocence</em>
+</center>
 <hr />
 <p>Let’s look at a pretty little Hackenbush flower:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/6/upflower.svg” width=“25%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/6/upflower.svg" width="25%" height="auto" />
+<figcaption>
 Figure 6.1: A piece of Hackenflora.
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>What is the value of this flower? Lazuli can win by chopping the blue petal, and either of Ruby’s first moves leaves Lazuli with a single green branch, so this position is positive. How positive is it? Well, you may have heard this one before:</p>
 <p>It’s smaller than <span class="math inline">\(1\)</span>. And <span class="math inline">\(\frac{1}{2}\)</span>. And <span class="math inline">\(\frac{1}{4}\)</span>. And <em>every</em> positive fraction. Just like <span class="math inline">\(\star\)</span>! However, there is one crucial difference between this position and <span class="math inline">\(\star\)</span>: This one is positive! It’s positive, but infinitely tiny! We have encountered an infinitesimal! We shall call this new value <span class="math inline">\(\up\)</span>, pronounced “up”, and its negative shall be <span class="math inline">\(\down\)</span>.</p>
 <p>Formally, we will call a value <span class="math inline">\(x\)</span> <strong>infinitesimal</strong> if, for all positive dyadic fractions <span class="math inline">\(d\)</span>, <span class="math inline">\(-d &lt; x &lt; d\)</span>.</p>
@@ -65,34 +77,36 @@ Figure 6.1: A piece of Hackenflora.
 <p><span class="math display">\[ \up &lt; \doubleup &lt; 3.\up &lt; 4.\up &lt; \cdots \]</span></p>
 <p>but how do these values compare with other things we’ve seen, like <span class="math inline">\(\ast\)</span> or for that matter <span class="math inline">\(1\)</span>?</p>
 <p>Though comparing multiples of <span class="math inline">\(\up\)</span> with <span class="math inline">\(1\)</span> is easy, we’ll do <span class="math inline">\(\ast\)</span> first. Let’s first consider <span class="math inline">\(\up - \star\)</span>, which is the same as <span class="math inline">\(\up + \star\)</span>, which is <em>also</em> the same as the following Hackenbush position:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/6/upstar.svg” width=“25%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/6/upstar.svg" width="25%" height="auto" />
+<figcaption>
 Figure 6.2: A position with value <span class="math inline">\(\up + \star\)</span>.
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>Whoever moves first here wins, since they can cut the stem of the flower, leaving their opponent with a zero position. This means that <span class="math inline">\(\up\)</span> is confused with <span class="math inline">\(\star\)</span>. Does this hold for every multiple of up? No!</p>
 <p>Consider <span class="math inline">\(\up + \up + \star\)</span>. Ruby only has two distinct moves here: One to <span class="math inline">\(\up + \up + 0\)</span> and another to <span class="math inline">\(\up + \star + \star = \up\)</span>. Both of these moves are positive, so Lazuli will always win here, no matter who goes first (Lazuli going first can simply move to <span class="math inline">\(\up + \up\)</span> and win).</p>
 <p>What about other nimbers, then? Surely, if <span class="math inline">\(\up\)</span> is confused with <span class="math inline">\(\star\)</span>, it should be confused with other nimbers too. right? As it turns out, that is not true!</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Proposition:</strong> For any <span class="math inline">\(n \geq 2\)</span>, <span class="math inline">\(\up &gt; \star n\)</span>
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Proposition:</strong> For any <span class="math inline">\(n \geq 2\)</span>, <span class="math inline">\(\up &gt; \star n\)</span>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>Consider the position <span class="math inline">\(G = \up - \star n = \up + \star n\)</span>. Since Lazuli has a move to the positive position <span class="math inline">\(\up\)</span> (taking <span class="math inline">\(\star n \to 0\)</span>), Lazuli wins going first, so <span class="math inline">\(G \mid\mid&gt; 0\)</span>.</p>
 <p>If Ruby goes first, they have two types of move, either moving from <span class="math inline">\(\up \to \star\)</span> or by moving <span class="math inline">\(\star n \to \star a\)</span> for some <span class="math inline">\(a &lt; n\)</span>.</p>
 <p>If Ruby takes <span class="math inline">\(\star n \to \star a\)</span>, Lazuli can move <span class="math inline">\(\star a \to 0\)</span> as above. However, if Ruby takes <span class="math inline">\(\up \to \star\)</span>, the total position is <span class="math inline">\(\star + \star n\)</span>. Since <span class="math inline">\(n &gt; 1\)</span>, this position is equal to some nimber other than <span class="math inline">\(0\)</span>, which is a fuzzy position, and since Lazuli is to move, they win.</p>
 <p>This means that Lazuli wins going second as well, so <span class="math inline">\(G &gt; 0\)</span> and <span class="math inline">\(\up &gt; \star n\)</span>.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>What about comparison to <span class="math inline">\(1\)</span>? To compare multiples of <span class="math inline">\(\up\)</span> with <span class="math inline">\(1\)</span>, we will perform massive overkill and show a theorem that tells us about a lot more than <span class="math inline">\(\up\)</span> and a lot more than <span class="math inline">\(1\)</span>.</p>
 <p>Recall from Part 5 when we learned of <em>impartial</em> positions, those where each player has the same set of moves at every point. <span class="math inline">\(\up\)</span> is not impartial, but it <em>does</em> satisfy a slightly weaker property. At every subsequent position (other than zeroes), both players have <em>some</em> move, though not necessarily the <em>same</em> move. Positions with this property are called <strong>dicotic</strong>. Note that adding two dicotic positions together makes another one.</p>
 <p>I now present the equivalent for the Sprague-Grundy Theorem for dicotic positions. It doesn’t tell us about the exact possible values of dicotic positions, but it is still very powerful:</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>The Lawnmower Theorem:</strong> Every dicotic position is infinitesimal.
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>The Lawnmower Theorem:</strong> Every dicotic position is infinitesimal.
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>By Induction.</p>
@@ -101,12 +115,12 @@ Figure 6.2: A position with value <span class="math inline">\(\up + \star\)</spa
 <p>Consider the position <span class="math inline">\(x - G\)</span>, where <span class="math inline">\(x &gt; 0\)</span> is some positive number in canonical form (that is, there are no dominated or reversible options). We wish to show that Lazuli wins no matter who goes first.</p>
 <p>Let us first consider if Ruby goes first. Ruby’s moves in this position are to either <span class="math inline">\(x^R - G\)</span> or to <span class="math inline">\(x - G^L\)</span>. If Ruby moves to <span class="math inline">\(x^R - G\)</span>, <span class="math inline">\(x^R\)</span> is a positive number and so by the other branch of this inductive step (when Lazuli is to move), Lazuli wins. If Ruby moves <span class="math inline">\(x - G^L\)</span>, Lazuli wins by induction.</p>
 <p>Now consider the case when Lazuli goes first. Since <span class="math inline">\(G\)</span> is dicotic, it must have an option <span class="math inline">\(G^R\)</span>. Lazuli can therefore move to <span class="math inline">\(x - G^R\)</span> which by induction is a win for Lazuli.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>A brief aside to explain the whimsical name “Lawnmower Theorem”: If you consider a Hackenbush position <span class="math inline">\(G\)</span> where the only branches that connect directly to the ground are green, then that <span class="math inline">\(G\)</span> must necessarily be dicotic (since either player will always have at least one of those green branches to chop). Lazuli’s winning strategy in <span class="math inline">\(x - G\)</span>, where <span class="math inline">\(x\)</span> is some positive dyadic fraction, is to employ a “lawnmower” to cut all the aforementioned green branches in <span class="math inline">\(G\)</span>. After this is complete, <span class="math inline">\(G\)</span> is gone and Lazuli will always have a move in the positive <span class="math inline">\(x\)</span>, so they can win.</p>
 <p>This theorem means that every multiple of <span class="math inline">\(\up\)</span> is infinitesimal, so no finite multiple of <span class="math inline">\(\up\)</span> will ever reach <span class="math inline">\(1\)</span>. We have a notation for this which will come in handy later. If every finite multiple of <span class="math inline">\(A\)</span> is less than <span class="math inline">\(B\)</span>, we write <span class="math inline">\(A \ll B\)</span>. So, we have that <span class="math inline">\(\up \ll 1\)</span>.</p>
 <p>We’ll use this property to generate a whole <em>smattering</em> of infinitesimals later, but before we do that, let’s look at some infinitesimals that are <em>not</em> dicotic:</p>
-<h2>The Tinys and Minys</h2>
+<h2 id="the-tinys-and-minys">The Tinys and Minys</h2>
 <p>Here are the canonical forms for <span class="math inline">\(\up\)</span> and its multiples:</p>
 <p><span class="math display">\[ 0 = \impgame{} \]</span>
 <span class="math display">\[ \up = \game{0}{\star} \]</span>
@@ -118,10 +132,10 @@ Figure 6.2: A position with value <span class="math inline">\(\up + \star\)</spa
 <p>Tinkering with this form will give us an entirely new set of infinitesimals. Suppose we took that rightmost zero and decremented it, giving us</p>
 <p><span class="math display">\[ \game{0}{\game{0}{-1}} \]</span></p>
 <p>This position is still positive, as no matter who moves first Lazuli can go to zero, but this position is <em>much</em> smaller than <span class="math inline">\(\up\)</span>. In fact,</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Proposition:</strong> <span class="math inline">\(\game{0}{\game{0}{-1}} \ll \up\)</span>
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Proposition:</strong> <span class="math inline">\(\game{0}{\game{0}{-1}} \ll \up\)</span>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>Let <span class="math inline">\(G = \game{0}{\game{0}{-1}}\)</span>.</p>
@@ -132,30 +146,30 @@ Figure 6.2: A position with value <span class="math inline">\(\up + \star\)</spa
 <p><em>Inductive Case</em>: Whenever it is Ruby’s turn, they can move from some <span class="math inline">\(G \to \game{0}{-1}\)</span>. Lazuli cannot allow this position to persist and must move <span class="math inline">\(\game{0}{-1} \to 0\)</span>, because if Lazuli instead moved <span class="math inline">\(\down \to \star\)</span>, Ruby could then move <span class="math inline">\(\game{0}{-1} \to -1\)</span>, leaving the total position’s sum as <span class="math inline">\(-1 + \star + (n-1).G\)</span>. <span class="math inline">\(\star\)</span> is infinitesimal by the Lawnmower Theorem and <span class="math inline">\((n-1).G\)</span> is infinitesimal by induction, so the sum is negative and Ruby wins.</p>
 <p>So, Lazuli must move <span class="math inline">\(\game{0}{-1} \to 0\)</span>, leaving the position at <span class="math inline">\((n-1) . G + \down\)</span>, which by induction is negative and therefore won by Ruby.</p>
 <p>Since Ruby wins this position no matter who goes first, <span class="math inline">\(n . G &lt; \up\)</span>, so <span class="math inline">\(G \ll \up\)</span>.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>We have discovered an infinitesimal so small, that it is even infinitesimal <em>compared to other infinitesimals</em>! This position is called “tiny-1”, and is notated <span class="math inline">\(\tiny{1}\)</span>. Its opposite, <span class="math inline">\(\game{\game{1}{0}}{0}\)</span>, is called “miny-1”, notated <span class="math inline">\(\miny{1}\)</span>. In general, we have for any value <span class="math inline">\(x \geq 0\)</span>:</p>
 <p><span class="math display">\[ \tiny{x} = \game{0}{\game{0}{-x}} \]</span>
 <span class="math display">\[ \miny{x} = -\tiny{x} = \game{\game{x}{0}}{0} \]</span></p>
 <p>How do these tiny positions compare to eachother? As it turns out, they have truly earned the “tiny” moniker, because they form an infinite chain of <span class="math inline">\(\ll\)</span> with eachother:</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Theorem:</strong> Let <span class="math inline">\(x &gt; y \geq 0\)</span>. <span class="math inline">\(\tiny{x} \ll \tiny{y}\)</span>
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Theorem:</strong> Let <span class="math inline">\(x &gt; y \geq 0\)</span>. <span class="math inline">\(\tiny{x} \ll \tiny{y}\)</span>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>Consider the sum</p>
 <p><span class="math display">\[ n . \tiny{x} + \miny{y} \]</span></p>
 <p>For any <span class="math inline">\(n &gt; 1\)</span>. Whenever it is Ruby’s turn, they can move from some <span class="math inline">\(\tiny{x} \to \game{0}{-x}\)</span>. Lazuli cannot allow this position to persist and must move it to <span class="math inline">\(0\)</span>, because if Ruby were allowed to move in it, they could take it to <span class="math inline">\(-x\)</span>. Even if Lazuli were then successfully able to convert <span class="math inline">\(\miny{y}\)</span> to <span class="math inline">\(y\)</span>, the total position would have a value of <span class="math inline">\(-x + y + z\)</span> for some infinitesimal <span class="math inline">\(z\)</span>, which is still negative since <span class="math inline">\(x &gt; y\)</span>. Thus, Lazuli must move <span class="math inline">\(\game{0}{-x} \to 0\)</span>. Ruby can then repeat this process with every copy of <span class="math inline">\(\tiny{x}\)</span>, until the position is only <span class="math inline">\(\miny{y}\)</span>, at which point Ruby wins.</p>
 <p>Since Ruby wins this position no matter who goes first, <span class="math inline">\(n . \tiny{x} &lt; \tiny{y}\)</span>, so <span class="math inline">\(\tiny{x} \ll \tiny{y}\)</span>.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>For an intuition on the tinies, think of them as bombs. Consider, for example, <span class="math inline">\(\tiny{5} = \game{0}{\game{0}{-5}}\)</span>. If this position appears as a component, it grants Ruby the ability to arm a bomb. Lazuli can, either before or after the bomb is armed, spend one turn in order to defuse it. However, if Lazuli does not do this, then Ruby can detonate the bomb, which will penalize Lazuli by <span class="math inline">\(5\)</span>. The position is still positive, since Lazuli has the freedom to defuse the bomb at any time, but as the magnitude of the threat increases, Lazuli’s advantage drops off quickly (infinitely quickly, actually), as Lazuli is increasingly obligated to respond, which may allow Ruby valuable moves elsewhere.</p>
 <p>Tinies are <em>small</em>. To further drive this point home, we have another result, which shows that in a sense, the tinies are the <em>smallest</em> positions of all:</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Theorem:</strong> For <em>any</em> positive <span class="math inline">\(G\)</span>, there exists some <span class="math inline">\(x\)</span> such that <span class="math inline">\(\tiny{x} \leq G\)</span>.
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Theorem:</strong> For <em>any</em> positive <span class="math inline">\(G\)</span>, there exists some <span class="math inline">\(x\)</span> such that <span class="math inline">\(\tiny{x} \leq G\)</span>.
+</summary>
 <hr />
 <p><strong>Note:</strong> This proof requires the following Lemmas from Appendix <span class="math inline">\(\star\)</span>:</p>
 <ul>
@@ -167,41 +181,45 @@ Figure 6.2: A position with value <span class="math inline">\(\up + \star\)</spa
 <p>We will show that Lazuli wins when Ruby starts.</p>
 <p>If Ruby is to move, they must move in <span class="math inline">\(G\)</span>, since their move in <span class="math inline">\(\miny{n}\)</span> loses since <span class="math inline">\(G\)</span> is positive. So, Ruby must move to</p>
 <p><span class="math display">\[ G^R + \miny{n} \]</span></p>
-<p>Lazuli here can move <span class="math inline">\(\miny{n} \to \game{n}{0}\)</span>. Ruby cannot avoid negating this threat, as <span class="math inline">\(n &gt; G^{RR}\)</span>, so doing so would leave the game as a win for Lazuli. Thus, they must move <span class="math inline">\(\game{n}{0} \to 0\)</span>, leaving the final position as <span class="math inline">\(G^R \mid\mid&gt; 0\)</span>.<br />
+Lazuli here can move <span class="math inline">\(\miny{n} \to \game{n}{0}\)</span>. Ruby cannot avoid negating this threat, as <span class="math inline">\(n &gt; G^{RR}\)</span>, so doing so would leave the game as a win for Lazuli. Thus, they must move <span class="math inline">\(\game{n}{0} \to 0\)</span>, leaving the final position as <span class="math inline">\(G^R \mid\mid&gt; 0\)</span>.<br />
 <span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+</details>
 <p>We have two extremes of the infinitesimals. <span class="math inline">\(\up\)</span> and its multiples are among the largest infinitesimals we currently have access to, and the <span class="math inline">\(\tiny{n}\)</span>’s are the among the smallest. We now introduce a new operator which will let us look between.</p>
-<h2>The Ordinal Sum</h2>
+<h2 id="the-ordinal-sum">The Ordinal Sum</h2>
 <p>There are <em>many</em> ways to combine two positions into another. Our previous notion of <em>addition</em> (that is, giving the players the choice to play on any single component, and whoever runs out of moves in <em>any</em> component loses), was only one of them.</p>
 <p>Now we will define a new type of “addition” of positions, that is very similar to what we have. We can take two positions <span class="math inline">\(G\)</span> and <span class="math inline">\(H\)</span> and produce <span class="math inline">\(G : H\)</span>. The rules of <span class="math inline">\(G : H\)</span> are similar to <span class="math inline">\(G + H\)</span>. Each player has the option to move in <span class="math inline">\(G\)</span> or in <span class="math inline">\(H\)</span>. If they move in <span class="math inline">\(H\)</span>, nothing special happens. However, if they opt instead to move in <span class="math inline">\(G\)</span>, <span class="math inline">\(H\)</span> dissapears entirely! In formal terms, we have</p>
 <p><span class="math display">\[ G : H = \game{G^L, G : H^L}{G^R, G : H^R} \]</span></p>
 <p>This is hard to visualize in general, but in one specific case, there is a helpful way to think about it. If your <span class="math inline">\(G\)</span> and <span class="math inline">\(H\)</span> are a single stack of Hackenbush branches, <span class="math inline">\(G : H\)</span> is what you get when you put <span class="math inline">\(H\)</span> on top of <span class="math inline">\(G\)</span>, like so:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/6/ordsum.svg” width=“12.5%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/6/ordsum.svg" width="12.5%" height="auto" />
+<figcaption>
 Figure 6.3: <span class="math inline">\(G\)</span>, <span class="math inline">\(H\)</span>, and <span class="math inline">\(G : H\)</span>.
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>Thinking about the branches like this, one can see that this lets you get some semblance of normalcy back with nimbers, because</p>
 <p><span class="math display">\[ \star a : \star b = \star (a + b) \]</span></p>
 <p>But that’s about as far as the normalcy goes, since this operation doesn’t follow some rules we expect. If <span class="math inline">\(H = H'\)</span>, then <span class="math inline">\(G + H = G + H'\)</span>, and this holds for the ordinal sum too. However, the other way doesn’t. If <span class="math inline">\(G = G'\)</span> then <span class="math inline">\(G + H = G' + H\)</span>, but not so for ordinal sums. For example, <span class="math inline">\(0 : 1 = 1\)</span>, and <span class="math inline">\(\impgame{\star} = 0\)</span>, but <span class="math inline">\(\impgame{\star} : 1 = \up\)</span>. I leave verifying this as an exercise.</p>
 <p>With our new tool ready-made, we are now ready to enter the garden!</p>
-<h2>Flowers and the Gardens in Which They Reside</h2>
+<h2 id="flowers-and-the-gardens-in-which-they-reside">Flowers and the Gardens in Which They Reside</h2>
 <p>We will term any position of the form <span class="math inline">\(\star m : n\)</span>, for any integer <span class="math inline">\(n\)</span> and any positive integer <span class="math inline">\(m\)</span> a <strong>flower</strong>. Why do we call them this? Because the <span class="math inline">\(\star m\)</span> is a green Hackenbush stack (the “stem”), and the <span class="math inline">\(n\)</span> is another red or blue Hackenbush stack on top of it. We call a flower <strong>green</strong> if <span class="math inline">\(n = 0\)</span> (the flower is only the stem), <strong>red</strong> if <span class="math inline">\(n &lt; 0\)</span> (the “petal” is red), and <strong>blue</strong> if <span class="math inline">\(n &gt; 0\)</span> (the “petal” is blue). Naturally, any position which is a sum of flowers is called a <strong>flower garden</strong>. Here is an example:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/6/flowergarden.svg” width=“12.5%” height=“auto”/&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/6/flowergarden.svg" width="12.5%" height="auto" />
+<figcaption>
 Figure 6.3: A flower garden consisting of two blue flowers, two red flowers, and a green flower (equal to <span class="math inline">\(\star 3\)</span>)
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>In general, figuring out who wins in a flower garden is <em>hard</em>. So hard, in fact, that it is currently an <em>open problem</em>. However, we do have some methods for figuring this out for <em>some</em> flower gardens. As it turns out, it is often the case that only the <em>number</em> of red and blue flowers matters.</p>
 <p>We will define the <strong>weight</strong> of a flower garden, denoted <span class="math inline">\(w(G)\)</span>, to be the difference between the count of blue flowers and the count of red flowers. For example, Figure 6.3 has a weight of zero, since the number of red and blue flowers are equal (green flowers do not affect the weight). From this weight we have a useful rule:</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>The Two-Ahead Rule:</strong> Let <span class="math inline">\(G\)</span> be a flower garden. &lt;br&gt;
-<span class="math inline">\((a)\)</span> If <span class="math inline">\(w(G) \geq 1\)</span>, <span class="math inline">\(G \mid\mid&gt; 0\)</span> (that is, Lazuli wins going first) &lt;br&gt;
+<details>
+<summary>
+<strong>The Two-Ahead Rule:</strong> Let <span class="math inline">\(G\)</span> be a flower garden. <br>
+<span class="math inline">\((a)\)</span> If <span class="math inline">\(w(G) \geq 1\)</span>, <span class="math inline">\(G \mid\mid&gt; 0\)</span> (that is, Lazuli wins going first) <br>
 <span class="math inline">\((b)\)</span> If <span class="math inline">\(w(G) \geq 2\)</span>, <span class="math inline">\(G &gt; 0\)</span> (that is, Lazuli wins always)
-&lt;/summary&gt;</p>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>First we will show (a).</p>
@@ -216,9 +234,9 @@ Figure 6.3: A flower garden consisting of two blue flowers, two red flowers, and
 <li>If <span class="math inline">\(H = 0\)</span>, we have <span class="math inline">\(G^L \geq H \geq 0\)</span>, so Lazuli can win playing first and so <span class="math inline">\(G \mid\mid&gt; 0\)</span>. (In this case, Lazuli’s winning strategy would involve making the blossom-move mentioned above, and then proceeding as in the other case)</li>
 </ul>
 <p>Now, for (b). Any move by Ruby must reduce the weight by at most <span class="math inline">\(1\)</span>. Thus, every <span class="math inline">\(w(G^R) \geq 1\)</span> for every <span class="math inline">\(G^R\)</span>. So, by induction, Lazuli wins them all playing first, so Lazuli wins <span class="math inline">\(G\)</span> playing second. Thus, <span class="math inline">\(G \geq 0\)</span>. However, since <span class="math inline">\(w(G) \geq 2\)</span>, <span class="math inline">\(w(G) \geq 1\)</span> as well, so we know that <span class="math inline">\(G \mid\mid&gt; 0\)</span>. Since <span class="math inline">\(G \geq 0\)</span> and <span class="math inline">\(G \mid\mid&gt; 0\)</span>, we have <span class="math inline">\(G &gt; 0\)</span>.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
-<h2>The Uptimals</h2>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
+<h2 id="the-uptimals">The Uptimals</h2>
 <p>Certain flowers are particularly interesting, those of the form <span class="math inline">\(\star : n\)</span> for some integer n. For small values of <span class="math inline">\(n\)</span>, we get some familiar faces:</p>
 <p><span class="math display">\[ \star : 0 = \impgame{0} = \star \]</span>
 <span class="math display">\[ \star : 1 = \game{0, \star}{0} = \up + \star \]</span></p>
@@ -236,10 +254,10 @@ Figure 6.3: A flower garden consisting of two blue flowers, two red flowers, and
 <p><span class="math display">\[ \up^{n+1} = \game{0}{\star : -n} \]</span>
 <span class="math display">\[ \up^{[n+1]} = \game{\up^{[n]}}{\star} \]</span></p>
 <p>Right, now that the definition is out of the way, what are some properties of these funny little guys? Well, you’re probably expecting this, but they are indeed tiny <em>little</em> guys. Much like the tinies before, we have another chain of <span class="math inline">\(\ll\)</span>:</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Theorem:</strong> For all <span class="math inline">\(n \geq 1\)</span>, <span class="math inline">\(\up^{n+1} \ll \up^n\)</span>
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Theorem:</strong> For all <span class="math inline">\(n \geq 1\)</span>, <span class="math inline">\(\up^{n+1} \ll \up^n\)</span>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>Consider the difference:</p>
@@ -255,25 +273,25 @@ Figure 6.3: A flower garden consisting of two blue flowers, two red flowers, and
 <p>However, from this position, Lazuli can move one of the <span class="math inline">\(\down^{n+1} \to (\star : n)\)</span>, putting the position at</p>
 <p><span class="math display">\[ (\star : (-n + 1)) + (\star : n) + (k-1).\down^{n+1} = \up^n + (k-1).\down^{n+1} \]</span></p>
 <p>Which is exactly where it was before, with one fewer <span class="math inline">\(\down^{n+1}\)</span>. This means that Lazuli can just repeat this process, eventually winning when the <span class="math inline">\(\down^{n+1}\)</span>s are exhausted.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>Now, remember earlier when we mentioned that <span class="math inline">\(\up \mid\mid \star\)</span>, but <span class="math inline">\(\up &gt; \star 2\)</span>? You might think that a pattern is emerging, that perhaps <span class="math inline">\(\up^n || \star m\)</span> when <span class="math inline">\(m \leq n\)</span>, and is bigger than the rest. Unfortunately, that pattern fails to exist. Thankfully, the real rule is a lot simpler:</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Theorem:</strong> For all <span class="math inline">\(n \geq 1\)</span> and for all <span class="math inline">\(k\)</span>, <span class="math inline">\(k.\up^{2} \mid \ast n\)</span>
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Theorem:</strong> For all <span class="math inline">\(n \geq 1\)</span> and for all <span class="math inline">\(k\)</span>, <span class="math inline">\(k.\up^{2} \mid \ast n\)</span>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>WLOG suppose <span class="math inline">\(k &gt; 0\)</span>. Let</p>
 <p><span class="math display">\[ G = k.\up^{2} + \ast n = k.(\ast : 2) + k.(\ast : -1) + \star n \]</span></p>
 <p>This is a flower garden with weight <span class="math inline">\(0\)</span>. So, by the Two Ahead Rule, whoever goes first can remove flowers of the opposite color, forcing their opponent to reply in kind until the position is only <span class="math inline">\(\star n\)</span> with the first player to move again.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>Since <span class="math inline">\(\up^2\)</span> is confused with every nonzero nimber, any uptimal that doesn’t include <span class="math inline">\(\up\)</span> or <span class="math inline">\(\down\)</span> is too. Now, we have discovered two infinite chains of <span class="math inline">\(\ll\)</span> throughout this part. How do they compare? Well,</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Theorem:</strong> For all <span class="math inline">\(n \geq 1\)</span>, <span class="math inline">\(\tiny{1} \ll \up^n\)</span>
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Theorem:</strong> For all <span class="math inline">\(n \geq 1\)</span>, <span class="math inline">\(\tiny{1} \ll \up^n\)</span>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>Let <span class="math inline">\(G = k.\up^n + \miny{1}\)</span>. We wish to show <span class="math inline">\(G\)</span> is a win for Lazuli.</p>
@@ -284,13 +302,13 @@ Figure 6.3: A flower garden consisting of two blue flowers, two red flowers, and
 <p><span class="math display">\[ (\star : -n + 1) + (k-1).\up^{n} \]</span></p>
 <p>Lazuli can now move <span class="math inline">\((\star : -n + 1) \to 0\)</span>, leaving the entire position at <span class="math inline">\((k - 1).\up^{n}\)</span>, which is positive and hence won for Lazuli.</p>
 <p>Since Lazuli wins both going first and second, <span class="math inline">\(G &gt; 0\)</span> and so <span class="math inline">\(k.\up^n &gt; \tiny{1}\)</span>.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>So, now we have a pretty good eye on the landscape of infinitesimals. <span class="math inline">\(\up\)</span> and its multiples are at the top (until Part 8, at least). <span class="math inline">\(\up^2\)</span> is infinitely smaller than <span class="math inline">\(\up\)</span>, and <span class="math inline">\(\up^3\)</span> is infinitely smaller than <span class="math inline">\(\up^2\)</span>. After going through all the uptimals, we eventually reach the realm of the tinies, where we get to <span class="math inline">\(\tiny{1}\)</span>, <span class="math inline">\(\tiny{2}\)</span>, and so on, all the way down (with every positive position having its own tiny version). <span class="math inline">\(\star\)</span> is confused with <span class="math inline">\(\up\)</span> and everything smaller, but higher nimbers don’t get confusing until <span class="math inline">\(\up^2\)</span> and its multiples.</p>
 <p>Now, this Part was a lot heavier on definition then previous parts, so you might be asking where these strange infinitesimals serve any use. Well, uptimals come up a lot in Hackenbush when you allow all three colors. There is more that can be done with combinations of nimbers and uptimals and tinies, in fact there is an entire “atomic weight calculus” which helpfully allows you to reason about positions like those, but it is beyond our grasp, for now.</p>
 <p>Another most startling application is that positions derived from tinies have been used to construct a theory for the game of Go, along with some truly devilish Go endgame positions that 9-dan ranked (read: <em>quite</em> good) Go players were baffled by, but a combinatorial game theorist could discern the winner of fairly straightforwardly. If you wish to learn more about that, consult Berlekamp and Wolfe’s <em>Mathematical Go: Chilling Gets the Last Point</em>.</p>
 <p>This concludes our survey of the infinitesimals (for now), and it might help to cool down for a moment, because in the next Part our positions will get quite heated indeed.</p>
-<h2>Summary of Part 6</h2>
+<h2 id="summary-of-part-6">Summary of Part 6</h2>
 <ul>
 <li>A position is <em>infinitesimal</em> if it is smaller than every positive dyadic fraction and larger than every negative dyadic fraction.</li>
 <li>Positions where, at every point, both players have a move (or both players have <em>no move</em>), are called <em>dicotic</em>.</li>
@@ -305,7 +323,7 @@ Figure 6.3: A flower garden consisting of two blue flowers, two red flowers, and
 <li><span class="math inline">\(\up \mid\mid \star\)</span>, but <span class="math inline">\(\up &gt; \star2\)</span> and <span class="math inline">\(\doubleup &gt; \star\)</span></li>
 <li>Any amount of <span class="math inline">\(\up^2\)</span> copies is confused with any nonzero nimber.</li>
 </ul>
-<h2>In Part 7, we will</h2>
+<h2 id="in-part-7-we-will">In Part 7, we will</h2>
 <ul>
 <li>Learn a game other than Hackenbush and Nim.</li>
 <li>Examine positions where the players really, <em>really</em> want to have the right to move.</li>

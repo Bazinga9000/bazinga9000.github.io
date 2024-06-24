@@ -25,6 +25,10 @@ details {
     padding: 20px;
 }
 
+gloss {
+    padding: 0px;
+}
+
 #content {
     width: 66%;
     margin: auto;

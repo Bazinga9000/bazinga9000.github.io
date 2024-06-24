@@ -33,35 +33,43 @@ $$\gdef\tiny#1{\pmb{\boldsymbol{+}}_{#1}}$$
 $$\gdef\miny#1{\pmb{\boldsymbol{-}}_{#1}}$$
 			
             <hr />
-<p>&lt;center&gt;“The beginning of wisdom is to call things by their proper name.”&lt;/center&gt;
-&lt;center&gt;—<em>Confucius</em>&lt;/center&gt;</p>
+<center>
+“The beginning of wisdom is to call things by their proper name.”
+</center>
+<center>
+—<em>Confucius</em>
+</center>
 <hr />
 <p>Part 3 has given us a wonderful gift: A formal way to describe an arbitrary position in <em>any</em> combinatorial game whatsoever, and how to give values to those positions. Throughout later parts in this series we will stretch our conception of what values a position can take to impossible heights, but before we learn to fly we must learn to run, and before we learn to run we must learn to walk. Let’s take a closer look at the values we came up with in Parts 1 and 2 to understand some ways that positions can be manipulated while preserving their value.</p>
 <p>We will continue to use Hackenbush as our game of choice for illustrative purposes, but it should be stressed that positions in <em>any</em> combinatorial game can be described in this way.</p>
 <p>The simplest Hackenbush position we have not yet treated formally is two blue branches next to each other:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/4/twolong.svg” width=“25%” height=“auto”&gt;&lt;/img&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/4/twolong.svg" width="25%" height="auto" />
+<figcaption>
 Figure 4.1: Two blue branches next to each other.
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>We showed in Part 3 that <span class="math inline">\(1 + 1 = \game{1}{}\)</span>, and this position is in fact the sum of two single branch positions with a value of <span class="math inline">\(1\)</span> each, but let’s verify this by checking explicitly what options each player has. Ruby has no moves at all, so the position has nothing on the right side of the bar. Lazuli’s two options both remove one blue branch, leaving us with a value of <span class="math inline">\(\game{1,1}{}\)</span>. Duplicate entries on either side of the bar can be combined, since these are sets, so we are left with <span class="math inline">\(\game{1}{}\)</span>, exactly as predicted by adding <span class="math inline">\(1 + 1\)</span>. This value is called <span class="math inline">\(2\)</span>, also as you might expect.</p>
 <p>I leave you as an exercise to show that the negative of this position, <span class="math inline">\(\game{}{-1}\)</span>, which we naturally call <span class="math inline">\(-2\)</span>, has a value of <span class="math inline">\(-1 + -1\)</span>.</p>
 <p>Cool, what about two blue branches on <em>top</em> of each other?</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/4/twohigh.svg” width=“12.5%” height=“auto”&gt;&lt;/img&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/4/twohigh.svg" width="12.5%" height="auto" />
+<figcaption>
 Figure 4.2: Two blue branches on top of each other.
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>Writing down the options for Lazuli and Ruby show us that this position is <span class="math inline">\(\game{0,1}{}\)</span>. Is this equal to <span class="math inline">\(2\)</span> as well? One can check that yes, this stack is countered by two isolated red branches to result in a zero position, but there is a more general principle at play here. Look at Lazuli’s options. They have the choice between moving to <span class="math inline">\(0\)</span> and moving to <span class="math inline">\(1\)</span>. Positions that are more positive are better for Lazuli, so assuming they are playing optimally (which we always are assuming), why in the world would Lazuli <em>ever</em> move to <span class="math inline">\(0\)</span>, when <span class="math inline">\(1\)</span> is there, which is better for them? This allows us to <em>simplify</em> our representation. That is, since <span class="math inline">\(0 \leq 1\)</span>,</p>
 <p><span class="math display">\[ \game{0,1}{} = \game{1}{} \]</span></p>
 <p>In general, in some game <span class="math inline">\(G = \game{G^L}{G^R}\)</span>, if we have two options in <span class="math inline">\(G^L\)</span>, call them <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, where <span class="math inline">\(A \leq B\)</span>, we will say that <span class="math inline">\(A\)</span> is <strong>dominated</strong> by <span class="math inline">\(B\)</span>.
 Likewise, if if we have two options in <span class="math inline">\(G^R\)</span>, call them <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, where <span class="math inline">\(X \geq Y\)</span> (note that the inequality changed directions), we will also say that <span class="math inline">\(X\)</span> is <strong>dominated</strong> by <span class="math inline">\(Y\)</span>.</p>
 <p>What an option being dominated <em>means</em> is that the player that has that option also has another option which is <em>at least as good</em> for them. The reason this is relevant is that removing a dominated option (while <em>retaining</em> at least one option that dominated it) <em>does not change the value of a position.</em> Intuitively, this makes sense. Removing options that someone would never want to play doesn’t change anything.</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Theorem:</strong> Removing dominated options (and keeping an option that dominates it) does not change the value of a position. That is, for some position
+<details>
+<summary>
+<strong>Theorem:</strong> Removing dominated options (and keeping an option that dominates it) does not change the value of a position. That is, for some position
 <span class="math display">\[ G = \game{A, B, C, \cdots}{X, Y, Z, \cdots} \]</span>
 if <span class="math inline">\(B \geq A\)</span>, then the position
 <span class="math display">\[ H = \game{B, C, \cdots}{X, Y, Z, \cdots} \]</span>
@@ -69,7 +77,7 @@ is equal to <span class="math inline">\(G\)</span>.
 Likewise, if <span class="math inline">\(Y \leq X\)</span>, then
 <span class="math display">\[ H' = \game{A, B, C, \cdots}{Y, Z, \cdots} \]</span>
 is equal to <span class="math inline">\(G\)</span>.
-&lt;/summary&gt;</p>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>We will show this is true for Lazuli’s options only. A similar argument will hold for Ruby’s options.</p>
@@ -79,7 +87,7 @@ is equal to <span class="math inline">\(G\)</span>.
 <p>The one exception to this is as follows: Suppose Lazuli is first, and they move in <span class="math inline">\(G\)</span> to <span class="math inline">\(A\)</span>. There is no corresponding <span class="math inline">\(-A\)</span> in <span class="math inline">\(-H\)</span> for Ruby to move to. However, what Ruby <em>does</em> have is <span class="math inline">\(-B\)</span>. If Ruby moves to <span class="math inline">\(-B\)</span> from <span class="math inline">\(H\)</span>, the entire position is now <span class="math inline">\(A - B\)</span>. Since <span class="math inline">\(B \geq A\)</span>, this difference is negative or zero, and in either case Ruby has a winning strategy.</p>
 <p>Since, in either case, the second player has a winning strategy, the difference is a zero position and <span class="math inline">\(G = H\)</span>.</p>
 <p><span class="math inline">\(\blacksquare\)</span></p>
-<p>&lt;/details&gt;</p>
+</details>
 <p>By the same logic, we can determine the value of any number of blue branches, either in a stack or side-by-side, and they have the names you would expect from Part 1:</p>
 <p><span class="math display">\[ 2 = \game{1}{} \]</span>
 <span class="math display">\[ 3 = \game{2}{} \]</span>
@@ -89,12 +97,14 @@ is equal to <span class="math inline">\(G\)</span>.
 <p>One can, of course, negate these positions to produce the rest of the integers:</p>
 <p><span class="math display">\[ -n = \game{}{-(n-1)} \]</span></p>
 <p>Now, giving only one player options makes for some pretty boring positions. Now, we’ll cover Part 2’s fractional values. Recall this position from part 2:</p>
-<p>&lt;figure&gt;&lt;center&gt;
-&lt;img src=“/resources/cgt/2/halfmove.svg” width=“12.5%” height=“auto”&gt;&lt;/img&gt;
-&lt;figcaption&gt;
+<figure>
+<center>
+<img src="../resources/cgt/2/halfmove.svg" width="12.5%" height="auto" />
+<figcaption>
 Figure 4.3: “Half a Spare Move”
-&lt;/figcaption&gt;
-&lt;/center&gt;&lt;/figure&gt;</p>
+</figcaption>
+</center>
+</figure>
 <p>Let’s notate this position. For the first time, both players have things to do! Lazuli has one move, to go to the empty position <span class="math inline">\(0\)</span>, and Ruby’s only move leaves Lazuli with a single branch, which we know to have a value of <span class="math inline">\(1\)</span>. Thus, this position, which we called <span class="math inline">\(\frac{1}{2}\)</span>, is</p>
 <p><span class="math display">\[ \frac{1}{2} = \game{0}{1} \]</span></p>
 <p>We can justify our nomenclature by verifying that <span class="math inline">\(\frac{1}{2} + \frac{1}{2} = 1\)</span>, which is left as an exercise.</p>
@@ -106,10 +116,10 @@ Figure 4.3: “Half a Spare Move”
 <span class="math display">\[G_n = \game{0}{G_{n-1}}\]</span></p>
 <p>(Note that <span class="math inline">\(G_0 &gt; G_1 &gt; G_2 \cdots\)</span>. This isn’t too hard to show, so I leave it as an exercise.)</p>
 <p>We want to give these the value <span class="math inline">\(G_n = \frac{1}{2^n}\)</span>. To justify that, we will use the arithmetic I left as exercise (so, spoilers if you’re doing those), and show</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Proposition:</strong> <span class="math inline">\(G_n + G_n = G_{n-1}\)</span>.
-&lt;/summary&gt;</p>
+<details>
+<summary>
+<strong>Proposition:</strong> <span class="math inline">\(G_n + G_n = G_{n-1}\)</span>.
+</summary>
 <hr />
 <p><strong>Proof:</strong> By induction on <span class="math inline">\(n\)</span>.</p>
 <p>Base Case: <span class="math inline">\(\game{0}{1} + \game{0}{1} - \game{0}{}\)</span> is a second-player win, so <span class="math inline">\(G_{1} + G_{1} = G_{0}\)</span></p>
@@ -129,15 +139,15 @@ Figure 4.3: “Half a Spare Move”
 </ul></li>
 </ul>
 <p><span class="math inline">\(\blacksquare\)</span></p>
-<p>&lt;/details&gt;</p>
+</details>
 <p>Cool, now we have the all the (negative) powers of two. We can add these together to get any dyadic rational. Though, that begs the question, what is a simple way to represent any dyadic rational? Can we just say that the value of <span class="math inline">\(\game{a}{b}\)</span> is <span class="math inline">\(\frac{a + b}{2}\)</span>? It looks like that’s how the fractions we’ve already made work. As it turns out, this doesn’t hold in general. For an example, consider the position</p>
 <p><span class="math display">\[ \game{-10}{100} \]</span></p>
 <p>You’d think, by taking averages, this game would have a value of <span class="math inline">\(45\)</span>, meaning that Lazuli will always win, but clearly if Lazuli moves first, they lose! This is a second-player win position, so its value is <span class="math inline">\(0\)</span>. While the notion of taking averages doesn’t work, the value of a position like <span class="math inline">\(\game{a}{b}\)</span> will always be between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, provided that <span class="math inline">\(a &lt; b\)</span>. We’ll learn a way to find this value shortly, and the method of simplifying any position at all in Part 5, but now that I’ve told you that taking averages doesn’t work, we will define every dyadic rational by… taking averages. It works here, but <em>not in general</em>. With that out of the way, here is the formula for the remaining dyadic rationals:</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Theorem:</strong> For any integer <span class="math inline">\(p\)</span> and any natural number <span class="math inline">\(m\)</span>,
+<details>
+<summary>
+<strong>Theorem:</strong> For any integer <span class="math inline">\(p\)</span> and any natural number <span class="math inline">\(m\)</span>,
 <span class="math display">\[\game{\frac{p}{2^m}}{\frac{p+1}{2^m}} = \frac{2p+1}{2^{m+1}}\]</span>
-&lt;/summary&gt;</p>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p>Suppose that <span class="math inline">\(2p + 1 &gt; 0\)</span>. Rewrite the right side as the sum of <span class="math inline">\(2p+1\)</span> copies of <span class="math inline">\(\frac{1}{2^{m+1}} = \game{0}{\frac{1}{2^m}}\)</span></p>
@@ -150,10 +160,10 @@ Figure 4.3: “Half a Spare Move”
 <p><span class="math display">\[ \game{\frac{p}{2^m}}{\frac{p+1}{2^m}} \]</span></p>
 <p>precisely the left hand side. The case where <span class="math inline">\(2p + 1 &lt; 0\)</span> is similar and omitted.</p>
 <p><span class="math inline">\(\blacksquare\)</span></p>
-<p>&lt;/details&gt;</p>
+</details>
 <p>Excellent. We now have a way to express a position with a value that is any dyadic rational. Though, there are many positions like the ones we characterized above whose values we do not yet know. What’s the value of <span class="math inline">\(\game{-7}{-3}\)</span>? Or <span class="math inline">\(\game{\frac{3}{8}}{23}\)</span>? We can make values in so many ways, but how can we <em>simplify</em> them?</p>
 <p>I introduce to you now a rule that works for any number, which is a specific way of expressing a more general property we will learn in Part 5. But before doing that, there is a matter of terminology we must clear up.</p>
-<h2>What Even Is A Number?</h2>
+<h2 id="what-even-is-a-number">What Even Is A Number?</h2>
 <p>You might have noticed in those last few sentences I have used both the term “number” and the term “value”. It might seem like they are interchangable, but in fact only some values are considered numbers.</p>
 <p>For a position <span class="math inline">\(\game{G^L}{G^R}\)</span> to be called a <strong>number</strong>, it must have the following properties:</p>
 <ul>
@@ -163,7 +173,7 @@ Figure 4.3: “Half a Spare Move”
 <p>Those among you who know what surreal numbers are may find this defintion strangely familiar, and to that I say we will encounter those lovely things a bit later.</p>
 <p>For some examples, every position we’ve talked about in this part is a number. <span class="math inline">\(\star = \game{0}{0}\)</span>, on the other hand, is not, because <span class="math inline">\(0\)</span> is not strictly less than <span class="math inline">\(0\)</span>. We will encounter many more positions that are not numbers in Parts 5 and 6.</p>
 <p>Now that you know what a “number” is, I present</p>
-<h2>The Simplicity Rule</h2>
+<h2 id="the-simplicity-rule">The Simplicity Rule</h2>
 <p>The Simplicity Rule is a powerful tool for finding out the values of numbers. It allows us to look at all the options and, at a glance, immediately divine the value. Suppose we have some number</p>
 <p><span class="math display">\[G = \game{A, B, C, \cdots}{X, Y, Z, \cdots}\]</span></p>
 <p>We can immediately determine the value of <span class="math inline">\(G\)</span>, by finding the <em>simplest</em> number between everything on the left and everything on the right! That of course begs the question: What does it mean for one number to be <em>simpler</em> than another? The method I will outline now works only for numbers that are dyadic rationals, but there is a more general method that works for much more interesting numbers (if you wish to do some research on your own, the term “birthday” will help).</p>
@@ -184,9 +194,9 @@ Figure 4.3: “Half a Spare Move”
 <li>If there are any integers between the left and right options, the value is the smallest such (in absolute value).</li>
 </ul>
 <p>You may be asking yourself that because it is possible to have two numbers where neither is simpler than the other, that the title of “simplest number” we’ve been using is not unique? Could there be two numbers between the left and right options that are both simpler than everything else but have no simplicity relationship, such as <span class="math inline">\(\frac{7}{8}\)</span> and <span class="math inline">\(\frac{1}{8}\)</span>? The answer is no. Our current ordering is sufficient. Why? The reason is</p>
-<p>&lt;details&gt;
-&lt;summary&gt;</p>
-<p><strong>Theorem:</strong> Suppose we had a position,
+<details>
+<summary>
+<strong>Theorem:</strong> Suppose we had a position,
 <span class="math display">\[G = \game{A, B, C, \cdots}{X, Y, Z, \cdots}\]</span>
 where all <span class="math inline">\(G^L\)</span> and all <span class="math inline">\(G^R\)</span> are numbers.
 If there exists a number <span class="math inline">\(r\)</span> such that
@@ -194,7 +204,7 @@ If there exists a number <span class="math inline">\(r\)</span> such that
 and
 <span class="math display">\[r &lt; X, r &lt; Y, r &lt; Z, \cdots\]</span>
 then <span class="math inline">\(G\)</span> is equal to the simplest such <span class="math inline">\(r\)</span>.
-&lt;/summary&gt;</p>
+</summary>
 <hr />
 <p><strong>Proof:</strong></p>
 <p><em>Note: This proof isn’t mine. It’s from <a href="https://mathstrek.blog/2012/08/15/combinatorial-game-theory-vii">here</a>.</em></p>
@@ -206,7 +216,7 @@ then <span class="math inline">\(G\)</span> is equal to the simplest such <span 
 <li><span class="math inline">\(r = \game{s}{t}\)</span>, where <span class="math inline">\(s\)</span> and <span class="math inline">\(t\)</span> are numbers simpler than <span class="math inline">\(r\)</span>, and <span class="math inline">\(s &lt; r &lt; t\)</span></li>
 </ul>
 <p>Now, for the proof. We must show three things:</p>
-<ol>
+<ol type="1">
 <li>There exists a simplest <span class="math inline">\(r\)</span> that satisfies the inequalities.</li>
 <li><span class="math inline">\(G = r\)</span></li>
 <li><span class="math inline">\(r\)</span> is unique.</li>
@@ -218,10 +228,10 @@ then <span class="math inline">\(G\)</span> is equal to the simplest such <span 
 <p>Now suppose that Lazuli instead moves in <span class="math inline">\(-r\)</span>. Note that by our recollection above, we can assume the move to be <span class="math inline">\((-r) \to (-n)\)</span>, where <span class="math inline">\(n\)</span> is simpler than <span class="math inline">\(r\)</span> and <span class="math inline">\(r &lt; n\)</span>. It follows from our choice of <span class="math inline">\(r\)</span> that either there exists some left option <span class="math inline">\(a \geq r\)</span> in <span class="math inline">\(G\)</span> or that there is some right option <span class="math inline">\(x \leq n\)</span> in <span class="math inline">\(G\)</span>.</p>
 <p>However, we know <span class="math inline">\(n &gt; r &gt; a\)</span>, so it must be that there is some right option <span class="math inline">\(x \leq n\)</span> in <span class="math inline">\(G\)</span>. Ruby can take this option, leaving the final postiion at <span class="math inline">\(x - n \leq 0\)</span>. Since the position is less than or equal to zero, and it is Lazuli’s turn to move, Ruby wins.</p>
 <p><em>Step 3:</em> If <span class="math inline">\(r\)</span> were not unique, then by step 2 <span class="math inline">\(G\)</span> would be equal to two different numbers, which is impossible.</p>
-<p><span class="math inline">\(\blacksquare\)</span>
-&lt;/details&gt;</p>
+<span class="math inline">\(\blacksquare\)</span>
+</details>
 <p>And with that, we’ve done all that we can currently do in the land of numbers. Now, we must look further, and learn about some positions that are not numbers.</p>
-<h2>Summary of Part 4</h2>
+<h2 id="summary-of-part-4">Summary of Part 4</h2>
 <ul>
 <li>For any positive integer <span class="math inline">\(n\)</span>, <span class="math inline">\(n = \game{n-1}{}\)</span></li>
 <li>For any negative integer <span class="math inline">\(-n\)</span>, <span class="math inline">\(-n = \game{}{-(n-1)}\)</span></li>
@@ -229,7 +239,7 @@ then <span class="math inline">\(G\)</span> is equal to the simplest such <span 
 <li>For any integer <span class="math inline">\(p\)</span> and any natural number <span class="math inline">\(m\)</span>, <span class="math inline">\(\game{\frac{p}{2^m}}{\frac{p+1}{2^m}} = \frac{2p+1}{2^{m+1}}\)</span></li>
 <li>If there is a number between all left options and all right options of <span class="math inline">\(G\)</span>, <span class="math inline">\(G\)</span> is equal to the simplest such.</li>
 </ul>
-<h2>In Part 5, we will</h2>
+<h2 id="in-part-5-we-will">In Part 5, we will</h2>
 <ul>
 <li>Learn more about <span class="math inline">\(\star\)</span> and its friends.</li>
 <li>Discover a powerful theorem.</li>

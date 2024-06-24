@@ -83,9 +83,7 @@ main = hakyllWith config $ do
 Math In Pandoc
 -------------------------------------------------------------------------------}
 globalReaderOptions :: ReaderOptions
-globalReaderOptions = defaultHakyllReaderOptions {
-    readerExtensions = extensionsFromList [Ext_smart, Ext_grid_tables]
-}
+globalReaderOptions = defaultHakyllReaderOptions
 
 globalWriterOptions :: WriterOptions
 globalWriterOptions = defaultHakyllWriterOptions

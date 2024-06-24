@@ -4,6 +4,8 @@ kochtitle: Test Page
 goto: /index.html
 katex: on
 includes: test
+extracss: tsalexp
+lateincludes: tsal/gloss
 ---
 
 TeX!!!!!!
@@ -24,3 +26,10 @@ $$\mathbf{on} = \game{\mathbf{on}}{\,}$$
 <span style="font-family: tsalscript; font-size: 36px;">CalXwu</span> here's some regular text<br>
 <span style="font-family: tsalscript; font-size: 40px;">CalXwu</span> here's some regular text<br>
 <tsal style="color: #ff0000">CalXwu</tsal> here's some regular text<br>
+
+<span 
+  data-title="Title:"
+  data-description="Description" 
+  class="tooltip"
+>Hover over me!</span>
+<gloss>1SG.GEN tree-INST</gloss>

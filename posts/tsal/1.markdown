@@ -99,7 +99,7 @@ Tsal's sound inventory consists of twenty-five consonants and five vowels, detai
 			<td>**Lateral Fricative**</td>
 			<td></td>
 			<td></td>
-			<td>/ɬ/ (lh)</td>
+			<td>/ɬ/ (lh, ł)</td>
 			<td></td>
 			<td></td>
 			<td></td>
@@ -111,7 +111,7 @@ Tsal's sound inventory consists of twenty-five consonants and five vowels, detai
 			<td>**Trill**</td>
 			<td></td>
 			<td></td>
-			<td>/r̥/ (rh)</td>
+			<td>/r̥/ (rh, ř)</td>
 			<td>/r/</td>
 			<td></td>
 			<td></td>
@@ -229,6 +229,8 @@ The character <tsal>h</tsal> also serves the purpose of marking long vowels. If 
 This orthography reflects the timing and syllable rules of the language: Each "character", that is, a consonant and the diacritics attached to it, represents one mora. This is why the long-vowel mark acts similarly to a final consonant, as they both add one mora to the word.
 
 The script also has a hyphen character, <tsal>-</tsal>, used in some word derivations and compounds. It's not pronounced, but it is the exception to the one character one mora rule, as a mora may be fragmented across a hyphen, like in the sequence <tsal>n-yi</tsal>. It's often possible to tell whether Tsal speakers conceive of something as a word in its own right or just a compound of two words based on whether or not the words are split by a hyphen or just concatenated. As such, compound words might lose their hyphens as they persist in the language or drift semantically.
+
+The rest of the marks and symbols (such as numbers and punctuation), are best discussed later once more of the language is detailed, but one that will be used in examples is the sentence-terminator. The sentence-terminator is like the word-terminating tick, but two of them, as in <tsal>Cal.</tsal>
 
 -----------
 

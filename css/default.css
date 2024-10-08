@@ -4,6 +4,13 @@ body {
     font-family: 'montserrat', sans-serif;
 }
 
+code {
+  background-color: #000000;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-color: #ffffff;
+  border-width: 2px; 
+}
 
 
 @font-face {
@@ -155,7 +162,7 @@ a, a:hover, a:focus, a:active {
 
 .tooltip .tooltiptext {
 visibility: hidden;
-max-width: 50vw; /* Maximum width to avoid being too wide */
+max-width: 33vw; /* Maximum width to avoid being too wide */
 width: max-content;
 background-color: black;
 color: #fff;

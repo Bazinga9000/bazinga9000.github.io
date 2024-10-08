@@ -1,0 +1,442 @@
+---
+title: Tsal - Phonology and Orthography
+kochtitle: "2: Basic Sentences and Nouns"
+goto: /tsal.html
+extracss: tsalexp
+prev: /tsal/1.html
+index: 2
+lateincludes: tsal/tsalhtml
+---
+
+## --- A Note on Glossing ---
+
+We will be seeing many, *many* example sentences and words from here on out, so a brief explanation is warranted on how glosses work, which are used to break sentences into their grammatical pieces and explain them.
+
+A **morpheme** is a basic unit of a word. For example, the english word "walked" contains two morphemes: "walk", meaning "to perambulate ones legs for the purpose of motion", and "-ed", marking the past tense. Each morpheme is separated by a hyphen, and grammatical meanings are abbreviated. For example, consider this simple English sentence "I walked":
+
+<center>
+
+**I walk-ed** <br>
+<puregloss>1SG walk-PST</puregloss>
+
+*(You will always be able to hover over the little grammatical abbreviations to get a longer description of what it means. Try it out!)*
+</center>
+
+Note that the hyphens in the text match up with the hyphens in the gloss. However, sometimes morphemes will carry multiple pieces of information. In glosses, this is done by separating the distinct meanings that the morphemes convey by a dot, as in the example:
+
+<center>
+
+**Jason walk-s** <br>
+<puregloss>Jason walk-PRES.3SG</puregloss>
+</center>
+
+Tsal glosses will also include a rough English translation of the sentence or word in question.
+
+## --- Basic Sentence Structure ---
+
+Most languages have some distinguished word order for their basic sentences (even those that are more flexible in how often this basic pattern is followed). English, for example, is a Subject-Verb-Object (SVO) language. In the sentence "the cat ate the fish", it is understood that the cat is the one that did the eating, and the fish was the one that was eaten. If you wish to express the other relationship, you must swap the word order as in "the fish ate the cat", as the subject is before the verb, and the object is after it. 
+
+About 35% of the world's languages are like English in this way, making it the second most common<sup id="ref1"><a href="#fn1">1</a></sup> word order. Tsal uses a less common word order, putting it in the same camp as about seven percent of the world's languages, including Hawaiian and Classical Arabic: **Verb-Subject-Object (VSO)**. So, to say that the cat ate the fish, a Tsalian would say
+
+<gloss data-eng="The[2] cat ate the fish."
+       data-tsal="tug=il ija= gaC=eR."
+       data-gloss="eat-PST.PFV.IND cat-AGT fish-PAT"
+       data-footnotes="2"></gloss>
+
+Ignore all those extra grammatical bits for now, just focus on the word order. "Eat" is first, then "cat", then "fish". 
+
+However, Tsal is more flexible in its word order. One common tactic employed by Tsal speakers is to move things to the front of the sentence to show emphasis or relevance. 
+
+Suppose, perhaps, that you are eating a meal with your friend and their cat is lounging near the table. You decide to put your plate of unfinished fish down next to the cat's food, since she's not a big fan of fish and you're curious whether the cat will eat its usual meal or your fish. To your surprise, the cat *does* eat the fish. You might say to your friend
+
+<gloss data-eng="<b>Fish</b>, the cat ate!"
+       data-tsal="gaC=eR tug=il ija=."
+       data-gloss="fish-PAT eat-PST.PFV.IND cat-AGT"></gloss>
+
+This relationship between position in the sentence and relevance extends further than this. In general, phrases can get moved earlier in a sentence to signal that they are relevant or to emphasize them, and phrases can get moved later in the sentence to background them. For instance, a child, sheepishly admitting to their parents that they broke a vase, might employ a OSV or OVS word order, saying something akin to "vase I broke" or "vase broke I". But in genral, the default word order, conveying no special emphasis on anything in particular, is VSO.
+
+## --- Noun Cases ---
+
+This flexible word order raises an issue: If you allow word-order to change freely, the question of who is doing what to whom becomes more ambiguous. How could you tell if "Ate cat fish" is saying that the cat ate the fish, or that the fish ate the (slightly more relevant) cat? 
+
+The solution that Tsal (along with languages such as Latin) use to solve this problem is **noun case**, in which a given noun is explicitly marked with a **case** which details its role in the sentence. Old English had an extensive case system, but all that remains of it in modern English is the distinction between pronouns, as in "I"/"me" and "we"/"us". 
+
+Different languages have different numbers of cases. Many languages only have two or three, German has four, Latin has six, Finnish has fifteen, Hungarian has eighteen, and the language Tsez has 39 cases. Another constructed language, Ithkuil, has a whopping 96 cases (as it is designed for dense communication), but fortunately we do not go nearly so mad.
+
+Tsal has the following nine grammatical cases:
+
+- Agentive (AGT)
+- Patientive (PAT)
+- Dative (DAT)
+- Genitive (GEN)
+- Vocative (VOC)
+- Allative (ALL)
+- Ablative (ABL)
+- Locative (LOC)
+
+and in addition to the case, nouns can also take a plural marking, like English's -s, if there are more than one of the thing in question.
+
+We will go over each case's meanings in turn, and at the end provide the big tables with all the affixes in one place. These will be written in the romanization, instead of the native script.
+
+### --- The Agentive and Patientive Cases ---
+
+Every language (that I know of, at least) that bothers to mark nouns for case has a certain pair of core cases, used to mark subjects and objects of verbs. However, they may work differently under the hood. Consider a transitive verb like "love", that has both something performing the action (the **agent**, A) and someone to whom the action is being done (the **patient**, P). Languages will (in general) mark the agent and the patient with two different cases. So far so good. However, we now consider an intransitive verb like "sleep", which has only *one* participant, which we will label **S**, for "sole participant". Which case are we to use?
+
+Some languages (like Latin) decide to mark S like A. Such languages are called **nominative-accusative**, with the nominative case for S/A and the accusative case for P. 
+
+Other languages (like [Basque](https://en.wikipedia.org/w/index.php?title=Basque_language&useskin=vector)) decide instead to mark S like P. Such languages are called **ergative-absolutive**, with the ergative case for A and the absolutive case for S/P. 
+
+You may notice that the title of this section has none of those four words, because of course it is [much more complicated than this](https://en.wikipedia.org/wiki/Morphosyntactic_alignment?useskin=vector). Some languages simply give S its own case. Some languages decide based on what type of clause the noun in question is in, or based on semantics of the verb. Tsal is one of these mix-and-match languages. Particularly, Tsal is what is called an **active-stative** language.
+
+Tsal's two core cases are the **Agentive** and **Patientive**. As one might expect, with a transitive verb, the agent gets the Agentive and the patient gets the Patientive. This is how our example sentence from the previous section worked, and how we always knew it was the cat doing the eating.
+
+However, with an intransitive verb's sole S, the case depends on context. Consider a verb like <tsal>nihLix</tsal>, meaning "to sleep". If your friend isn't feeling well and decides to go to bed to get some rest and try to feel better, and later someone asks you where she is, you might use the agentive case and say
+
+<gloss data-eng="She's sleeping (voluntarily)."
+       data-tsal="nihL=i Lo."
+       data-gloss="sleep-PRES.IMPV.IND 3SG.PROX.AGT"></gloss>
+
+On the other hand, suppose your friend got home from a long day of work and was so exhausted, that she sat down on her bed for a moment and just fell asleep because her body couldn't stay awake. In this case, you would instead use the patientive and say
+
+<gloss data-eng="She's sleeping (involuntarily)."
+       data-tsal="nihL=i Lon."
+       data-gloss="sleep-PRES.IMPV.IND 3SG.PROX.PAT"></gloss>
+
+The difference here is one of *volition*. If the subject of an intransitive verb is doing the action of their own free will, a Tsal speaker might reason that this makes them more like an agent than a patient, and so would mark them as such. However, if the subject did not have agency, they would be considered more patient-like and thus get the patientive case.
+
+Another factor that may influence which case is used is empathy on the part of the speaker. Using the patientive case highlights a level of sympathy, and thus might be used if the topic of discussion is of a heavy or sensitive nature to the listener. It is for this reason that using the agentive case with the intransitive verb <tsal>bwehox</tsal> ("to die") is considered extremely offensive. Don't do that in polite company.
+
+It is important to note further that the choice of case is *not* constant for every verb, and that it is the choice of the speaker to decide based on the particular context of the conversation (though, naturally some verbs may more commonly use one or the other). In fact, some pairs of verbs in English differ primarily on volition, and so may be translated as the same verb in Tsal. One such example is <tsal>Kwitox</tsal>, which, depending on the case of the noun, can be translated as either "to slip" or "to slide".
+
+The agentive case is unmarked in the singular and is marked with -to in the plural. 
+
+The patientive case is marked with -(e)ř in the singular and -řo in the plural. (That is, if just suffixing -ř would break syllable rules, suffix -eř)
+
+### --- The Dative Case ---
+
+The dative case is *primarily* used for the marking of indirect objects of verbs like "to give" that involve three things. For example:
+
+<gloss data-eng="I gave the fish <b>to you</b>."
+       data-tsal="ke=boz= ki gaC=eR gat."
+       data-gloss="1SG-give-PRES.PFV.IND 1SG.AGT fish-PAT 2SG.DAT"></gloss>
+
+Ignore the extra marking on the verb. That has to do with "to give" being irregular in Tsal. 
+
+The dative also has a few other uses:
+
+- To mark the purpose of an action or for whose benefit/detriment the action takes place:
+<gloss data-eng="I am fighting <b>for the king</b>."
+       data-tsal="jikw=a ki syid=pah"
+       data-gloss="fight-PRES.IMPV.IND 1SG.AGT king.DAT"></gloss>
+
+- To mark the agent of a *passive* verb<sup id="ref3"><a href="#fn3">3</a></sup>: 
+<gloss data-eng="The fish was eaten <b>by the cat</b>."
+       data-tsal="ke=tug=il gaC=eR ija=pah."
+       data-gloss="PASS-eat-PST.PFV.IND fish-PAT cat-DAT"></gloss>
+
+- To mark a measurement or difference:
+<gloss data-eng="They won the race <b>by five <i>żaošo</i>[4]</b>."
+       data-tsal="ka=el Lo xen=eR luR=pah DaoSo=pao."
+       data-gloss="win-PST.PFV.IND 3SG.PROX.AGT race-PAT five-DAT żaošo-DAT.PL"
+       data-footnotes="4"></gloss>
+
+- To indicate perspective for verbs of subjective experience or perception like "to seem":
+
+<gloss data-eng="It seems <b>to me</b> that the cat ate the fish."
+       data-tsal="Zex=a naz pwi yem tug=il gaC=eR ija=."
+       data-gloss="seem-PRES.IMPV.IND 3SG.OBV.PAT 1SG.DAT COMP eat-PST.PFV.IND fish-PAT cat-AGT"></gloss>
+
+
+The dative case is marked with -pā in the singular, and -pao in the plural.
+
+### --- The Genitive Case ---
+
+The genitive case is used to mark that the noun posesses something. Nouns in the genitive go before the nouns they modify: 
+
+<gloss data-eng="The cat ate <b>the dog's</b> fish."
+       data-tsal="tug=il gaC=eR rolmwa=xa ija=."
+       data-gloss="eat-PST.PFV.IND cat-AGT dog-GEN fish-PAT"></gloss>
+
+It can also be used similarly to the English word "of":
+
+<gloss data-eng="The ring <b>of gold</b>"
+       data-tsal="kyuh=xa ruhsa="
+       data-gloss="gold-GEN ring-AGT"></gloss>
+
+Though in poetic or highly formal speech, the genitive when used in this second manner may appear after its corresponding noun, it usually goes before, as in the first use.
+
+The genitive case is marked with -xa in the singular, and -xano in the plural.
+
+### --- The Instrumental/Comitative Case ---
+
+The instrumental/comitative case, shortened to the instrumental case, is used in two ways:
+
+- To mark the means by which an action occurs or the tool with which it is done:
+
+<gloss data-eng="I built it <b>with a hammer</b>."
+       data-tsal="ke=Suil=il ki Lo Kol=Sub"
+       data-gloss="1SG-build-PST.PFV.IND 1SG.AGT 3SG.PROX.PAT hammer-INST"></gloss>
+
+- To mark that the verb is done alongside something or in association with something:
+<gloss data-eng="I watched the game <b>with you</b>."
+       data-tsal="giheb=el ki Lakuh=eR tase"
+       data-gloss="watch-PST.PFV.IND 1SG.AGT game-PAT 2SG.INST"></gloss>
+
+In some languages (like Finnish), these two uses are two seperate instrumental and comitative cases. In others (like English) they are conevyed by the same constructions (the preposition "with"). Tsal is of the latter group, having one case for both uses.
+
+The instrumental/comitative case is marked with -šub in the singular and -šob in the plural.
+
+### --- The Vocative Case ---
+
+The vocative case is used for direct addressing of the noun:
+
+<gloss data-eng="<b>John!</b>"
+       data-tsal="jon=de"
+       data-gloss="John-VOC"></gloss>
+
+It is not limited to proper nouns:
+<gloss data-eng="<b>O, stars!</b>"
+       data-tsal="ohnah=joh"
+       data-gloss="star-VOC.PL"></gloss>
+
+and can be inserted into a sentence effectively anywhere so long as it doesn't split modifiers from their nouns.
+
+The vocative is marked with -de in the singular and -jō in the plural.
+
+### --- The Allative and Ablative Cases ---
+
+The allative and ablative cases are the cases of motion (be it spatial or any other type).
+
+The allative case marks motion *towards* a noun:
+
+<gloss data-eng="I ran <b>to the city</b>."
+       data-tsal="xaox=el ki kahz=eL"
+       data-gloss="run-PST.PFV.IND 1SG.AGT city-ALL"></gloss>
+
+The ablative case marks motion *away from* a noun:
+
+<gloss data-eng="I ran <b>from the city</b>."
+       data-tsal="xaox=el ki kahz=eZ"
+       data-gloss="run-PST.PFV.IND 1SG.AGT city-ABL"></gloss>
+
+The allative is marked with -(e)ł in the singular and -ił in the plural.
+
+The ablative is marked with -(e)ž in the singular and -iž in the plural.
+
+### --- The Locative Case ---
+
+The locative case marks a location.
+
+<gloss data-eng="The book is <b>on the table</b>."
+       data-tsal="te=kel zud=eR edjwa=tuh"
+       data-gloss="3SG-COP.PRES.PFV.IND book-PAT table-LOC"></gloss>
+
+Tsal relies heavily on context to tease out specifically what locational relationship is being conveyed. Depending on the context, one might use the locative case analogously to any of "by", "at", "on", "in", "about", and several others. Tsal has some means of being more precise if it is needed, which we will discuss in the section on prepositions.
+
+The locative is marked with -tū in the singular and -two
+
+### --- Summary of Cases ---
+
+Here is the full declension table for nouns:
+
+<center>
+
++------------------+--------------+------------+
+| **Case**         | **Singular** | **Plural** |
++:================:+:============:+:==========:+
+| **Nominative**   | -∅           | -to        |
++------------------+--------------+------------+
+| **Accusative**   | -(e)ř        | -řo        |
++------------------+--------------+------------+
+| **Dative**       | -pā          | -pao       |
++------------------+--------------+------------+
+| **Genitive**     | -xa          | -xano      |
++------------------+--------------+------------+
+| **Inst./Comit.** | -šub         | -šob       |
++------------------+--------------+------------+
+| **Vocative**     | -de          | -jō        |
++------------------+--------------+------------+
+| **Allative**     | -(e)ł        | -łi        |
++------------------+--------------+------------+
+| **Ablative**     | -(e)ž        | -ži        |
++------------------+--------------+------------+
+| **Locative**     | -tū          | -two       |
++------------------+--------------+------------+
+
+</center>
+
+As will become usual, there are some minor irregularities that are basically just some alterations, which will go into the Irregularity Box:
+
+<details>
+<summary>Irregularity Box</summary>
+
+*`V` denotes an arbitrary **short** vowel.*
+
+- If a word ends with `řV`, the patientive singular is marked by removing the vowel, and the patientive plural is marked by replacing the vowel with `o` (if the vowel was already `o`, replace it with `ō`).
+
+</details>
+
+## --- Pronouns ---
+
+Tsal has four sets of pronouns: 1st person, 2nd person, two sets of 3rd person pronouns.
+
+The distinction between the 3rd person pronouns is not gender-based. Tsal has no grammatical gender whatsoever, and either 3rd person pronoun can be used with any gender. The pronouns are distinguished based on whether they are **proximant** or **obviate**. 
+
+The proximate 3rd person pronoun is used for whatever is the *most relevant* to the current topic of conversation. In that conversation from earlier about an exhausted friend, you would refer to her with the proximate 3rd person, and everything else would be referred to with the obviate 3rd person. Essentially, whatever is most important, salient, topical, or relevant has *exclusive* rights to the proximate. Of course, if the topic changes throughout the discourse, the referent of the proximate pronoun may change with it, so one must rely on context to discern what is "salient" at any given time.
+
+It is also important to note that being the proximate referent has no correlation with being the subject. For example, if someone is talking about a population of fish that is at risk of extinction, they might say (in English), "One risk to this species is that sharks prey upon them." The "them" in that sentence is the fish, currently the object, despite being the core topic of discussion and thus getting the proximate.
+
+Here is the full pronoun table. Forms in <span class="irregular">red</span> are irregular.
+
+<center>
+<table style="text-align: center;">
+	<tbody>
+		<tr>
+			<td rowspan="2">__***Case***__</td>
+			<td colspan="2">**1st Person**</td>
+			<td colspan="2">**2nd Person**</td>
+			<td colspan="2">**3rd Person, Proximate**</td>
+			<td colspan="2">**3rd Person, Obviate**</td>
+		</tr>
+		<tr>
+			<td>*Singular*</td>
+			<td>*Plural*</td>
+			<td>*Singular*</td>
+			<td>*Plural*</td>
+			<td>*Singular*</td>
+			<td>*Plural*</td>
+			<td>*Singular*</td>
+			<td>*Plural*</td>
+		</tr>
+		<tr>
+			<td>**Agentive**</td>
+			<td><tsalr>ki</tsalr></td>
+			<td><tsalr class="irregular">koC</tsalr></td>
+			<td><tsalr>cu</tsalr></td>
+			<td><tsalr>cuto</tsalr></td>
+			<td><tsalr>Lo</tsalr></td>
+			<td><tsalr class="irregular">Dah</tsalr></td>
+			<td><tsalr>naR</tsalr></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Patientive**</td>
+			<td><tsalr class="irregular">Ce</tsalr></td>
+			<td><tsalr class="irregular">Ceo</tsalr></td>
+			<td><tsalr class="irregular">do</tsalr></td>
+			<td><tsalr>cuRo</tsalr></td>
+			<td><tsalr class="irregular">Lon</tsalr></td>
+			<td><tsalr class="irregular">Lono</tsalr></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Dative**</td>
+			<td><tsalr class="irregular">pwi</tsalr></td>
+			<td><tsalr class="irregular">pwoh</tsalr></td>
+			<td><tsalr class="irregular">gat</tsalr></td>
+			<td><tsalr>cupao</tsalr></td>
+			<td><tsalr class="irregular">loge</tsalr></td>
+			<td><tsalr class="irregular">Dogo</tsalr></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Genitive**</td>
+			<td><tsalr class="irregular">atal</tsalr></td>
+			<td><tsalr class="irregular">ital</tsalr></td>
+			<td><tsalr class="irregular">tas</tsalr></td>
+			<td><tsalr>cuxano</tsalr></td>
+			<td><tsalr class="irregular">Lag</tsalr></td>
+			<td><tsalr class="irregular">Lig</tsalr></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Instr./Comit.**</td>
+			<td><tsalr class="irregular">atale</tsalr></td>
+			<td><tsalr class="irregular">italob</tsalr></td>
+			<td><tsalr class="irregular">tase</tsalr></td>
+			<td><tsalr>cuSob</tsalr></td>
+			<td><tsalr class="irregular">Lage</tsalr></td>
+			<td><tsalr class="irregular">Ligob</tsalr></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Vocative**</td>
+			<td><tsalr>kide</tsalr></td>
+			<td><tsalr>kijoh</tsalr></td>
+			<td><tsalr>cude</tsalr></td>
+			<td><tsalr>cujoh</tsalr></td>
+			<td><tsalr>Lode</tsalr></td>
+			<td><tsalr>Lojoh</tsalr></td>
+			<td><tsalr>naRde</tsalr></td>
+			<td><tsalr>naRjoh</tsalr></td>
+		</tr>
+		<tr>
+			<td>**Allative**</td>
+			<td><tsalr class="irregular">lak</tsalr></td>
+			<td><tsalr class="irregular">lako</tsalr></td>
+			<td><tsalr class="irregular">let</tsalr></td>
+			<td><tsalr>cuLi</tsalr></td>
+			<td><tsalr class="irregular">lel</tsalr></td>
+			<td><tsalr class="irregular">lelo</tsalr></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Ablative**</td>
+			<td><tsalr class="irregular">zek</tsalr></td>
+			<td><tsalr class="irregular">zeko</tsalr></td>
+			<td><tsalr class="irregular">zet</tsalr></td>
+			<td><tsalr>cuZi</tsalr></td>
+			<td><tsalr class="irregular">zel</tsalr></td>
+			<td><tsalr class="irregular">zelo</tsalr></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>**Locative**</td>
+			<td><tsalr class="irregular">kice</tsalr></td>
+			<td><tsalr class="irregular">kiCwo</tsalr></td>
+			<td><tsalr class="irregular">cut</tsalr></td>
+			<td><tsalr>cutwo</tsalr></td>
+			<td><tsalr class="irregular">teLo</tsalr></td>
+			<td><tsalr class="irregular">teDah</tsalr></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+</center>
+
+One might notice that *a lot* of the pronouns are irregular. Pronouns are some of the most irregular parts of many languages, and this one is no exception. 
+
+-----------
+
+**Footnotes**
+
+<div id="footnotes">
+<ol>
+    <li id="fn1">For the curious:
+    <ol>
+        <li>SOV, 41.0%</li>
+        <li>SVO, 35.4%</li>
+        <li>No dominant word order: 13.7%</li>
+        <li>VSO, 6.9%</li>
+        <li>VOS, 1.8%</li>
+        <li>OVS, 0.8%</li>
+        <li>OSV, 0.3%</li>
+    </ol>
+
+See [wikipedia](https://en.wikipedia.org/wiki/Word_order?useskin=vector) for examples and information on why word order is A Bit More Complex than this 7-way chart may suggest.
+<a href="#ref1">↩</a>
+</li>
+    <li id="fn2">Tsal has no articles. Whether we're talking about a specific fish or not is left up to context. I will be using articles interchangably in English translations.<a href="#ref2">↩</a></li>
+    <li id="fn3">Passive verbs are a bit strange and do funny things with their cases in general. More details will come in the verb sections.<a href="#ref3">↩</a></li>
+    <li id="fn4">A unit of time equal to a little under half a second.<a href="#ref4">↩</a></li>
+</ol>
+</div>
+
+-----------

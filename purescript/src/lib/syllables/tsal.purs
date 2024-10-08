@@ -15,10 +15,10 @@ import Data.String.Pattern
 
 
 tsalConsonants :: NonEmptyArray String
-tsalConsonants = NonEmptyArray ["p","t","k","b","d","g","s","lh","sh","x","z","zh","xh","TS","ch","kh","DZ","j","m","n","rh","r","l","y","w"]
+tsalConsonants = NonEmptyArray ["p","t","k","b","d","g","s","lh","sh","x","z","zh","xh","TS","ch","q","DZ","j","m","n","rh","r","l","y","w"]
 
 tsalInitialConsonants :: NonEmptyArray String
-tsalInitialConsonants = NonEmptyArray ["p","t","k","b","d","g","s","lh","sh","x","z","zh","xh","TS","ch","kh","DZ","j","m","n","rh","r","l"]
+tsalInitialConsonants = NonEmptyArray ["p","t","k","b","d","g","s","lh","sh","x","z","zh","xh","TS","ch","q","DZ","j","m","n","rh","r","l"]
 
 tsalInitialConsonantsWithW :: NonEmptyArray String
 tsalInitialConsonantsWithW = tsalInitialConsonants <> singleton ""

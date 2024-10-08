@@ -25,4 +25,5 @@ executable bazsite
                        directory,
                        temporary,
                        process,
-                       bytestring
+                       bytestring,
+                       filepath

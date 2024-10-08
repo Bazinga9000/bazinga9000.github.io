@@ -21,16 +21,12 @@ _cache/
 _site/
 
 ### purescript ###
-/bower_components/
-/node_modules/
-/.pulp-cache/
-/output/
-/generated-docs/
+/purescript/output/
 /.psc-package/
 /.psc*
 /.purs*
 /.psa*
-/.spago
+/purescript/.spago
 
 ### neither haskell nor purescript ###
 deploy.sh

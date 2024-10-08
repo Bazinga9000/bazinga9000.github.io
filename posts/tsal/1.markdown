@@ -3,6 +3,7 @@ title: Tsal - Phonology and Orthography
 kochtitle: "1: Phonology and Orthography"
 goto: /tsal.html
 extracss: tsalexp
+next: /tsal/2.html
 index: 1
 ---
 
@@ -16,10 +17,10 @@ index: 1
 
 The first two things about a langauge one needs to learn are how you say it and how you write it. 
 
-## Phonology 
+## --- Phonology ---
 
 
-### Sound Inventory
+### --- Sound Inventory ---
 
 Tsal's sound inventory consists of twenty-five consonants and five vowels, detailed in the following charts. The symbols in /slashes/ are the IPA representation of each sound. If you aren't familiar with the International Phonetic Alphabet or any particular sound, [this site](https://www.ipachart.com) is a good place to hear the sound spoken. The characters in parentheses are used when writing the language using the Latin alphabet, with another single-character option if your input method can handle non-ASCII characters:
 
@@ -148,7 +149,7 @@ Tsal's sound inventory consists of twenty-five consonants and five vowels, detai
 
 </center>
 
-### Allophony
+### --- Allophony ---
 
 Certain sounds get realized differently in certain environments. This will just be a list of sound changes (and as such will assume more IPA knowlege), so I've compressed it in this easily skippable box:
 
@@ -156,23 +157,23 @@ Certain sounds get realized differently in certain environments. This will just 
 <summary>List of Allophones</summary>
 
 - /p/ and /b/ become [f] and [v] before front vowels.
-- The clusters /r̥ɬ/ and /rɬ/ become the affricates [t͡ɬ] and [d͡ɮ].
+- The clusters /r̥ɬ/ and /rɬ/ become the affricates [t͡ɬ] and [d͡ɮ], as do the reverse clusters /ɬr̥/ and /ɬr/. 
 - /ɬ/ becomes [θ] or [ð] after sibilants (/s/, /z/, /ʃ/, /ʒ/), matching the voicing of the sibilant.
 - The clusters /sj/, /zj/, /tsj/, /dzj/, /xj/, and /ɣj/ palatalize to [ɕ], [ʑ], [tɕ], [dʑ], [ç], and [ʝ].
 
 </details>
 
-### Syllable Structure and Timing
+### --- Syllable Structure and Timing ---
 
 A syllable in Tsal looks like this:
 
 <center>
 +:---------------------:+:-------:+:------:+:---------------------:+
-| *Non-glide Consonant* | *Glide* | Vowel  | *Non-glide Consonant* |
+| (Non-glide Consonant) | (Glide) | Vowel  | (Non-glide Consonant) |
 +-----------------------+---------+--------+-----------------------+
 </center>
 
-The *glides* are the /j/ and /w/ sounds. Sounds italicized are optional. This means that a legal syllable in Tsal can be as simple as a single vowel /e/ or up to four phones long, like /kwon/. There is one additional restriction involving long vowels: If the vowel in a syllable is long, then that syllable may not have a final consonant. So while the syllable /kwon/ is legal, the syllable /kwoːn/ is not.
+The *glides* are the /j/ and /w/ sounds. Sounds parenthesized are optional. This means that a legal syllable in Tsal can be as simple as a single vowel /e/ or up to four phones long, like /kwon/. There is one additional restriction involving long vowels: If the vowel in a syllable is long, then that syllable may not have a final consonant. So while the syllable /kwon/ is legal, the syllable /kwoːn/ is not.
 
 Different languages have different rules for the *timing* of syllables when spoken. English is a *stress*-timed language, where there is a (roughly) equal amount of time between one stressed syllable and the next (we'll get to Tsal's stress rules in a moment). A language like Spanish is *syllable*-timed, where every syllable is of equal length. Tsal, along with languages like Japanese, fall into the category of *mora*-timed languages. 
 
@@ -186,7 +187,7 @@ Syllables worth one mora are called *light* and syllables with two morae are cal
 
 Morae inform Tsal's rules for stress. If a word has at least one heavy syllable, stress goes on the *last* heavy syllable in the word. If there is no such syllable, stress goes on the second-to-last syllable. So, for example, the word xyeztyī has two heavy syllables, so the stress goes on the final syllable, tyī.    
 
-## Orthography
+## --- Orthography ---
 
 Tsal's writing system is an *abugida*, which gives consonants center stage and marks vowels with a diacritic. The script has twenty-four consonant characters:
 

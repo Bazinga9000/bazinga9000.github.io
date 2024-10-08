@@ -34,3 +34,7 @@ gloss {
     margin: auto;
     line-height: 180%;
 }
+
+.irregular {
+    color: #ff0000;
+}

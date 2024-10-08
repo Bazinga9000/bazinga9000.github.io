@@ -1,0 +1,50 @@
+package:
+  dependencies:
+    - aff
+    - argonaut
+    - argonaut-codecs
+    - argonaut-core
+    - arrays
+    - canvas
+    - colors
+    - console
+    - datetime
+    - debug
+    - decimals
+    - effect
+    - either
+    - fetch
+    - foldable-traversable
+    - foreign
+    - formatters
+    - functions
+    - gen
+    - generate-values
+    - halogen
+    - halogen-subscriptions
+    - integers
+    - js-timers
+    - lcg
+    - lists
+    - maybe
+    - now
+    - numbers
+    - ordered-collections
+    - partial
+    - prelude
+    - refs
+    - strings
+    - stringutils
+    - tailrec
+    - transformers
+    - tuples
+    - unsafe-coerce
+    - web-dom
+    - web-events
+    - web-html
+    - web-uievents
+  name: bazsite
+workspace:
+  extraPackages: {}
+  packageSet:
+    url: https://raw.githubusercontent.com/purescript/package-sets/psc-0.15.7-20230408/packages.json

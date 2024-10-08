@@ -10,6 +10,7 @@ import qualified Data.Text           as T
 import           Hakyll
 import           Text.Pandoc.Options
 import           System.Directory (getCurrentDirectory)
+import           System.FilePath (joinPath, takeFileName)
 import           System.IO.Temp (withTempFile)
 import           System.Process (callCommand)
 
@@ -70,8 +71,8 @@ main = hakyllWith config $ do
             route idRoute
             compile copyFileCompiler --todo minify or something
 
-        match "purescript/*" $ do
-            route $ gsubRoute "purescript" (const "js") `composeRoutes` gsubRoute ".purs" (const ".js")
+        match "purescript/src/*" $ do
+            route $ gsubRoute "purescript/src" (const "js") `composeRoutes` gsubRoute ".purs" (const ".js")
             compile purescriptCompiler
 
         match "templates/*" $ compile templateBodyCompiler
@@ -211,10 +212,11 @@ purescriptCompiler = do
         let moduleName = words inputText !! 1 --quiet, you.
         --build it
         dir <- getCurrentDirectory
-        withTempFile dir "index.js" $ \fp h -> do
+        withTempFile (joinPath [dir, "purescript"]) "index.js" $ \outputFile h -> do
             putStrLn $ "Building purescript" ++ inputFile
-            let outputFile = "--to " ++ fp
-                spago = "spago bundle-app --main " ++ moduleName ++ " " ++ outputFile
+            -- using the absolute path for spago 0.93.40 until it gets actually added to nixpkgs or until i learn how to use nixos overlays
+            -- this does mean that practically nobody else will be able to build this site. but who else would want to build this site.
+            let spago = "cd purescript; /nix/store/0ggwjnv7fnlkf70icirf240abfim11ns-spago-0.93.40/bin/spago bundle --module " ++ moduleName ++ " --outfile " ++ (takeFileName outputFile)
             putStrLn $ "Running " ++ spago
             callCommand spago
             BS.unpack <$> BS.hGetContents h

@@ -66,5 +66,5 @@ system-ghc: true
 # compiler-check: newer-minor
 
 nix:
-  packages: [zlib, pkg-config, esbuild, purescript, spago]
-  #packages: [zlib, pkg-config, purs, spago-unstable, purs-backend-es] # Eventually, I will get the nix overlay working
+  pure: false
+  packages: [zlib, pkg-config, esbuild]

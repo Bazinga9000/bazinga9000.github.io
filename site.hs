@@ -186,14 +186,14 @@ getPostIndex post = do
     return $ read <$> s
 
 isPostVisible :: Item String -> Compiler Bool
-isPostVisible post = isJust <$> getMetadataField (itemIdentifier post) "index" 
+isPostVisible post = isJust <$> getMetadataField (itemIdentifier post) "index"
 
-filterAndSortPosts :: [Item String] -> Compiler [Item String] 
+filterAndSortPosts :: [Item String] -> Compiler [Item String]
 filterAndSortPosts posts = do
     filteredPosts <- filterM isPostVisible posts
     let makePair p = getPostIndex p >>= (\i -> return (p, i))
     postsWithIndices <- mapM makePair filteredPosts
-    return $ map fst $ sortOn snd postsWithIndices 
+    return $ map fst $ sortOn snd postsWithIndices
 
 postCompiler :: Compiler (Item String) -> Compiler (Item String)
 postCompiler c = do
@@ -216,7 +216,7 @@ purescriptCompiler = do
             putStrLn $ "Building purescript" ++ inputFile
             -- using the absolute path for spago 0.93.40 until it gets actually added to nixpkgs or until i learn how to use nixos overlays
             -- this does mean that practically nobody else will be able to build this site. but who else would want to build this site.
-            let spago = "cd purescript; /nix/store/0ggwjnv7fnlkf70icirf240abfim11ns-spago-0.93.40/bin/spago bundle --module " ++ moduleName ++ " --outfile " ++ (takeFileName outputFile)
+            let spago = "cd purescript; /etc/profiles/per-user/bazinga/bin/spago bundle --module " ++ moduleName ++ " --outfile " ++ takeFileName outputFile
             putStrLn $ "Running " ++ spago
             callCommand spago
             BS.unpack <$> BS.hGetContents h

@@ -67,3 +67,4 @@ system-ghc: true
 
 nix:
   packages: [zlib, pkg-config, esbuild, purescript, spago]
+  #packages: [zlib, pkg-config, purs, spago-unstable, purs-backend-es] # Eventually, I will get the nix overlay working

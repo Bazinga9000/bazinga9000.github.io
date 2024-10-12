@@ -142,8 +142,8 @@ The dative also has a few other uses:
 
 - To mark a measurement or difference:
 <gloss data-eng="They won the race <b>by five <i>żaošo</i>[4]</b>."
-       data-tsal="ka=el Lo xen=eR luR=pah DaoSo=pao."
-       data-gloss="win-PST.PFV.IND 3SG.PROX.AGT race-PAT five-DAT żaošo-DAT.PL"
+       data-tsal="ka=el Lo xen=eR luR DaoSo=pao."
+       data-gloss="win-PST.PFV.IND 3SG.PROX.AGT race-PAT five żaošo-DAT.PL"
        data-footnotes="4"></gloss>
 
 - To indicate perspective for verbs of subjective experience or perception like "to seem":

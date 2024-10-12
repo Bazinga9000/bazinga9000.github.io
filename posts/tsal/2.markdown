@@ -239,7 +239,7 @@ The locative case marks a location.
 
 Tsal relies heavily on context to tease out specifically what locational relationship is being conveyed. Depending on the context, one might use the locative case analogously to any of "by", "at", "on", "in", "about", and several others. Tsal has some means of being more precise if it is needed, which we will discuss in the section on prepositions.
 
-The locative is marked with -tū in the singular and -two
+The locative is marked with -tū in the singular and -two in the plural.
 
 ### --- Summary of Cases ---
 

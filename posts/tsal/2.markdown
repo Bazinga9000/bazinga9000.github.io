@@ -1,5 +1,5 @@
 ---
-title: Tsal - Phonology and Orthography
+title: Tsal - Basic Sentences and Nouns
 kochtitle: "2: Basic Sentences and Nouns"
 goto: /tsal.html
 extracss: tsalexp

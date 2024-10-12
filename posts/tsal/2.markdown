@@ -7,6 +7,12 @@ prev: /tsal/1.html
 index: 2
 lateincludes: tsal/tsalhtml
 ---
+-----------
+
+<center>"When I use a word", Humpty Dumpty said, in rather a scornful tone, "it means just what I choose it to mean—neither more nor less."</center>
+<center>—Lewis Carroll, *Through the Looking Glass*</center>
+
+-----------
 
 ## --- A Note on Glossing ---
 

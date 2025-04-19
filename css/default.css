@@ -1,193 +1,196 @@
 body {
     background-color: #282828;
     color: #ffffff;
-    font-family: 'montserrat', sans-serif;
+    font-family: "fairfaxhd", sans-serif;
+    font-size: 18px;
 }
 
 code {
-  background-color: #000000;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-color: #ffffff;
-  border-width: 2px; 
-}
-
-
-@font-face {
-	font-family: 'montserrat';
-	src:
-		local('Montserrat'),
-		local('Montserrat-Regular'),
-		url('/fonts/montserrat/Montserrat-Regular.otf') format('opentype');
+    background-color: #000000;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-color: #ffffff;
+    border-width: 2px;
 }
 
 @font-face {
-    font-family: 'argam';
-    src: 
-      url('/fonts/argam/argam.ttf') format('truetype');
+    font-family: "montserrat";
+    src:
+        local("Montserrat"),
+        local("Montserrat-Regular"),
+        url("/fonts/montserrat/Montserrat-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "fairfaxhd";
+    src:
+        local("Fairfax HD"),
+        local("Fairfax HD-Regular"),
+        url("/fonts/fairfaxhd/FairfaxHD.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "argam";
+    src: url("/fonts/argam/argam.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
-
 @font-face {
-    font-family: 'argam-large';
-    src: 
-      url('/fonts/argam-large/argam-large.ttf') format('truetype');
+    font-family: "argam-large";
+    src: url("/fonts/argam-large/argam-large.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-  font-family: 'gothica';
-  src: 
-    url('/fonts/gothica/Gothica-Bold.ttf') format('truetype');
+    font-family: "gothica";
+    src: url("/fonts/gothica/Gothica-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'tsalscript';
-  src: 
-    url('/fonts/tsalscript/Tsalscript.otf') format('opentype');
+    font-family: "tsalscript";
+    src: url("/fonts/tsalscript/Tsalscript.otf") format("opentype");
 }
 
 tsal {
-  font-family: tsalscript;
-  font-size: 40px;
+    font-family: tsalscript;
+    font-size: 40px;
 }
 
 button {
-  background: #202020;
-  border: 2px solid #ffffff;
-  color: #ffffff;
-  font: inherit;
-  line-height: 1;
-  margin: 0.25em;
-  padding: 0.5em 1em;
-  cursor: pointer;
+    background: #202020;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    font: inherit;
+    line-height: 1;
+    margin: 0.25em;
+    padding: 0.5em 1em;
+    cursor: pointer;
 }
 
 button:hover {
-  filter: brightness(130%);
+    filter: brightness(130%);
 }
 
 input {
-  border: 1px solid #ffffff;
-  background-color: #202020;
-  margin: 3px;
-  color: #ffffff;
-  margin-right: 10px;
-  margin-left: 6px;
-
+    border: 1px solid #ffffff;
+    background-color: #202020;
+    margin: 3px;
+    color: #ffffff;
+    margin-right: 10px;
+    margin-left: 6px;
 }
 
 textarea {
-  border-radius: 5px;
-  border: 1px solid #ffffff;
-  background-color: #202020;
-  margin: 3px;
-  color: #ffffff;
-  margin-right: 10px;
-  margin-left: 6px;
-
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    background-color: #202020;
+    margin: 3px;
+    color: #ffffff;
+    margin-right: 10px;
+    margin-left: 6px;
 }
 
-a, a:hover, a:focus, a:active {
-      text-decoration: none;
-      color: inherit;
+a,
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none;
+    color: inherit;
 }
 
 .hyperlink {
-      color: #51e194;
+    color: #51e194;
 }
 
 .hyperlink:hover {
-      color: #256643;
+    color: #256643;
 }
 
 /* When you can't be bothered to properly setup a slider so you fiddle with
    the first thing you find on w3schools until it looks right
    lol*/
 .slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  width: 100%;
-  height: 15px;
-  border-radius: 5px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
 }
 
 /* Mouse-over effects */
 .slider:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #51e194;
-  cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #51e194;
+    cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #51e194;
-  cursor: pointer;
-}
-
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #51e194;
+    cursor: pointer;
 }
 
 .tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted white;
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted white;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted white;
 }
 
 .tooltip .tooltiptext {
-visibility: hidden;
-max-width: 33vw; /* Maximum width to avoid being too wide */
-width: max-content;
-background-color: black;
-color: #fff;
-text-align: center;
-border-radius: 6px;
-padding: 10px;
-position: absolute;
-z-index: 1;
-bottom: 150%;
-left: 50%;
-transform: translateX(-50%); /* Center the tooltip */
-word-wrap: break-word; /* Allow long words to break and wrap to the next line */
+    visibility: hidden;
+    max-width: 33vw; /* Maximum width to avoid being too wide */
+    width: max-content;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%); /* Center the tooltip */
+    word-wrap: break-word; /* Allow long words to break and wrap to the next line */
 }
 
 .tooltip .tooltiptext::after {
-content: "";
-position: absolute;
-top: 100%;
-left: 50%;
-margin-left: -5px;
-border-width: 5px;
-border-style: solid;
-border-color: black transparent transparent transparent;
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
-visibility: visible;
+    visibility: visible;
 }

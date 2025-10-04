@@ -63,14 +63,14 @@ class TsalDateTime {
 
   static fromEarthTime(t) {
     var earth_days = t.diff(EARTH_EPOCH, "days").days;
-    var tsal_days_delta = earth_days * TSAL_EARTH_RATIO;
+    var tsal_days_delta = earth_days / TSAL_EARTH_RATIO;
     var tsal_days = TSAL_EPOCH_DAYS + tsal_days_delta;
     return TsalDateTime.fromDays(tsal_days);
   }
 
   get earthTime() {
     var tsal_days = this.days - TSAL_EPOCH_DAYS;
-    var earth_days_delta = tsal_days / TSAL_EARTH_RATIO;
+    var earth_days_delta = tsal_days * TSAL_EARTH_RATIO;
     return EARTH_EPOCH.plus({ days: earth_days_delta });
   }
 

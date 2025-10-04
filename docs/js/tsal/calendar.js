@@ -112,7 +112,7 @@ const EARTH_EPOCH = DateTime.fromISO("2022-07-08T20:09:12.046Z");
 const TSAL_EPOCH = TsalDateTime.fromObject({
   year: parseInt("3600", 12),
   month: 2,
-  day: 37,
+  day: 36,
   lhig: 3,
   osho: 9,
   dzaosho: 127,

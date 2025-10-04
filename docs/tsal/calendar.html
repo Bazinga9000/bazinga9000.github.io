@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+	<head>
+		<title>Tsal Calendar</title>
+		<link rel="stylesheet" type="text/css" href="../css/default.css">
+		<link rel="icon" type="image/x-icon" href="../resources/favicon.ico">
+		
+			<link rel="stylesheet" type="text/css" href="../css/argam.css">
+		
+		
+			<script src="https://cdn.jsdelivr.net/npm/bignumber.js/bignumber.min.js"></script>
+		
+			<script src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"></script>
+		
+		
+		
+	<body>
+		<h1>
+			<center><a href="../index.html"><img src="../resources/koch.png" height="50px" width="auto" style="vertical-align: middle" /></a></center>
+			<center><span>Tsal Calendar</span></center>
+		</h1>
+		<div id="content">
+			
+            <center>
+    It is currently
+    <br />
+    <span style="font-size: 30px" id="clock"></span>
+</center>
+
+<center>
+    The Tsal Calendar equivalent date of
+    <input type="datetime-local" value="2022-07-08T16:09" id="earthtsalinput" oninput="convert();" />
+    is
+    <br />
+    <span style="font-size: 24px" id="earthtsal"></span>
+</center>
+
+        </div>
+		
+		<script src="../js/argam/argam.js"></script>
+		
+		<script src="../js/tsal/calendar.js"></script>
+		
+	</body>
+</html>

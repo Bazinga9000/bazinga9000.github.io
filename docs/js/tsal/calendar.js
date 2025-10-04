@@ -101,8 +101,15 @@ class TsalDateTime {
     return out;
   }
 
-  toString() {
-    return `${this.day + 1} ${MONTH_NAMES[this.month]}ğus ${this.year} ${this.lhig}:${this.osho}:${Math.floor(this.dzaosho)}`;
+  format(base) {
+    var conv = function (n) {
+      if (base == 12) {
+        return n.toString(12).replaceAll("a", "↊").replaceAll("b", "↋");
+      } else {
+        return n.toString();
+      }
+    };
+    return `${conv(this.day + 1)} ${MONTH_NAMES[this.month]}ğus ${conv(this.year)} ${conv(this.lhig)}:${conv(this.osho)}:${conv(Math.floor(this.dzaosho))}`;
   }
 }
 
@@ -168,13 +175,15 @@ const TSAL_EPOCH_DAYS = TSAL_EPOCH.days;
 
 function update_time() {
   const tst = TsalDateTime.fromEarthTime(DateTime.now());
-  document.getElementById("clock").innerText = tst.toString();
+  let base = document.querySelector('input[name="base"]:checked').value;
+  document.getElementById("clock").innerText = tst.format(base);
 }
 
 function convert() {
   let earth_d = document.getElementById("earthtsalinput").value;
   let earth_d_tsal = TsalDateTime.fromEarthTime(DateTime.fromISO(earth_d));
-  document.getElementById("earthtsal").innerText = earth_d_tsal.toString();
+  let base = document.querySelector('input[name="base"]:checked').value;
+  document.getElementById("earthtsal").innerText = earth_d_tsal.format(base);
 }
 setInterval(update_time, 10);
 convert();

@@ -179,11 +179,75 @@ function update_time() {
   document.getElementById("clock").innerText = tst.format(base);
 }
 
-function convert() {
+function convert_earth_tsal() {
   let earth_d = document.getElementById("earthtsalinput").value;
   let earth_d_tsal = TsalDateTime.fromEarthTime(DateTime.fromISO(earth_d));
   let base = document.querySelector('input[name="base"]:checked').value;
   document.getElementById("earthtsal").innerText = earth_d_tsal.format(base);
 }
+
+function update_tsal_selectors() {
+  let year_sel = document.getElementById("tsalyearinput");
+  let month_sel = document.getElementById("tsalmonthinput");
+  let day_sel = document.getElementById("tsaldayinput");
+  let lhig_sel = document.getElementById("tsallhiginput");
+  let osho_sel = document.getElementById("tsaloshoinput");
+  let dzaosho_sel = document.getElementById("tsaldzaoshoinput");
+
+  // get the selected month for later
+  let set_month = month_sel.value;
+
+  // fix the day selector if we go from a 40 month to a 39 month
+  day_sel.max = MONTH_LENGTHS[set_month];
+  if (day_sel.value > day_sel.max) {
+    day_sel.value = day_sel.max;
+  }
+
+  // set up the month selector to account for which type of year we're in
+  month_sel.innerHTML = "";
+  let year_type = YEARS[year_sel.value % 203];
+  console.log(year_type, year_sel.value);
+
+  for (let n = 0; n < 18; n++) {
+    if (
+      (n == 0 && year_type != W) ||
+      (n == 17 && year_type != B) ||
+      (n > 0 && n < 17)
+    ) {
+      let opt = document.createElement("option");
+      opt.value = n;
+      opt.innerHTML = `${MONTH_NAMES[n]}ğus`;
+      month_sel.appendChild(opt);
+    }
+  }
+
+  // fix the month selector so as not to reset it
+  if (set_month == 0 && year_type == W) {
+    month_sel.value = 1;
+  } else if (set_month == 17 && year_type == B) {
+    month_sel.value = 16;
+  } else {
+    month_sel.value = set_month;
+  }
+
+  // now perform the actual date conversion
+  let tsal_date = TsalDateTime.fromObject({
+    year: parseInt(year_sel.value),
+    month: parseInt(month_sel.value),
+    day: parseInt(day_sel.value) - 1, // anti-oboe
+    lhig: parseInt(lhig_sel.value),
+    osho: parseInt(osho_sel.value),
+    dzaosho: parseInt(dzaosho_sel.value),
+  });
+
+  document.getElementById("tsalearth").innerHTML =
+    tsal_date.earthTime.toLocaleString({
+      ...luxon.DateTime.DATETIME_FULL_WITH_SECONDS,
+      era: "short",
+    });
+}
+
 setInterval(update_time, 10);
-convert();
+convert_earth_tsal();
+update_tsal_selectors();
+document.getElementById("tsalmonthinput").value = 2;

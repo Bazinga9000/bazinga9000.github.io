@@ -142,7 +142,7 @@ const YEARS = (function () {
   return [L, L, L, L, L, L, L, L, L, L, L, L, L, S].flat();
 })();
 
-const YEAR_LENGTHS = [711, 711 - 40, 711 - 39];
+const YEAR_LENGTHS = [711 - 40, 711 - 39, 711];
 
 const MONTH_LENGTHS = [
   40, 39, 40, 39, 40, 39, 40, 39, 40, 39, 40, 39, 40, 39, 40, 39, 40, 39,

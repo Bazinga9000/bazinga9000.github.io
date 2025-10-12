@@ -86,7 +86,13 @@ class TsalDateTime {
     }
 
     // add in the completed months in the current year
-    for (var i = 0; i < this.month; i++) {
+    // skip month 0 if we're in a white year, so we don't add an extra 40 days
+    // (this doesn't need to be adjusted for black years since the skipped month is 17, at the end)
+    let starting_month = 0;
+    if (YEARS[this.year % 203] == W) {
+      starting_month = 1;
+    }
+    for (var i = starting_month; i < this.month; i++) {
       out += MONTH_LENGTHS[i];
     }
 

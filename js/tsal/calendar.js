@@ -32,6 +32,11 @@ class TsalDateTime {
     }
 
     var month = 0;
+    // start on month 1 in white years, since Quğus is skipped
+    // no action needed in black years since the last month is skipped, but we'll never get there
+    if (YEARS[year % 203] == W) {
+      month += 1;
+    }
     while (days_left > MONTH_LENGTHS[month]) {
       days_left -= MONTH_LENGTHS[month];
       month += 1;

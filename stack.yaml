@@ -67,4 +67,4 @@ system-ghc: true
 
 nix:
   pure: false
-  packages: [zlib, pkg-config, esbuild]
+  packages: [zlib, pkg-config, esbuild, numactl]
